@@ -1,2 +1,11 @@
 Grupo 33
-Tobias Ajenjo 16286/5
+
+Tobias Ajenjo 
+Legajo: 16286/5
+
+Pugliese Alejo
+Legajo: 14414/5
+
+Bodrone Bautista
+Legajo: 15563/3
+

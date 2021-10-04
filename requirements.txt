@@ -3,3 +3,4 @@ PyMySQL==1.0.2
 Flask-Session==0.4
 black==21.9b0
 flask-sqlalchemy==2.5.1
+mariadb==1.0.7

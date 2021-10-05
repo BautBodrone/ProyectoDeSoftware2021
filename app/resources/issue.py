@@ -1,11 +1,11 @@
 from flask import redirect, render_template, request, url_for
-from app.db import connection
+
 from app.models.issue import Issue
 
 # Public resources
 def index():
-    conn = connection()
-    issues = Issue.all(conn)
+    
+    issues = Issue.query.all()
 
     return render_template("issue/index.html", issues=issues)
 
@@ -15,7 +15,8 @@ def new():
 
 
 def create():
-    conn = connection()
-    Issue.create(conn, request.form)
+    
+    new_issue = Issue(**request.form)
+    Issue.save(new_issue)
 
     return redirect(url_for("issue_index"))

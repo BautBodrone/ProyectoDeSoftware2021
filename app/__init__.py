@@ -1,11 +1,11 @@
 from os import path, environ
+
 from flask import Flask, render_template, g, Blueprint
 from flask_session import Session
+
 from config import config
 from app import db
-from app.resources import issue
-from app.resources import user
-from app.resources import auth
+from app.resources import issue, user, auth
 from app.resources.api.issue import issue_api
 from app.helpers import handler
 from app.helpers import auth as helper_auth

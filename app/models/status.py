@@ -8,11 +8,9 @@ class Status(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(30))
     
-    @classmethod
     def __init__(self, name=None):
         self.name = name
     
-    @classmethod
     def save(self, new_status):
         db.session.add(new_status)
         db.session.commit()

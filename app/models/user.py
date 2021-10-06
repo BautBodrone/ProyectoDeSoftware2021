@@ -10,18 +10,15 @@ class User(db.Model):
     email = Column(String(30),unique=True)
     password = Column(String(30))
 
-    @classmethod
     def __init__(self, first_name=None, last_name=None, email=None, password=None):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.password = password
     
-    @classmethod
     def authenticate_user(self, params):
         return self.query.filter(User.email==params["email"] and user.password==params["password"]).first()
         
-    @classmethod
     def save(self, new_user):
         db.session.add(new_user)
         db.session.commit()

@@ -16,14 +16,12 @@ class Issue(db.Model):
     status_id = Column(Integer,ForeignKey("statuses.id"))
     status = relationship(Status)
 
-    @classmethod
     def __init__(self, email=None, description=None, status_id=None, category_id=None):
         self.email = email
         self.description = description
         self.status_id = status_id
         self.category_id = category_id
 
-    @classmethod
     def save(self, new_issue):
         db.session.add(new_issue)
         db.session.commit()

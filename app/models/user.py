@@ -17,7 +17,7 @@ class User(db.Model):
         self.password = password
     
     def authenticate_user(self, params):
-        return self.query.filter(User.email==params["email"] and user.password==params["password"]).first()
+        return self.query.filter(User.email==params["email"] and User.password==params["password"]).first()
         
     def save(self, new_user):
         db.session.add(new_user)

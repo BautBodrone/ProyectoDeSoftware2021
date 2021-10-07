@@ -23,6 +23,9 @@ class ProductionConfig(Config):
     DB_USER = environ.get("DB_USER", "grupo33")
     DB_PASS = environ.get("DB_PASS", "Y2Q3Y2MzNzEwMmY0")
     DB_NAME = environ.get("DB_NAME", "grupo33")
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_DATABASE_URI = (f"mariadb+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:3306/{DB_NAME}")
+
 
 
 class DevelopmentConfig(Config):

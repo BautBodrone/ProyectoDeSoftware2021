@@ -16,9 +16,11 @@ class User(db.Model):
         self.email = email
         self.password = password
     
+    @classmethod
     def authenticate_user(self, params):
         return self.query.filter(User.email==params["email"] and User.password==params["password"]).first()
-        
+    
+    @classmethod
     def save(self, new_user):
         db.session.add(new_user)
         db.session.commit()

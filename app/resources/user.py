@@ -24,7 +24,7 @@ def create():
     if not authenticated(session):
         abort(401)
 
-    new_user= User.query.create(**request.form)
+    new_user= User(**request.form)
     User.save(new_user)
     
     return redirect(url_for("user_index"))

@@ -11,6 +11,7 @@ class Status(db.Model):
     def __init__(self, name=None):
         self.name = name
     
+    @classmethod
     def save(self, new_status):
         db.session.add(new_status)
         db.session.commit()

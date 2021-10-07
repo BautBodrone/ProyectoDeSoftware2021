@@ -22,6 +22,7 @@ class Issue(db.Model):
         self.status_id = status_id
         self.category_id = category_id
 
+    @classmethod
     def save(self, new_issue):
         db.session.add(new_issue)
         db.session.commit()

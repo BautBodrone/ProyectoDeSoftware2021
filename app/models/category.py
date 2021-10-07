@@ -11,6 +11,7 @@ class Category(db.Model):
     def __init__(self, name=None):
         self.name = name
     
+    @classmethod
     def save(self, new_category):
         db.session.add(new_category)
         db.session.commit()

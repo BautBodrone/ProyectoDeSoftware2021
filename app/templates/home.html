@@ -5,6 +5,7 @@
 {% endblock %}
 {% block content %}
   <h1>Inicio</h1>
+  <img src="/static/imgs/logo.png">
   <p>Página de inicio de la aplicación</p>
   <a href="{{ url_for('issue_index') }}" class="link">Consultas</a>
   {% if is_authenticated(session) %}

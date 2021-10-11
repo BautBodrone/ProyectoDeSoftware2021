@@ -36,6 +36,26 @@ class User(db.Model):
                     return True
             return False
 
+    @classmethod
+    def check_rol(cls,rol):
+        if self.user_r() is None:
+            print('testing')
+            return True
+        else:
+            for rol_s in self.user_r():
+                if rol_s == rol:
+                    return True
+            return False
+
+    @classmethod
+    def add_rol(cls,rol):
+        if check_rol(rol):
+            return False
+        else:
+            #add rol
+            return True
+
+
     @classmethod 
     def save(self, new_user):
         db.session.add(new_user)

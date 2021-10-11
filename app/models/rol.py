@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from app.db import db
+from app.models.user import User
 
 user_rol = db.Table('tags',
     db.Column('rols', db.Integer, db.ForeignKey('rols.id'), primary_key=False),
@@ -12,7 +13,7 @@ class Rol(db.Model):
     __tablename__ = 'rols'
     id = Column(Integer,primary_key=True)
     nombre = Column(String(30))
-    users = relationship('User',secondary = user_rol, backref = db.backref('users_r',lazy = 'dynamic'))
+    users = relationship(User,secondary = user_rol, backref = db.backref('users_r',lazy = 'dynamic'))
     
     def __init__(self,nombre = None):
         self.nombre = nombre

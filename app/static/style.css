@@ -6,6 +6,14 @@ body {
   font-size: 14px;
 }
 
+.header {
+  padding: 60px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+  font-size: 30px;
+}
+
 .clear {
   clear: both;
   height: 0;
@@ -42,4 +50,44 @@ a.link {
   text-decoration: none;
   margin-top: 50px;
   letter-spacing: 1px;
+}
+.navbar {
+  font-family: 'Montserrat', sans-serif;
+    color: rgba(146,146,146,1.00);
+    float: left;
+    width: 20%;
+    padding-left: 3%;
+    padding-right: 3%;
+    text-align: center;
+    background-color: rgba(246,246,246,1.00);
+    padding-top: 36px;
+    height: 784px;
+}
+
+.navbar a {
+  text-decoration: none;
+  font-size: 15px;
+  color: #2196F3;
+  display: block;
+}
+
+.navbar #search {
+	width: 100%;
+	border-radius: 0px;
+	height: 42px;
+	text-align: center;
+	color: rgba(208,207,207,1.00);
+	font-size: 14px;
+	;
+	margin-bottom: 21px;
+}
+
+.navbar a:hover {
+  color: #064579;
+}
+
+.content {
+	width: 70%;
+	text-align: center;
+	padding-left: 4%;
 }

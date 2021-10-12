@@ -2,16 +2,36 @@
 <html lang="en">
   <head>
     {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
     <title>{% block title %}{% endblock %}</title>
     {% endblock %}
   </head>
   <body>
-    <div id="navbar">
-      {% block navbar %}
+    <div class="header" id="header">
+      {% block header %}
+      <img src="/static/imgs/logo.png" width="10%" height="10%" >
+      <p>Proyecto de Software</p>
+      {% endblock %} 
+    </div>
+
+    <div class="navbar" id="navbar">
+      {% block navbar %} 
+
+        <div id="menubar">
+          <nav class="menu">
+            <input type="text"  id="search" value="search">
+            <hr>
+            <ul>
+              <li><a href="#" title="Link">Opcion 1</a></li>
+              <li><a href="#" title="Link">Opcion 2</a></li>
+              <li><a href="#" title="Link">Opcion 3</a></li>
+            </ul>
+          </nav>
+        </div>
       {% endblock %}
     </div>
-    <div id="content">
+    <div class="content" id="content">
+      
       {% with messages = get_flashed_messages() %}
         {% if messages %}
           <ul class=flashes>

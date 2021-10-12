@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block title %}Configuration{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <h1>Configuracion</h1>
+  <p>Página de configuracion de la aplicación</p>
+  {% if is_authenticated(session) %}
+  <form action="{{ url_for('configuration_update') }}" method="POST">
+    <p>
+      <label for="cant_filas">filas por página</label>
+      <input id="cant_filas" type="number" name="cant_filas" placeholder="{{ configurations.cant_filas }}" />
+    </p>
+    <p>
+      <label for="criterio">criterio de orden</label>
+      <select list="criterios" id="criterio" name="criterio_orden">
+        {% for criterio in configurations.order %}
+          <option value='{{criterio}}'>{{criterio}}</option>
+        {% endfor %}
+      </select>
+    </p>
+    <p>
+      <label for="paleta_app_publica" class="dropbtn">paleta aplicación publica</label>
+      <input type="color" id="paleta_app_publica" name="paleta_app_publica" value="background-color" /> 
+    </p>
+    <p>
+      <label for="paleta_app_privada" class="dropbtn">paleta aplicación privada</label>
+      <input type="color" id="paleta_app_privada" name="paleta_app_privada" value="{{configurations.private_color}}" />
+    </p>
+    <button type="reset">Limpiar</button>
+    <a href="{{ url_for('configuration_update') }}" class="link">Guardar</a>
+  </form>    
+  {% endif %}
+  <a href="{{ url_for('home') }}" class="link">Volver</a>
+{% endblock %}

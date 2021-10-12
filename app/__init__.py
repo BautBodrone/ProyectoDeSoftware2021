@@ -5,7 +5,7 @@ from flask_session import Session
 
 from config import config
 from app import db
-from app.resources import issue, user, auth
+from app.resources import issue, user, auth, configuration
 from app.resources.api.issue import issue_api
 from app.helpers import handler
 from app.helpers import auth as helper_auth
@@ -46,6 +46,10 @@ def create_app(environment="production"):
     app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
     app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
 
+    # Rutas de Usuarios
+    app.add_url_rule("/configuracion", "configuration_index", configuration.index)
+    app.add_url_rule("/configuracion", "configuration_update", configuration.update, methods=["POST"])
+    
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
@@ -60,7 +64,7 @@ def create_app(environment="production"):
     # Handlers
     app.register_error_handler(404, handler.not_found_error)
     app.register_error_handler(401, handler.unauthorized_error)
-    # Implementar lo mismo para el error 500
+    app.register_error_handler(500, handler.server_error)
 
     # Retornar la instancia de app configurada
     return app

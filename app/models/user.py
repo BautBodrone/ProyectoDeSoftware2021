@@ -54,7 +54,11 @@ class User(db.Model):
         else:
             #add rol
             return True
-
+    
+    @classmethod
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
     @classmethod 
     def save(self, new_user):

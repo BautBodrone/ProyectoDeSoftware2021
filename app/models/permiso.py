@@ -17,6 +17,7 @@ class Permiso(db.Model):
     
     def __init__(self,nombre = None):
         self.nombre = nombre
+        db.session.commit()
 
     @classmethod 
     def save(self,new_permiso):

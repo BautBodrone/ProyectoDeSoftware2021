@@ -7,7 +7,6 @@ from app.models.issue import Issue
 def index():
     
     issues = Issue.query.all()
-    #rols = Rol.query.all()
 
     return render_template("issue/index.html", issues=issues)
 

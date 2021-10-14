@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Probando</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1 style="text-align: center">Permisos</h1>
+    <table>
+        <tr>
+            <th>User</th>
+            <th>Permisos</th>
+            <th>Estado</th>
+            <th>Actions</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.first_name}}  {{ user.last_name}}  </td>
+                <td>{{ user.permisos }}</td>
+                <td>{{ user.estado }}</td>
+                <td>
+                    <a href="/delete/{{user.id}}">Modificar Estado</a>
+                    <br>
+                    <a href="/update/{{user.id}}">Administrar Rol</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

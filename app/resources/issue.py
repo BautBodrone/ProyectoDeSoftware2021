@@ -15,7 +15,6 @@ def new():
 
 
 def create():
-    
     new_issue = Issue(**request.form)
     Issue.save(new_issue)
 

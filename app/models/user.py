@@ -10,11 +10,12 @@ class User(db.Model):
     email = Column(String(30),unique=True)
     password = Column(String(30))
 
-    def __init__(self, first_name=None, last_name=None, email=None, password=None):
+    def __init__(self, first_name=None, last_name=None, email=None, password=None , permisos=None):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.password = password
+        self.permisos= permisos
     
     @classmethod
     def authenticate_user(self, params):

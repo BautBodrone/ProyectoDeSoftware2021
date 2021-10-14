@@ -5,7 +5,7 @@ from flask_session import Session
 
 from config import config
 from app import db
-from app.resources import issue, user, auth
+from app.resources import issue, user, auth , probando
 from app.resources.api.issue import issue_api
 from app.helpers import handler
 from app.helpers import auth as helper_auth
@@ -28,6 +28,8 @@ def create_app(environment="production"):
 
     # Funciones que se exportan al contexto de Jinja2
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
+    app.jinja_env.globals.update(haveThePermits=helper_auth.havePermits)
+
 
     # Autenticación
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
@@ -46,10 +48,13 @@ def create_app(environment="production"):
     app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
     app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
 
+    #rutas de permisos
+    app.add_url_rule("/permisos", "probando_index", probando.index)
+
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
-        return render_template("home.html")
+       return render_template("home.html")
 
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")

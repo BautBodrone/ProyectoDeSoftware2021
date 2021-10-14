@@ -13,10 +13,10 @@ class Punto(db.Model):
 
     __tablename__= "puntos"
     
-    #id = Column(Integer, primary_key=True) # solo es testing
+    id = Column(Integer, primary_key=True) 
     nombre = Column(String (30))
     direccion = Column(String(30))
-    coordenadas1 = Column(String(30), primary_key=True)
+    coordenadas1 = Column(String(30), unique=True)
     estado = Column(ChoiceType(ESTADOS))
     telefono = Column(String(20))
     email = Column(String(30))
@@ -40,6 +40,25 @@ class Punto(db.Model):
         db.session.add(new_punto)
         db.session.commit()
 
-    def search_punto(p_coordenadas):
-        return db.session.query(Punto).filter_by(nombre=p_coordenadas).first()
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def search_punto(p_id):
+        return db.session.query(Punto).get(p_id)
+
+    def edit(self, data):
+        if self.nombre != data["nombre"]:
+            self.nombre = data["nombre"]
+        if self.direccion != data["direccion"]:
+            self.direccion = data["direccion"]
+        if self.coordenadas1 != ["coordenadas1"]:
+            self.coordenadas1 = data["coordenadas1"]
+        if self.estado != data["estado"]:
+            self.estado = data["estado"]
+        if self.telefono != data["telefono"]:
+            self.telefono = data["telefono"]
+        if self.email != data["email"]:
+            self.email = data["email"]
+        db.session.commit()
 

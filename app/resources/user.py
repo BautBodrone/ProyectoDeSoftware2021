@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, url_for, session, abort
+from flask import flash, redirect, render_template, request, url_for, session, abort
 
 from app.models.user import User
 from app.helpers.auth import authenticated
@@ -28,3 +28,13 @@ def create():
     User.save(new_user)
     
     return redirect(url_for("user_index"))
+
+def delete():
+    if not authenticated(session):
+        abort(401)
+
+    user = User.search_user(request.form["user_id"])
+    user.delete()
+    flash("Se elimino con exito")
+
+    return redirect(url_for('user_index'))

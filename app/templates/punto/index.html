@@ -8,8 +8,11 @@
   {% for punto in puntos %}
     <li>{{ punto.nombre }} - {{ punto.direccion }}</li>
     <form action="{{ url_for('punto_delete') }}" method="POST" enctype="multipart/form-data">
-      <input type="hidden" id="punto_nombre" name="punto_nombre" value="{{punto.nombre}}">
-      <button type="submite" class="btn btn-danger mt-2 ml-2" >eliminar</button>
+      <input type="hidden" id="punto_id" name="punto_id" value="{{punto.id}}">
+      <button type="submit" class="btn btn-danger mt-2 ml-2" >eliminar</button>
+    </form>
+    <form action="{{ url_for('punto_edit', punto_id = punto.id ) }}"  method="POST" enctype="multipart/form-data"  >
+      <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
     </form>
   {% endfor %}
   <a href="{{ url_for('home') }}" class="link">Volver</a>

@@ -54,8 +54,7 @@ class User(db.Model):
         else:
             #add rol
             return True
-    
-    @classmethod
+
     def delete(self):
         db.session.delete(self)
         db.session.commit()
@@ -64,4 +63,7 @@ class User(db.Model):
     def save(self, new_user):
         db.session.add(new_user)
         db.session.commit()
+
+    def search_user(id):
+        return db.session.query(User).get(id)
     

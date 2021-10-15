@@ -38,3 +38,30 @@ def delete():
     flash("Se elimino con exito")
 
     return redirect(url_for('user_index'))
+
+def edit(user_id):
+    if not authenticated(session):
+        abort(401)
+
+    user = User.search_user(user_id)
+    print(user.email)
+
+    return render_template("user/edit.html", user=user)
+
+def edit_finish():
+    if not authenticated(session):
+        abort(401)
+
+    data = request.form
+    user = User.search_user(data["id"])
+
+    try:
+        user.edit(data)
+    except:
+        flash("Usuario con ese nombre o email ya existe", "error")
+        return redirect(request.referrer)
+
+    return redirect(url_for("user_index"))
+
+
+    

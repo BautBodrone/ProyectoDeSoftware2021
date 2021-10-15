@@ -1,7 +1,6 @@
 from flask import redirect, render_template, request, url_for, session, abort, flash
 from app.helpers.auth import authenticated
 from app.models.punto import Punto
-import bleach
 
 def index():
     
@@ -52,20 +51,10 @@ def edit_finish():
     if not authenticated(session):
         abort(401)
 
-    print("tst")
     data = request.form
     punto = Punto.search_punto(data["coordenadas1"])
 
-    dictUser = {
-        "nombre": bleach.clean(data["nombre"]),
-        "direccion": bleach.clean(data["direccion"]),
-        "coordenadas1": bleach.clean(data["coordenadas1"]),
-        "estado": bleach.clean(data["estado"]),
-        "telefono": bleach.clean(data["telefono"]),
-        "email": bleach.clean(data["email"])
-    }
-
-    punto.edit(dictUser)
+    punto.edit(data)
 
     flash("Se edito con exito", "success")
 

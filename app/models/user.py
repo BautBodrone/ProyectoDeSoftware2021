@@ -66,4 +66,15 @@ class User(db.Model):
 
     def search_user(id):
         return db.session.query(User).get(id)
+
+    def edit(self,data):
+        if self.first_name != data["first_name"]:
+            self.first_name = data["first_name"]
+        if self.last_name != data["last_name"]:
+            self.last_name = data["last_name"]
+        if self.password != data["password"]:
+            self.password = data["password"]
+        if self.email != data["email"]:
+            self.email = data["email"]
+        db.session.commit()
     

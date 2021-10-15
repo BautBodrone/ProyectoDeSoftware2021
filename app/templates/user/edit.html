@@ -5,25 +5,28 @@
 {% endblock %}
 {% block content %}
   <h1>Editar un usuario</h1>
-  <form action="{{ url_for('user_create') }}" method="POST">
+  <form action="{{ url_for('user_edit_finish') }}" method="POST">
+    <div class="form-group">
+      <input type="hidden" class="form-control"  id="id" name="id" value="{{user.id}}">
+    </div>
     <p>
       <label>Email<label></br>
-      <input name="email" placeholder="Correo"/>
+      <input name="email" placeholder="{{user.email}}" value="{{user.email}}" required/>
     </p>
     <p>
       <label>Clave<label></br>
-      <input type="password" name="password" placeholder="Clave"/>
+      <input type="password" name="password" placeholder="{{user.password}}" value="{{user.password}}"/>
     </p>
     <p>
       <label>Nombre<label></br>
-      <input name="first_name" placeholder="Nombre"/>
+      <input name="first_name" placeholder="{{user.first_name}}" value="{{user.first_name}}"/>
     </p>
     <p>
       <label>Apellido<label></br>
-      <input name="last_name" placeholder="Apellido"/>
+      <input name="last_name" placeholder="{{user.last_name}}" value="{{user.last_name}}"/>
     </p>
     <p>
-      <input type="submit" value="Crear">
+      <input type="submit" value="Editar">
       <button type="reset">Limpiar</button>
     </p>
   </form>

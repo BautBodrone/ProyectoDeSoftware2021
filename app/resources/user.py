@@ -25,7 +25,11 @@ def create():
         abort(401)
 
     new_user = User(**request.form)
-    User.save(new_user)
+    try:
+        User.save(new_user)
+    except:
+        flash("Usuario con ese nombre o email ya existe", "error")
+        return redirect(request.referrer)
     
     return redirect(url_for("user_index"))
 

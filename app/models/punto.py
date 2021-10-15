@@ -47,12 +47,15 @@ class Punto(db.Model):
     def search_punto(p_id):
         return db.session.query(Punto).get(p_id)
 
+    def get_id(self):
+        return self.id
+
     def edit(self, data):
         if self.nombre != data["nombre"]:
             self.nombre = data["nombre"]
         if self.direccion != data["direccion"]:
             self.direccion = data["direccion"]
-        if self.coordenadas1 != ["coordenadas1"]:
+        if self.coordenadas1 != data["coordenadas1"]:
             self.coordenadas1 = data["coordenadas1"]
         if self.estado != data["estado"]:
             self.estado = data["estado"]

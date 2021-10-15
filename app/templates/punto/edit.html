@@ -6,6 +6,9 @@
 {% block content %}
   <h1>Editar un punto</h1>
   <form action="{{ url_for('punto_edit_finish' ) }}" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+      <input type="hidden" class="form-control"  id="id" name="id" value="{{punto.id}}">
+    </div>
     <p>
       <label>nombre<label></br>
       <input name="nombre" placeholder="{{punto.nombre}}" value="{{punto.nombre}}" required/>

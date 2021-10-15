@@ -13,23 +13,21 @@
       <input id="cant_filas" type="number" name="cant_filas" placeholder="{{ configurations.cant_filas }}" />
     </p>
     <p>
-      <label for="criterio">criterio de orden</label>
-      <select list="criterios" id="criterio" name="criterio_orden">
-        {% for criterio in configurations.order %}
-          <option value='{{criterio}}'>{{criterio}}</option>
-        {% endfor %}
-      </select>
+      <label for="order">criterio de orden</label>
+        <select name='order'>
+          <option value='1'>Importancia</option>
+          <option value='2'>Cercanía</option>
+          <option value='3'>A..Z</option>
+          <option value='3'>Z..A</option>
+        </select>
     </p>
     <p>
-      <label for="paleta_app_publica" class="dropbtn">paleta aplicación publica</label>
-      <input type="color" id="paleta_app_publica" name="paleta_app_publica" value="background-color" /> 
+      <label for="private_bg_color" class="dropbtn">paleta aplicación privada</label>
+      <input type="color" id="private_bg_color" name="private_bg_color" value="{{ configurations.bg_color }}" />
     </p>
-    <p>
-      <label for="paleta_app_privada" class="dropbtn">paleta aplicación privada</label>
-      <input type="color" id="paleta_app_privada" name="paleta_app_privada" value="{{configurations.private_color}}" />
-    </p>
+    <input type="submit" value="Crear">
     <button type="reset">Limpiar</button>
-    <a href="{{ url_for('configuration_update') }}" class="link">Guardar</a>
+    <br>
   </form>    
   {% endif %}
   <a href="{{ url_for('home') }}" class="link">Volver</a>

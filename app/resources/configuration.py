@@ -1,15 +1,18 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, redirect, url_for
 
 from app.models.configuration import Configuration
 
 def index():
     configurations = Configuration.query.first()
-    
+    print("index")
     return render_template("config/index.html", configurations=configurations)
 
-def update():
-    #to be implemented
-    new_config = Configuration(**request.form)
-    Configuration.update(new_config)
+def save():
+    if not authenticated(session):
+        abort(401)
+    configurations = Configuration.query.first()
+    configurations.update(**request.form)
+    return redirect(url_for("configuration_index"))
 
-    return render_template("config/index.html")
+def bg_color():
+    return Configuration.bg_color()

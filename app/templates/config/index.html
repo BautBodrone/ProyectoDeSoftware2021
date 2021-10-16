@@ -9,8 +9,8 @@
   {% if is_authenticated(session) %}
   <form action="{{ url_for('configuration_update') }}" method="POST">
     <p>
-      <label for="cant_filas">filas por página</label>
-      <input id="cant_filas" type="number" name="cant_filas" placeholder="{{ configurations.cant_filas }}" />
+      <label for="rows_per_page">filas por página</label>
+      <input id="rows_per_page" type="number" name="rows_per_page" placeholder="{{ configurations.rows_per_page }}" />
     </p>
     <p>
       <label for="order">criterio de orden</label>

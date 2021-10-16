@@ -1,19 +1,27 @@
 from sqlalchemy import Column, Integer, String
+from sqlalchemy_utils import ChoiceType
 
 from app.db import db
 
 class Configuration(db.Model):
     
+    CRITERIOS = [
+        ('prioridad', 'Prioridad'),
+        ('cercania', 'Cercania'),
+        ('a..z', 'A..Z'),
+        ('z..a', 'Z..A')
+    ]
+
     __tablename__ = "configurations" 
     id = Column(Integer, primary_key=True)
-    cant_filas = Column(Integer())
-    order = Column(Integer())
-    private_bg_color = Column(String(10))
-    private_accent_color = Column(String(10))
-    private_letters_color = Column(String(10))
-    public_bg_color = Column(String(10))
-    public_accent_color = Column(String(10))
-    public_letters_color = Column(String(10))
+    cant_filas = Column(Integer(), default=10)
+    order = Column(ChoiceType(CRITERIOS), default='a..z')
+    private_bg_color = Column(String(10), default='#81AE9D')
+    private_accent_color = Column(String(10), default='#21A179')
+    private_letters_color = Column(String(10), default='#1E1E24')
+    public_bg_color = Column(String(10), default='#81AE9D')
+    public_accent_color = Column(String(10), default='#21A179')
+    public_letters_color = Column(String(10), default='#1E1E24')
     
     def __init__(self, data):
         self.cant_filas = data["cant_filas"]

@@ -1,14 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
 @import url('https://fonts.googleapis.com/css?family=Catamaran:400,800');
 
-:root {
-  --primary-bg-color: {{configurations.bg_color}}; 
-  --primary-color: #1E1E24; 
-}
-
 body {
-  background-color: var(--primary-bg-color);
-  color: var(--primary-color);
+  color: #1E1E24;
   font-family: 'Montserrat', Helvetica, sans-serif;
   font-size: 14px;
 }

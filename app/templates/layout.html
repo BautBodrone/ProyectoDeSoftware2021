@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <style>
+      body{
+        background-color: {{ bg_color }};
+      }
+    </style>
     {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
     <title>{% block title %}{% endblock %}</title>
     {% endblock %}
-    
   </head>
   <body>
     <div id="navbar">

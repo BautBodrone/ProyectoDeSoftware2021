@@ -33,32 +33,17 @@ class User(db.Model):
 
     @classmethod  
     def check_permiso(self, permiso):
-        if(self.users_r() is None):
-            print('testing no tiene nada')
-        else:
-            for rol in self.user_r():
-                if (rol.check_permiso(permiso)):
-                    return True
-            return False
+        for rol in self.user_r():
+            if (rol.check_permiso(permiso)):
+                return True
+        return False
 
     @classmethod
     def check_rol(self,rol):
-        if self.user_r() is None:
-            print('testing')
-            return True
-        else:
-            for rol_s in self.user_r():
-                if rol_s == rol:
-                    return True
-            return False
-
-    @classmethod
-    def add_rol(cls,rol):
-        if check_rol(rol):
-            return False
-        else:
-            #add rol
-            return True
+        for rol_s in self.user_r():
+            if rol_s == rol:
+                return True
+        return False
 
     def delete(self):
         db.session.delete(self)
@@ -72,6 +57,12 @@ class User(db.Model):
     def search_user(id):
         return db.session.query(User).get(id)
 
+    def search_user_email(email):
+        return db.session.query(User).filter_by(email=email).first()
+
+    def is_activo(self):
+        return self.activo
+
     def edit(self,data):
         if self.first_name != data["first_name"]:
             self.first_name = data["first_name"]
@@ -81,5 +72,11 @@ class User(db.Model):
             self.password = data["password"]
         if self.email != data["email"]:
             self.email = data["email"]
+        print(data["estado"])
+        if data["estado"] == "True":
+            aux = True
+        else:
+            aux = False
+        if self.activo != aux:
+            self.activo = aux
         db.session.commit()
-    

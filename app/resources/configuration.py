@@ -15,5 +15,5 @@ def save():
         abort(401)
     
     configurations = Configuration.query.first()
-    configurations.update(**request.form)
+    configurations.update(request.form)
     return redirect(url_for("home"))

@@ -3,7 +3,14 @@
   <head>
     <style>
       body{
-        background-color: {{ bg_color }};
+        background-color: {{ configurations.get_private_bg_color() }};
+        color: {{ configurations.get_private_letters_color() }};
+      }
+      a.link{
+        background-color: {{ configurations.get_private_accent_color() }};
+      }
+      #container{
+        background-color: {{ configurations.get_private_accent_color() }};
       }
     </style>
     {% block head %}

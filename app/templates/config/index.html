@@ -22,10 +22,22 @@
         </select>
     </p>
     <p>
-      <label for="private_bg_color" class="dropbtn">paleta aplicación privada</label>
+      <label for="private_bg_color" class="dropbtn">paleta aplicación privada: Fondo</label>
       <input type="color" id="private_bg_color" name="private_bg_color" value="{{ configurations.private_bg_color }}" />
+      <label for="private_bg_color" class="dropbtn"> acentos:</label>
+      <input type="color" id="private_accent_color" name="private_accent_color" value="{{ configurations.private_accent_color }}" />
+      <label for="private_bg_color" class="dropbtn"> letras:</label>
+      <input type="color" id="private_leters_color" name="private_letters_color" value="{{ configurations.private_letters_color }}" />
     </p>
-    <input type="submit" value="Crear">
+    <p>
+      <label for="public_bg_color" class="dropbtn">paleta aplicación pública: Fondo</label>
+      <input type="color" id="public_bg_color" name="public_bg_color" value="{{ configurations.public_bg_color }}" />
+      <label for="public_bg_color" class="dropbtn"> acentos:</label>
+      <input type="color" id="public_accent_color" name="public_accent_color" value="{{ configurations.public_accent_color }}" />
+      <label for="public_bg_color" class="dropbtn"> letras:</label>
+      <input type="color" id="public_leters_color" name="public_letters_color" value="{{ configurations.public_letters_color }}" />
+    </p>
+    <input type="submit" value="Guardar">
     <button type="reset">Limpiar</button>
     <br>
   </form>    

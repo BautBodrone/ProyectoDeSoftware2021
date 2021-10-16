@@ -55,7 +55,7 @@ def create_app(environment="production"):
     @app.route("/")
     def home():
         configurations = Configuration.query.first()
-        app.jinja_env.globals.update(bg_color=configurations.get_bg_color())
+        app.jinja_env.globals.update(configurations=configurations)
         return render_template("home.html")
 
     # Rutas de API-REST (usando Blueprints)

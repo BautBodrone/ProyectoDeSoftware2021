@@ -1,6 +1,7 @@
 from flask import redirect, render_template, request, url_for
 
 from app.models.issue import Issue
+#from app.models.rol import Rol
 
 # Public resources
 def index():

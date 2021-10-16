@@ -74,7 +74,7 @@ CREATE TABLE `issues` (
 
 LOCK TABLES `issues` WRITE;
 /*!40000 ALTER TABLE `issues` DISABLE KEYS */;
-INSERT INTO `issues` VALUES (1,'fede@mail.com','No puedo iniciar sesión correctamente',1,1),(2,'jose@mail.com','El sistema de dice que hay un error',1,2),(4,'maria@mail.com','No tengo acceso al sistema',1,1);
+INSERT INTO `issues` VALUES (1,'fede@mail.com','No puedo iniciar sesiÃ³n correctamente',1,1),(2,'jose@mail.com','El sistema de dice que hay un error',1,2),(4,'maria@mail.com','No tengo acceso al sistema',1,1);
 /*!40000 ALTER TABLE `issues` ENABLE KEYS */;
 UNLOCK TABLES;
 

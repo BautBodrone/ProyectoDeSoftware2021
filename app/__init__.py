@@ -5,13 +5,14 @@ from flask_session import Session
 
 from config import config
 from app import db
-from app.resources import issue, user, auth
+from app.resources import issue, user, auth, punto, rol #, permiso
 from app.resources.api.issue import issue_api
 from app.helpers import handler
 from app.helpers import auth as helper_auth
 
 
 def create_app(environment="production"):
+
     # Configuración inicial de la app
     app = Flask(__name__)
 
@@ -45,6 +46,22 @@ def create_app(environment="production"):
     app.add_url_rule("/usuarios", "user_index", user.index)
     app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
     app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
+    app.add_url_rule("/usuarios/delete", "user_delete", user.delete, methods=["POST"])
+    app.add_url_rule("/usuarios/edit/<user_id>","user_edit",user.edit)
+    app.add_url_rule("/usuarios/edit","user_edit_finish",user.edit_finish, methods=["POST"])
+
+    # Ruta de Puntos
+    app.add_url_rule("/puntos", "punto_index", punto.index)
+    app.add_url_rule("/puntos", "punto_create", punto.create, methods=["POST"])
+    app.add_url_rule("/puntos/nuevo", "punto_new", punto.new)
+    app.add_url_rule("/puntos/delete","punto_delete",punto.delete, methods=["POST"])
+    app.add_url_rule("/puntos/edit/<punto_id>","punto_edit",punto.edit)
+    app.add_url_rule("/puntos/edit","punto_edit_finish",punto.edit_finish, methods=["POST"])
+
+    # Ruta de Roles
+    app.add_url_rule("/roles", "rol_index", rol.index)
+
+    app.add_url_rule("/user_roles", "rol_index", rol.index)
 
     # Ruta para el Home (usando decorator)
     @app.route("/")

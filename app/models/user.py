@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.orm import relationship
 from app.db import db
 
@@ -12,7 +12,8 @@ class User(db.Model):
     last_name = Column(String(30))
     email = Column(String(30),unique=True)
     password = Column(String(30))
-    rols = relationship("Rol",secondary = "users_rols") 
+    rols = relationship("Rol",secondary = "users_rols")
+    activo = Column(Boolean)
     
 
     def __init__(self, first_name=None, last_name=None, email=None, password=None):
@@ -20,6 +21,7 @@ class User(db.Model):
         self.last_name = last_name
         self.email = email
         self.password = password
+        self.activo = True
 
     @classmethod
     def get_email(self):
@@ -30,7 +32,7 @@ class User(db.Model):
         return self.query.filter(User.email==params["email"] and User.password==params["password"]).first()
 
     @classmethod  
-    def check_permiso(self, cls, permiso):
+    def check_permiso(self, permiso):
         if(self.users_r() is None):
             print('testing no tiene nada')
         else:
@@ -40,7 +42,7 @@ class User(db.Model):
             return False
 
     @classmethod
-    def check_rol(cls,rol):
+    def check_rol(self,rol):
         if self.user_r() is None:
             print('testing')
             return True

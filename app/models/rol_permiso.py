@@ -12,9 +12,9 @@ class Rol_permiso(db.Model):
     permiso = relationship("Permiso", backref=backref("rols_permisos", cascade="all,delete-orphan"))
     rol = relationship("Rol", backref=backref("rols_permisos", cascade="all,delete-orphan"))
 
-    def __init__(self, permiso, rol):
-        self.permiso_id = permiso
-        self.rol_id = rol
+    def __init__(self, permiso_id, rol_id):
+        self.permiso_id = permiso_id
+        self.rol_id = rol_id
         db.session.commit()
 
     def add(permiso_id, rol_id):

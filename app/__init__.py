@@ -61,8 +61,6 @@ def create_app(environment="production"):
     # Ruta de Roles
     app.add_url_rule("/roles", "rol_index", rol.index)
 
-    app.add_url_rule("/user_roles", "rol_index", rol.index)
-
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():

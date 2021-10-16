@@ -13,7 +13,6 @@ class User(db.Model):
     email = Column(String(30),unique=True)
     password = Column(String(30))
     rols = relationship("Rol",secondary = "users_rols")
-    activo = Column(Boolean)
     
 
     def __init__(self, first_name=None, last_name=None, email=None, password=None):
@@ -21,7 +20,6 @@ class User(db.Model):
         self.last_name = last_name
         self.email = email
         self.password = password
-        self.activo = True
 
     @classmethod
     def get_email(self):
@@ -31,15 +29,15 @@ class User(db.Model):
     def authenticate_user(self, params):
         return self.query.filter(User.email==params["email"] and User.password==params["password"]).first()
 
-    @classmethod  
-    def check_permiso(self, permiso):
-        if(self.users_r() is None):
-            print('testing no tiene nada')
-        else:
-            for rol in self.user_r():
-                if (rol.check_permiso(permiso)):
+    @classmethod
+    def check_permiso(self, email, permiso):
+        user = db.session.query(User).filter_by(email=email).first()
+        for rol in user.rols:
+            permisos = rol.permisos
+            for unPermiso in permisos:
+                if (unPermiso.nombre == permiso):
                     return True
-            return False
+        return False 
 
     @classmethod
     def check_rol(self,rol):
@@ -82,4 +80,8 @@ class User(db.Model):
         if self.email != data["email"]:
             self.email = data["email"]
         db.session.commit()
+
+    def search_email(unEmail):
+
+        return db.session.query(User).filter_by(email=unEmail).first()
     

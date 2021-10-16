@@ -7,13 +7,17 @@
   <h1>usuarios</h1>
   {% for user in users %}
   <li>{{ user.email }} - {{ user.first_name }} - {{ user.last_name }} - {{ user.password }}</li>
+  {% if permissions(is_authenticated(session)).check_permiso(is_authenticated(session),'user_delete') %}
   <form action="{{ url_for('user_delete') }}" method="POST" enctype="multipart/form-data">
     <input type="hidden" id="user_id" name="user_id" value="{{user.id}}">
     <button type="submit" class="btn btn-danger mt-2 ml-2" >eliminar</button>
   </form>
+  {% endif %}
+  {% if permissions(is_authenticated(session)).check_permiso(is_authenticated(session),'user_edit') %}
   <form action="{{ url_for('user_edit', user_id = user.id ) }}"  >
     <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
   </form>
+  {% endif %}
   {% endfor %}
   <a href="{{ url_for('home') }}" class="link">Volver</a>
   <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>

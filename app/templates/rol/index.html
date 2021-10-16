@@ -6,7 +6,7 @@
 {% block content %}
   <h1>Rols</h1>
   {% for rol in rols %}
-    <li>{{ rol.nombre }} {{rol.permisos}}</li>
+    <li>{{ rol.nombre }} {% for permiso in rol.permisos %} {{ permiso.nombre }}, {% endfor %}</li>
   {% endfor %}
   <a href="{{ url_for('home') }}" class="link">Volver</a>
 {% endblock %}

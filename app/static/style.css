@@ -20,9 +20,25 @@ body {
   overflow: hidden;
 }
 
+#div {
+  display: flex;
+  justify-content: space-between;
+}
+
+#header {
+  font-size: 36px;
+  width: 75%;
+  height : 40px;
+  margin-top : 20px;
+  text-align: center;
+}
+
 #footer {
   width: 75%;
-  margin: 0 auto;
+  position : absolute;
+  bottom : 0;
+  height : 40px;
+  margin-top : 40px;
   text-align: center;
 }
 
@@ -34,6 +50,10 @@ body {
   border: solid 1px black;
   margin-top: 20px;
   min-height: 400px;
+}
+
+h1 {
+  display:inline-block;margin-right:10px;
 }
 
 a.link {

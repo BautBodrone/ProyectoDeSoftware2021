@@ -7,7 +7,7 @@ from config import config
 from app import db
 from app.resources import issue, user, auth, punto, rol #, permiso
 from app.resources.api.issue import issue_api
-from app.helpers import handler
+from app.helpers import handler, permissions
 from app.helpers import auth as helper_auth
 
 
@@ -29,6 +29,7 @@ def create_app(environment="production"):
 
     # Funciones que se exportan al contexto de Jinja2
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
+    app.jinja_env.globals.update(permissions=permissions.permissions)
 
     # Autenticación
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)

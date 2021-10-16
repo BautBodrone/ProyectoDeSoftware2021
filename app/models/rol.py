@@ -30,5 +30,4 @@ class Rol(db.Model):
         db.session.add(new_rol)
         db.session.commit()
 
-    def permisos(self):
-        return [permiso.name for permiso in self.permisos]
+   

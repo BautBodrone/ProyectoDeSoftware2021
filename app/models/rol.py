@@ -1,25 +1,22 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from app.db import db
-from app.models.user import User
 
-user_rol = db.Table('tags',
-    db.Column('rols', db.Integer, db.ForeignKey('rols.id'), primary_key=False),
-    db.Column('users', db.Integer, db.ForeignKey('usersS.id'), primary_key=False)
-)
+from app.models import permiso, user
 
 class Rol(db.Model):
 
     __tablename__ = 'rols'
     id = Column(Integer,primary_key=True)
     nombre = Column(String(30))
-    users = relationship(User,secondary = user_rol, backref = db.backref('users_r',lazy = 'dynamic'))
-    
+    users = relationship("User",secondary = "users_rols")
+    permisos = relationship("Permiso",secondary = "rols_permisos")
+
     def __init__(self,nombre = None):
         self.nombre = nombre
 
     @classmethod 
-    def check_permiso(cls, permiso):
+    def check_permiso(cls, self, permiso):
         if(self.rols_p() is None):
             print('testing no tiene nada')
         else:

@@ -68,3 +68,5 @@ def edit_finish():
     flash("Se edito con exito", "success")
 
     return redirect(url_for("punto_index"))
+
+    return redirect(url_for("confuguration_url"))

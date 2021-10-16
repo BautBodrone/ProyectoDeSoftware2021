@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}Rols{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <h1>Rols</h1>
+  {% for rol in rols %}
+    <li>{{ rol.nombre }}</li>
+  {% endfor %}
+  <a href="{{ url_for('home') }}" class="link">Volver</a>
+{% endblock %}

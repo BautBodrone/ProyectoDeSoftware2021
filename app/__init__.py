@@ -5,7 +5,7 @@ from flask_session import Session
 
 from config import config
 from app import db
-from app.resources import issue, user, auth, punto #, permiso, rol
+from app.resources import issue, user, auth, punto, rol #, permiso
 from app.resources.api.issue import issue_api
 from app.helpers import handler
 from app.helpers import auth as helper_auth
@@ -58,6 +58,10 @@ def create_app(environment="production"):
     app.add_url_rule("/puntos/edit/<punto_id>","punto_edit",punto.edit)
     app.add_url_rule("/puntos/edit","punto_edit_finish",punto.edit_finish, methods=["POST"])
 
+    # Ruta de Roles
+    app.add_url_rule("/roles", "rol_index", rol.index)
+
+    app.add_url_rule("/user_roles", "rol_index", rol.index)
 
     # Ruta para el Home (usando decorator)
     @app.route("/")

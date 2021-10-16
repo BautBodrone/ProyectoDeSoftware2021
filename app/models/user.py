@@ -2,6 +2,8 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from app.db import db
 
+from app.models import user_rol,rol
+
 class User(db.Model):
     
     __tablename__ = "users" 
@@ -10,6 +12,7 @@ class User(db.Model):
     last_name = Column(String(30))
     email = Column(String(30),unique=True)
     password = Column(String(30))
+    rols = relationship("Rol",secondary = "users_rols") 
     
 
     def __init__(self, first_name=None, last_name=None, email=None, password=None):
@@ -19,7 +22,7 @@ class User(db.Model):
         self.password = password
 
     @classmethod
-    def get_amail(self):
+    def get_email(self):
         return self.email
     
     @classmethod
@@ -27,7 +30,7 @@ class User(db.Model):
         return self.query.filter(User.email==params["email"] and User.password==params["password"]).first()
 
     @classmethod  
-    def check_permiso(cls, permiso):
+    def check_permiso(self, cls, permiso):
         if(self.users_r() is None):
             print('testing no tiene nada')
         else:

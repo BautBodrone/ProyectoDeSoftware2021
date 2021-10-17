@@ -32,6 +32,7 @@ body {
 
 #container {
   width: 75%;
+  height: 90%;
   margin: 0 auto;
   padding: 20px 40px;
   border: solid 1px black;

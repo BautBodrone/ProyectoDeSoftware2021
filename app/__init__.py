@@ -7,7 +7,7 @@ from config import config
 from app import db
 from app.resources import issue, user, auth, punto, rol , configuration
 from app.resources.api.issue import issue_api
-from app.helpers import handler, user_helper, settings
+from app.helpers import handler, user_helper, configurator
 from app.helpers import auth as helper_auth
 
 
@@ -32,7 +32,7 @@ def create_app(environment="production"):
     app.jinja_env.globals.update(my_user=user_helper.user)
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
     app.jinja_env.globals.update(is_admin=user_helper.is_admin)
-    app.jinja_env.globals.update(configurations=settings.settings)
+    app.jinja_env.globals.update(settings=configurator.private_bg_color())
 
     # Autenticación
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)

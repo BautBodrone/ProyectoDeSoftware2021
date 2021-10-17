@@ -52,8 +52,8 @@ class Configuration(db.Model):
             self.public_letters_color = data["public_letters_color"]
         db.session.commit()
 
-    def get_private_bg_color(self):
-        return self.private_bg_color
+    def get_private_bg_color():
+        return db.session.query(Configuration).filter_by(id=1).first().private_bg_color
     
     def get_private_accent_color(self):
         return self.private_accent_color
@@ -69,3 +69,6 @@ class Configuration(db.Model):
 
     def get_public_letters_color(self):
         return self.public_letters_color
+
+    def get_config():
+       return db.session.query(Configuration).filter_by(id=1).first()

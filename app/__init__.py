@@ -5,11 +5,11 @@ from flask_session import Session
 
 from config import config
 from app import db
-from app.resources import issue, user, auth, punto, rol #, permiso
+from app.resources import issue, user, auth, punto, rol #configuration
 from app.resources.api.issue import issue_api
-from app.helpers import handler
+from app.helpers import handler, user_helper
 from app.helpers import auth as helper_auth
-from app.helpers import user_helper
+#from app.models.configuration import Configuration
 
 
 def create_app(environment="production"):
@@ -29,7 +29,9 @@ def create_app(environment="production"):
     db.init_app(app)
 
     # Funciones que se exportan al contexto de Jinja2
-    app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated, is_admin=user_helper.is_admin)
+    app.jinja_env.globals.update(my_user=user_helper.user)
+    app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
+    app.jinja_env.globals.update(is_admin=user_helper.is_admin)
 
     # Autenticación
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
@@ -51,21 +53,14 @@ def create_app(environment="production"):
     app.add_url_rule("/usuarios/edit/<user_id>","user_edit",user.edit)
     app.add_url_rule("/usuarios/edit","user_edit_finish",user.edit_finish, methods=["POST"])
 
-    # Ruta de Puntos
-    app.add_url_rule("/puntos", "punto_index", punto.index)
-    app.add_url_rule("/puntos", "punto_create", punto.create, methods=["POST"])
-    app.add_url_rule("/puntos/nuevo", "punto_new", punto.new)
-    app.add_url_rule("/puntos/delete","punto_delete",punto.delete, methods=["POST"])
-    app.add_url_rule("/puntos/edit/<punto_id>","punto_edit",punto.edit)
-    app.add_url_rule("/puntos/edit","punto_edit_finish",punto.edit_finish, methods=["POST"])
-
-    # Ruta de Roles
+ # Ruta de Roles
     app.add_url_rule("/roles", "rol_index", rol.index)
+
 
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
-        return render_template("home.html")
+       return render_template("home.html")
 
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")

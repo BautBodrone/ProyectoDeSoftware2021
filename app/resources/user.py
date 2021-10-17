@@ -11,6 +11,7 @@ def index():
         abort(401)
 
     users = User.query.all()
+    
 
     return render_template("user/index.html", users=users)
 
@@ -81,3 +82,10 @@ def add_rols():
     flash("Insercion exitosa", "success")
 
     return redirect(request.referrer)
+
+#'Este seria un filtro muy parecido al de puntos de encuentro'
+def filtro():
+    if not authenticated(session):
+        abort(401)
+    
+    return "Hello world"

@@ -9,7 +9,7 @@ from app.resources import issue, user, auth, punto, rol , configuration
 from app.resources.api.issue import issue_api
 from app.helpers import handler, user_helper, configurator
 from app.helpers import auth as helper_auth
-
+from app.models.configuration import Configuration
 
 
 def create_app(environment="production"):
@@ -74,6 +74,8 @@ def create_app(environment="production"):
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
+        configurations = Configuration.query.first()
+        app.jinja_env.globals.update(configurations=configurations)
         return render_template("home.html")
 
     # Rutas de API-REST (usando Blueprints)

@@ -13,6 +13,7 @@ class User(db.Model):
     email = Column(String(30),unique=True)
     password = Column(String(30))
     rols = relationship("Rol",secondary = "users_rols")
+    activo = Column(Boolean)
     
 
     def __init__(self, first_name=None, last_name=None, email=None, password=None):
@@ -20,6 +21,7 @@ class User(db.Model):
         self.last_name = last_name
         self.email = email
         self.password = password
+        self.activo = True
 
     @classmethod
     def get_email(self):

@@ -87,9 +87,26 @@ a.link {
 }
 
 .content {
-	width: 70%;
-	text-align: center;
-	padding-left: 4%;
+  margin: 0 auto;
+  width: 400px;
+}
+
+table, td, th {
+  border: 1px solid rgb(0, 0, 0);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  height: 30px;
+}
+
+td {
+  text-align: center;
+  padding: 5px;
 }
 table {
   font-family: arial, sans-serif;
@@ -107,3 +124,7 @@ tr:nth-child(even) {
   background-color: #dddddd;
 
 }
+.form {
+  margin-top: 20px;
+}
+

@@ -3,27 +3,65 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="header">Usuarios</h1>
-  </div>
-{% endblock %}
 {% block content %}
+
+
+<h1>Usuarios</h1>
+
+<form action="{{ url_for('user_filtro') }}" method="POST">
+  <h3>Filtrar</h3> 
+      <input name="first_name" placeholder="Nombre"/>
+      <select  name="activo">
+        <option value="" selected>Seleccione un estado</option>
+        <option value="1">Activo</option>
+        <option value="0">Bloqueado</option>
+      </select>
+      <input type="submit" value="Filtrar">
+    </form>
+    <br>
+    <br>
+  <table>
+    <tr>
+        <th>  Email  </th>
+        <th>  Nombre  </th>
+        <th>  Apellido  </th>
+        <th>  Contraseña  </th>
+        <th>  Roles  </th>
+        <th>  Estado  </th>
+        <th>  Actions  </th>
+    </tr>
   {% for user in users %}
-  <li>{{ user.email }} - {{ user.first_name }} - {{ user.last_name }} - {{ user.password }}</li>
-  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_delete') %}
-  <form action="{{ url_for('user_delete') }}" method="POST" enctype="multipart/form-data">
-    <input type="hidden" id="user_id" name="user_id" value="{{user.id}}">
-    <button type="submit" class="btn btn-danger mt-2 ml-2" >eliminar</button>
-  </form>
-  {% endif %}
-  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_edit') %}
-  <form action="{{ url_for('user_edit', user_id = user.id ) }}"  >
-    <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
-  </form>
-  {% endif %}
-  {% endfor %}
+    <tr>
+      <td>{{ user.email }}</td>
+      <td>{{ user.first_name }} </td>
+      <td>{{ user.last_name }} </td>
+      <td>{{ user.password }}</td>
+      <td>
+        {% for rol in user.rols %}
+          {{ rol.nombre }} 
+          <br>
+        {% endfor %}
+      <td>
+        {% if user.activo==True %}
+          Activo
+        {% else %}
+          Bloqueado
+        {% endif %}
+      </td>
+      <td>
+        <form action="{{ url_for('user_edit', user_id = user.id ) }}"  >
+          <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
+        </form>
+        <br>
+        <form action="{{ url_for('user_delete') }}" method="POST" enctype="multipart/form-data">
+          <input type="hidden" id="user_id" name="user_id" value="{{user.id}}">
+          <button type="submit" class="btn btn-danger mt-2 ml-2" >eliminar</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
   <a href="{{ url_for('home') }}" class="link">Volver</a>
   <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>
 {% endblock %}

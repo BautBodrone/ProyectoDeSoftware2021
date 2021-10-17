@@ -86,4 +86,9 @@ class User(db.Model):
 
         return db.session.query(User).filter_by(email=unEmail).first()
     
-
+    def get_permisos(self):
+        permisos = []
+        for rol in self.rols:
+            for permiso in rol.permisos:
+                permisos.append(permiso)
+        return permisos

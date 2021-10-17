@@ -35,16 +35,14 @@ class User(db.Model):
     def check_permiso(self, email, permiso):
         user = db.session.query(User).filter_by(email=email).first()
         for rol in user.rols:
-            for un_permiso in rol.permisos:
-                if (un_permiso.nombre == permiso):
-                    return True
-        return False 
+            if rol.check_permiso(permiso):
+                return True
+        return False
 
     @classmethod
     def check_rol(self, email, rol):
         user = db.session.query(User).filter_by(email=email).first()
         for un_rol in user.rols:
-            rol = un_rol.nombre
             if (un_rol.nombre == rol):
                 return True
         return False 

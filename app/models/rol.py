@@ -15,10 +15,9 @@ class Rol(db.Model):
     def __init__(self,nombre = None):
         self.nombre = nombre
 
-    @classmethod 
-    def check_permiso(self, rol, permiso):
-        for un_permiso in rols.permisos:
-            if (unPermiso.nombre == permiso):
+    def check_permiso(self, permiso):
+        for un_permiso in self.permisos:
+            if (un_permiso.nombre == permiso):
                 return True
         return False 
 
@@ -26,9 +25,5 @@ class Rol(db.Model):
     def save(self,new_rol):
         db.session.add(new_rol)
         db.session.commit()
-
-    def permisos(self):
-        return [permiso.name for permiso in self.permisos]
-
 
    

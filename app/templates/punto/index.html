@@ -3,8 +3,13 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header">Puntos</h1>
+  </div>
+{% endblock %}
 {% block content %}
-  <h1>Puntos</h1>
   {% for punto in puntos %}
     <li>{{ punto.nombre }} - {{ punto.direccion }}</li>
     {% if permissions(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_delete') %}

@@ -5,7 +5,7 @@
 {% endblock %}
 {% block header %}
   <div>
-    <a href="{{ url_for('home') }}"><img src="/static/images/logo.png" alt="logo" width="100" height="100"></a>
+    {{ super() }}
     <h1 id="header">Inicio</h1>
   </div>
 {% endblock %}
@@ -14,6 +14,7 @@
   <a href="{{ url_for('punto_index') }}" class="link">Ver puntos</a>
   <a href="{{ url_for('issue_index') }}" class="link">Problemas</a>
   {% if is_authenticated(session) %}
+    <a href="{{ url_for('configuration_index') }}" class="link">Configuracion</a>
     {% if permissions(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}
       <a href="{{ url_for('rol_index') }}" class="link">Roles</a>
       <a href="{{ url_for('user_index') }}" class="link">Usuarios</a>

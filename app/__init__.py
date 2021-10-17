@@ -5,10 +5,11 @@ from flask_session import Session
 
 from config import config
 from app import db
-from app.resources import issue, user, auth, punto, rol #, permiso
+from app.resources import issue, user, auth, punto, rol , configuration
 from app.resources.api.issue import issue_api
 from app.helpers import handler, permissions
 from app.helpers import auth as helper_auth
+from app.models.configuration import Configuration
 
 
 def create_app(environment="production"):
@@ -62,9 +63,15 @@ def create_app(environment="production"):
     # Ruta de Roles
     app.add_url_rule("/roles", "rol_index", rol.index)
 
+    # Rutas de Usuarios
+    app.add_url_rule("/configuracion", "configuration_index", configuration.index)
+    app.add_url_rule("/configuracion", "configuration_update", configuration.save, methods=["POST"])
+
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
+        configurations = Configuration.query.first()
+        app.jinja_env.globals.update(configurations=configurations)
         return render_template("home.html")
 
     # Rutas de API-REST (usando Blueprints)
@@ -76,7 +83,7 @@ def create_app(environment="production"):
     # Handlers
     app.register_error_handler(404, handler.not_found_error)
     app.register_error_handler(401, handler.unauthorized_error)
-    # Implementar lo mismo para el error 500
+    app.register_error_handler(500, handler.server_error)
 
     # Retornar la instancia de app configurada
     return app

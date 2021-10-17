@@ -3,8 +3,13 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header">Roles</h1>
+  </div>
+{% endblock %}
 {% block content %}
-  <h1>Rols</h1>
   {% for rol in rols %}
     <li>{{ rol.nombre }} {% for permiso in rol.permisos %} {{ permiso.nombre }}, {% endfor %}</li>
   {% endfor %}

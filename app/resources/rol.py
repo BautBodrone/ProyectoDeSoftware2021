@@ -3,6 +3,7 @@ from flask import flash, redirect, render_template, request, url_for, session, a
 from app.models.rol import Rol
 from app.helpers.auth import authenticated
 
+'El metodo mostrara todos los roles con sus permisos'
 def index():
     rols = Rol.query.all()
 

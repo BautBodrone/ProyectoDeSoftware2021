@@ -55,7 +55,7 @@ def create_app(environment="production"):
     app.add_url_rule("/usuarios/delete", "user_delete", user.delete, methods=["POST"])
     app.add_url_rule("/usuarios/edit/<user_id>","user_edit",user.edit)
     app.add_url_rule("/usuarios/edit","user_edit_finish",user.edit_finish, methods=["POST"])
-    app.add_url_rule("/usuarios/filtro","user_filtro",user.filtro,methods=["POST"])
+    app.add_url_rule("/usuarios/filtro","user_filtro",user.filtro, methods=["POST"] )
 
     # Ruta de Puntos
     app.add_url_rule("/puntos", "punto_index", punto.index)

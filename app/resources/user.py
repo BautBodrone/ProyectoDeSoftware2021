@@ -80,3 +80,19 @@ def add_rols():
     flash("Insercion exitosa", "success")
 
     return redirect(request.referrer)
+
+def filtro():
+    data = request.form
+    activo = data["activo"]
+    first_name = data["first_name"]
+    if (activo != "" and first_name!= ""):
+      users=User.query.filter_by(activo=activo,first_name=first_name)
+    else:
+        if (activo == "" and first_name != ""):
+            users=User.query.filter_by(first_name=first_name)
+        else:
+            if(activo !="" and first_name==""):
+                users=User.query.filter_by(activo=activo)
+            else:
+                 users=User.query.all()
+    return render_template("user/index.html", users=users )

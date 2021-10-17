@@ -11,15 +11,17 @@
 {% endblock %}
 {% block content %}
   <p>Página de inicio de la aplicación</p>
-  <a href="{{ url_for('punto_index') }}" class="link">Ver puntos</a>
   <a href="{{ url_for('issue_index') }}" class="link">Problemas</a>
+  <a href="{{ url_for('puntos_index') }}" class="link">Puntos de Encuentro</a>
   {% if is_authenticated(session) %}
+
     <a href="{{ url_for('configuration_index') }}" class="link">Configuracion</a>
     {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}
       <a href="{{ url_for('rol_index') }}" class="link">Roles</a>
       <a href="{{ url_for('user_index') }}" class="link">Usuarios</a>
       <a href="{{ url_for('auth_logout') }}" class="link">Cerrar sesión</a>
       {% endif %}
+
   {% else %}
     <a href="{{ url_for('auth_login') }}" class="link">Iniciar sesión</a>
   {% endif %}

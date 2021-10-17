@@ -24,10 +24,11 @@ class Puntos(db.Model):
         self.direccion = direccion
 
     def search_punto(id):
+        """
+            Retorna punto que tenga el mismo id que el que se paso por parametro
+        """
         return db.session.query(Puntos).get(id)
     
-   
-
     @classmethod
     def save(self, new_punto):
         db.session.add(new_punto)
@@ -38,6 +39,9 @@ class Puntos(db.Model):
         db.session.commit()
 
     def update(self, punto):
+        """
+            Actualiza el punto con los valores pasados por parametro
+        """
         self.nombre = punto["nombre"]
         self.direccion = punto["direccion"]
         self.coordenadas = punto["coordenadas"]
@@ -47,6 +51,9 @@ class Puntos(db.Model):
         db.session.commit()
 
     def to_dict(self):
+        """
+            Transforma los atributos del objeto en un diccionario
+        """
         return {
             'nombre': self.nombre,
             'direccion': self.direccion,

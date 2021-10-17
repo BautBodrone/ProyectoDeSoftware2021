@@ -34,6 +34,9 @@ class Configuration(db.Model):
         self.public_letters_color = data["public_letters_color"]
     
     def update(self, data):
+        """
+            Actualiza los valores si son distintos a los pasados por parametro
+        """
         if (data["rows_per_page"] != '' and data["rows_per_page"] != self.rows_per_page):
             self.rows_per_page = data["rows_per_page"]
         if (data["order"] != self.order):
@@ -53,25 +56,46 @@ class Configuration(db.Model):
         db.session.commit()
 
     def get_private_bg_color(self):
+        """
+            Retorna el valor de private_bg_color
+        """
         return self.private_bg_color
     
     def get_private_accent_color(self):
+        """
+            Retorna el valor de private_accent_color
+        """
         return self.private_accent_color
 
     def get_private_letters_color(self):
+        """
+            Retorna el valor de private_letter_color
+        """
         return self.private_letters_color
 
     def get_public_bg_color(self):
+        """
+            Retorna el valor de publi_bg_color
+        """
         return self.public_bg_color
 
     def get_public_accent_color(self):
+        """
+            Retorna el valor de public_accent_color
+        """
         return self.public_accent_color
 
     def get_public_letters_color(self):
+        """
+            Retorna el valor de public_letters_color
+        """
         return self.public_letters_color
 
     def get_rows_per_page(self):
         return self.rows_per_page
 
     def get_config():
+       """
+            Retorna el primero objeto configurations
+       """
        return db.session.query(Configuration).first()

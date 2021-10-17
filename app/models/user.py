@@ -25,14 +25,24 @@ class User(db.Model):
 
     @classmethod
     def get_email(self):
+        """
+            Retorno email del user
+        """
         return self.email
     
     @classmethod
     def authenticate_user(self, params):
+        """
+            Revisa en la base de datos para saber si se ingreso correctamente el email y la pass
+            al logear
+        """
         return self.query.filter(User.email==params["email"] and User.password==params["password"]).first()
 
     @classmethod
     def check_permiso(self, email, permiso):
+        """
+            Recive un email y un permiso y se fija si el usuario con ese email tiene ese permiso
+        """
         user = db.session.query(User).filter_by(email=email).first()
         for rol in user.rols:
             if rol.check_permiso(permiso):
@@ -41,6 +51,9 @@ class User(db.Model):
 
     @classmethod
     def check_rol(self, email, rol):
+        """
+            Recive un email y un permiso y se fija si el usuario con ese mail tiene ese rol
+        """
         user = db.session.query(User).filter_by(email=email).first()
         for un_rol in user.rols:
             if (un_rol.nombre == rol):

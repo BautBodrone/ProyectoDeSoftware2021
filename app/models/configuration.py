@@ -27,11 +27,11 @@ class Configuration(db.Model):
         self.rows_per_page = data["rows_per_page"]
         self.order = data["order"]
         self.private_bg_color = data["private_bg_color"]
-        private_accent_color = data["private_accent_color"]
-        private_letters_color = data["private_letters_color"]
-        public_bg_color = data["pubic_bg_color"]
-        public_accent_color = data["public_accent_color"]
-        public_letters_color = data["public_letters_color"]
+        self.private_accent_color = data["private_accent_color"]
+        self.private_letters_color = data["private_letters_color"]
+        self.public_bg_color = data["pubic_bg_color"]
+        self.public_accent_color = data["public_accent_color"]
+        self.public_letters_color = data["public_letters_color"]
     
     def update(self, data):
         if (data["rows_per_page"] != '' and data["rows_per_page"] != self.rows_per_page):
@@ -52,8 +52,8 @@ class Configuration(db.Model):
             self.public_letters_color = data["public_letters_color"]
         db.session.commit()
 
-    def get_private_bg_color():
-        return db.session.query(Configuration).filter_by(id=1).first().private_bg_color
+    def get_private_bg_color(self):
+        return self.private_bg_color
     
     def get_private_accent_color(self):
         return self.private_accent_color
@@ -71,4 +71,4 @@ class Configuration(db.Model):
         return self.public_letters_color
 
     def get_config():
-       return db.session.query(Configuration).filter_by(id=1).first()
+       return db.session.query(Configuration).first()

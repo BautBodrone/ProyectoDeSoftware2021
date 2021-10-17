@@ -3,8 +3,26 @@
   <head>
     <style>
       body{
-        background-color: {{ settings }};
+        background-color: {{ get_private_bg_color() }};
+        color: {{ get_private_letters_color() }};
+      }
+      a.link{
+        background-color: {{ get_private_accent_color() }};
+        color: {{ get_private_letters_color() }}
+      }
+      #container{
+        background-color: {{ get_private_accent_color() }};
+      }
+      #header{
+        background-color: {{ get_private_accent_color() }};
+        color: {{ get_private_letters_color() }}
+      }
+      .navbar{
+        background-color: {{ get_private_accent_color() }};
+        color: {{ get_private_letters_color() }}
+      }
     </style>
+
     {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
     <title>{% block title %}{% endblock %}</title>

@@ -9,9 +9,8 @@ pagConf=4
 def index():
     if not authenticated(session):
         abort(401)
-    page = request.args.get('page',1, type=int)
-    puntos = Puntos.query.paginate(page=page,per_page=pagConf)
-    return render_template("puntosDeEncuentro/index.html", puntos=puntos)
+    
+    return render_template("puntosDeEncuentro/index.html")
 
 
 def new():
@@ -32,24 +31,6 @@ def create():
 
     flash("Se creo con exito", "success")
     return redirect(url_for("puntos_index"))
-
-def filtro():
-    page = request.args.get('page',1, type=int)
-    data = request.form
-    estado = data["estado"]
-    nombre = data["nombre"]
-    if (estado != "" and nombre!= ""):
-      puntos=Puntos.query.filter_by(estado=estado,nombre=nombre).paginate(page=page,per_page=pagConf)
-    else:
-        if (estado == "" and nombre != ""):
-            puntos=Puntos.query.filter_by(nombre=nombre).paginate(page=page,per_page=pagConf)
-        else:
-            if(estado !="" and nombre==""):
-                puntos=Puntos.query.filter_by(estado=estado).paginate(page=page,per_page=pagConf)
-            else:
-                 puntos = Puntos.query.paginate(page=page,per_page=pagConf)
-    return render_template("puntosDeEncuentro/index.html", puntos=puntos)
-
 
 
 def delete(id):
@@ -77,3 +58,28 @@ def update():
         return redirect(request.referrer)
     flash("Se edito con exito", "success")
     return redirect(url_for("puntos_index"))
+
+def data():
+    query = Puntos.query
+
+    # search filter
+    search = request.args.get('search[value]')
+    if search:
+        query = query.filter(db.or_(
+            Puntos.nombre.like(f'%{search}%'),
+            Puntos.estado.like(f'%{search}%')
+        ))
+    total_filtered = query.count()
+
+    # pagination
+    start = request.args.get('start', type=int)
+    length = request.args.get('length', type=int)
+    query = query.offset(start).limit(length)
+
+    # response
+    return {
+        'data': [Puntos.to_dict() for puntos in query],
+        'recordsFiltered': total_filtered,
+        'recordsTotal': Puntos.query.count(),
+        'draw': request.args.get('draw', type=int),
+    }

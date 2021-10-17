@@ -7,73 +7,84 @@
 {% block content %}
   <h1>Puntos de encuentro</h1>
 
-  <form action="{{ url_for('puntos_filtro') }}" method="POST">
-  <h3>Filtrar</h3>  
-  <div style="margin=5px">
-      <input name="nombre" placeholder="Nombre"/>
-     <select  name="estado">
-        <option value="" selected>Seleccione un estado</option>
-        <option value="Publicado">Publicado</option>
-        <option value="Despublicado">Despublicado</option>
-     </select>
-      <input type="submit" value="Filtrar">
-   </div>
-  </form>
+<a href="{{ url_for('home') }}" class="btn btn-primary">Volver</a>
+<a href="{{ url_for('puntos_new') }}" class="btn btn-success">Nuevo punto </a>
 
-<a href="{{ url_for('home') }}" class="link">Volver</a>
-<a href="{{ url_for('puntos_new') }}" class="link">Nuevo punto de encuentro</a>
-{{nombre}}
-{{estado}}
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Nombre</th>
-      <th scope="col">Direccion</th>
-      <th scope="col">Coordenadas</th>
-      <th scope="col">Estado</th>
-      <th scope="col">Telefono</th>
-      <th scope="col">Email</th>
-      <th scope="col">Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for p in puntos.items %}
-    <tr>
-      <th scope="row">{{ p.nombre }}</th>
-      <td>{{ p.direccion }}</td>
-      <td>{{ p.coordenadas }}</td>
-      <td>{{ p.estado }}</td>
-      <td>{{ p.telefono}}</td>
-      <td>{{ p.email }}</td>
-      <td>
-        <a href="/puntosDeEncuentro/delete/{{p.id}}" class="link">Eliminar</a>
-        <a href="/puntosDeEncuentro/edit/{{p.id}}" class="link">Editar</a>
-    </td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
-  {% if puntos.has_prev %}
-   <a class="link" href="{{ url_for('puntos_index', page_num=puntos.prev_num,) }}">Anterior</a>
-   {% else %}
-    <a style=" pointer-events: none;cursor: default;" class="link" disabled href="">Anterior</a>
-  {% endif %}
-
-   {% for page_num in puntos.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-      {% if page_num%}
-        {% if puntos.page == page_num%}
-          <a href="" style=" pointer-events: none;cursor: default; background-color:pink" class="link btn btn-info mb-4">{{page_num}}</a>
-        {% else %}
-          <a href="{{ url_for('puntos_index',page=page_num)}}" class="link btn btn-outline-info mb-4">{{page_num}}</a>
-        {% endif %}
-      {% else %}
-        ...
-      {% endif %}
-   {% endfor %}
-  {% if puntos.has_next %}
-   <a class="link" href="{{ url_for('puntos_index', page=puntos.next_num) }}">Siguiente</a>
-   {% else %}
-   <a style=" pointer-events: none;cursor: default;" class="link" href="">Siguiente</a>
-  {% endif %}
+<table id="data" class="table">
   
+</table>
+   
+  {% block scripts %}
+  <script>
+  var defecto=3 //PONER LA VARIABLE DE CONFIGURACION DE PAGINAS
+      $(document).ready(function(){
+       var table = $('#data').DataTable({
+        ajax: '/api/data',
+        serverSide: true,
+        "lengthMenu": [[defecto, 2, 5, 10, 15], ["Defecto", 2, 5, 10, 15]],
+        
+        columns: [
+          {data: 'nombre', title:"Nombre", orderable: true, searchable: true},
+          {data: 'coordenadas', title:"Coordenadas"},
+          {data: 'direccion', title:"Direccion"},
+          {data: 'telefono', title:"Telefono"},
+          {data: 'estado', title:"Estado", orderable: true, searchable: true},
+          {data: 'email', title:"Email"},
+          {data:'id', title:'Id'},
+          {
+                data: null,
+                className: "dt-center editor-edit",
+                defaultContent: "<button type='button' class='editar btn btn-primary'>Editar</button>",
+                orderable: false
+            },
+            {
+                data: null,
+                className: "dt-center editor-delete",
+                defaultContent: "<button type='button' class='eliminar btn btn-danger' >Eliminar</button>",
+                orderable: false
+            }
+        ],
+        "language":espanol
+      });
+       obtener_data_editar("#data tbody",table)
+       obtener_data_delete("#data tbody",table)
+      })
+       //Update record
+      var obtener_data_editar= function(tbody,table){
+      $('#data').on('click', 'td.editor-edit', function (e) {
+        var data = table.row($(this).parents("tr")).data();
+        window.location.href='/puntosDeEncuentro/edit/'+data.id;} );
+        }
+        // Delete a record
+      var obtener_data_delete= function(tbody,table){
+      $('#data').on('click', 'td.editor-delete', function (e) {
+          var data = table.row($(this).parents("tr")).data();
+          window.location.href='/puntosDeEncuentro/delete/'+data.id;} );
+        }
+        
+     var espanol = 
+     {
+    "processing": "Procesando...",
+    "lengthMenu": "Mostrar _MENU_ registros",
+    "zeroRecords": "No se encontraron resultados",
+    "emptyTable": "Ningún dato disponible en esta tabla",
+    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+    "search": "Buscar:",
+    "infoThousands": ",",
+    "loadingRecords": "Cargando...",
+    "paginate": {
+        "first": "Primero",
+        "last": "Último",
+        "next": "Siguiente",
+        "previous": "Anterior"
+    },
+    
+    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros"
+} 
+      
+   
+    
+  </script>
+{% endblock %}
 {% endblock %}

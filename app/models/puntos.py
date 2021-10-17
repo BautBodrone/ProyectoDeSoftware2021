@@ -26,6 +26,7 @@ class Puntos(db.Model):
     def search_punto(id):
         return db.session.query(Puntos).get(id)
     
+   
 
     @classmethod
     def save(self, new_punto):
@@ -44,6 +45,17 @@ class Puntos(db.Model):
         self.telefono = punto["telefono"]
         self.email = punto["email"]
         db.session.commit()
+
+    def to_dict(self):
+        return {
+            'nombre': self.nombre,
+            'direccion': self.direccion,
+            'coordenadas': self.coordenadas,
+            'telefono': self.telefono,
+            'estado': self.estado,
+            'email': self.email,
+            'id':self.id
+        }
 
     
     

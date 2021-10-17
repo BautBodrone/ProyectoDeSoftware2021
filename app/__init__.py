@@ -1,6 +1,6 @@
 from os import path, environ
 
-from flask import Flask, render_template, g, Blueprint, abort
+from flask import Flask, render_template, g, Blueprint, abort, request
 from flask.helpers import url_for
 from werkzeug.utils import redirect
 from flask_session import Session
@@ -63,13 +63,34 @@ def create_app(environment="production"):
         puntoEliminar = Puntos.query.filter_by(id=int(id)).first()
         Puntos.delete(puntoEliminar)
         return redirect(url_for('puntos_index'))
-    #Filtrar puntos de encuentro 
-    app.add_url_rule("/puntosDeEncuentros", "puntos_filtro", puntos.filtro, methods=["POST"])
 
+    #DATA TABLE
     @app.route('/api/data')
     def data():
-        return {'data': [puntos.to_dict() for puntos in Puntos.query]}
+        puntos = Puntos.query
+        # search filter
+        search = request.args.get('search[value]')
+        if search:
+            puntos = puntos.filter(db.or_(
+                Puntos.nombre.like(f'%{search}%'),
+                Puntos.estado.like(f'{search}%'),
+            ))
+        total_filtered = puntos.count()
+        # pagination
+        start = request.args.get('start', type=int)
+        length = request.args.get('length', type=int)
+        puntos = puntos.offset(start).limit(length)
 
+        # response
+        return {
+        'data': [p.to_dict() for p in puntos],
+        'recordsFiltered': total_filtered,
+        'recordsTotal': Puntos.query.count(),
+        'draw': request.args.get('draw', type=int),
+    }
+        
+
+        
 
     # Ruta para el Home (usando decorator)
     @app.route("/")

@@ -17,6 +17,10 @@
         background-color: {{ configurations.get_private_accent_color() }};
         color: {{ configurations.get_private_letters_color() }}
       }
+      .navbar{
+        background-color: {{ configurations.get_private_accent_color() }};
+        color: {{ configurations.get_private_letters_color() }}
+      }
     </style>
     {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>

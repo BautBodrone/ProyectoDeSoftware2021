@@ -3,13 +3,13 @@
 body {
   font-family: 'Montserrat', Helvetica, sans-serif;
   font-size: 14px;
+  min-height: 100vh;
+  height: 100%;
 }
 
 .header {
-  padding: 60px;
+  padding: 20px;
   text-align: center;
-  background: #1abc9c;
-  color: white;
   font-size: 30px;
 }
 
@@ -23,6 +23,11 @@ body {
   width: 75%;
   margin: 0 auto;
   text-align: center;
+  bottom: 0;
+  clear: both;
+  position: relative;
+  height: 40px;
+  margin-top: 0px;
 }
 
 #container {
@@ -49,15 +54,13 @@ a.link {
 }
 .navbar {
   font-family: 'Montserrat', sans-serif;
-    color: rgba(146,146,146,1.00);
     float: left;
     width: 20%;
     padding-left: 3%;
     padding-right: 3%;
     text-align: center;
-    background-color: rgba(246,246,246,1.00);
     padding-top: 36px;
-    height: 784px;
+    height: 100%;
 }
 
 .navbar a {

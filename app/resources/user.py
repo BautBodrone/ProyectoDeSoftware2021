@@ -50,8 +50,7 @@ def edit(user_id):
         abort(401)
 
     user = User.search_user(user_id)
-    print(user.email)
-
+    
     return render_template("user/edit.html", user=user)
 
 def edit_finish():

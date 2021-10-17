@@ -9,7 +9,7 @@ from app.helpers.auth import authenticated
 
 from config import config
 
-from app.resources import issue, user, auth, punto, rol , configuration, puntos
+from app.resources import issue, user, auth, rol, configuration, puntos
 from app.db import db
 from app.models.puntos import Puntos
 from app.resources.api.issue import issue_api

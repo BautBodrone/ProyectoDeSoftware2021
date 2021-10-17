@@ -14,3 +14,7 @@ def private_letters_color():
 def private_accent_color():
     aux = Configuration.get_config().get_private_accent_color()
     return aux
+
+def rows_per_page():
+    aux = Configuration.get_config().get_rows_per_page()
+    return aux

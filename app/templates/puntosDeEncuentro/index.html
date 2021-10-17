@@ -16,7 +16,7 @@
    
   {% block scripts %}
   <script>
-  var defecto=3 //PONER LA VARIABLE DE CONFIGURACION DE PAGINAS
+  var defecto= {{ rows_per_page()  }}//PONER LA VARIABLE DE CONFIGURACION DE PAGINAS
       $(document).ready(function(){
        var table = $('#data').DataTable({
         ajax: '/api/data',

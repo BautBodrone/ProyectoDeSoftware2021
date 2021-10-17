@@ -70,5 +70,8 @@ class Configuration(db.Model):
     def get_public_letters_color(self):
         return self.public_letters_color
 
+    def get_rows_per_page(self):
+        return self.rows_per_page
+
     def get_config():
        return db.session.query(Configuration).first()

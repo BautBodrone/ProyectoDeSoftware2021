@@ -26,6 +26,15 @@
       <input name="last_name" placeholder="{{user.last_name}}" value="{{user.last_name}}"/>
     </p>
     <p>
+      {% if not is_admin(user.email) %}
+        <label for="estado">Estado:</label>
+        <select id="estado" name="estado">
+          <option value="True">Activar</option>
+          <option value="False">Desactivar</option>
+        </select>
+      {% endif %}
+    </p>
+    <p>
       <input type="submit" value="Editar">
       <button type="reset">Limpiar</button>
     </p>

@@ -43,9 +43,7 @@ def delete():
     return redirect(url_for("punto_index"))
 
 def edit(punto_id):
-    if not authenticated(session):
-        abort(401)
-
+    
     punto = Punto.search_punto(punto_id)
 
     return render_template("punto/edit.html", punto=punto)

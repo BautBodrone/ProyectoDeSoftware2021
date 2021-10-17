@@ -8,15 +8,16 @@
   <h1>Puntos de encuentro</h1>
 
 <a href="{{ url_for('home') }}" class="btn btn-primary">Volver</a>
+{% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_new') %} 
 <a href="{{ url_for('puntos_new') }}" class="btn btn-success">Nuevo punto </a>
-
+{% endif %}
 <table id="data" class="table">
   
 </table>
    
   {% block scripts %}
   <script>
-  var defecto= {{ rows_per_page()  }}//PONER LA VARIABLE DE CONFIGURACION DE PAGINAS
+  var defecto= {{ rows_per_page()  }}
       $(document).ready(function(){
        var table = $('#data').DataTable({
         ajax: '/api/data',

@@ -45,12 +45,21 @@ class Punto(db.Model):
         db.session.commit()
 
     def search_punto(p_id):
+        """
+            Retorna el punto con el mismo id que se paso por parametro
+        """
         return db.session.query(Punto).get(p_id)
 
     def get_id(self):
+        """
+            Retorna el id del objeto
+        """
         return self.id
 
     def edit(self, data):
+        """
+            Cambia los valores si son distinto a los pasados por parametro
+        """
         if self.nombre != data["nombre"]:
             self.nombre = data["nombre"]
         if self.direccion != data["direccion"]:

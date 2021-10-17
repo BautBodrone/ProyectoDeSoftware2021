@@ -1,6 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <style>
+      body{
+        background-color: {{ configurations.get_private_bg_color() }};
+        color: {{ configurations.get_private_letters_color() }};
+      }
+      a.link{
+        background-color: {{ configurations.get_private_accent_color() }};
+        color: {{ configurations.get_private_letters_color() }}
+      }
+      #container{
+        background-color: {{ configurations.get_private_accent_color() }};
+      }
+      #header{
+        background-color: {{ configurations.get_private_accent_color() }};
+        color: {{ configurations.get_private_letters_color() }}
+      }
+      .navbar{
+        background-color: {{ configurations.get_private_accent_color() }};
+        color: {{ configurations.get_private_letters_color() }}
+      }
+    </style>
     {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
     <title>{% block title %}{% endblock %}</title>
@@ -9,8 +30,7 @@
   <body>
     <div class="header" id="header">
       {% block header %}
-      <img src="/static/imgs/logo.png" width="10%" height="10%" >
-      <p>Proyecto de Software</p>
+      <a href="{{ url_for('home') }}"><img src="/static/imgs/logo.png" alt="logo" width="100"></a>
       {% endblock %} 
     </div>
 
@@ -47,6 +67,7 @@
     </div>
     <div id="footer">
       {% block footer %}
+      <a> proyecto de software </a>
       {% endblock %}
     </div>
   </body>

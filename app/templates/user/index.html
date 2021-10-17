@@ -3,9 +3,13 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header">Usuarios</h1>
+  </div>
+{% endblock %}
 {% block content %}
-
-
 <h1 style="text-align: center">Usuarios</h1>
   <table>
     <tr>
@@ -48,10 +52,6 @@
     </tr>
     {% endfor %}
   </table>
-
   <a href="{{ url_for('home') }}" class="link">Volver</a>
   <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>
-
-
-
 {% endblock %}

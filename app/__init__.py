@@ -9,7 +9,7 @@ from app.helpers.auth import authenticated
 
 from config import config
 
-from app.resources import issue, user, auth, punto, rol , configuration, puntos
+from app.resources import issue, user, auth, rol, configuration, puntos
 from app.db import db
 from app.models.puntos import Puntos
 from app.resources.api.issue import issue_api
@@ -61,14 +61,6 @@ def create_app(environment="production"):
     app.add_url_rule("/usuarios/edit","user_edit_finish",user.edit_finish, methods=["POST"])
     app.add_url_rule("/usuarios/filtro","user_filtro",user.filtro, methods=["POST"] )
 
-    # Ruta de Puntos
-    app.add_url_rule("/puntos", "punto_index", punto.index)
-    app.add_url_rule("/puntos", "punto_create", punto.create, methods=["POST"])
-    app.add_url_rule("/puntos/nuevo", "punto_new", punto.new)
-    app.add_url_rule("/puntos/delete","punto_delete",punto.delete, methods=["POST"])
-    app.add_url_rule("/puntos/edit/<punto_id>","punto_edit",punto.edit)
-    app.add_url_rule("/puntos/edit","punto_edit_finish",punto.edit_finish, methods=["POST"])
-
     # Ruta de Roles
     app.add_url_rule("/roles", "rol_index", rol.index)
 
@@ -80,9 +72,11 @@ def create_app(environment="production"):
     app.add_url_rule("/puntosDeEncuentros", "puntos_index", puntos.index)
     app.add_url_rule("/puntos", "puntos_create", puntos.create, methods=["POST"])
     app.add_url_rule("/puntosDeEncuentros/nuevo", "puntos_new", puntos.new)
+
     #Editar punto de encuentro
     app.add_url_rule("/puntosDeEncuentro/edit/<id>", "puntos_edit", puntos.edit)
     app.add_url_rule("/puntosDeEncuentro/update","puntos_update",puntos.update, methods=["POST"])
+    
     #Eliminar punto de encuentro
     @app.route('/puntosDeEncuentro/delete/<id>')
     def delete(id):
@@ -114,9 +108,6 @@ def create_app(environment="production"):
         'recordsTotal': Puntos.query.count(),
         'draw': request.args.get('draw', type=int),
     }
-        
-
-        
 
     # Ruta para el Home (usando decorator)
     @app.route("/")

@@ -9,7 +9,7 @@ pagConf=4
 def index():
     if not authenticated(session):
         abort(401)
-    
+        
     return render_template("puntosDeEncuentro/index.html")
 
 

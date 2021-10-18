@@ -9,17 +9,23 @@ pagConf=4
 def index():
     if not authenticated(session):
         abort(401)
-        
+
     return render_template("puntosDeEncuentro/index.html")
 
-'El metodo , si esta autenticado, mostrara una pagina para crear un nuevo punto de encuentro'
 def new():
+    """
+        El metodo , si esta autenticado, mostrara una pagina para crear un nuevo punto de encuentro
+    """
+
     if not authenticated(session):
         abort(401)
     return render_template("puntosDeEncuentro/new.html")
 
-'El metodo ,si esta autenticado, creara un nuevo punto de encuentro'
 def create():
+    """
+        El metodo ,si esta autenticado, creara un nuevo punto de encuentro
+    """
+
     if not authenticated(session):
         abort(401)
     puntoNuevo = Puntos(**request.form)
@@ -32,25 +38,34 @@ def create():
     flash("Se creo con exito", "success")
     return redirect(url_for("puntos_index"))
 
-'El metodo ,si esta autenticado, borrara un punto de encuentro'
 def delete(id):
-        if not authenticated(session):
-          abort(401)
+    """
+        El metodo ,si esta autenticado, borrara un punto de encuentro
+    """
 
-        puntoEliminar = Puntos.query.filter_by(id=int(id)).first()
-        Puntos.delete(puntoEliminar)
-        flash("Se elimino con exito", "success") 
-        return redirect(url_for('puntos_index'))
+    if not authenticated(session):
+        abort(401)
 
-'El metodo ,si esta autenticado, editara un punto de encuentro en una nueva pagina'
+    puntoEliminar = Puntos.query.filter_by(id=int(id)).first()
+    Puntos.delete(puntoEliminar)
+    flash("Se elimino con exito", "success") 
+    return redirect(url_for('puntos_index'))
+
 def edit(id):
+    """
+        El metodo ,si esta autenticado, editara un punto de encuentro en una nueva pagina
+    """
+
     if not authenticated(session):
         abort(401)
     punto = Puntos.query.filter_by(id=int(id)).first()
     return render_template("puntosDeEncuentro/edit.html", punto=punto)
 
-'El metodo ,si esta autenticado, editara el punto de encuentro'
 def update():
+    """
+        El metodo ,si esta autenticado, editara el punto de encuentro
+    """
+
     data = request.form
     punto = Puntos.search_punto(data["id"])
     try:
@@ -61,8 +76,11 @@ def update():
     flash("Se edito con exito", "success")
     return redirect(url_for("puntos_index"))
 
-'El metodo hara un filtro de los puntos de encuentro dependiendo de los datos ingresados '
 def data():
+    """
+        El metodo hara un filtro de los puntos de encuentro dependiendo de los datos ingresados
+    """
+
     query = Puntos.query
 
     # search filter

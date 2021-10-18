@@ -1,23 +1,29 @@
 from flask import redirect, render_template, request, url_for
 
 from app.models.issue import Issue
-#from app.models.rol import Rol
 
-'Mostrara todos las consultas en pantalla'
 # Public resources
 def index():
+    """
+        Mostrara todos las consultas en pantalla    
+    """
     
     issues = Issue.query.all()
 
     return render_template("issue/index.html", issues=issues)
 
-'El metodo hara una pagina para que crees una nueva consulta'
 def new():
+    """
+        El metodo hara una pagina para que crees una nueva consulta
+    """
+
     return render_template("issue/new.html")
 
-'El metodo creara una nueva consulta'
 def create():
-    
+    """
+        El metodo creara una nueva consulta
+    """
+
     new_issue = Issue(**request.form)
     Issue.save(new_issue)
 

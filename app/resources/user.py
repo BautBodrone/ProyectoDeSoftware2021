@@ -9,8 +9,11 @@ from app.models.user_rol import User_rol
 pagConf=4
 
 # Protected resources
-'El metodo mostrara todos los usuarios en una tabla'
 def index():
+    """
+        El metodo mostrara todos los usuarios en una tabla
+    """
+
     if not authenticated(session):
         abort(401)
 
@@ -20,15 +23,21 @@ def index():
 
     return render_template("user/index.html", users=users)
 
-'El metodo ,si esta autenticado,saltara a una nueva pagina para crear un usuario '
 def new():
+    """
+        El metodo ,si esta autenticado,saltara a una nueva pagina para crear un usuario
+    """
+
     if not authenticated(session):
         abort(401)
 
     return render_template("user/new.html")
 
-'El metodo ,si esta autenticado, creara un nuevo usuario'
 def create():
+    """
+        El metodo ,si esta autenticado, creara un nuevo usuario
+    """
+
     if not authenticated(session):
         abort(401)
 
@@ -41,8 +50,11 @@ def create():
     
     return redirect(url_for("user_index"))
 
-'El metodo ,si esta autenticado, eliminara al usuario seleccionado'
 def delete():
+    """
+        El metodo ,si esta autenticado, eliminara al usuario seleccionado
+    """
+
     if not authenticated(session):
         abort(401)
 
@@ -52,8 +64,10 @@ def delete():
 
     return redirect(url_for('user_index'))
 
-'El metodo ,si esta autenticado, saltara a una nueva pagina para editar un usuario'
 def edit(user_id):
+    """
+        El metodo ,si esta autenticado, saltara a una nueva pagina para editar un usuario
+    """
     if not authenticated(session):
         abort(401)
 
@@ -61,8 +75,11 @@ def edit(user_id):
     
     return render_template("user/edit.html", user=user)
 
-'El metodo , si esta autentiticado, podra cambiar los datos de un usuario'
 def edit_finish():
+    """
+        El metodo , si esta autentiticado, podra cambiar los datos de un usuario
+    """
+
     if not authenticated(session):
         abort(401)
 
@@ -77,8 +94,11 @@ def edit_finish():
 
     return redirect(url_for("user_index"))
 
-'El metodo ,si esta autenticado, añadira el nuevo rol al usuario seleccionado'
 def add_rols():
+    """
+        El metodo ,si esta autenticado, añadira el nuevo rol al usuario seleccionado 
+    """
+    
     if not authenticated(session):
         abort(401)
 
@@ -91,10 +111,11 @@ def add_rols():
 
     return redirect(request.referrer)
 
-'El metodo hara un filtro de los usuarios dependiendo de los datos ingresados '
 def filtro():
+    """
+        El metodo hara un filtro de los usuarios dependiendo de los datos ingresados 
+    """
     page = request.args.get('page',1, type=int)
-    data = request.form
     data = request.form
     activo = data["activo"]
     first_name = data["first_name"]

@@ -30,7 +30,7 @@
         <th>  Estado  </th>
         <th>  Actions  </th>
     </tr>
-  {% for user in users %}
+  {% for user in users.items %}
     <tr>
       <td>{{ user.email }}</td>
       <td>{{ user.first_name }} </td>
@@ -65,6 +65,31 @@
     </tr>
     {% endfor %}
   </table>
+
+
+
+  {% if users.has_prev %}
+  <a class="link" href="{{ url_for('user_index', page_num=users.prev_num,) }}">Anterior</a>
+  {% else %}
+   <a style=" pointer-events: none;cursor: default;" class="link" disabled href="">Anterior</a>
+ {% endif %}
+  {% for page_num in users.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+     {% if page_num%}
+       {% if users.page == page_num%}
+         <a href="" style=" pointer-events: none;cursor: default; background-color:pink" class="link btn btn-info mb-4">{{page_num}}</a>
+       {% else %}
+         <a href="{{ url_for('user_index',page=page_num)}}" class="link btn btn-outline-info mb-4">{{page_num}}</a>
+       {% endif %}
+     {% else %}
+       ...
+     {% endif %}
+  {% endfor %}
+ {% if users.has_next %}
+  <a class="link" href="{{ url_for('user_index', page=users.next_num) }}">Siguiente</a>
+  {% else %}
+  <a style=" pointer-events: none;cursor: default;" class="link" href="">Siguiente</a>
+ {% endif %}
+
 
   <a href="{{ url_for('home') }}" class="link">Volver</a>
   <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>

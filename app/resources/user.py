@@ -5,13 +5,18 @@ from app.helpers.auth import authenticated
 
 from app.models.user_rol import User_rol
 
+
+pagConf=4
+
 # Protected resources
 'El metodo mostrara todos los usuarios en una tabla'
 def index():
     if not authenticated(session):
         abort(401)
 
-    users = User.query.all()
+    page = request.args.get('page',1, type=int)
+    users = User.query.paginate(page=page,per_page=pagConf)
+
 
     return render_template("user/index.html", users=users)
 
@@ -88,17 +93,19 @@ def add_rols():
 
 'El metodo hara un filtro de los usuarios dependiendo de los datos ingresados '
 def filtro():
+    page = request.args.get('page',1, type=int)
+    data = request.form
     data = request.form
     activo = data["activo"]
     first_name = data["first_name"]
     if (activo != "" and first_name!= ""):
-      users=User.query.filter_by(activo=activo,first_name=first_name)
+      users=User.query.filter_by(activo=activo,first_name=first_name).paginate(page=page,per_page=pagConf)
     else:
         if (activo == "" and first_name != ""):
-            users=User.query.filter_by(first_name=first_name)
+            users=User.query.filter_by(first_name=first_name).paginate(page=page,per_page=pagConf)
         else:
             if(activo !="" and first_name==""):
-                users=User.query.filter_by(activo=activo)
+                users=User.query.filter_by(activo=activo).paginate(page=page,per_page=pagConf)
             else:
-                 users=User.query.all()
+                 users=User.query.paginate(page=page,per_page=pagConf)
     return render_template("user/index.html", users=users )

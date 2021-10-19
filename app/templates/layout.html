@@ -1,41 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
-    
     <style>
       body{
-        background-color: {{ get_private_bg_color() }}!important;
-        color: {{ get_private_letters_color() }};
+        background-color: {{ configurations.get_private_bg_color() }};
+        color: {{ configurations.get_private_letters_color() }};
       }
       a.link{
-        background-color: {{ get_private_accent_color() }};
-        color: {{ get_private_letters_color() }};
+        background-color: {{ configurations.get_private_accent_color() }};
+        color: {{ configurations.get_private_letters_color() }}
       }
       #container{
-        background-color: {{ get_private_accent_color() }};
+        background-color: {{ configurations.get_private_accent_color() }};
       }
       #header{
-        background-color: {{ get_private_accent_color() }};
-        color: {{ get_private_letters_color() }}
+        background-color: {{ configurations.get_private_accent_color() }};
+        color: {{ configurations.get_private_letters_color() }}
       }
       .navbar{
-        background-color: {{ get_private_accent_color() }};
-        color: {{ get_private_letters_color() }}
+        background-color: {{ configurations.get_private_accent_color() }};
+        color: {{ configurations.get_private_letters_color() }}
       }
     </style>
-
     {% block head %}
-<<<<<<< HEAD
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
-=======
-
->>>>>>> master
     <title>{% block title %}{% endblock %}</title>
     {% endblock %}
   </head>

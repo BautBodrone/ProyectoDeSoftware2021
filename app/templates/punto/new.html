@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %}Puntos{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <h1>Crear un punto</h1>
+  <form action="{{ url_for('punto_create') }}" method="POST">
+    <p>
+      <label>nombre<label></br>
+      <input name="nombre" placeholder="Nombre"/>
+    </p>
+    <p>
+      <label>Direccion<label></br>
+      <input name="direccion" placeholder="Direccion"/>
+    </p>
+    <p>
+      <label>Coordenadas<label></br>
+      <input name="coordenadas1" placeholder="coordenadas"/>
+    </p>
+    <p>
+        <label for="estado">Estado:</label>
+        <select id="estado" name="estado">
+        <option value="publicado">Publicado</option>
+        <option value="despblicado">Despublicado</option>
+    </select>
+    </p>
+    <p>
+        <label>Telefono<label></br>
+        <input name="telefono" placeholder="telefono"/>
+    </p>
+    <p>
+        <label>Email<label></br>
+        <input name="email" placeholder="email"/>
+    </p>
+    <p>
+      <input type="submit" value="Crear">
+      <button type="reset">Limpiar</button>
+    </p>
+  </form>
+  <a href="{{ url_for('punto_index') }}" class="link">Volver</a>
+{% endblock %}

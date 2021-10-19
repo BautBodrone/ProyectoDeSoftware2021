@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %}Puntos{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header">Puntos</h1>
+  </div>
+{% endblock %}
+{% block content %}
+  {% for punto in puntos %}
+    <li>{{ punto.nombre }} - {{ punto.direccion }}</li>
+    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_delete') %}
+    <form action="{{ url_for('punto_delete') }}" method="POST" enctype="multipart/form-data">
+      <input type="hidden" id="punto_id" name="punto_id" value="{{punto.id}}">
+      <button type="submit" class="btn btn-danger mt-2 ml-2" >eliminar</button>
+    </form>
+    {% endif %}
+    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_edit') %}
+    <form action="{{ url_for('punto_edit', punto_id = punto.id ) }}" >
+      <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
+    </form>
+    {% endif %}
+  {% endfor %}
+  <a href="{{ url_for('home') }}" class="link">Volver</a>
+  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_new') %}
+  <a href="{{ url_for('punto_new') }}" class="link">Nuevo</a>
+  {% endif %}
+{% endblock %}

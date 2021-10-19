@@ -15,13 +15,10 @@ class Rol(db.Model):
     def __init__(self,nombre = None):
         self.nombre = nombre
 
-    def check_permiso(self, permiso):
-        """
-            Retorna verdadero o falso dependiendo si el rol tiene el permiso pasado
-            por parametro
-        """
-        for un_permiso in self.permisos:
-            if (un_permiso.nombre == permiso):
+    @classmethod 
+    def check_permiso(self, rol, permiso):
+        for un_permiso in rols.permisos:
+            if (unPermiso.nombre == permiso):
                 return True
         return False 
 

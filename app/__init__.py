@@ -8,6 +8,7 @@ from flask_sqlalchemy import _SessionSignalEvents
 from app.helpers.auth import authenticated
 
 from config import config
+<<<<<<< HEAD
 from app import db
 
 from app.resources import issue, user, auth, punto, rol , configuration,puntos
@@ -15,8 +16,14 @@ from app.resources import issue, user, auth, punto, rol , configuration,puntos
 
 from app.models.puntos import Puntos
 
+=======
+
+from app.resources import issue, user, auth, rol, configuration, puntos
+from app.db import db
+from app.models.puntos import Puntos
+>>>>>>> master
 from app.resources.api.issue import issue_api
-from app.helpers import handler, user_helper
+from app.helpers import handler, user_helper, configurator
 from app.helpers import auth as helper_auth
 from app.models.configuration import Configuration
 
@@ -41,6 +48,10 @@ def create_app(environment="production"):
     app.jinja_env.globals.update(my_user=user_helper.user)
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
     app.jinja_env.globals.update(is_admin=user_helper.is_admin)
+    app.jinja_env.globals.update(get_private_bg_color=configurator.private_bg_color)
+    app.jinja_env.globals.update(get_private_letters_color=configurator.private_letters_color)
+    app.jinja_env.globals.update(get_private_accent_color=configurator.private_accent_color)
+    app.jinja_env.globals.update(rows_per_page=configurator.rows_per_page)
 
     # Autenticación
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
@@ -59,8 +70,14 @@ def create_app(environment="production"):
     app.add_url_rule("/usuarios/delete", "user_delete", user.delete, methods=["POST"])
     app.add_url_rule("/usuarios/edit/<user_id>","user_edit",user.edit)
     app.add_url_rule("/usuarios/edit","user_edit_finish",user.edit_finish, methods=["POST"])
+<<<<<<< HEAD
 
  # Ruta de Roles
+=======
+    app.add_url_rule("/usuarios/filtro","user_filtro",user.filtro, methods=["POST"] )
+
+    # Ruta de Roles
+>>>>>>> master
     app.add_url_rule("/roles", "rol_index", rol.index)
 
     # Rutas de Usuarios
@@ -71,9 +88,11 @@ def create_app(environment="production"):
     app.add_url_rule("/puntosDeEncuentros", "puntos_index", puntos.index)
     app.add_url_rule("/puntos", "puntos_create", puntos.create, methods=["POST"])
     app.add_url_rule("/puntosDeEncuentros/nuevo", "puntos_new", puntos.new)
+
     #Editar punto de encuentro
     app.add_url_rule("/puntosDeEncuentro/edit/<id>", "puntos_edit", puntos.edit)
     app.add_url_rule("/puntosDeEncuentro/update","puntos_update",puntos.update, methods=["POST"])
+    
     #Eliminar punto de encuentro
     @app.route('/puntosDeEncuentro/delete/<id>')
     def delete(id):
@@ -105,9 +124,6 @@ def create_app(environment="production"):
         'recordsTotal': Puntos.query.count(),
         'draw': request.args.get('draw', type=int),
     }
-        
-
-        
 
     # Ruta para el Home (usando decorator)
     @app.route("/")

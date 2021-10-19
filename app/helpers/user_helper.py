@@ -2,8 +2,8 @@ from app.models.user import User
 
 def is_admin(email):
     user = User.search_user_email(email)
-    for rol in user.rols:
-        if (rol.nombre == "admin"):
+    for permiso in user.get_permisos():
+        if ('admin' == permiso.nombre):
             return True
     return False
 

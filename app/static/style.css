@@ -32,6 +32,7 @@ body {
 
 #container {
   width: 75%;
+  height: 90%;
   margin: 0 auto;
   padding: 20px 40px;
   border: solid 1px black;
@@ -94,15 +95,18 @@ table, td, th {
   border: 1px solid rgb(0, 0, 0);
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 table {
-  font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 
 th {
   height: 30px;
+<<<<<<< HEAD
 }
 
 td {
@@ -124,4 +128,14 @@ td, th {
 
 tr:nth-child(even) {
   background-color: #dddddd;
+=======
+}
+
+td {
+  text-align: center;
+  padding: 5px;
+>>>>>>> master
+}
+.form {
+  margin-top: 20px;
 }

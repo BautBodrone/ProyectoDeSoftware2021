@@ -7,23 +7,23 @@
     
     <style>
       body{
-        background-color: {{ get_private_bg_color() }}!important;
-        color: {{ get_private_letters_color() }};
+        background-color: {{ configurator().get_private_bg_color() }}!important;
+        color: {{ configurator().get_private_letters_color() }};
       }
       a.link{
-        background-color: {{ get_private_accent_color() }};
-        color: {{ get_private_letters_color() }};
+        background-color: {{ configurator().get_private_accent_color() }};
+        color: {{ configurator().get_private_letters_color() }};
       }
       #container{
-        background-color: {{ get_private_accent_color() }};
+        background-color: {{ configurator().get_private_accent_color() }};
       }
       #header{
-        background-color: {{ get_private_accent_color() }};
-        color: {{ get_private_letters_color() }}
+        background-color: {{ configurator().get_private_accent_color() }};
+        color: {{ configurator().get_private_letters_color() }}
       }
       .navbar{
-        background-color: {{ get_private_accent_color() }};
-        color: {{ get_private_letters_color() }}
+        background-color: {{ configurator().get_private_accent_color() }};
+        color: {{ configurator().get_private_letters_color() }}
       }
     </style>
 

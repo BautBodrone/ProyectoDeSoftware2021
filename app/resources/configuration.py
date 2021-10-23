@@ -7,8 +7,10 @@ def edit():
     """
         El metodo mostrara una pagina para cambiar las configuraciones de la misma
     """
+    if not authenticated(session):
+        abort(401)
 
-    configurations = Configuration.query.first()
+    configurations = Configuration.get_config()
     
     return render_template("config/edit.html", configurations=configurations)
 
@@ -20,6 +22,6 @@ def save():
     if not authenticated(session):
         abort(401)
     
-    Configuration.query.first().update(request.form)
+    Configuration.get_config().update(request.form)
 
     return redirect(url_for("home"))

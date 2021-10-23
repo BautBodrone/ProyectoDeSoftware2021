@@ -7,29 +7,35 @@
     
     <style>
       body{
-        background-color: {{ get_private_bg_color() }}!important;
-        color: {{ get_private_letters_color() }};
+        background-color: {{ configurator().get_private_bg_color() }}!important;
+        color: {{ configurator().get_private_letters_color() }};
       }
       a.link{
-        background-color: {{ get_private_accent_color() }};
-        color: {{ get_private_letters_color() }};
+        background-color: {{ configurator().get_private_accent_color() }};
+        color: {{ configurator().get_private_letters_color() }};
       }
       #container{
-        background-color: {{ get_private_accent_color() }};
+        background-color: {{ configurator().get_private_accent_color() }};
       }
       #header{
-        background-color: {{ get_private_accent_color() }};
-        color: {{ get_private_letters_color() }}
+        background-color: {{ configurator().get_private_accent_color() }};
+        color: {{ configurator().get_private_letters_color() }}
       }
       .navbar{
-        background-color: {{ get_private_accent_color() }};
-        color: {{ get_private_letters_color() }}
+        background-color: {{ configurator().get_private_accent_color() }};
+        color: {{ configurator().get_private_letters_color() }}
+      }
+      a.link{
+        background-color: {{ configurator().get_private_bg_color() }};
+      }
+      a.volver_link{
+        background-color: {{ configurator().get_private_accent_color() }};
       }
     </style>
 
     {% block head %}
-
-    <title>{% block title %}{% endblock %}</title>
+      <link rel="icon" href="/static/imgs/logo.png" type="image/x-icon">
+      <title>{% block title %}{% endblock %}</title>
     {% endblock %}
   </head>
   <body>
@@ -40,20 +46,19 @@
     </div>
 
     <div class="navbar" id="navbar">
-      {% block navbar %} 
-
-        <div id="menubar">
-          <nav class="menu">
-            <input type="text"  id="search" value="search">
-            <hr>
-            <ul>
-              <li><a href="#" title="Link">Opcion 1</a></li>
-              <li><a href="#" title="Link">Opcion 2</a></li>
-              <li><a href="#" title="Link">Opcion 3</a></li>
-            </ul>
-          </nav>
-        </div>
-      {% endblock %}
+    {% block navbar %}
+      {% if is_authenticated(session) %}
+        <a href="{{ url_for('puntos_index') }}" class="link">Puntos de Encuentro</a>
+        <a href="{{ url_for('configuration_index') }}" class="link">Configuracion</a>
+        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
+          <a href="{{ url_for('rol_index') }}" class="link">Roles</a>
+          <a href="{{ url_for('user_index') }}" class="link">Usuarios</a>
+          {% endif %}
+          <a href="{{ url_for('auth_logout') }}" class="link">Cerrar sesión</a>
+      {% else %}
+        <a href="{{ url_for('auth_login') }}" class="link">Iniciar sesión</a>
+      {% endif %}
+    {% endblock %}
     </div>
     <div class="content" id="content">
       

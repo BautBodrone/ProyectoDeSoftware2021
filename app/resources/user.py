@@ -4,9 +4,8 @@ from app.models.user import User
 from app.helpers.auth import authenticated
 
 from app.models.user_rol import User_rol
+from app.helpers import configurator
 
-
-pagConf=4
 
 # Protected resources
 def index():
@@ -18,6 +17,7 @@ def index():
         abort(401)
 
     page = request.args.get('page',1, type=int)
+    pagConf = configurator.settings().get_rows_per_page()
     users = User.query.paginate(page=page,per_page=pagConf)
 
 

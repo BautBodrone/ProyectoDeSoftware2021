@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for, abort
+from flask import render_template, request, session, redirect, url_for, abort, flash
 
 from app.models.configuration import Configuration
 from app.helpers.auth import authenticated
@@ -21,7 +21,10 @@ def save():
 
     if not authenticated(session):
         abort(401)
-    
-    Configuration.get_config().update(request.form)
+    try:
+        Configuration.get_config().update(request.form)
+    except:
+        flash("error al actualizar las configuraciones")
+        return redirect(request.referrer)
 
     return redirect(url_for("home"))

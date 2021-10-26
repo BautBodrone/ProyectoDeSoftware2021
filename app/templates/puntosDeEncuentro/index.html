@@ -17,7 +17,7 @@
    
   {% block scripts %}
   <script>
-  var defecto= {{ rows_per_page()  }}
+  var defecto= {{ configurator().get_rows_per_page()  }}
       $(document).ready(function(){
        var table = $('#data').DataTable({
         ajax: '/api/data',

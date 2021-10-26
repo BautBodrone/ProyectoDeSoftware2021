@@ -15,7 +15,6 @@ from app.models.puntos import Puntos
 from app.resources.api.issue import issue_api
 from app.helpers import handler, user_helper, configurator
 from app.helpers import auth as helper_auth
-from app.models.configuration import Configuration
 
 
 def create_app(environment="production"):
@@ -38,10 +37,7 @@ def create_app(environment="production"):
     app.jinja_env.globals.update(my_user=user_helper.user)
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
     app.jinja_env.globals.update(is_admin=user_helper.is_admin)
-    app.jinja_env.globals.update(get_private_bg_color=configurator.private_bg_color)
-    app.jinja_env.globals.update(get_private_letters_color=configurator.private_letters_color)
-    app.jinja_env.globals.update(get_private_accent_color=configurator.private_accent_color)
-    app.jinja_env.globals.update(rows_per_page=configurator.rows_per_page)
+    app.jinja_env.globals.update(configurator=configurator.settings)
 
     # Autenticación
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
@@ -66,7 +62,7 @@ def create_app(environment="production"):
     app.add_url_rule("/roles", "rol_index", rol.index)
 
     # Rutas de Usuarios
-    app.add_url_rule("/configuracion", "configuration_index", configuration.index)
+    app.add_url_rule("/configuracion", "configuration_edit", configuration.edit)
     app.add_url_rule("/configuracion", "configuration_update", configuration.save, methods=["POST"])
 
     #Rutas de Puntos de encuentro
@@ -113,8 +109,6 @@ def create_app(environment="production"):
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
-        configurations = Configuration.query.first()
-        app.jinja_env.globals.update(configurations=configurations)
         return render_template("home.html")
 
     # Rutas de API-REST (usando Blueprints)

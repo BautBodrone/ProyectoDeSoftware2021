@@ -7,11 +7,15 @@
     
     <style>
       body{
-        background-color: {{ configurator().get_private_bg_color() }}!important;
+        background-color: {{ configurator().get_private_bg_color() }};
         color: {{ configurator().get_private_letters_color() }};
       }
       a.link{
         background-color: {{ configurator().get_private_accent_color() }};
+        color: {{ configurator().get_private_letters_color() }};
+      }
+      a.navbar{
+        background-color: {{ configurator().get_private_bg_color() }};
         color: {{ configurator().get_private_letters_color() }};
       }
       #container{
@@ -25,38 +29,41 @@
         background-color: {{ configurator().get_private_accent_color() }};
         color: {{ configurator().get_private_letters_color() }}
       }
-      a.link{
-        background-color: {{ configurator().get_private_bg_color() }};
-      }
-      a.volver_link{
+      a.navbar.selected{
         background-color: {{ configurator().get_private_accent_color() }};
+        filter: brightness(1.5);
       }
+      a.navbar:hover {
+        background-color: {{ configurator().get_private_accent_color() }};
+        filter: brightness(0.88);
+      }
+
     </style>
 
     {% block head %}
-      <link rel="icon" href="/static/imgs/logo.png" type="image/x-icon">
+      <link rel="icon" href="/static/imgs/logo.png" type="image/x-icon" >
       <title>{% block title %}{% endblock %}</title>
     {% endblock %}
   </head>
   <body>
     <div class="header" id="header">
       {% block header %}
-      <a href="{{ url_for('home') }}"><img src="/static/imgs/logo.png" alt="logo" width="100"></a>
+      <a href="{{ url_for('home') }}"><img src="/static/imgs/logo.png" alt="logo" width="100" style="position:absolute; left:5%;"></a>
       {% endblock %} 
     </div>
 
     <div class="navbar" id="navbar">
     {% block navbar %}
       {% if is_authenticated(session) %}
-        <a href="{{ url_for('puntos_index') }}" class="link">Puntos de Encuentro</a>
-        <a href="{{ url_for('configuration_edit') }}" class="link">Configuracion</a>
+        <a href="{{ url_for('puntos_index') }}" class="navbar">Puntos de Encuentro</a>
+        <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
         {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
-          <a href="{{ url_for('rol_index') }}" class="link">Roles</a>
-          <a href="{{ url_for('user_index') }}" class="link">Usuarios</a>
-          {% endif %}
-          <a href="{{ url_for('auth_logout') }}" class="link">Cerrar sesión</a>
+          <a href="{{ url_for('rol_index') }}" class="navbar">Roles</a>
+          <a href="{{ url_for('user_index') }}" class="navbar">Usuarios</a>
+        {% endif %}
+        <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
       {% else %}
-        <a href="{{ url_for('auth_login') }}" class="link">Iniciar sesión</a>
+        <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
       {% endif %}
     {% endblock %}
     </div>

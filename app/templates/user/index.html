@@ -3,13 +3,32 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header">Usuarios</h1>
+  </div>
+{% endblock %}
+
+{% block navbar %}
+{% if is_authenticated(session) %}
+  <a href="{{ url_for('puntos_index') }}" class="navbar">Puntos de Encuentro</a>
+  <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
+  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
+    <a href="{{ url_for('rol_index') }}" class="navbar">Roles</a>
+    <a href="{{ url_for('user_index') }}" class="navbar selected">Usuarios</a>
+    {% endif %}
+    <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
+{% else %}
+  <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
+{% endif %}
+{% endblock %}
+
 {% block content %}
 
-
-<h1>Usuarios</h1>
-
 <form action="{{ url_for('user_filtro') }}" method="POST">
-  <h3>Filtrar</h3> 
+  <a href="{{ url_for('user_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
+  <h4>Filtrar</h4> 
       <input name="first_name" placeholder="Nombre"/>
       <select  name="activo">
         <option value="" selected>Seleccione un estado</option>
@@ -92,6 +111,5 @@
 
 
   <a href="{{ url_for('home') }}" class="link">Volver</a>
-  <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>
 {% endblock %}
 

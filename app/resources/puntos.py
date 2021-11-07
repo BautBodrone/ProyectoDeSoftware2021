@@ -129,7 +129,7 @@ def filtro():
             puntos=Puntos.query.filter_by(nombre=nombre).paginate(page=page,per_page=page_config)
         else:
             if(estado !="" and nombre==""):
-                puntos=Puntos.query.filter_by(estado=Publicado).paginate(page=page,per_page=page_config)
+                puntos=Puntos.query.filter_by(estado=estado).paginate(page=page,per_page=page_config)
             else:
                 puntos=Puntos.query.paginate(page=page,per_page=page_confif)
     return render_template("puntosDeEncuentro/index.html", puntos=puntos )

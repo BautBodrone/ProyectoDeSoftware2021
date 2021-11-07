@@ -77,9 +77,8 @@ a.page {
 .navbar {
   font-family: 'Montserrat', sans-serif;
   float: left;
-  width: 25%;
-  padding-left: 3%;
-  padding-right: 3%;
+  width: 20%;
+  padding-left: 1%;
   text-align: center;
   padding-top: 36px;
 }
@@ -101,8 +100,11 @@ a.page {
 }
 
 .content {
+  padding-right: 3%;
+  padding-left: 3%;
+  float: right;
   margin: 0 auto;
-  width: 45%;
+  width: 80%;
 }
 
 table, td, th {

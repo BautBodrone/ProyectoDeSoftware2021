@@ -25,26 +25,23 @@
 {% endblock %}
 
 {% block content %}
-
+<a href="{{ url_for('user_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
 <form action="{{ url_for('user_filtro') }}" method="POST">
-  <a href="{{ url_for('user_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
   <h4>Filtrar</h4> 
-      <input name="first_name" placeholder="Nombre"/>
-      <select  name="activo">
+      <input name="first_name" placeholder="Nombre" />
+      <select  name="activo" >
         <option value="" selected>Seleccione un estado</option>
         <option value="1">Activo</option>
         <option value="0">Bloqueado</option>
       </select>
       <input type="submit" value="Filtrar">
     </form>
-    <br>
-    <br>
+  <br>
   <table>
     <tr>
         <th>  Email  </th>
         <th>  Nombre  </th>
         <th>  Apellido  </th>
-        <th>  Contraseña  </th>
         <th>  Roles  </th>
         <th>  Estado  </th>
         <th>  Actions  </th>
@@ -54,7 +51,6 @@
       <td>{{ user.email }}</td>
       <td>{{ user.first_name }} </td>
       <td>{{ user.last_name }} </td>
-      <td>{{ user.password }}</td>
       <td>
         {% for rol in user.rols %}
           {{ rol.nombre }} 

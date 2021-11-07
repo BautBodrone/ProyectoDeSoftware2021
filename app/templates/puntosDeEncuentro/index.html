@@ -38,7 +38,6 @@
       <input type="submit" value="Filtrar">
     </form>
     <br>
-    <br>
   <table>
     <tr>
         <th>  Email  </th>
@@ -65,7 +64,6 @@
         {% endif %}
         {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_delete') %}
         <form action="{{ url_for('puntos_delete', id = punto.id) }}" method="POST" enctype="multipart/form-data">
-          <input type="hidden" id="punto_id" name="punto_id" value="{{punto.id}}">
           <button type="submit" class="btn btn-danger mt-2 ml-2" >eliminar</button>
         </form>
         {% endif %}

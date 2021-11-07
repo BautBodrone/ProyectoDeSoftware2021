@@ -26,7 +26,7 @@
 
 {% block content %}
   {% for rol in rols %}
-    <li>{{ rol.nombre }} {% for permiso in rol.permisos %} {{ permiso.nombre }}, {% endfor %}</li>
+    <li>{{ rol.nombre }}: {% for permiso in rol.permisos %} {{ permiso.descripcion }}, {% endfor %}</li>
   {% endfor %}
   <a href="{{ url_for('home') }}" class="link">Volver</a>
 {% endblock %}

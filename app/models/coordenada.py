@@ -8,8 +8,8 @@ class Coordenada(db.Model):
 
     __tablename__ = "coordenadas"
     id = Column(Integer,primary_key=True)
-    latitud = Column(String)
-    longitud = (Column(String))
+    latitud = Column(String,nullable=False)
+    longitud = Column(String,nullable=False)
 
     def __init__(self,latitud,longitud):
         self.latitud = latitud

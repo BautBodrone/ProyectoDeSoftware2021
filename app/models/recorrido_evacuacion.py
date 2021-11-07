@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Relationship
 from sqlalchemy_utils import ChoiceType
 
 from app.db import db
@@ -12,9 +12,9 @@ class Recorrido(db.Model):
 
     __tablename__ = "recorridos"
     id = Column(Integer, primary_key=True)
-    nombre = Column(String(30), unique=True)
+    nombre = Column(String(30), unique=True,nullable=False)
     descrpcion = Column(String(60))
-    coordenadas = Column(String)
+    coordenadas = db.relationship("Coordenada", backref="recorrido", lazy=True, nullable=False)
     estado = Column(ChoiceType(ESTADOS))
 
     def __init__(self,nombre=None, descipcion=None, coordenadas=None, estado=None)

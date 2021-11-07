@@ -2,7 +2,6 @@ from flask import flash, redirect, render_template, request, url_for, session, a
 
 from app.models.user import User
 from app.helpers.auth import authenticated
-
 from app.models.user_rol import User_rol
 
 

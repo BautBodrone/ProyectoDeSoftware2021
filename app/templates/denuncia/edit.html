@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+{% block title %}Denuncia{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <h1>Editar una Denuncia</h1>
+  <form action="{{ url_for('denuncia_edit_finish') }}" method="POST">
+    <div class="form-group">
+      <input type="hidden" class="form-control"  id="id" name="id" value="{{denuncia.id}}">
+    </div>
+    
+    <p>
+      <label>Titulo<label></br>
+      <input name="titulo" placeholder="{{denuncia.titulo}}" value="{{denuncia.titulo}}" required/>
+    </p>
+
+    <p>
+      <label>Categoria<label></br>
+      <input name="categoria" placeholder="{{denuncia.categoria}}" value="{{denuncia.categoria}}" />
+    </p>
+
+    <p>
+      <label>Descripcion<label></br>
+      <input name="descripcion" placeholder="{{denuncia.descripcion}}" value="{{denuncia.descripcion}}"/>
+    </p>
+
+    <p>
+      <label>Coordenadas<label></br>
+      <input name="coordenadas" placeholder="{{denuncia.coordenadas}}" value="{{denuncia.coordenadas}}"/>
+    </p>
+
+    <p>
+      <label for="estado">Estado:</label>
+          <select id="estado" name="estado">
+            <option value="sinConfirmar">Sin confirmar</option>
+            <option value="curso">En curso</option>
+            <option value="resuelta">Resuelta</option>
+            <option value="cerrada">Cerrada</option>
+          </select>
+    </p>     
+
+    <p>
+      <label>Fecha Comienzo<label></br>
+      <input type="date" name="fechaC" placeholder="{{denuncia.fechaC}}" value="{{denuncia.fechaC}}" />
+    </p>
+    {% if denuncia.estado == "cerrada"%}
+    <p>
+      <label>Fecha Fin<label></br>
+      <input type="date" name="fechaF" placeholder="{{denuncia.fechaF}}" value="{{denuncia.fechaF}}" />
+    </p>
+    {% endif %}
+    <p>
+      <label>Apellido del denunciante <label></br>
+      <input name="apellidoD" placeholder="{{denuncia.apellidoD}}" value="{{denuncia.apellidoD}}" />
+    </p>
+
+    <p>
+      <label>Nombre del denunciante <label></br>
+      <input type="nombreD" name="nombreD" placeholder="{{denuncia.nombreD}}" value="{{denuncia.nombreD}}"/>
+    </p>
+
+    <p>
+      <label>Telefono<label></br>
+      <input name="telefono" placeholder="{{denuncia.telefono}}" value="{{denuncia.telefono}}"/>
+    </p>
+
+    <p>
+      <label>Email del denunciante<label></br>
+      <input name="emailD" placeholder="{{denuncia.emailD}}" value="{{denuncia.emailD}}"/>
+    </p>
+
+    <p>
+      <input type="submit" value="Editar">
+      <button type="reset">Limpiar</button>
+    </p>
+
+  </form>
+  <a href="{{ url_for('denuncia_index') }}" class="link">Volver</a>
+{% endblock %}
+

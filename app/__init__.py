@@ -6,12 +6,14 @@ from werkzeug.utils import redirect
 from flask_session import Session
 from flask_sqlalchemy import _SessionSignalEvents
 from app.helpers.auth import authenticated
+from app.models import denuncia
 
 from config import config
 
-from app.resources import issue, user, auth, rol, configuration, puntos
+from app.resources import issue, user, auth, rol, configuration, puntos, denuncia
 from app.db import db
 from app.models.puntos import Puntos
+from app.models.user import User
 from app.resources.api.issue import issue_api
 from app.helpers import handler, user_helper, configurator
 from app.helpers import auth as helper_auth
@@ -65,7 +67,7 @@ def create_app(environment="production"):
     # Ruta de Roles
     app.add_url_rule("/roles", "rol_index", rol.index)
 
-    # Rutas de Usuarios
+    # Rutas de configuracion
     app.add_url_rule("/configuracion", "configuration_index", configuration.index)
     app.add_url_rule("/configuracion", "configuration_update", configuration.save, methods=["POST"])
 
@@ -84,6 +86,16 @@ def create_app(environment="production"):
         puntoEliminar = Puntos.query.filter_by(id=int(id)).first()
         Puntos.delete(puntoEliminar)
         return redirect(url_for('puntos_index'))
+
+
+   #  Rutas de Denuncias
+    app.add_url_rule("/denuncias", "denuncia_index", denuncia.index)
+    app.add_url_rule("/denuncias", "denuncia_create", denuncia.create, methods=["POST"])
+    app.add_url_rule("/denuncias/nuevo", "denuncia_new", denuncia.new)
+    app.add_url_rule("/denuncias/delete", "denuncia_delete", denuncia.delete, methods=["POST"])
+    app.add_url_rule("/denuncias/edit/<denuncia_id>","denuncia_edit",denuncia.edit)
+    app.add_url_rule("/denuncias/edit","denuncia_edit_finish",denuncia.edit_finish, methods=["POST"])
+   #app.add_url_rule("/denuncias/filtro","denuncia_filtro",denuncia.filtro, methods=["POST"] )
 
     #DATA TABLE
     @app.route('/api/data')

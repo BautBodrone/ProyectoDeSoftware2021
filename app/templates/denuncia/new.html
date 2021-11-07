@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block title %}Denuncia{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <h1>Crear una Denuncia</h1>
+  <form action="{{ url_for('denuncia_create') }}" method="POST">
+    <p>
+      <label>Titulo<label></br>
+      <input name="titulo" placeholder="Titulo de denuncia"/>
+    </p>
+    <p>
+      <label>Categoria<label></br>
+      <input name="categoria" placeholder="Clave"/>
+    </p>
+    <p>
+      <label>Descripcion <label></br>
+      <input name="descripcion" placeholder="descripcion"/>
+    </p>
+    <p>
+        <label>Coordenadas <label></br>
+        <input name="coordenadas" placeholder="coordenadas"/>
+      </p>
+      <p>
+        <label for="estado">Estado:</label>
+            <select id="estado" name="estado">
+              <option value="sinConfirmar">Sin confirmar</option>
+              <option value="curso">En curso</option>
+              <option value="resuelta">Resuelta</option>
+              <option value="cerrada">Cerrada</option>
+            </select>
+      </p>     
+      <p>
+        <label>Apellido del denunciante <label></br>
+        <input name="apellidoD" placeholder="apellidoD"/>
+      </p>
+      <p>
+        <label>Nombre del denunciante <label></br>
+        <input name="nombreD" placeholder="nombreD"/>
+      </p>
+      <p>
+        <label>Telefono <label></br>
+        <input name="telefono" placeholder="Telefono"/>
+      </p>
+      <p>
+        <label>Email del denunciante <label></br>
+        <input name="emailD" placeholder="emailD"/>
+      </p>
+    <p>
+      <input type="submit" value="Crear">
+      <button type="reset">Limpiar</button>
+    </p>
+  </form>
+  <a href="{{ url_for('denuncia_index') }}" class="link">Volver</a>
+{% endblock %}

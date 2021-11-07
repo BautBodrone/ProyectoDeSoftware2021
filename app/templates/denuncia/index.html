@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block title %}Denuncias{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+<h1>Denuncias</h1>
+<table>
+  <tr>
+      <th>  Titulo  </th>
+      <th>  Categoria  </th>
+      <th>  Fecha de Creacion  </th>
+      <th>  Fecha de Cierre  </th>
+      <th>  Descripcion  </th>
+      <th>  Coordenadas  </th>
+      <th>  Estado  </th>
+      <th>  Apellido denunciante  </th>
+      <th>  Nombre denunciante  </th>
+      <th>  telefono del denunciante  </th>
+      <th>  Email denunciante  </th>
+  </tr>
+  {% for denuncia in denuncias.items %}
+  <tr>
+    <td>{{ denuncia.titulo }}</td>
+    <td>{{ denuncia.categoria }} </td>
+    <td>{{ denuncia.fechaC }} </td>
+    <td>{{ denuncia.fechaF }}</td>
+    <td>{{ denuncia.descripcion }}</td>
+    <td>{{ denuncia.coordenadas }}</td>
+    <td>{{ denuncia.estado }}</td>
+    <td>{{ denuncia.apellidoD }}</td>
+    <td>{{ denuncia.nombreD }}</td>
+    <td>{{ denuncia.telefono }}</td>
+    <td>{{ denuncia.emailD }}</td>
+    <td>
+      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'denuncia_edit') %}
+      <form action="{{ url_for('denuncia_edit', denuncia_id = denuncia.id ) }}"  >
+        <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
+      </form>
+      {% endif %}
+      <br>
+      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'denuncia_delete') %}
+      <form action="{{ url_for('denuncia_delete') }}" method="POST" enctype="multipart/form-data">
+        <input type="hidden" id="denuncia_id" name="denuncia_id" value="{{denuncia.id}}">
+       <button onclick="return confirm('Estas seguro de que deseas eliminar esta denuncia?');" class="btn btn-danger mt-2 ml-2">eliminar</a>
+      </form>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<a href="{{ url_for('home') }}" class="link">Volver</a>
+<a href="{{ url_for('denuncia_new') }}" class="link">Nuevo</a>
+{% endblock %}

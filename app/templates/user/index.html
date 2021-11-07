@@ -58,16 +58,13 @@
         {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_delete') %}
         <form action="{{ url_for('user_delete') }}" method="POST" enctype="multipart/form-data">
           <input type="hidden" id="user_id" name="user_id" value="{{user.id}}">
-          <button type="submit" class="btn btn-danger mt-2 ml-2" >eliminar</button>
+         <button onclick="return confirm('Estas seguro de que deseas eliminar este usuario?');" class="btn btn-danger mt-2 ml-2">eliminar</a>
         </form>
         {% endif %}
       </td>
     </tr>
     {% endfor %}
   </table>
-
-
-
   {% if users.has_prev %}
   <a class="link" href="{{ url_for('user_index', page_num=users.prev_num,) }}">Anterior</a>
   {% else %}
@@ -94,4 +91,3 @@
   <a href="{{ url_for('home') }}" class="link">Volver</a>
   <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>
 {% endblock %}
-

@@ -12,7 +12,7 @@ class User(db.Model):
     last_name = Column(String(30))
     email = Column(String(30),unique=True)
     password = Column(String(30))
-    rols = relationship("Rol",secondary = "users_rols")
+    rols = relationship("Rol",secondary = "users_rols",viewonly=True)
     activo = Column(Boolean)
     
 

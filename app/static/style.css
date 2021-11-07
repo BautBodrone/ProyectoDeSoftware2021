@@ -108,6 +108,8 @@ a.page {
 
 table, td, th {
   border: 1px solid rgb(32, 32, 32);
+  text-align: right;
+  padding: 8px;
 }
 
 
@@ -121,22 +123,8 @@ th {
   height: 30px;
 }
 
-td {
-  text-align: right;
-  padding: 5px;
-}
-
 .form {
   margin-top: 20px;
-}
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
 }
 
 tr:nth-child(even) {

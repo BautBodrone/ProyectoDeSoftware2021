@@ -12,14 +12,16 @@ class Rol(db.Model):
     users = relationship("User",secondary = "users_rols")
     permisos = relationship("Permiso",secondary = "rols_permisos")
 
-    def __init__(self, nombre):
+    def __init__(self,nombre):
         self.nombre = nombre
-        db.session.commit()
 
-    @classmethod 
-    def check_permiso(self, rol, permiso):
-        for un_permiso in rols.permisos:
-            if (unPermiso.nombre == permiso):
+    def check_permiso(self, permiso):
+        """
+            Retorna verdadero o falso dependiendo si el rol tiene el permiso pasado
+            por parametro
+        """
+        for un_permiso in self.permisos:
+            if (un_permiso.nombre == permiso):
                 return True
         return False 
 
@@ -27,5 +29,3 @@ class Rol(db.Model):
     def save(self,new_rol):
         db.session.add(new_rol)
         db.session.commit()
-
-   

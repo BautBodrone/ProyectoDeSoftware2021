@@ -85,7 +85,6 @@ def add_rols():
 
     return redirect(request.referrer)
 
-#'Este seria un filtro muy parecido al de puntos de encuentro'
 def filtro():
     """
         El metodo hara un filtro de los usuarios dependiendo de los datos ingresados 

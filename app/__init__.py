@@ -10,13 +10,10 @@ from app.helpers.auth import authenticated
 from config import config
 from app import db
 
-from app.resources import issue, user, auth, punto, rol , configuration,puntos
-
-
-from app.models.puntos import Puntos
+from app.resources import issue, user, auth, rol , configuration, puntos
 
 from app.resources.api.issue import issue_api
-from app.helpers import handler, user_helper
+from app.helpers import handler, user_helper, configurator
 from app.helpers import auth as helper_auth
 
 
@@ -59,8 +56,9 @@ def create_app(environment="production"):
     app.add_url_rule("/usuarios/delete", "user_delete", user.delete, methods=["POST"])
     app.add_url_rule("/usuarios/edit/<user_id>","user_edit",user.edit)
     app.add_url_rule("/usuarios/edit","user_edit_finish",user.edit_finish, methods=["POST"])
+    app.add_url_rule("/usuarios/filtro","user_filtro",user.filtro, methods=["POST"] )
 
- # Ruta de Roles
+    # Ruta de Roles
     app.add_url_rule("/roles", "rol_index", rol.index)
 
     # Rutas de Usuarios

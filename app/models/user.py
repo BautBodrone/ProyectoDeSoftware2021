@@ -13,13 +13,14 @@ class User(db.Model):
     email = Column(String(30),unique=True)
     password = Column(String(30))
     rols = relationship("Rol",secondary = "users_rols")
-    
+    activo = Column(Boolean)
 
     def __init__(self, first_name=None, last_name=None, email=None, password=None):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.password = password
+        self.activo = True
 
     @classmethod
     def get_email(self):
@@ -27,10 +28,17 @@ class User(db.Model):
     
     @classmethod
     def authenticate_user(self, params):
+        """
+            Revisa en la base de datos para saber si se ingreso correctamente el email y la pass
+            al logear
+        """
         return self.query.filter(User.email==params["email"] and User.password==params["password"]).first()
 
     @classmethod
     def check_permiso(self, email, permiso):
+        """
+            Recive un email y un permiso y se fija si el usuario con ese email tiene ese permiso
+        """
         user = db.session.query(User).filter_by(email=email).first()
         for rol in user.rols:
             for un_permiso in rol.permisos:
@@ -40,6 +48,9 @@ class User(db.Model):
 
     @classmethod
     def check_rol(self, email, rol):
+        """
+            Recive un email y un permiso y se fija si el usuario con ese mail tiene ese rol
+        """
         user = db.session.query(User).filter_by(email=email).first()
         for un_rol in user.rols:
             rol = un_rol.nombre
@@ -86,4 +97,9 @@ class User(db.Model):
 
         return db.session.query(User).filter_by(email=unEmail).first()
     
-
+    def get_permisos(self):
+        permisos = []
+        for rol in self.rols:
+            for permiso in rol.permisos:
+                permisos.append(permiso)
+        return permisos

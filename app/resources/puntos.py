@@ -42,13 +42,13 @@ def create():
 
 
 def delete(id):
-        if not authenticated(session):
-          abort(401)
+    if not authenticated(session):
+        abort(401)
 
-        puntoEliminar = Puntos.query.filter_by(id=int(id)).first()
-        Puntos.delete(puntoEliminar)
-        flash("Se elimino con exito", "success") 
-        return redirect(url_for('puntos_index'))
+    puntoEliminar = Puntos.query.filter_by(id=int(id)).first()
+    Puntos.delete(puntoEliminar)
+    flash("Se elimino con exito", "success") 
+    return redirect(url_for('puntos_index'))
 
 def edit(id):
     if not authenticated(session):

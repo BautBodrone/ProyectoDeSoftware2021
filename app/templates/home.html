@@ -14,9 +14,9 @@
   <a href="{{ url_for('issue_index') }}" class="link">Problemas</a>
   <a href="{{ url_for('puntos_index') }}" class="link">Puntos de Encuentro</a>
   {% if is_authenticated(session) %}
-
-    <a href="{{ url_for('configuration_index') }}" class="link">Configuracion</a>
-    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}
+    <a href="{{ url_for('puntos_index') }}" class="link">Puntos de Encuentro</a>
+    <a href="{{ url_for('configuration_edit') }}" class="link">Configuracion</a>
+    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
       <a href="{{ url_for('rol_index') }}" class="link">Roles</a>
       <a href="{{ url_for('user_index') }}" class="link">Usuarios</a>
       <a href="{{ url_for('auth_logout') }}" class="link">Cerrar sesión</a>

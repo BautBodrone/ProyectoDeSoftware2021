@@ -3,23 +3,23 @@
   <head>
     <style>
       body{
-        background-color: {{ configurations.get_private_bg_color() }};
-        color: {{ configurations.get_private_letters_color() }};
+        background-color: {{ configurator().get_private_bg_color() }}!important;
+        color: {{ configurator().get_private_letters_color() }};
       }
       a.link{
-        background-color: {{ configurations.get_private_accent_color() }};
-        color: {{ configurations.get_private_letters_color() }}
+        background-color: {{ configurator().get_private_accent_color() }};
+        color: {{ configurator().get_private_letters_color() }};
       }
       #container{
-        background-color: {{ configurations.get_private_accent_color() }};
+        background-color: {{ configurator().get_private_accent_color() }};
       }
       #header{
-        background-color: {{ configurations.get_private_accent_color() }};
-        color: {{ configurations.get_private_letters_color() }}
+        background-color: {{ configurator().get_private_accent_color() }};
+        color: {{ configurator().get_private_letters_color() }};
       }
       .navbar{
-        background-color: {{ configurations.get_private_accent_color() }};
-        color: {{ configurations.get_private_letters_color() }}
+        background-color: {{ configurator().get_private_accent_color() }};
+        color: {{ configurator().get_private_letters_color() }};
       }
     </style>
     {% block head %}

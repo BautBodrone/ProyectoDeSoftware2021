@@ -17,8 +17,8 @@ def index():
         abort(401)
 
     page = request.args.get('page',1, type=int)
-    pagConf = configurator.settings().get_rows_per_page()
-    users = User.query.paginate(page=page,per_page=pagConf)
+    page_config = configurator.settings().get_rows_per_page()
+    users = User.query.paginate(page=page,per_page=page_config)
 
 
     return render_template("user/index.html", users=users)
@@ -115,18 +115,19 @@ def filtro():
     """
         El metodo hara un filtro de los usuarios dependiendo de los datos ingresados 
     """
+    page_config = configurator.settings().get_rows_per_page()
     page = request.args.get('page',1, type=int)
     data = request.form
     activo = data["activo"]
     first_name = data["first_name"]
     if (activo != "" and first_name!= ""):
-      users=User.query.filter_by(activo=activo,first_name=first_name).paginate(page=page,per_page=pagConf)
+      users=User.query.filter_by(activo=activo,first_name=first_name).paginate(page=page,per_page=page_config)
     else:
         if (activo == "" and first_name != ""):
-            users=User.query.filter_by(first_name=first_name).paginate(page=page,per_page=pagConf)
+            users=User.query.filter_by(first_name=first_name).paginate(page=page,per_page=page_config)
         else:
             if(activo !="" and first_name==""):
-                users=User.query.filter_by(activo=activo).paginate(page=page,per_page=pagConf)
+                users=User.query.filter_by(activo=activo).paginate(page=page,per_page=page_config)
             else:
-                 users=User.query.paginate(page=page,per_page=pagConf)
+                users=User.query.paginate(page=page,per_page=page_config)
     return render_template("user/index.html", users=users )

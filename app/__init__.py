@@ -71,43 +71,12 @@ def create_app(environment="production"):
     app.add_url_rule("/puntosDeEncuentros", "puntos_index", puntos.index)
     app.add_url_rule("/puntos", "puntos_create", puntos.create, methods=["POST"])
     app.add_url_rule("/puntosDeEncuentros/nuevo", "puntos_new", puntos.new)
+    app.add_url_rule("/puntosDeEncuentro/filtro","puntos_filtro",puntos.filtro, methods=["POST"] )
+
     #Editar punto de encuentro
     app.add_url_rule("/puntosDeEncuentro/edit/<id>", "puntos_edit", puntos.edit)
     app.add_url_rule("/puntosDeEncuentro/update","puntos_update",puntos.update, methods=["POST"])
-    #Eliminar punto de encuentro
-    @app.route('/puntosDeEncuentro/delete/<id>')
-    def delete(id):
-        puntoEliminar = Puntos.query.filter_by(id=int(id)).first()
-        Puntos.delete(puntoEliminar)
-        return redirect(url_for('puntos_index'))
-
-    #DATA TABLE
-    @app.route('/api/data')
-    def data():
-        puntos = Puntos.query
-        # search filter
-        search = request.args.get('search[value]')
-        if search:
-            puntos = puntos.filter(db.or_(
-                Puntos.nombre.like(f'%{search}%'),
-                Puntos.estado.like(f'{search}%'),
-            ))
-        total_filtered = puntos.count()
-        # pagination
-        start = request.args.get('start', type=int)
-        length = request.args.get('length', type=int)
-        puntos = puntos.offset(start).limit(length)
-
-        # response
-        return {
-        'data': [p.to_dict() for p in puntos],
-        'recordsFiltered': total_filtered,
-        'recordsTotal': Puntos.query.count(),
-        'draw': request.args.get('draw', type=int),
-    }
-        
-
-        
+    app.add_url_rule("/puntosDeEncuentro/delete/<id>", "puntos_delete", puntos.delete, methods=["POST"])
 
     # Ruta para el Home (usando decorator)
     @app.route("/")

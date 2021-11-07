@@ -3,14 +3,22 @@ from flask import redirect, render_template, request, url_for, session, abort, f
 from app.models.puntos import Puntos
 from app.helpers.auth import authenticated
 from app.db import db
+from app.helpers import configurator
 
-pagConf=4
 # Public resources
 def index():
+    """
+        El metodo mostrara todos los puntos en una tabla
+    """
+
     if not authenticated(session):
         abort(401)
-    
-    return render_template("puntosDeEncuentro/index.html")
+
+    page = request.args.get('page',1, type=int)
+    page_config = configurator.settings().get_rows_per_page()
+    puntos = Puntos.query.paginate(page=page,per_page=page_config)
+
+    return render_template("puntosDeEncuentro/index.html", puntos=puntos)
 
 
 def new():
@@ -83,3 +91,24 @@ def data():
         'recordsTotal': Puntos.query.count(),
         'draw': request.args.get('draw', type=int),
     }
+
+def filtro():
+    """
+        El metodo hara un filtro de los puntos dependiendo de los datos ingresados 
+    """
+    page_config = configurator.settings().get_rows_per_page()
+    page = request.args.get('page',1, type=int)
+    data = request.form
+    estado = data["estado"]
+    nombre = data["nombre"]
+    if (estado != "" and nombre!= ""):
+      puntos=Puntos.query.filter_by(estado=estado,nombre=nombre).paginate(page=page,per_page=page_config)
+    else:
+        if (estado == "" and nombre != ""):
+            puntos=Puntos.query.filter_by(nombre=nombre).paginate(page=page,per_page=page_config)
+        else:
+            if(estado !="" and nombre==""):
+                puntos=Puntos.query.filter_by(estado=estado).paginate(page=page,per_page=page_config)
+            else:
+                puntos=Puntos.query.paginate(page=page,per_page=page_confif)
+    return render_template("puntosDeEncuentro/index.html", puntos=puntos )

@@ -9,14 +9,39 @@
     <h1 id="header">Usuarios</h1>
   </div>
 {% endblock %}
+
+{% block navbar %}
+{% if is_authenticated(session) %}
+  <a href="{{ url_for('puntos_index') }}" class="navbar">Puntos de Encuentro</a>
+  <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
+  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
+    <a href="{{ url_for('rol_index') }}" class="navbar">Roles</a>
+    <a href="{{ url_for('user_index') }}" class="navbar selected">Usuarios</a>
+    {% endif %}
+    <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
+{% else %}
+  <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
+{% endif %}
+{% endblock %}
+
 {% block content %}
-<h1 style="text-align: center">Usuarios</h1>
+<a href="{{ url_for('user_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
+<form action="{{ url_for('user_filtro') }}" method="POST">
+  <h4>Filtrar</h4> 
+      <input name="first_name" placeholder="Nombre" />
+      <select  name="activo" >
+        <option value="" selected>Seleccione un estado</option>
+        <option value="1">Activo</option>
+        <option value="0">Bloqueado</option>
+      </select>
+      <input type="submit" value="Filtrar">
+    </form>
+  <br>
   <table>
     <tr>
         <th>  Email  </th>
         <th>  Nombre  </th>
         <th>  Apellido  </th>
-        <th>  Contraseña  </th>
         <th>  Roles  </th>
         <th>  Estado  </th>
         <th>  Actions  </th>
@@ -26,7 +51,6 @@
       <td>{{ user.email }}</td>
       <td>{{ user.first_name }} </td>
       <td>{{ user.last_name }} </td>
-      <td>{{ user.password }}</td>
       <td>
         {% for rol in user.rols %}
           {{ rol.nombre }} 
@@ -43,7 +67,12 @@
         <form action="{{ url_for('user_edit', user_id = user.id ) }}"  >
           <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
         </form>
+<<<<<<< HEAD
         <br>
+=======
+        {% endif %}
+        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_delete') %}
+>>>>>>> refactoring-layout
         <form action="{{ url_for('user_delete') }}" method="POST" enctype="multipart/form-data">
           <input type="hidden" id="user_id" name="user_id" value="{{user.id}}">
           <button type="submit" class="btn btn-danger mt-2 ml-2" >eliminar</button>
@@ -52,6 +81,32 @@
     </tr>
     {% endfor %}
   </table>
+<<<<<<< HEAD
   <a href="{{ url_for('home') }}" class="link">Volver</a>
   <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>
 {% endblock %}
+=======
+
+
+
+  {% if users.has_prev %}
+  <a class="link" href="{{ url_for('user_index', page_num=users.prev_num,) }}">Anterior</a>
+  {% endif %}
+  {% for page_num in users.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+     {% if page_num%}
+       {% if users.page == page_num%}
+         <a href="" class="link selected">{{page_num}}</a>
+       {% else %}
+         <a href="{{ url_for('user_index',page=page_num)}}" class="link">{{page_num}}</a>
+       {% endif %}
+     {% endif %}
+  {% endfor %}
+ {% if users.has_next %}
+  <a class="link" href="{{ url_for('user_index', page=users.next_num) }}">Siguiente</a>
+ {% endif %}
+
+
+  <a href="{{ url_for('home') }}" class="link">Volver</a>
+{% endblock %}
+
+>>>>>>> refactoring-layout

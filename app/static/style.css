@@ -4,11 +4,12 @@ body {
   font-family: 'Montserrat', Helvetica, sans-serif;
   font-size: 14px;
   min-height: 100vh;
+  margin:0;
   height: 100%;
 }
 
 .header {
-  padding: 20px;
+  padding: 30px;
   text-align: center;
   font-size: 30px;
 }
@@ -20,14 +21,11 @@ body {
 }
 
 #footer {
-  width: 75%;
-  margin: 0 auto;
+  position:fixed;
+  bottom:0; 
+  min-height:50px;
   text-align: center;
-  bottom: 0;
-  clear: both;
-  position: relative;
-  height: 40px;
-  margin-top: 0px;
+  width: 100%;
 }
 
 #container {
@@ -37,6 +35,23 @@ body {
   border: solid 1px black;
   margin-top: 20px;
   min-height: 400px;
+}
+
+a.navbar{
+  text-transform: uppercase;
+  font-size: 10px;
+  padding: 15px 10px;
+  border-radius: 0;
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  line-height: 1.5;
+  text-decoration: none;
+  letter-spacing: 1px;
+  text-align: left;
+  height:50px; 
+  width:250px;
 }
 
 a.link {
@@ -52,21 +67,24 @@ a.link {
   margin-top: 50px;
   letter-spacing: 1px;
 }
+
+a.page {
+  pointer-events: none;
+  cursor: default;
+}
+
 .navbar {
   font-family: 'Montserrat', sans-serif;
-    float: left;
-    width: 20%;
-    padding-left: 3%;
-    padding-right: 3%;
-    text-align: center;
-    padding-top: 36px;
-    height: 100%;
+  float: left;
+  width: 20%;
+  padding-left: 1%;
+  text-align: center;
+  padding-top: 36px;
 }
 
 .navbar a {
   text-decoration: none;
   font-size: 15px;
-  color: #2196F3;
   display: block;
 }
 
@@ -77,26 +95,24 @@ a.link {
 	text-align: center;
 	color: rgba(208,207,207,1.00);
 	font-size: 14px;
-	;
 	margin-bottom: 21px;
 }
 
-.navbar a:hover {
-  color: #064579;
-}
-
 .content {
+  padding-right: 3%;
+  padding-left: 3%;
+  float: right;
   margin: 0 auto;
-  width: 400px;
+  width: 80%;
 }
 
 table, td, th {
-  border: 1px solid rgb(0, 0, 0);
+  border: 1px solid rgb(32, 32, 32);
 }
 
 
 table {
-  font-family: arial, sans-serif;
+  text-align: center;
   border-collapse: collapse;
   width: 100%;
 }
@@ -106,9 +122,10 @@ th {
 }
 
 td {
-  text-align: center;
+  text-align: right;
   padding: 5px;
 }
+
 .form {
   margin-top: 20px;
 }

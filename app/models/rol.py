@@ -12,8 +12,9 @@ class Rol(db.Model):
     users = relationship("User",secondary = "users_rols")
     permisos = relationship("Permiso",secondary = "rols_permisos")
 
-    def __init__(self,nombre = None):
+    def __init__(self, nombre):
         self.nombre = nombre
+        db.session.commit()
 
     @classmethod 
     def check_permiso(self, rol, permiso):

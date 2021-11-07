@@ -4,14 +4,17 @@ from app.models.user import User
 from app.helpers.auth import authenticated
 
 from app.models.user_rol import User_rol
+from app.helpers import configurator
 
 # Protected resources
 def index():
     if not authenticated(session):
         abort(401)
 
-    users = User.query.all()
-    
+    page = request.args.get('page',1, type=int)
+    page_config = configurator.settings().get_rows_per_page()
+    users = User.query.paginate(page=page,per_page=page_config)
+
 
     return render_template("user/index.html", users=users)
 
@@ -84,7 +87,22 @@ def add_rols():
 
 #'Este seria un filtro muy parecido al de puntos de encuentro'
 def filtro():
-    if not authenticated(session):
-        abort(401)
-    
-    return "Hello world"
+    """
+        El metodo hara un filtro de los usuarios dependiendo de los datos ingresados 
+    """
+    page_config = configurator.settings().get_rows_per_page()
+    page = request.args.get('page',1, type=int)
+    data = request.form
+    activo = data["activo"]
+    first_name = data["first_name"]
+    if (activo != "" and first_name!= ""):
+      users=User.query.filter_by(activo=activo,first_name=first_name).paginate(page=page,per_page=page_config)
+    else:
+        if (activo == "" and first_name != ""):
+            users=User.query.filter_by(first_name=first_name).paginate(page=page,per_page=page_config)
+        else:
+            if(activo !="" and first_name==""):
+                users=User.query.filter_by(activo=activo).paginate(page=page,per_page=page_config)
+            else:
+                users=User.query.paginate(page=page,per_page=page_config)
+    return render_template("user/index.html", users=users )

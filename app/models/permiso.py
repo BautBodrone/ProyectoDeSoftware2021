@@ -9,10 +9,12 @@ class Permiso(db.Model):
     __tablename__ = 'permisos'
     id = Column(Integer,primary_key = True)
     nombre = Column(String(30))
+    descripcion = Column(String(255))
     rols = relationship("Rol",secondary = "rols_permisos")
     
-    def __init__(self,nombre = None):
+    def __init__(self, nombre, descripcion):
         self.nombre = nombre
+        self.descripcion = descripcion
         db.session.commit()
 
     @classmethod 

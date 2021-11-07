@@ -9,9 +9,24 @@
     <h1 id="header">Roles</h1>
   </div>
 {% endblock %}
+
+{% block navbar %}
+{% if is_authenticated(session) %}
+  <a href="{{ url_for('puntos_index') }}" class="navbar">Puntos de Encuentro</a>
+  <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
+  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
+    <a href="{{ url_for('rol_index') }}" class="navbar selected">Roles</a>
+    <a href="{{ url_for('user_index') }}" class="navbar">Usuarios</a>
+    {% endif %}
+    <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
+{% else %}
+  <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
+{% endif %}
+{% endblock %}
+
 {% block content %}
   {% for rol in rols %}
-    <li>{{ rol.nombre }} {% for permiso in rol.permisos %} {{ permiso.nombre }}, {% endfor %}</li>
+    <li>{{ rol.nombre }}: {% for permiso in rol.permisos %} {{ permiso.descripcion }}, {% endfor %}</li>
   {% endfor %}
   <a href="{{ url_for('home') }}" class="link">Volver</a>
 {% endblock %}

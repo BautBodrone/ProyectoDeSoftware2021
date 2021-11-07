@@ -1,5 +1,6 @@
 from flask import redirect, render_template, request, url_for, session, abort, flash
 
+from app.helpers.user_helper import has_permit
 from app.models.puntos import Puntos
 from app.helpers.auth import authenticated
 from app.db import db
@@ -24,6 +25,11 @@ def index():
 def new():
     if not authenticated(session):
         abort(401)
+
+    if not has_permit("punto_index"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
+
     return render_template("puntosDeEncuentro/new.html")
 
 
@@ -31,6 +37,11 @@ def create():
     if not authenticated(session):
         abort(401)
     puntoNuevo = Puntos(**request.form)
+
+    if not has_permit("punto_new"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
+
     try:
         Puntos.save(puntoNuevo)
     except:
@@ -45,6 +56,10 @@ def delete(id):
     if not authenticated(session):
         abort(401)
 
+    if not has_permit("punto_delete"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
+
     puntoEliminar = Puntos.query.filter_by(id=int(id)).first()
     Puntos.delete(puntoEliminar)
     flash("Se elimino con exito", "success") 
@@ -53,6 +68,11 @@ def delete(id):
 def edit(id):
     if not authenticated(session):
         abort(401)
+
+    if not has_permit("punto_edit"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
+    
     punto = Puntos.query.filter_by(id=int(id)).first()
     return render_template("puntosDeEncuentro/edit.html", punto=punto)
 

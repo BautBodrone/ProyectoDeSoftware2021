@@ -2,6 +2,7 @@ from flask import flash, redirect, render_template, request, url_for, session, a
 
 from app.models.user import User
 from app.helpers.auth import authenticated
+from app.helpers.user_helper import has_permit
 
 from app.models.user_rol import User_rol
 
@@ -31,6 +32,10 @@ def new():
     if not authenticated(session):
         abort(401)
 
+    if not has_permit("user_index"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
+
     return render_template("user/new.html")
 
 def create():
@@ -40,6 +45,10 @@ def create():
 
     if not authenticated(session):
         abort(401)
+
+    if not has_permit("user_create"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
 
     new_user = User(**request.form)
     try:
@@ -58,6 +67,10 @@ def delete():
     if not authenticated(session):
         abort(401)
 
+    if not has_permit("user_delete"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
+
     user = User.search_user(request.form["user_id"])
     user.delete()
     flash("Se elimino con exito")
@@ -70,6 +83,10 @@ def edit(user_id):
     """
     if not authenticated(session):
         abort(401)
+
+    if not has_permit("user_edit"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
 
     user = User.search_user(user_id)
     

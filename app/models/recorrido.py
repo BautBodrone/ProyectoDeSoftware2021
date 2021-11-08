@@ -1,7 +1,14 @@
-from sqlalchemy import Column, Integer, String, Relationship
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.sql.schema import PrimaryKeyConstraint
 from sqlalchemy_utils import ChoiceType
 
+from app.models import coordenada
 from app.db import db
+
+coordenadas = db.Table('recorridos_coordenadas',
+    db.Column('recorrido_id', db.Integer, db.ForeignKey('recorrdio.id'), primary_key=True),
+    db.Column('coordenada_id', db.Integer, db.ForeignKey('coordenada.id'), primary_key=True)
+)
 
 class Recorrido(db.Model):
 
@@ -14,7 +21,7 @@ class Recorrido(db.Model):
     id = Column(Integer, primary_key=True)
     nombre = Column(String(30), unique=True,nullable=False)
     descrpcion = Column(String(60))
-    coordenadas = db.relationship("Coordenada", backref="recorrido", lazy=True, nullable=False)
+    coordenadas = db.relationship("Coordenada", secondary=coordenadas)
     estado = Column(ChoiceType(ESTADOS))
 
     def __init__(self,nombre=None, descipcion=None, coordenadas=None, estado=None):

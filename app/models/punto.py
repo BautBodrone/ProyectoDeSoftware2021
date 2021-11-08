@@ -4,9 +4,9 @@ from sqlalchemy.orm import relationship
 from app.db import db
 
 
-class Puntos(db.Model):
+class Punto(db.Model):
     
-    __tablename__ = "puntosDeEncuentro" 
+    __tablename__ = "puntos" 
     id = Column(Integer, primary_key=True)
     email = Column(String(30))
     nombre = Column(String(30), unique=True)
@@ -27,7 +27,7 @@ class Puntos(db.Model):
         """
             Retorna punto que tenga el mismo id que el que se paso por parametro
         """
-        return db.session.query(Puntos).get(id)
+        return db.session.query(Punto).get(id)
     
     @classmethod
     def save(self, new_punto):
@@ -38,7 +38,7 @@ class Puntos(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def update(self, punto):
+    def edit(self, punto):
         """
             Actualiza el punto con los valores pasados por parametro
         """

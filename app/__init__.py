@@ -9,10 +9,7 @@ from app.helpers.auth import authenticated
 
 from config import config
 from app import db
-
-from app.resources import issue, user, auth, rol , configuration, puntos
-
-from app.resources.api.issue import issue_api
+from app.resources import user, auth, rol , configuration, puntos
 from app.helpers import handler, user_helper, configurator
 from app.helpers import auth as helper_auth
 
@@ -44,11 +41,6 @@ def create_app(environment="production"):
     app.add_url_rule("/cerrar_sesion", "auth_logout", auth.logout)
     app.add_url_rule("/autenticacion", "auth_authenticate", auth.authenticate, methods=["POST"])
 
-    # Rutas de Consultas
-    app.add_url_rule("/consultas", "issue_index", issue.index)
-    app.add_url_rule("/consultas", "issue_create", issue.create, methods=["POST"])
-    app.add_url_rule("/consultas/nueva", "issue_new", issue.new)
-
     # Rutas de Usuarios
     app.add_url_rule("/usuarios", "user_index", user.index)
     app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
@@ -61,7 +53,7 @@ def create_app(environment="production"):
     # Ruta de Roles
     app.add_url_rule("/roles", "rol_index", rol.index)
 
-    # Rutas de Usuarios
+    # Rutas de la configuracion
     app.add_url_rule("/configuracion", "configuration_edit", configuration.edit)
     app.add_url_rule("/configuracion", "configuration_update", configuration.save, methods=["POST"])
 
@@ -83,8 +75,6 @@ def create_app(environment="production"):
 
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")
-    api.register_blueprint(issue_api)
-
     app.register_blueprint(api)
 
     # Handlers

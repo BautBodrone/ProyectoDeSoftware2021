@@ -17,7 +17,7 @@ class Recorrido(db.Model):
     coordenadas = db.relationship("Coordenada", backref="recorrido", lazy=True, nullable=False)
     estado = Column(ChoiceType(ESTADOS))
 
-    def __init__(self,nombre=None, descipcion=None, coordenadas=None, estado=None)
+    def __init__(self,nombre=None, descipcion=None, coordenadas=None, estado=None):
         self.nombre = nombre
         self.descrpcion = descipcion
         self.coordenadas = coordenadas

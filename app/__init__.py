@@ -11,7 +11,7 @@ from config import config
 
 from app.resources import issue, user, auth, rol, configuration, puntos
 from app.db import db
-from app.models.puntos import Puntos
+from app.models.punto import Punto
 from app.resources.api.issue import issue_api
 from app.helpers import handler, user_helper, configurator
 from app.helpers import auth as helper_auth
@@ -66,31 +66,31 @@ def create_app(environment="production"):
     app.add_url_rule("/configuracion", "configuration_update", configuration.save, methods=["POST"])
 
     #Rutas de Puntos de encuentro
-    app.add_url_rule("/puntosDeEncuentros", "puntos_index", puntos.index)
-    app.add_url_rule("/puntos", "puntos_create", puntos.create, methods=["POST"])
-    app.add_url_rule("/puntosDeEncuentros/nuevo", "puntos_new", puntos.new)
+    app.add_url_rule("/punto", "punto_index", puntos.index)
+    app.add_url_rule("/punto", "punto_create", puntos.create, methods=["POST"])
+    app.add_url_rule("/punto/nuevo", "punto_new", puntos.new)
 
     #Editar punto de encuentro
-    app.add_url_rule("/puntosDeEncuentro/edit/<id>", "puntos_edit", puntos.edit)
-    app.add_url_rule("/puntosDeEncuentro/update","puntos_update",puntos.update, methods=["POST"])
+    app.add_url_rule("/punto/edit/<id>", "punto_edit", puntos.edit)
+    app.add_url_rule("/punto/update","punto_update",puntos.update, methods=["POST"])
     
     #Eliminar punto de encuentro
-    @app.route('/puntosDeEncuentro/delete/<id>')
+    @app.route('/punto/delete/<id>')
     def delete(id):
-        puntoEliminar = Puntos.query.filter_by(id=int(id)).first()
-        Puntos.delete(puntoEliminar)
-        return redirect(url_for('puntos_index'))
+        puntoEliminar = Punto.query.filter_by(id=int(id)).first()
+        Punto.delete(puntoEliminar)
+        return redirect(url_for('punto_index'))
 
     #DATA TABLE
     @app.route('/api/data')
     def data():
-        puntos = Puntos.query
+        puntos = Punto.query
         # search filter
         search = request.args.get('search[value]')
         if search:
             puntos = puntos.filter(db.or_(
-                Puntos.nombre.like(f'%{search}%'),
-                Puntos.estado.like(f'{search}%'),
+                Punto.nombre.like(f'%{search}%'),
+                Punto.estado.like(f'{search}%'),
             ))
         total_filtered = puntos.count()
         # pagination
@@ -102,7 +102,7 @@ def create_app(environment="production"):
         return {
         'data': [p.to_dict() for p in puntos],
         'recordsFiltered': total_filtered,
-        'recordsTotal': Puntos.query.count(),
+        'recordsTotal': Punto.query.count(),
         'draw': request.args.get('draw', type=int),
     }
 

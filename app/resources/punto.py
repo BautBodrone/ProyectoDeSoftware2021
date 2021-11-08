@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, url_for, session, abort, flash
 
-from app.models.puntos import Puntos
+from app.models.punto import Punto
 from app.helpers.auth import authenticated
 from app.db import db
 
@@ -10,7 +10,7 @@ def index():
     if not authenticated(session):
         abort(401)
 
-    return render_template("puntosDeEncuentro/index.html")
+    return render_template("punto/index.html")
 
 def new():
     """
@@ -19,7 +19,7 @@ def new():
 
     if not authenticated(session):
         abort(401)
-    return render_template("puntosDeEncuentro/new.html")
+    return render_template("punto/new.html")
 
 def create():
     """
@@ -28,15 +28,15 @@ def create():
 
     if not authenticated(session):
         abort(401)
-    puntoNuevo = Puntos(**request.form)
+    puntoNuevo = Punto(**request.form)
     try:
-        Puntos.save(puntoNuevo)
+        Punto.save(puntoNuevo)
     except:
         flash("error")
         return redirect(request.referrer)
 
     flash("Se creo con exito", "success")
-    return redirect(url_for("puntos_index"))
+    return redirect(url_for("punto_index"))
 
 def delete(id):
     """
@@ -46,10 +46,10 @@ def delete(id):
     if not authenticated(session):
         abort(401)
 
-    puntoEliminar = Puntos.query.filter_by(id=int(id)).first()
-    Puntos.delete(puntoEliminar)
+    puntoEliminar = Punto.query.filter_by(id=int(id)).first()
+    Punto.delete(puntoEliminar)
     flash("Se elimino con exito", "success") 
-    return redirect(url_for('puntos_index'))
+    return redirect(url_for('punto_index'))
 
 def edit(id):
     """
@@ -58,8 +58,8 @@ def edit(id):
 
     if not authenticated(session):
         abort(401)
-    punto = Puntos.query.filter_by(id=int(id)).first()
-    return render_template("puntosDeEncuentro/edit.html", punto=punto)
+    punto = Punto.query.filter_by(id=int(id)).first()
+    return render_template("punto/edit.html", punto=punto)
 
 def update():
     """
@@ -67,7 +67,7 @@ def update():
     """
 
     data = request.form
-    punto = Puntos.search_punto(data["id"])
+    punto = Punto.search_punto(data["id"])
     try:
         punto.update(data)
     except:
@@ -81,14 +81,14 @@ def data():
         El metodo hara un filtro de los puntos de encuentro dependiendo de los datos ingresados
     """
 
-    query = Puntos.query
+    query = Punto.query
 
     # search filter
     search = request.args.get('search[value]')
     if search:
         query = query.filter(db.or_(
-            Puntos.nombre.like(f'%{search}%'),
-            Puntos.estado.like(f'%{search}%')
+            Punto.nombre.like(f'%{search}%'),
+            Punto.estado.like(f'%{search}%')
         ))
     total_filtered = query.count()
 
@@ -99,8 +99,8 @@ def data():
 
     # response
     return {
-        'data': [Puntos.to_dict() for puntos in query],
+        'data': [Punto.to_dict() for puntos in query],
         'recordsFiltered': total_filtered,
-        'recordsTotal': Puntos.query.count(),
+        'recordsTotal': Punto.query.count(),
         'draw': request.args.get('draw', type=int),
     }

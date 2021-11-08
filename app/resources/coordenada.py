@@ -9,11 +9,13 @@ def index():
     if not authenticated(session):
         abort(401)
 
-    if not has_permit("coordenada_index"):
-        flash("No cuenta con los permisso necesarios")
-        return redirect(request.referrer)
+    # if not has_permit("coordenada_index"):
+    #     flash("No cuenta con los permisso necesarios")
+    #     return redirect(request.referrer)
 
-    return render_template("coordenada/index.html")
+    coordenadas = Coordenada.query.all()
+
+    return render_template("coordenada/index.html", coordenadas=coordenadas)
 
 def create():
     """

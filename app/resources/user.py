@@ -84,6 +84,10 @@ def edit(user_id):
     if not authenticated(session):
         abort(401)
 
+    if not has_permit("user_edit"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
+
     user = User.search_user(user_id)
     
     return render_template("user/edit.html", user=user)

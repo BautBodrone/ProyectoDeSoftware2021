@@ -4,7 +4,7 @@ from app.db import db
 
 class Coordenada(db.Model):
 
-    __table_args__ = (db.UniqueConstraint("latutid","longitud"),)
+    __table_args__ = (db.UniqueConstraint("latitud","longitud"),)
 
     __tablename__ = "coordenadas"
     id = Column(Integer,primary_key=True)

@@ -10,6 +10,8 @@ from app.helpers.auth import authenticated
 from config import config
 from app import db
 from app.resources import user, auth, rol , configuration, puntos
+from app.resources.api.zonas import zonas_api
+from app.resources.api.denuncias import denuncias_api
 from app.helpers import handler, user_helper, configurator
 from app.helpers import auth as helper_auth
 
@@ -68,6 +70,13 @@ def create_app(environment="production"):
     app.add_url_rule("/puntosDeEncuentro/update","puntos_update",puntos.update, methods=["POST"])
     app.add_url_rule("/puntosDeEncuentro/delete/<id>", "puntos_delete", puntos.delete, methods=["POST"])
 
+    # Rutas del api zonas
+    app.add_url_rule("/zonas-inundables", "/", api.zonas.index)
+    app.add_url_rule("/zonas-inundables/:<id>", "/", api.zonas.get_id)
+
+    # Rutas del api denuncias
+    app.add_url_rule("/denuncias", "/", api.denuncias.index, methods=["POST"])
+
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
@@ -76,11 +85,14 @@ def create_app(environment="production"):
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")
     app.register_blueprint(api)
+    app.register_blueprint(zonas_api)
+    app.register_blueprint(denuncias_api)
 
     # Handlers
+    app.register_error_handler(400, handler.bad_request)
     app.register_error_handler(404, handler.not_found_error)
     app.register_error_handler(401, handler.unauthorized_error)
     app.register_error_handler(500, handler.server_error)
-
+    
     # Retornar la instancia de app configurada
     return app

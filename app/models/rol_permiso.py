@@ -9,8 +9,8 @@ class Rol_permiso(db.Model):
     id = Column(Integer,primary_key=True)
     permiso_id = Column(Integer, ForeignKey("permisos.id"))
     rol_id = Column(Integer, ForeignKey("rols.id"))
-    permiso = relationship("Permiso", backref=backref("rols_permisos", cascade="all,delete-orphan"))
-    rol = relationship("Rol", backref=backref("rols_permisos", cascade="all,delete-orphan"))
+    permiso = relationship("Permiso")
+    rol = relationship("Rol")
 
     def __init__(self, permiso_id, rol_id):
         self.permiso_id = permiso_id

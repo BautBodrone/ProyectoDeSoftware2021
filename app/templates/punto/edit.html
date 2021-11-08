@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
   <h1>Editar Punto de Encuentro</h1>
-  <form action="{{ url_for('puntos_update') }}" method="POST">
+  <form action="{{ url_for('punto_update') }}" method="POST">
     <input type="hidden" class="form-control"  id="id" name="id" value="{{punto.id}}">
     <p>
       <label>Nombre<label></br>
@@ -41,5 +41,5 @@
       <input type="submit" value="Modificar">
     </p>
   </form>
-  <a href="{{ url_for('puntos_index') }}" class="link">Volver</a>
+  <a href="{{ url_for('punto_index') }}" class="link">Volver</a>
 {% endblock %}

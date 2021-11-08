@@ -16,6 +16,19 @@ def index():
     coordenadas = Coordenada.query.all()
 
     return render_template("coordenada/index.html", coordenadas=coordenadas)
+def new():
+    """
+        El metodo ,si esta autenticado,saltara a una nueva pagina para crear una coordenada
+    """
+
+    if not authenticated(session):
+        abort(401)
+
+    # if not has_permit("coordenada_new"):
+    #     flash("No cuenta con los permisos necesarios")
+    #     return redirect(request.referrer)
+
+    return render_template("coordenada/new.html")
 
 def create():
     """
@@ -25,9 +38,9 @@ def create():
     if not authenticated(session):
         abort(401)
 
-    if not has_permit("coordenada_create"):
-        flash("No cuenta con los permisos necesarios")
-        return redirect(request.referrer)
+    # if not has_permit("coordenada_create"):
+    #     flash("No cuenta con los permisos necesarios")
+    #     return redirect(request.referrer)
 
     new_coord = Coordenada(**request.form)
     try:
@@ -46,9 +59,9 @@ def delete():
     if not authenticated(session):
         abort(401)
 
-    if not has_permit("coordenada_delete"):
-        flash("No cuenta con los permisos necesarios")
-        return redirect(request.referrer)
+    # if not has_permit("coordenada_delete"):
+    #     flash("No cuenta con los permisos necesarios")
+    #     return redirect(request.referrer)
 
     coordenada = Coordenada.search_coordenada(request.form["coordenada_id"])
     coordenada.delete()
@@ -63,9 +76,9 @@ def edit(coordenada_id):
     if not authenticated(session):
         abort(401)
 
-    if not has_permit("coordenada_edit"):
-        flash("No cuenta con los permisos necesarios")
-        return redirect(request.referrer)
+    # if not has_permit("coordenada_edit"):
+    #     flash("No cuenta con los permisos necesarios")
+    #     return redirect(request.referrer)
 
     coordenada = Coordenada.search_coordenada(coordenada_id)
     

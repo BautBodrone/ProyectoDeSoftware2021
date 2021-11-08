@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String,ForeignKey
 from sqlalchemy.orm import relationship
 from app.db import db
+from app.models import punto_coordenada, recorrido_coordenada
 
 class Coordenada(db.Model):
 
@@ -10,6 +11,8 @@ class Coordenada(db.Model):
     id = Column(Integer,primary_key=True)
     latitud = Column(String,nullable=False)
     longitud = Column(String,nullable=False)
+    recorridos = db.relationship("Recorrido", secondary="recorrido_coordenada")
+    puntos = relationship("Punto", secondary="punto_coordenada")
 
     def __init__(self,latitud,longitud):
         self.latitud = latitud

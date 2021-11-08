@@ -1,11 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from app.db import db
-from app.models import coordenada
-
-coordenadas = db.Table('puntos_coordenadas',
-    db.Column('punto_id', db.Integer, db.ForeignKey('punto.id'), primary_key=True),
-    db.Column('coordenada_id', db.Integer, db.ForeignKey('coordenada.id'), primary_key=True)
-)
+from app.models import coordenada, punto_coordenada
+from sqlalchemy.orm import relationship
 
 class Punto(db.Model):
     
@@ -13,7 +9,7 @@ class Punto(db.Model):
     id = Column(Integer, primary_key=True)
     email = Column(String(30))
     nombre = Column(String(30), unique=True)
-    coordenadas = db.relationship("Coordenada", secondary=coordenadas)
+    coordenadas = relationship("Coordenada", secondary="punto_coordenada")
     estado = Column(String(30))
     telefono = Column(String(30))
     direccion = Column(String(30))

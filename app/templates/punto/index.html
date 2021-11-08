@@ -9,7 +9,7 @@
 
 <a href="{{ url_for('home') }}" class="btn btn-primary">Volver</a>
 {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_new') %} 
-<a href="{{ url_for('puntos_new') }}" class="btn btn-success">Nuevo punto </a>
+<a href="{{ url_for('punto_new') }}" class="btn btn-success">Nuevo punto </a>
 {% endif %}
 <table id="data" class="table">
   
@@ -54,13 +54,13 @@
       var obtener_data_editar= function(tbody,table){
       $('#data').on('click', 'td.editor-edit', function (e) {
         var data = table.row($(this).parents("tr")).data();
-        window.location.href='/puntosDeEncuentro/edit/'+data.id;} );
+        window.location.href='/puntos/edit/'+data.id;} );
         }
         // Delete a record
       var obtener_data_delete= function(tbody,table){
       $('#data').on('click', 'td.editor-delete', function (e) {
           var data = table.row($(this).parents("tr")).data();
-          window.location.href='/puntosDeEncuentro/delete/'+data.id;} );
+          window.location.href='/puntos/delete/'+data.id;} );
         }
         
      var espanol = 

@@ -62,8 +62,3 @@ class Punto(db.Model):
             'email': self.email,
             'id':self.id
         }
-
-    
-    
-
-        

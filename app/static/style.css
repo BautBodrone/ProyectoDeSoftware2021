@@ -32,7 +32,6 @@ body {
 
 #container {
   width: 75%;
-  height: 90%;
   margin: 0 auto;
   padding: 20px 40px;
   border: solid 1px black;
@@ -95,7 +94,9 @@ table, td, th {
   border: 1px solid rgb(0, 0, 0);
 }
 
+
 table {
+  font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
@@ -111,7 +112,23 @@ td {
 .form {
   margin-top: 20px;
 }
+<<<<<<< HEAD
 
 #coordenadaPopUp{
   display: none;
 }
+=======
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+>>>>>>> development

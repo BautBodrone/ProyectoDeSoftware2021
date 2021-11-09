@@ -8,12 +8,21 @@ from flask_sqlalchemy import _SessionSignalEvents
 from app.helpers.auth import authenticated
 
 from config import config
+from app import db
 
+from app.resources import issue, user, auth, punto, rol , configuration,puntos
+
+
+<<<<<<< HEAD
 from app.resources import issue, user, auth, rol, configuration, punto, coordenada
 from app.db import db
 from app.models.punto import Punto
+=======
+from app.models.puntos import Puntos
+
+>>>>>>> development
 from app.resources.api.issue import issue_api
-from app.helpers import handler, user_helper, configurator
+from app.helpers import handler, user_helper
 from app.helpers import auth as helper_auth
 
 
@@ -37,7 +46,10 @@ def create_app(environment="production"):
     app.jinja_env.globals.update(my_user=user_helper.user)
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
     app.jinja_env.globals.update(is_admin=user_helper.is_admin)
+<<<<<<< HEAD
     app.jinja_env.globals.update(configurator=configurator.settings)
+=======
+>>>>>>> development
 
     # Autenticación
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
@@ -56,9 +68,8 @@ def create_app(environment="production"):
     app.add_url_rule("/usuarios/delete", "user_delete", user.delete, methods=["POST"])
     app.add_url_rule("/usuarios/edit/<user_id>","user_edit",user.edit)
     app.add_url_rule("/usuarios/edit","user_edit_finish",user.edit_finish, methods=["POST"])
-    app.add_url_rule("/usuarios/filtro","user_filtro",user.filtro, methods=["POST"] )
 
-    # Ruta de Roles
+ # Ruta de Roles
     app.add_url_rule("/roles", "rol_index", rol.index)
 
     # Rutas de Usuarios
@@ -110,6 +121,9 @@ def create_app(environment="production"):
         'recordsTotal': Punto.query.count(),
         'draw': request.args.get('draw', type=int),
     }
+        
+
+        
 
     # Ruta para el Home (usando decorator)
     @app.route("/")

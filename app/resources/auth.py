@@ -2,18 +2,12 @@ from flask import redirect, render_template, request, url_for, abort, session, f
 
 from app.models.user import User
 
-def login():
-    """
-        El metodo mostrara una nueva pagina para poder iniciar sesion
-    """
 
+def login():
     return render_template("auth/login.html")
 
-def authenticate():
-    """
-        El metodo autentica la sesion del usuario
-    """
 
+def authenticate():
     params = request.form
 
     user = User.authenticate_user(params)
@@ -31,11 +25,8 @@ def authenticate():
 
     return redirect(url_for("home"))
 
+
 def logout():
-    """
-        El metodo cerrara la sesion
-    """
-    
     del session["user"]
     session.clear()
     flash("La sesión se cerró correctamente.")

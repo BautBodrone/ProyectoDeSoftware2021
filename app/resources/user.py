@@ -3,18 +3,12 @@ from flask import flash, redirect, render_template, request, url_for, session, a
 from app.models.user import User
 from app.helpers.auth import authenticated
 from app.helpers.user_helper import has_permit
+from app.helpers import configurator
 
 from app.models.user_rol import User_rol
 
-
-pagConf=4
-
 # Protected resources
 def index():
-    """
-        El metodo mostrara todos los usuarios en una tabla
-    """
-
     if not authenticated(session):
         abort(401)
 
@@ -23,16 +17,14 @@ def index():
         return redirect(request.referrer)
 
     page = request.args.get('page',1, type=int)
-    users = User.query.paginate(page=page,per_page=pagConf)
+    page_config = configurator.settings().get_rows_per_page()
+    users = User.query.paginate(page=page,per_page=page_config)
 
 
     return render_template("user/index.html", users=users)
 
-def new():
-    """
-        El metodo ,si esta autenticado,saltara a una nueva pagina para crear un usuario
-    """
 
+def new():
     if not authenticated(session):
         abort(401)
 
@@ -42,11 +34,8 @@ def new():
 
     return render_template("user/new.html")
 
-def create():
-    """
-        El metodo ,si esta autenticado, creara un nuevo usuario
-    """
 
+def create():
     if not authenticated(session):
         abort(401)
 
@@ -64,10 +53,6 @@ def create():
     return redirect(url_for("user_index"))
 
 def delete():
-    """
-        El metodo ,si esta autenticado, eliminara al usuario seleccionado
-    """
-
     if not authenticated(session):
         abort(401)
 
@@ -82,9 +67,6 @@ def delete():
     return redirect(url_for('user_index'))
 
 def edit(user_id):
-    """
-        El metodo ,si esta autenticado, saltara a una nueva pagina para editar un usuario
-    """
     if not authenticated(session):
         abort(401)
 
@@ -97,10 +79,6 @@ def edit(user_id):
     return render_template("user/edit.html", user=user)
 
 def edit_finish():
-    """
-        El metodo , si esta autentiticado, podra cambiar los datos de un usuario
-    """
-
     if not authenticated(session):
         abort(401)
 
@@ -116,10 +94,6 @@ def edit_finish():
     return redirect(url_for("user_index"))
 
 def add_rols():
-    """
-        El metodo ,si esta autenticado, añadira el nuevo rol al usuario seleccionado 
-    """
-    
     if not authenticated(session):
         abort(401)
 
@@ -132,22 +106,9 @@ def add_rols():
 
     return redirect(request.referrer)
 
+#'Este seria un filtro muy parecido al de puntos de encuentro'
 def filtro():
-    """
-        El metodo hara un filtro de los usuarios dependiendo de los datos ingresados 
-    """
-    page = request.args.get('page',1, type=int)
-    data = request.form
-    activo = data["activo"]
-    first_name = data["first_name"]
-    if (activo != "" and first_name!= ""):
-      users=User.query.filter_by(activo=activo,first_name=first_name).paginate(page=page,per_page=pagConf)
-    else:
-        if (activo == "" and first_name != ""):
-            users=User.query.filter_by(first_name=first_name).paginate(page=page,per_page=pagConf)
-        else:
-            if(activo !="" and first_name==""):
-                users=User.query.filter_by(activo=activo).paginate(page=page,per_page=pagConf)
-            else:
-                 users=User.query.paginate(page=page,per_page=pagConf)
-    return render_template("user/index.html", users=users )
+    if not authenticated(session):
+        abort(401)
+    
+    return "Hello world"

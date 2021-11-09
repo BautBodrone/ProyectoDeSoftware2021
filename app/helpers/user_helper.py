@@ -3,8 +3,8 @@ from flask import session
 
 def is_admin(email):
     user = User.search_user_email(email)
-    for permiso in user.get_permisos():
-        if ('admin' == permiso.nombre):
+    for rol in user.rols:
+        if (rol.nombre == "admin"):
             return True
     return False
 

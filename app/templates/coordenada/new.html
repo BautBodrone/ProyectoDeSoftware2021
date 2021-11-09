@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
+<<<<<<< HEAD
 {% block title %}Coordenada{% endblock %}
+=======
+{% block title %}Usuarios{% endblock %}
+>>>>>>> e6c8216f731dfa69e265873523bcd258430cacb4
 {% block head %}
   {{ super() }}
 {% endblock %}
@@ -8,11 +12,19 @@
   <form action="{{ url_for('coordenada_create') }}" method="POST">
     <p>
       <label>Latitud<label></br>
+<<<<<<< HEAD
       <input type="number" name="latitud" placeholder="Latitud"/>
     </p>
     <p>
       <label>Longitud<label></br>
       <input type="number" name="longitud" placeholder="Longitud"/>
+=======
+      <input name="latitud" placeholder="Latitud"/>
+    </p>
+    <p>
+      <label>Longitud<label></br>
+      <input type="longitud" name="longitud" placeholder="Longitud"/>
+>>>>>>> e6c8216f731dfa69e265873523bcd258430cacb4
     </p>
     <p>
       <input type="submit" value="Crear">

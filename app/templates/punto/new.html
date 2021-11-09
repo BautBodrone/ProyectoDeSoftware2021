@@ -1,9 +1,11 @@
+
 {% extends "layout.html" %}
 {% block title %}Puntos de Encuentro{% endblock %}
 {% block head %}
   {{ super() }}
 {% endblock %}
 {% block content %}
+
   <h1>Nuevo punto de encuentro</h1>
   <form action="{{ url_for('punto_create') }}" method="POST">
     <p>
@@ -14,11 +16,14 @@
       <label>Direccion<label></br>
       <input  name="direccion" placeholder="Direccion" required/>
     </p>
-    <p>
-      <label>coordenadas<label></br>
-      <input name="coordenadas" placeholder="Coordenadas" required/>
-    </p>
-    <p>
+      <label for="coordenada">Seleccione una coordenada</label>
+      <select name="coordenada" id="coordenada">
+        {% for coordenada in coordenadas %}
+          <option value={{coordenada}}>{{coordenada}}</option>
+        {% endfor %}
+      </select>
+      <a class="open-button" href="{{ url_for('coordenada_new_punto') }}" onclick="openForm()">CrearNuevo</a>
+    <p> 
      <label>Estado<label></br>
      <select name="estado" required>
         <option value="" selected disabled hidden>

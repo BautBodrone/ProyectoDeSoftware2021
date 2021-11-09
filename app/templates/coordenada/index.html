@@ -11,7 +11,7 @@
 {% endblock %}
 {% block content %}
   {% for coordenada in coordenadas %}
-    <li>{{ coordenada.id }}</li>
+    <li>{{ coordenada }}</li>
   {% endfor %}
   <a href="{{ url_for('home') }}" class="link">Volver</a>
 {% endblock %}

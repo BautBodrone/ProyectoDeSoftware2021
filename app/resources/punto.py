@@ -1,5 +1,5 @@
 from flask import redirect, render_template, request, url_for, session, abort, flash
-
+from app.models.coordenada import Coordenada
 from app.helpers.user_helper import has_permit
 from app.models.punto import Punto
 from app.helpers.auth import authenticated
@@ -25,7 +25,9 @@ def new():
     #     flash("No cuenta con los permisos necesarios")
     #     return redirect(request.referrer)
 
-    return render_template("punto/new.html")
+    coordenadas = Coordenada.query.all()
+
+    return render_template("punto/new.html", coordenadas=coordenadas)
 
 def create():
     """
@@ -48,7 +50,7 @@ def create():
         return redirect(request.referrer)
 
     flash("Se creo con exito", "success")
-    return redirect(url_for("punto_index"))
+    return redirect(request.referrer)
 
 def delete(id):
     """

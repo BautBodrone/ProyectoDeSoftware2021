@@ -68,7 +68,9 @@ def create_app(environment="production"):
     # Rutas de Coordenadas
     app.add_url_rule("/coordenadas/index", "coordenada_index", coordenada.index)
     app.add_url_rule("/coordenadas/nuevo", "coordenada_new", coordenada.new)
+    app.add_url_rule("/coordenadas/nuevo/punto", "coordenada_new_punto", coordenada.new_punto)
     app.add_url_rule("/coordenadas", "coordenada_create", coordenada.create, methods=["POST"])
+    app.add_url_rule("/coordenadas", "coordenada_create_punto", coordenada.create_punto, methods=["POST"])
 
     #Rutas de Puntos de encuentro
     app.add_url_rule("/puntos", "punto_index", punto.index)

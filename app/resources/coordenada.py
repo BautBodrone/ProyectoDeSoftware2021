@@ -31,6 +31,20 @@ def new():
 
     return render_template("coordenada/new.html")
 
+def new_punto():
+    """
+        El metodo ,si esta autenticado,saltara a una nueva pagina para crear una coordenada
+    """
+
+    if not authenticated(session):
+        abort(401)
+
+    # if not has_permit("coordenada_new"):
+    #     flash("No cuenta con los permisos necesarios")
+    #     return redirect(request.referrer)
+
+    return render_template("coordenada/new_punto.html")
+
 def create():
     """
         El metodo ,si esta autenticado, creara una nueva coordenada
@@ -42,8 +56,9 @@ def create():
     # if not has_permit("coordenada_create"):
     #     flash("No cuenta con los permisos necesarios")
     #     return redirect(request.referrer)
-
+    
     new_coord = Coordenada(**request.form)
+    
     try:
         Coordenada.save(new_coord)
     except:
@@ -51,6 +66,27 @@ def create():
         return redirect(request.referrer)
     
     return redirect(url_for("coordenada_index"))
+
+def create_punto():
+    """
+        El metodo ,si esta autenticado, creara una nueva coordenada
+    """
+
+    if not authenticated(session):
+        abort(401)
+
+    # if not has_permit("coordenada_create"):
+    #     flash("No cuenta con los permisos necesarios")
+    #     return redirect(request.referrer)
+    
+    new_coord = Coordenada(**request.form)
+    try:
+        Coordenada.save(new_coord)
+    except:
+        flash("Coordenada con esa longitud y latitud ya existe", "error")
+        return redirect(request.referrer)
+    
+    return redirect(url_for("punto_nuevo"))
 
 def delete():
     """

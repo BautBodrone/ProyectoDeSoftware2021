@@ -111,3 +111,7 @@ td {
 .form {
   margin-top: 20px;
 }
+
+#coordenadaPopUp{
+  display: none;
+}

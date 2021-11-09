@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String,ForeignKey
+from sqlalchemy import Column, Integer, Float,ForeignKey
 from sqlalchemy.orm import relationship
 from app.db import db
 from app.models import punto_coordenada, recorrido_coordenada
@@ -9,14 +9,14 @@ class Coordenada(db.Model):
 
     __tablename__ = "coordenadas"
     id = Column(Integer,primary_key=True)
-    latitud = Column(String(30),nullable=False)
-    longitud = Column(String(30),nullable=False)
+    latitud = Column(Float(30),nullable=False)
+    longitud = Column(Float(30),nullable=False)
     recorridos = db.relationship("Recorrido", secondary="recorrido_coordenada")
     puntos = relationship("Punto", secondary="punto_coordenada")
 
     def __init__(self,latitud,longitud):
-        self.latitud = latitud
-        self.longitud = longitud
+        self.latitud = float(latitud)
+        self.longitud = float(longitud)
 
     def delete(self):
         db.session.delete(self)
@@ -36,3 +36,6 @@ class Coordenada(db.Model):
 
     def search_coordenada(id):
         return db.session.query(Coordenada).get(id)
+
+    def __str__(self):
+        return str(self.latitud)+" "+str(self.longitud)

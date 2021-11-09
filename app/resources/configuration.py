@@ -3,12 +3,23 @@ from flask import render_template, request, session, redirect, url_for, abort, f
 from app.models.configuration import Configuration
 from app.helpers.auth import authenticated
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> feature_recorrido-evacuacion
 def edit():
     """
         El metodo mostrara una pagina para cambiar las configuraciones de la misma
     """
     if not authenticated(session):
         abort(401)
+<<<<<<< HEAD
+=======
+=======
+
+def index():
+>>>>>>> development
+>>>>>>> feature_recorrido-evacuacion
 
     configurations = Configuration.get_config()
     

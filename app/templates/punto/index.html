@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block title %}Puntos de encuentro {% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <h1>Puntos de encuentro</h1>
+
+<a href="{{ url_for('home') }}" class="btn btn-primary">Volver</a>
+{% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_new') %} 
+<a href="{{ url_for('punto_new') }}" class="btn btn-success">Nuevo punto </a>
+{% endif %}
+<table id="data" class="table">
+  
+</table>
+   
+  {% block scripts %}
+  <script>
+  var defecto= {{ configurator().get_rows_per_page()  }}
+      $(document).ready(function(){
+       var table = $('#data').DataTable({
+        ajax: '/api/data',
+        serverSide: true,
+        "lengthMenu": [[defecto, 2, 5, 10, 15], ["Defecto", 2, 5, 10, 15]],
+        
+        columns: [
+          {data: 'nombre', title:"Nombre", orderable: true, searchable: true},
+          {data: 'coordenadas', title:"Coordenadas"},
+          {data: 'direccion', title:"Direccion"},
+          {data: 'telefono', title:"Telefono"},
+          {data: 'estado', title:"Estado", orderable: true, searchable: true},
+          {data: 'email', title:"Email"},
+          {data:'id', title:'Id'},
+          {
+                data: null,
+                className: "dt-center editor-edit",
+                defaultContent: "<button type='button' class='editar btn btn-primary'>Editar</button>",
+                orderable: false
+            },
+            {
+                data: null,
+                className: "dt-center editor-delete",
+                defaultContent: "<button type='button' class='eliminar btn btn-danger' >Eliminar</button>",
+                orderable: false
+            }
+        ],
+        "language":espanol
+      });
+       obtener_data_editar("#data tbody",table)
+       obtener_data_delete("#data tbody",table)
+      })
+       //Update record
+      var obtener_data_editar= function(tbody,table){
+      $('#data').on('click', 'td.editor-edit', function (e) {
+        var data = table.row($(this).parents("tr")).data();
+        window.location.href='/puntos/edit/'+data.id;} );
+        }
+        // Delete a record
+      var obtener_data_delete= function(tbody,table){
+      $('#data').on('click', 'td.editor-delete', function (e) {
+          var data = table.row($(this).parents("tr")).data();
+          window.location.href='/puntos/delete/'+data.id;} );
+        }
+        
+     var espanol = 
+     {
+    "processing": "Procesando...",
+    "lengthMenu": "Mostrar _MENU_ registros",
+    "zeroRecords": "No se encontraron resultados",
+    "emptyTable": "Ningún dato disponible en esta tabla",
+    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+    "search": "Buscar:",
+    "infoThousands": ",",
+    "loadingRecords": "Cargando...",
+    "paginate": {
+        "first": "Primero",
+        "last": "Último",
+        "next": "Siguiente",
+        "previous": "Anterior"
+    },
+    
+    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros"
+} 
+      
+   
+    
+  </script>
+{% endblock %}
+{% endblock %}

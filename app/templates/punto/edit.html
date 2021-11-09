@@ -3,29 +3,9 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="header">Editar punto de encuentro</h1>
-  </div>
-{% endblock %}
-
-{% block navbar %}
-{% if is_authenticated(session) %}
-  <a href="{{ url_for('puntos_index') }}" class="navbar selected">Puntos de Encuentro</a>
-  <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
-  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
-    <a href="{{ url_for('rol_index') }}" class="navbar">Roles</a>
-    <a href="{{ url_for('user_index') }}" class="navbar">Usuarios</a>
-    {% endif %}
-    <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
-{% else %}
-  <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
-{% endif %}
-{% endblock %}
-
 {% block content %}
-  <form action="{{ url_for('puntos_update') }}" method="POST">
+  <h1>Editar Punto de Encuentro</h1>
+  <form action="{{ url_for('punto_update') }}" method="POST">
     <input type="hidden" class="form-control"  id="id" name="id" value="{{punto.id}}">
     <p>
       <label>Nombre<label></br>
@@ -61,5 +41,5 @@
       <input type="submit" value="Modificar">
     </p>
   </form>
-  <a href="{{ url_for('puntos_index') }}" class="link">Volver</a>
+  <a href="{{ url_for('punto_index') }}" class="link">Volver</a>
 {% endblock %}

@@ -1,16 +1,15 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
+from app.db import db
+from app.models import coordenada, punto_coordenada
 from sqlalchemy.orm import relationship
 
-from app.db import db
-
-
-class Puntos(db.Model):
+class Punto(db.Model):
     
-    __tablename__ = "puntosDeEncuentro" 
+    __tablename__ = "puntos" 
     id = Column(Integer, primary_key=True)
     email = Column(String(30))
     nombre = Column(String(30), unique=True)
-    coordenadas = Column(String(30), unique=True)
+    coordenadas = relationship("Coordenada", secondary="punto_coordenada")
     estado = Column(String(30))
     telefono = Column(String(30))
     direccion = Column(String(30))
@@ -24,10 +23,11 @@ class Puntos(db.Model):
         self.direccion = direccion
 
     def search_punto(id):
-        return db.session.query(Puntos).get(id)
+        """
+            Retorna punto que tenga el mismo id que el que se paso por parametro
+        """
+        return db.session.query(Punto).get(id)
     
-   
-
     @classmethod
     def save(self, new_punto):
         db.session.add(new_punto)
@@ -38,6 +38,9 @@ class Puntos(db.Model):
         db.session.commit()
 
     def update(self, punto):
+        """
+            Actualiza el punto con los valores pasados por parametro
+        """
         self.nombre = punto["nombre"]
         self.direccion = punto["direccion"]
         self.coordenadas = punto["coordenadas"]
@@ -47,6 +50,9 @@ class Puntos(db.Model):
         db.session.commit()
 
     def to_dict(self):
+        """
+            Transforma los atributos del objeto en un diccionario
+        """
         return {
             'nombre': self.nombre,
             'direccion': self.direccion,
@@ -56,8 +62,3 @@ class Puntos(db.Model):
             'email': self.email,
             'id':self.id
         }
-
-    
-    
-
-        

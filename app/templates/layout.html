@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <html lang="es">
   <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-   
+    <script src="{{ url_for('static', filename='sidenavbar.js') }}"></script>
     <style>
       body, #footer, a.navbar{
         background-color: {{ configurator().get_private_bg_color() }};
@@ -22,7 +23,11 @@
       a.link.selected {
         filter: brightness(1.5);
       }
-
+      @media (max-width: 768px){
+          .navbar a{
+            display:hidden;
+          }
+      }
     </style>
     {% block head %}
       <link rel="icon" href="/static/imgs/logo.png" type="image/x-icon" >
@@ -39,7 +44,7 @@
       {% endblock %}
     </div>
 
-    <div class="navbar" id="navbar">
+    <div class="navbar" id="navbar" onmouseover="toggleNavbar()" onmouseout="toggleNavbar()">
     {% block navbar %}
       {% if is_authenticated(session) %}
         <a href="{{ url_for('puntos_index') }}" class="navbar">Puntos de Encuentro</a>
@@ -74,6 +79,7 @@
       <a> proyecto de software </a>
       {% endblock %}
     </div> 
-    {% block scripts %}{% endblock %} 
+    {% block scripts %}
+    {% endblock %} 
   </body>
 </html>

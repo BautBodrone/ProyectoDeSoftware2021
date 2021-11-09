@@ -18,6 +18,10 @@ def index():
     if not authenticated(session):
         abort(401)
 
+    if not has_permit("user_index"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
+
     page = request.args.get('page',1, type=int)
     users = User.query.paginate(page=page,per_page=pagConf)
 
@@ -32,7 +36,7 @@ def new():
     if not authenticated(session):
         abort(401)
 
-    if not has_permit("user_index"):
+    if not has_permit("user_new"):
         flash("No cuenta con los permisos necesarios")
         return redirect(request.referrer)
 

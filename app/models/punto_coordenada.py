@@ -9,8 +9,6 @@ class Punto_coordenada(db.Model):
     id = Column(Integer,primary_key=True)
     punto_id = Column(Integer, ForeignKey("puntos.id"))
     coordenada_id = Column(Integer, ForeignKey("coordenadas.id"))
-    punto = relationship("Punto")
-    coordenada = relationship("Coordenada")
 
     def __init__(self, punto, coordenada):
         self.punto_id = punto

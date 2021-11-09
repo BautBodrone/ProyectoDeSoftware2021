@@ -16,6 +16,7 @@ def index():
     coordenadas = Coordenada.query.all()
 
     return render_template("coordenada/index.html", coordenadas=coordenadas)
+    
 def new():
     """
         El metodo ,si esta autenticado,saltara a una nueva pagina para crear una coordenada

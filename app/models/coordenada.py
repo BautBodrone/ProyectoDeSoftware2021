@@ -9,8 +9,8 @@ class Coordenada(db.Model):
 
     __tablename__ = "coordenadas"
     id = Column(Integer,primary_key=True)
-    latitud = Column(String,nullable=False)
-    longitud = Column(String,nullable=False)
+    latitud = Column(String(30),nullable=False)
+    longitud = Column(String(30),nullable=False)
     recorridos = db.relationship("Recorrido", secondary="recorrido_coordenada")
     puntos = relationship("Punto", secondary="punto_coordenada")
 

@@ -14,12 +14,15 @@
       <label>Titulo<label></br>
       <input name="titulo" placeholder="{{denuncia.titulo}}" value="{{denuncia.titulo}}" required/>
     </p>
-
     <p>
-      <label>Categoria<label></br>
-      <input name="categoria" placeholder="{{denuncia.categoria}}" value="{{denuncia.categoria}}" />
-    </p>
-
+      <label for="categoria">Categoria:</label>
+          <select id="categoria" name="categoria">
+            <option value="cañeria_rota">Cañeria Rota</option>
+            <option value="calle_inundable">Calle Inundable</option>
+            <option value="calle_rota">Calle rota</option>
+            <option value="otro">Otro</option>
+          </select>
+    </p>     
     <p>
       <label>Descripcion<label></br>
       <input name="descripcion" placeholder="{{denuncia.descripcion}}" value="{{denuncia.descripcion}}"/>

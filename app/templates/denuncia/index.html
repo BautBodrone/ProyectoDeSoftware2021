@@ -5,6 +5,23 @@
 {% endblock %}
 {% block content %}
 <h1>Denuncias</h1>
+<form action="{{ url_for('denuncia_filtro') }}" method="POST">
+  <h3>Filtrar</h3> 
+      <input name="titulo" placeholder="Titulo"/>
+      <select  name="estado">
+        <option value="" selected>Seleccione un estado</option>
+        <option value="sinConfirmar">Sin Confirmar</option>
+        <option value="curso">Curso</option>
+        <option value="resuelta">Resuelta</option>
+        <option value="cerrada">Cerrada</option>
+      </select>
+  <p>
+    <label>Rango de fechas: <label></br>
+    <input type="date" name="fechaC"  />
+    <input type="date" name="fechaF" />
+  </p>
+  <input type="submit" value="Filtrar">
+</form>
 <table>
   <tr>
       <th>  Titulo  </th>
@@ -24,7 +41,11 @@
     <td>{{ denuncia.titulo }}</td>
     <td>{{ denuncia.categoria }} </td>
     <td>{{ denuncia.fechaC }} </td>
-    <td>{{ denuncia.fechaF }}</td>
+    {% if denuncia.fechaF == None %}
+      <td>No Finalizada</td>
+    {% else %}
+      <td>{{ denuncia.fechaF }}</td>
+    {% endif %}
     <td>{{ denuncia.descripcion }}</td>
     <td>{{ denuncia.coordenadas }}</td>
     <td>{{ denuncia.estado }}</td>
@@ -33,6 +54,9 @@
     <td>{{ denuncia.telefono }}</td>
     <td>{{ denuncia.emailD }}</td>
     <td>
+      <form action=""  >
+        <button type="submit" class="btn btn-info mt-2 ml-2">Seguimientos</button>
+      </form>
       {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'denuncia_edit') %}
       <form action="{{ url_for('denuncia_edit', denuncia_id = denuncia.id ) }}"  >
         <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>

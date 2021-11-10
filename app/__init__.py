@@ -95,7 +95,7 @@ def create_app(environment="production"):
     app.add_url_rule("/denuncias/delete", "denuncia_delete", denuncia.delete, methods=["POST"])
     app.add_url_rule("/denuncias/edit/<denuncia_id>","denuncia_edit",denuncia.edit)
     app.add_url_rule("/denuncias/edit","denuncia_edit_finish",denuncia.edit_finish, methods=["POST"])
-   #app.add_url_rule("/denuncias/filtro","denuncia_filtro",denuncia.filtro, methods=["POST"] )
+    app.add_url_rule("/denuncias/filtro","denuncia_filtro",denuncia.filtro, methods=["POST"] )
 
     #DATA TABLE
     @app.route('/api/data')

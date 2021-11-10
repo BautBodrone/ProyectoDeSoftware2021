@@ -1,9 +1,12 @@
 from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy.sql.schema import ForeignKey 
 from sqlalchemy.sql.expression import null
 from sqlalchemy.sql.sqltypes import Date
 from app.db import db
+from app.models.user import User
 import datetime 
 from sqlalchemy_utils import ChoiceType
+from sqlalchemy.orm import relationship, backref
 
 class Denuncia(db.Model):
 
@@ -27,6 +30,7 @@ class Denuncia(db.Model):
     categoria = Column(ChoiceType(CATEGORIAS))
     fechaC = Column(Date)
     fechaF = Column(Date)
+    asignadoA_id = Column(Integer, ForeignKey('user.id'))
     descripcion = Column(String(30))
     coordenadas = Column(String(30))
     estado = Column(ChoiceType(ESTADOS))
@@ -34,6 +38,8 @@ class Denuncia(db.Model):
     nombreD = Column(String(30))
     telefono = Column(String(30))
     emailD = Column(String(30))
+    #comment_id = relationship('Seguimiento', backref='author' ,lazy=True)
+    asignadoA = relationship(User, backref=backref('denuncias', uselist=True))
     
 
     def __init__(self , titulo=None,categoria=None,descripcion=None,
@@ -68,24 +74,40 @@ class Denuncia(db.Model):
     def edit(self,data):
         if self.titulo != data["titulo"]:
             self.titulo = data["titulo"]
+
         if self.categoria != data["categoria"]:
             self.categoria = data["categoria"]
+
         if self.fechaC != data["fechaC"]:
             self.fechaC = data["fechaC"]
+
+        if self.estado == "cerrada":
+            if self.fechaF != data["fechaF"]:
+                self.fechaF = data["fechaF"]
+
         if self.descripcion != data["descripcion"]:
             self.descripcion = data["descripcion"]
+
         if self.coordenadas != data["coordenadas"]:
             self.coordenadas = data["coordenadas"]
+
         if self.estado != data["estado"]:
             self.estado = data["estado"]
+
         if self.apellidoD != data["apellidoD"]:
             self.apellidoD = data["apellidoD"]
+
         if self.nombreD != data["nombreD"]:
             self.nombreD = data["nombreD"]
+
         if self.telefono != data["telefono"]:
             self.telefono = data["telefono"]
+
         if self.emailD != data["emailD"]:
             self.emailD = data["emailD"]
+
+        if self.estado == "cerrada" and self.fechaF == None:
+            self.fechaF = datetime.date.today()
         db.session.commit()
 
     def print(self):

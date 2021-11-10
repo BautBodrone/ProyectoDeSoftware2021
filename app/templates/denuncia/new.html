@@ -52,6 +52,15 @@
         <label>Email del denunciante <label></br>
         <input name="emailD" placeholder="emailD"/>
       </p>
+      <p>
+      <select class="selectpicker" name="users" id="users" multiple data-live-search="true">
+        {% for user in users %}
+          {% if user.getPermisos() != None %}
+            <option value={{user.first_name}}>{{first_name}}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+      </p>
     <p>
       <input type="submit" value="Crear">
       <button type="reset">Limpiar</button>

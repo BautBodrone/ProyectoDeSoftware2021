@@ -14,7 +14,7 @@ class User(db.Model):
     password = Column(String(30))
     rols = relationship("Rol",secondary = "users_rols",viewonly=True)
     activo = Column(Boolean)
-    
+   # denuncia_id = relationship('Denuncia')
 
     def __init__(self, first_name=None, last_name=None, email=None, password=None):
         self.first_name = first_name

@@ -4,6 +4,8 @@ from app.models import denuncia
 from app.models.denuncia import Denuncia
 from app.helpers.auth import authenticated
 from app.db import db
+from sqlalchemy import and_
+from app.models.user import User
 
 
 pagConf=4
@@ -27,8 +29,8 @@ def new():
 
     if not authenticated(session):
         abort(401)
-
-    return render_template("denuncia/new.html")
+    users = User.query.all()
+    return render_template("denuncia/new.html", users)
 
 def create():
     """
@@ -90,5 +92,35 @@ def edit_finish():
 
     return redirect(url_for("denuncia_index"))
 
+def filtro():
+    """
+        El metodo hara un filtro de los usuarios dependiendo de los datos ingresados 
+    """
+    page = request.args.get('page',1, type=int)
+    data = request.form
+    estado = data["estado"]
+    titulo = data["titulo"]
+    fechaC = data["fechaC"]
+    fechaF = data["fechaF"]
+    
+    if (estado != "" and titulo != ""):
+      denuncias=Denuncia.query.filter_by(estado=estado,titulo=titulo).paginate(page=page,per_page=pagConf)
+    else:
+        if (estado == "" and titulo != ""):
+            denuncias=Denuncia.query.filter_by(titulo=titulo).paginate(page=page,per_page=pagConf)
+        else:
+            if (estado != "" and titulo == ""):
+                denuncias=Denuncia.query.filter_by(estado=estado).paginate(page=page,per_page=pagConf)
+            else:
+                 denuncias=Denuncia.query.paginate(page=page,per_page=pagConf)
 
+    if (fechaC != "" and fechaF !="" ):
+          denuncias=denuncias.query.filter(and_(Denuncia.fechaC >= fechaC , Denuncia.fechaF<= fechaF)).paginate(page=page,per_page=pagConf)
+    else:
+        if (fechaC != "" and fechaF =="" ):  
+                denuncias=denuncias.query.filter(Denuncia.fechaC >= fechaC).paginate(page=page,per_page=pagConf)
+        else:
+            if (fechaC == "" and fechaF !="" ):  
+                denuncias=denuncias.query.filter(Denuncia.fechaF <= fechaF).paginate(page=page,per_page=pagConf)
+    return render_template("denuncia/index.html", denuncias=denuncias )
 

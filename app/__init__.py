@@ -9,10 +9,14 @@ from app.helpers.auth import authenticated
 
 from config import config
 from app import db
-from app.resources import user, auth, rol , configuration, puntos
+from app.resources import user, auth, rol , configuration, punto, coordenada
 from app.resources.api.zonas import zonas_api
 from app.resources.api.denuncias import denuncias_api
 from app.helpers import handler, user_helper, configurator
+
+from app.models.punto import Punto
+
+from app.helpers import handler, user_helper
 from app.helpers import auth as helper_auth
 
 
@@ -59,24 +63,31 @@ def create_app(environment="production"):
     app.add_url_rule("/configuracion", "configuration_edit", configuration.edit)
     app.add_url_rule("/configuracion", "configuration_update", configuration.save, methods=["POST"])
 
+    # Rutas de Coordenadas
+    app.add_url_rule("/coordenadas/index", "coordenada_index", coordenada.index)
+    app.add_url_rule("/coordenadas/nuevo", "coordenada_new", coordenada.new)
+    app.add_url_rule("/coordenadas/nuevo/punto", "coordenada_new_punto", coordenada.new_punto)
+    app.add_url_rule("/coordenadas", "coordenada_create", coordenada.create, methods=["POST"])
+    app.add_url_rule("/coordenadas", "coordenada_create_punto", coordenada.create_punto, methods=["POST"])
+
     #Rutas de Puntos de encuentro
-    app.add_url_rule("/puntosDeEncuentros", "puntos_index", puntos.index)
-    app.add_url_rule("/puntos", "puntos_create", puntos.create, methods=["POST"])
-    app.add_url_rule("/puntosDeEncuentros/nuevo", "puntos_new", puntos.new)
-    app.add_url_rule("/puntosDeEncuentro/filtro","puntos_filtro",puntos.filtro, methods=["POST"] )
+    app.add_url_rule("/puntos", "punto_index", punto.index)
+    app.add_url_rule("/puntos", "punto_create", punto.create, methods=["POST"])
+    app.add_url_rule("/puntos/nuevo", "punto_new", punto.new)
+    app.add_url_rule("/puntos/filtro","punto_filtro",punto.filtro, methods=["POST"] )
 
     #Editar punto de encuentro
-    app.add_url_rule("/puntosDeEncuentro/edit/<id>", "puntos_edit", puntos.edit)
-    app.add_url_rule("/puntosDeEncuentro/update","puntos_update",puntos.update, methods=["POST"])
-    app.add_url_rule("/puntosDeEncuentro/delete/<id>", "puntos_delete", puntos.delete, methods=["POST"])
+    app.add_url_rule("/puntos/edit/<id>", "punto_edit", punto.edit)
+    app.add_url_rule("/puntos/update","punto_update",punto.update, methods=["POST"])  
+    app.add_url_rule("/puntos/delete/<id>", "punto_delete", punto.delete, methods=["POST"])
 
     # Rutas del api zonas
-    app.add_url_rule("/zonas-inundables", "/", api.zonas.index)
-    app.add_url_rule("/zonas-inundables/:<id>", "/", api.zonas.get_id)
+    #app.add_url_rule("/zonas-inundables", "/", api.zonas.index)
+    #app.add_url_rule("/zonas-inundables/:<id>", "/", api.zonas.get_id)
 
     # Rutas del api denuncias
-    app.add_url_rule("/denuncias", "/", api.denuncias.index, methods=["POST"])
-
+    #app.add_url_rule("/denuncias", "/", api.denuncias.index, methods=["POST"])
+    
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():

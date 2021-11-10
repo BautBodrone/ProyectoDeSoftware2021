@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}Coordenada{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <h1>Crear un usuario</h1>
+  <form action="{{ url_for('coordenada_create_punto') }}" method="POST">
+    <p>
+      <label>Latitud<label></br>
+      <input name="latitud" placeholder="Latitud"/>
+    </p>
+    <p>
+      <label>Longitud<label></br>
+      <input type="longitud" name="longitud" placeholder="Longitud"/>
+    </p>
+    <p>
+      <input type="submit" value="Crear">
+      <button type="reset">Limpiar</button>
+    </p>
+  </form>
+  <a href="{{ url_for('punto_new') }}" class="link">Volver</a>
+{% endblock %}

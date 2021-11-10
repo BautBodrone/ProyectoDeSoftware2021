@@ -3,6 +3,7 @@ from flask import flash, redirect, render_template, request, url_for, session, a
 from app.models.user import User
 from app.helpers.auth import authenticated
 from app.helpers.user_helper import has_permit
+from app.helpers import configurator
 
 from app.models.user_rol import User_rol
 from app.helpers import configurator
@@ -11,6 +12,10 @@ from app.helpers import configurator
 def index():
     if not authenticated(session):
         abort(401)
+
+    if not has_permit("user_index"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
 
     page = request.args.get('page',1, type=int)
     page_config = configurator.settings().get_rows_per_page()
@@ -24,7 +29,7 @@ def new():
     if not authenticated(session):
         abort(401)
 
-    if not has_permit("user_index"):
+    if not has_permit("user_new"):
         flash("No cuenta con los permisos necesarios")
         return redirect(request.referrer)
 
@@ -65,6 +70,10 @@ def delete():
 def edit(user_id):
     if not authenticated(session):
         abort(401)
+
+    if not has_permit("user_edit"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
 
     user = User.search_user(user_id)
     

@@ -9,9 +9,9 @@ def edit():
     """
     if not authenticated(session):
         abort(401)
-
+     
     configurations = Configuration.get_config()
-    
+     
     return render_template("config/edit.html", configurations=configurations)
 
 def save():

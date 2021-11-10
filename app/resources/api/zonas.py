@@ -1,6 +1,6 @@
 from flask import jsonify, Blueprint
 
-from app.models.zonas import Zonas
+#from app.models.zonas import Zonas
 
 zonas_api = Blueprint("zonas-inundables", __name__, url_prefix="/zonas-inundables")
 

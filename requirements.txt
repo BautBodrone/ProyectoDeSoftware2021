@@ -6,3 +6,4 @@ flask-sqlalchemy==2.5.1
 python-dotenv==0.19.0
 SQLAlchemy==1.4.25
 SQLAlchemy_utils==0.37.8
+Flask_WTF==1.0.0

@@ -9,8 +9,8 @@ class User_rol(db.Model):
     id = Column(Integer,primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     rol_id = Column(Integer, ForeignKey("rols.id"))
-    user = relationship("User", backref=backref("users_rols", cascade="all,delete"))
-    rol = relationship("Rol", backref=backref("users_rols", cascade="all,delete"))
+    user = relationship("User")
+    rol = relationship("Rol")
 
     def __init__(self, user_id, rol):
         self.user_id = user_id

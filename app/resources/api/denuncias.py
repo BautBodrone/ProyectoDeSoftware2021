@@ -1,6 +1,6 @@
 from flask import jsonify, Blueprint, request, abort
 
-from app.models.denuncias import Denuncias
+#from app.models.denuncias import Denuncias
 
 denuncias_api = Blueprint("denuncias", __name__, url_prefix="/denuncias")
 

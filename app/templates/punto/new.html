@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block title %}Puntos de Encuentro{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header">Nuevo punto de encuentro</h1>
+  </div>
+{% endblock %}
+
+{% block navbar %}
+{% if is_authenticated(session) %}
+  <a href="{{ url_for('punto_index') }}" class="navbar selected">Puntos de Encuentro</a>
+  <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
+  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
+    <a href="{{ url_for('rol_index') }}" class="navbar">Roles</a>
+    <a href="{{ url_for('user_index') }}" class="navbar">Usuarios</a>
+    {% endif %}
+    <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
+{% else %}
+  <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+  <form action="{{ url_for('punto_create') }}" method="POST">
+    <p>
+      <label>Nombre<label></br>
+      <input name="nombre" placeholder="Nombre" required/>
+    </p>
+    <p>
+      <label>Direccion<label></br>
+      <input  name="direccion" placeholder="Direccion" required/>
+    </p>
+      <label for="coordenada">Seleccione una coordenada</label>
+      <select name="coordenada" id="coordenada">
+        {% for coordenada in coordenadas %}
+          <option value={{coordenada}}>{{coordenada}}</option>
+        {% endfor %}
+      </select>
+      <a class="open-button" href="{{ url_for('coordenada_new_punto') }}" onclick="openForm()">CrearNuevo</a>
+    <p> 
+     <label>Estado<label></br>
+     <select name="estado" required>
+        <option value="" selected disabled hidden>
+          Seleccione un estado
+        </option>
+        <option value="Publicado">Publicado</option>
+        <option value="Despublicado">Despublicado</option>
+     </select>
+    </p>
+    <p>
+      <label>Telefono<label></br>
+      <input name="telefono" placeholder="Telefono"/>
+    </p>
+    <p>
+      <label>Email<label></br>
+      <input name="email" placeholder="Email"/>
+    </p>
+    <p>
+      <input type="submit" value="Crear">
+      <button type="reset">Limpiar</button>
+    </p>
+  </form>
+  <a href="{{ url_for('punto_index') }}" class="link">Volver</a>
+{% endblock %}

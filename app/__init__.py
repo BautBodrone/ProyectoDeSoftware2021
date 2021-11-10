@@ -10,7 +10,7 @@ from app.helpers.auth import authenticated
 from config import config
 from app import db
 
-from app.resources import issue, user, auth, punto, rol , configuration,puntos
+from app.resources import issue, user, auth, punto, rol , configuration
 
 
 from app.resources import issue, user, auth, rol, configuration, punto, coordenada

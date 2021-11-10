@@ -11,7 +11,16 @@ class Zona(db.Model):
     id = Column(Integer, primary_key=True)
     nombre = Column(String(30))
     coordenadas = db.relationship("Coordenada", secondary="coordenadas", lazy='subquery',
-        backref=db.backref('zonaz', lazy=True))
+        backref=db.backref('zonas', lazy=True))
 
     def __init__(self, nombre = None):
         self.nombre = nombre
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    @classmethod 
+    def save(self, new_zona):
+        db.session.add(new_zona)
+        db.session.commit()

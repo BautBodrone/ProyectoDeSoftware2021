@@ -9,13 +9,15 @@ from app.helpers.auth import authenticated
 
 from config import config
 from app import db
+from app.resources import user, auth, rol , configuration, punto, coordenada
+from app.resources.api.zonas import zonas_api
+from app.resources.api.denuncias import denuncias_api
+from app.helpers import handler, user_helper, configurator
 
-from app.resources import user, auth, rol, configuration, punto, coordenada
-from app.db import db
 from app.models.punto import Punto
+
 from app.helpers import handler, user_helper
 from app.helpers import auth as helper_auth
-from app.helpers import configurator
 
 
 def create_app(environment="production"):
@@ -45,7 +47,6 @@ def create_app(environment="production"):
     app.add_url_rule("/cerrar_sesion", "auth_logout", auth.logout)
     app.add_url_rule("/autenticacion", "auth_authenticate", auth.authenticate, methods=["POST"])
 
-
     # Rutas de Usuarios
     app.add_url_rule("/usuarios", "user_index", user.index)
     app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
@@ -53,11 +54,12 @@ def create_app(environment="production"):
     app.add_url_rule("/usuarios/delete", "user_delete", user.delete, methods=["POST"])
     app.add_url_rule("/usuarios/edit/<user_id>","user_edit",user.edit)
     app.add_url_rule("/usuarios/edit","user_edit_finish",user.edit_finish, methods=["POST"])
+    app.add_url_rule("/usuarios/filtro","user_filtro",user.filtro, methods=["POST"] )
 
- # Ruta de Roles
+    # Ruta de Roles
     app.add_url_rule("/roles", "rol_index", rol.index)
 
-    # Rutas de Usuarios
+    # Rutas de la configuracion
     app.add_url_rule("/configuracion", "configuration_edit", configuration.edit)
     app.add_url_rule("/configuracion", "configuration_update", configuration.save, methods=["POST"])
 
@@ -72,41 +74,20 @@ def create_app(environment="production"):
     app.add_url_rule("/puntos", "punto_index", punto.index)
     app.add_url_rule("/puntos", "punto_create", punto.create, methods=["POST"])
     app.add_url_rule("/puntos/nuevo", "punto_new", punto.new)
+    app.add_url_rule("/puntos/filtro","punto_filtro",punto.filtro, methods=["POST"] )
+
+    #Editar punto de encuentro
     app.add_url_rule("/puntos/edit/<id>", "punto_edit", punto.edit)
-    app.add_url_rule("/puntos/update","punto_update",punto.update, methods=["POST"])
+    app.add_url_rule("/puntos/update","punto_update",punto.update, methods=["POST"])  
+    app.add_url_rule("/puntos/delete/<id>", "punto_delete", punto.delete, methods=["POST"])
 
-    #Eliminar punto de encuentro
-    @app.route('/puntos/delete/<id>')
-    def delete(id):
-        puntoEliminar = Punto.query.filter_by(id=int(id)).first()
-        Punto.delete(puntoEliminar)
-        return redirect(url_for('punto_index'))
+    # Rutas del api zonas
+    #app.add_url_rule("/zonas-inundables", "/", api.zonas.index)
+    #app.add_url_rule("/zonas-inundables/:<id>", "/", api.zonas.get_id)
 
-    #DATA TABLE
-    @app.route('/api/data')
-    def data():
-        puntos = Punto.query
-        # search filter
-        search = request.args.get('search[value]')
-        if search:
-            puntos = puntos.filter(db.or_(
-                Punto.nombre.like(f'%{search}%'),
-                Punto.estado.like(f'{search}%'),
-            ))
-        total_filtered = puntos.count()
-        # pagination
-        start = request.args.get('start', type=int)
-        length = request.args.get('length', type=int)
-        puntos = puntos.offset(start).limit(length)
-
-        # response
-        return {
-        'data': [p.to_dict() for p in puntos],
-        'recordsFiltered': total_filtered,
-        'recordsTotal': Punto.query.count(),
-        'draw': request.args.get('draw', type=int),
-    }
-
+    # Rutas del api denuncias
+    #app.add_url_rule("/denuncias", "/", api.denuncias.index, methods=["POST"])
+    
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
@@ -114,13 +95,15 @@ def create_app(environment="production"):
 
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")
-
     app.register_blueprint(api)
+    app.register_blueprint(zonas_api)
+    app.register_blueprint(denuncias_api)
 
     # Handlers
+    app.register_error_handler(400, handler.bad_request)
     app.register_error_handler(404, handler.not_found_error)
     app.register_error_handler(401, handler.unauthorized_error)
     app.register_error_handler(500, handler.server_error)
-
+    
     # Retornar la instancia de app configurada
     return app

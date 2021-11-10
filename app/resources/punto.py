@@ -4,14 +4,77 @@ from app.helpers.user_helper import has_permit
 from app.models.punto import Punto
 from app.helpers.auth import authenticated
 from app.db import db
+from app.helpers import configurator
 
-pagConf=4
 # Public resources
 def index():
+    """
+        El metodo mostrara todos los puntos en una tabla
+    """
+
     if not authenticated(session):
         abort(401)
 
-    return render_template("punto/index.html")
+    page = request.args.get('page',1, type=int)
+    page_config = configurator.settings().get_rows_per_page()
+    puntos = Punto.query.paginate(page=page,per_page=page_config)
+
+    return render_template("punto/index.html", puntos=puntos)
+
+
+def new():
+    if not authenticated(session):
+        abort(401)
+
+    if not has_permit("punto_index"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
+
+    return render_template("punto/new.html")
+
+
+def create():
+    if not authenticated(session):
+        abort(401)
+    puntoNuevo = Punto(**request.form)
+
+    if not has_permit("punto_new"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
+
+    try:
+        Punto.save(puntoNuevo)
+    except:
+        flash("error")
+        return redirect(request.referrer)
+
+    flash("Se creo con exito", "success")
+    return redirect(url_for("punto_index"))
+
+
+def delete(id):
+    if not authenticated(session):
+        abort(401)
+
+    if not has_permit("punto_delete"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
+
+    puntoEliminar = Punto.query.filter_by(id=int(id)).first()
+    Punto.delete(puntoEliminar)
+    flash("Se elimino con exito", "success") 
+    return redirect(url_for('punto_index'))
+
+def edit(id):
+    if not authenticated(session):
+        abort(401)
+
+    if not has_permit("punto_edit"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
+    
+    punto = Punto.query.filter_by(id=int(id)).first()
+    return render_template("punto/edit.html", punto=punto)
 
 def new():
     """
@@ -29,67 +92,7 @@ def new():
 
     return render_template("punto/new.html", coordenadas=coordenadas)
 
-def create():
-    """
-        El metodo ,si esta autenticado, creara un nuevo punto de encuentro
-    """
-
-    if not authenticated(session):
-        abort(401)
-
-    # if not has_permit("punto_new"):
-    #     flash("No cuenta con los permisos necesarios")
-    #     return redirect(request.referrer)
-
-    puntoNuevo = Punto(**request.form)
-
-    try:
-        Punto.save(puntoNuevo)
-    except:
-        flash("error")
-        return redirect(request.referrer)
-
-    flash("Se creo con exito", "success")
-    return redirect(request.referrer)
-
-def delete(id):
-    """
-        El metodo ,si esta autenticado, borrara un punto de encuentro
-    """
-
-    if not authenticated(session):
-        abort(401)
-
-    if not has_permit("punto_delete"):
-        flash("No cuenta con los permisos necesarios")
-        return redirect(request.referrer)
-
-    puntoEliminar = Punto.query.filter_by(id=int(id)).first()
-    Punto.delete(puntoEliminar)
-    flash("Se elimino con exito", "success") 
-
-    return redirect(url_for('punto_index'))
-
-def edit(id):
-    """
-        El metodo ,si esta autenticado, editara un punto de encuentro en una nueva pagina
-    """
-
-    if not authenticated(session):
-        abort(401)
-
-    # if not has_permit("punto_edit"):
-    #     flash("No cuenta con los permisos necesarios")
-    #     return redirect(request.referrer)
-
-    punto = Punto.query.filter_by(id=int(id)).first()
-    return render_template("punto/edit.html", punto=punto)
-
 def update():
-    """
-        El metodo ,si esta autenticado, editara el punto de encuentro
-    """
-
     data = request.form
     punto = Punto.search_punto(data["id"])
     try:
@@ -98,33 +101,25 @@ def update():
         flash("error")
         return redirect(request.referrer)
     flash("Se edito con exito", "success")
-    return redirect(url_for("puntos_index"))
+    return redirect(url_for("punto_index"))
 
-def data():
+def filtro():
     """
-        El metodo hara un filtro de los puntos de encuentro dependiendo de los datos ingresados
+        El metodo hara un filtro de los puntos dependiendo de los datos ingresados 
     """
-
-    query = Punto.query
-
-    # search filter
-    search = request.args.get('search[value]')
-    if search:
-        query = query.filter(db.or_(
-            Punto.nombre.like(f'%{search}%'),
-            Punto.estado.like(f'%{search}%')
-        ))
-    total_filtered = query.count()
-
-    # pagination
-    start = request.args.get('start', type=int)
-    length = request.args.get('length', type=int)
-    query = query.offset(start).limit(length)
-
-    # response
-    return {
-        'data': [Punto.to_dict() for puntos in query],
-        'recordsFiltered': total_filtered,
-        'recordsTotal': Punto.query.count(),
-        'draw': request.args.get('draw', type=int),
-    }
+    page_config = configurator.settings().get_rows_per_page()
+    page = request.args.get('page',1, type=int)
+    data = request.form
+    estado = data["estado"]
+    nombre = data["nombre"]
+    if (estado != "" and nombre!= ""):
+      puntos=Punto.query.filter_by(estado=estado,nombre=nombre).paginate(page=page,per_page=page_config)
+    else:
+        if (estado == "" and nombre != ""):
+            puntos=Punto.query.filter_by(nombre=nombre).paginate(page=page,per_page=page_config)
+        else:
+            if(estado !="" and nombre==""):
+                puntos=Punto.query.filter_by(estado=estado).paginate(page=page,per_page=page_config)
+            else:
+                puntos=Punto.query.paginate(page=page,per_page=page_confif)
+    return render_template("punto/index.html", puntos=puntos )

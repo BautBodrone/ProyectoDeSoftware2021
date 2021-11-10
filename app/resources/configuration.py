@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for, abort, flash
+from flask import render_template, request, session, redirect, url_for, abort, flash
 
 from app.models.configuration import Configuration
 from app.helpers.auth import authenticated
@@ -9,17 +9,14 @@ def edit():
     """
     if not authenticated(session):
         abort(401)
-
-def index():
-
+     
     configurations = Configuration.get_config()
-    
+     
     return render_template("config/edit.html", configurations=configurations)
 
 def save():
     if not authenticated(session):
         abort(401)
-    
     try:
         Configuration.get_config().update(request.form)
     except:

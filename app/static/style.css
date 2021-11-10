@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
-@import url('https://fonts.googleapis.com/css?family=Catamaran:400,800');
+
 body {
   font-family: 'Montserrat', Helvetica, sans-serif;
   font-size: 14px;
@@ -103,6 +103,7 @@ a.page {
   padding-left: 3%;
   float: right;
   margin: 0 auto;
+  margin-top: 1.5%;
   width: 80%;
 }
 
@@ -126,14 +127,11 @@ th {
 .form {
   margin-top: 20px;
 }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 
 #coordenadaPopUp{
   display: none;
 }
-=======
+
 tr:nth-child(even) {
   background-color: #dddddd;
 }
@@ -143,9 +141,7 @@ td, th {
   text-align: left;
   padding: 8px;
 }
->>>>>>> feature_recorrido-evacuacion
 
 tr:nth-child(even) {
   background-color: #dddddd;
 }
->>>>>>> development

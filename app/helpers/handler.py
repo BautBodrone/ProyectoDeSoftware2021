@@ -1,5 +1,12 @@
 from flask import render_template
 
+def bad_request(e):
+    kwargs = {
+        "error_name": "400 Bad Request Error",
+        "error_description": "La request está mal formulada",
+    }
+    return render_template("error.html", **kwargs), 400
+
 
 def not_found_error(e):
     kwargs = {

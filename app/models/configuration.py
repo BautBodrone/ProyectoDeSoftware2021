@@ -72,10 +72,6 @@ class Configuration(db.Model):
 
     def get_public_letters_color(self):
         return self.public_letters_color
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> feature_recorrido-evacuacion
 
     def get_rows_per_page(self):
         """
@@ -88,8 +84,3 @@ class Configuration(db.Model):
             Retorna el objeto configurations
        """
        return db.session.query(Configuration).first()
-<<<<<<< HEAD
-=======
-=======
->>>>>>> development
->>>>>>> feature_recorrido-evacuacion

@@ -10,14 +10,12 @@ from app.helpers.auth import authenticated
 from config import config
 from app import db
 
-from app.resources import issue, user, auth, punto, rol , configuration,puntos
-
-
-from app.resources import issue, user, auth, rol, configuration, punto, coordenada
+from app.resources import user, auth, rol, configuration, punto, coordenada
 from app.db import db
 from app.models.punto import Punto
 from app.helpers import handler, user_helper
 from app.helpers import auth as helper_auth
+from app.helpers import configurator
 
 
 def create_app(environment="production"):
@@ -47,10 +45,6 @@ def create_app(environment="production"):
     app.add_url_rule("/cerrar_sesion", "auth_logout", auth.logout)
     app.add_url_rule("/autenticacion", "auth_authenticate", auth.authenticate, methods=["POST"])
 
-    # Rutas de Consultas
-    app.add_url_rule("/consultas", "issue_index", issue.index)
-    app.add_url_rule("/consultas", "issue_create", issue.create, methods=["POST"])
-    app.add_url_rule("/consultas/nueva", "issue_new", issue.new)
 
     # Rutas de Usuarios
     app.add_url_rule("/usuarios", "user_index", user.index)
@@ -112,9 +106,6 @@ def create_app(environment="production"):
         'recordsTotal': Punto.query.count(),
         'draw': request.args.get('draw', type=int),
     }
-        
-
-        
 
     # Ruta para el Home (usando decorator)
     @app.route("/")
@@ -123,7 +114,6 @@ def create_app(environment="production"):
 
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")
-    api.register_blueprint(issue_api)
 
     app.register_blueprint(api)
 

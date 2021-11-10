@@ -13,13 +13,10 @@ def index():
     if not authenticated(session):
         abort(401)
 
-<<<<<<< HEAD
-=======
     if not has_permit("user_index"):
         flash("No cuenta con los permisos necesarios")
         return redirect(request.referrer)
 
->>>>>>> feature_recorrido-evacuacion
     page = request.args.get('page',1, type=int)
     page_config = configurator.settings().get_rows_per_page()
     users = User.query.paginate(page=page,per_page=page_config)

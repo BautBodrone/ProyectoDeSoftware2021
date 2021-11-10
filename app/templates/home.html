@@ -9,11 +9,8 @@
     <h1 id="header">Inicio</h1>
   </div>
 {% endblock %}
-<<<<<<< HEAD
-=======
 {% block content %}
   <p>Página de inicio de la aplicación</p>
-  <a href="{{ url_for('issue_index') }}" class="link">Problemas</a>
   {% if is_authenticated(session) %}
     <a href="{{ url_for('punto_index') }}" class="link">Puntos de Encuentro</a>
     <a href="{{ url_for('configuration_edit') }}" class="link">Configuracion</a>
@@ -27,4 +24,3 @@
   {% endif %}
 {% endblock %}
 
->>>>>>> feature_recorrido-evacuacion

@@ -76,22 +76,6 @@ def edit(id):
     punto = Punto.query.filter_by(id=int(id)).first()
     return render_template("punto/edit.html", punto=punto)
 
-def new():
-    """
-        El metodo , si esta autenticado, mostrara una pagina para crear un nuevo punto de encuentro
-    """
-
-    if not authenticated(session):
-        abort(401)
-
-    # if not has_permit("punto_index"):
-    #     flash("No cuenta con los permisos necesarios")
-    #     return redirect(request.referrer)
-
-    coordenadas = Coordenada.query.all()
-
-    return render_template("punto/new.html", coordenadas=coordenadas)
-
 def update():
     data = request.form
     punto = Punto.search_punto(data["id"])

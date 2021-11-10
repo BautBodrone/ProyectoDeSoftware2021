@@ -21,14 +21,11 @@
         background-color: {{ configurator().get_private_accent_color() }};
         color: {{ configurator().get_private_letters_color() }};
       }
-      a.navbar.selected{
+      a.navbar.selected,  a.link.selected{
         filter: brightness(1.5);
       }
       a.navbar:hover {
         filter: brightness(0.88);
-      }
-      a.link.selected {
-        filter: brightness(1.5);
       }
 
     </style>
@@ -49,17 +46,6 @@
 
     <div class="navbar" id="navbar">
     {% block navbar %}
-      {% if is_authenticated(session) %}
-        <a href="{{ url_for('punto_index') }}" class="navbar">Puntos de Encuentro</a>
-        <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
-        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
-          <a href="{{ url_for('rol_index') }}" class="navbar">Roles</a>
-          <a href="{{ url_for('user_index') }}" class="navbar">Usuarios</a>
-        {% endif %}
-        <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
-      {% else %}
-        <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
-      {% endif %}
     {% endblock %}
     </div>
     <div class="content" id="content">

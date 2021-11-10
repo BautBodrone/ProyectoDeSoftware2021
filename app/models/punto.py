@@ -9,15 +9,17 @@ class Punto(db.Model):
     id = Column(Integer, primary_key=True)
     email = Column(String(30))
     nombre = Column(String(30), unique=True)
-    coordenadas = relationship("Coordenada", secondary="punto_coordenada")
+    lat = Column(String(30))
+    lng = Column(String(30))
     estado = Column(String(30))
     telefono = Column(String(30))
     direccion = Column(String(30))
 
-    def __init__(self, email=None, nombre=None, coordenadas=None, estado=None, telefono=None, direccion=None):
+    def __init__(self, email, nombre, lat, lng, estado, telefono, direccion):
         self.email = email
         self.nombre = nombre
-        self.coordenadas = coordenadas
+        self.lat = lat;
+        self.lng = lng;
         self.estado = estado
         self.telefono = telefono
         self.direccion = direccion
@@ -43,7 +45,8 @@ class Punto(db.Model):
         """
         self.nombre = punto["nombre"]
         self.direccion = punto["direccion"]
-        self.coordenadas = punto["coordenadas"]
+        self.lat = punto["lat"]
+        self.lng = punto["lng"]
         self.estado = punto["estado"]
         self.telefono = punto["telefono"]
         self.email = punto["email"]
@@ -56,7 +59,8 @@ class Punto(db.Model):
         return {
             'nombre': self.nombre,
             'direccion': self.direccion,
-            'coordenadas': self.coordenadas,
+            'lat': self.lat,
+            'lng': self.lng,
             'telefono': self.telefono,
             'estado': self.estado,
             'email': self.email,

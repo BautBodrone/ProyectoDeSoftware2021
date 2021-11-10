@@ -25,7 +25,7 @@
 {% endblock %}
 
 {% block content %}
-  <form action="{{ url_for('punto_create') }}" method="POST">
+  <form id= "form-map" action="{{ url_for('punto_create') }}" method="POST">
     <p>
       <label>Nombre<label></br>
       <input name="nombre" placeholder="Nombre" required/>
@@ -34,14 +34,11 @@
       <label>Direccion<label></br>
       <input  name="direccion" placeholder="Direccion" required/>
     </p>
-      <label for="coordenada">Seleccione una coordenada</label>
-      <select name="coordenada" id="coordenada">
-        {% for coordenada in coordenadas %}
-          <option value={{coordenada}}>{{coordenada}}</option>
-        {% endfor %}
-      </select>
-      <a class="open-button" href="{{ url_for('coordenada_new_punto') }}" onclick="openForm()">CrearNuevo</a>
-    <p> 
+      <input type="text" name="lat" id="lat">
+      <input type="text" name="lng" id="lng">
+      <div class="map-container">
+        <div id="mapid" class="mapform" ></div>
+      </div>
      <label>Estado<label></br>
      <select name="estado" required>
         <option value="" selected disabled hidden>
@@ -61,7 +58,7 @@
     </p>
     <p>
       <input type="submit" value="Crear">
-      <button type="reset">Limpiar</button>
+      <input type="reset" value="Limpiar">
     </p>
   </form>
   <a href="{{ url_for('punto_index') }}" class="link">Volver</a>

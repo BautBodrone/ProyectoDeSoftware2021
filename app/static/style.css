@@ -146,6 +146,19 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 
-#mapid{
+.map-fullpage{
   height: 70vh;
+}
+
+.mapform{
+  height: 20rem;
+  width: 20rem;
+}
+
+.map-container{
+  margin-top: 1rem;
+}
+
+#lat, #lng {
+  display: none;
 }

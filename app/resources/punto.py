@@ -1,4 +1,5 @@
 from flask import redirect, render_template, request, url_for, session, abort, flash
+from app.models import coordenada
 from app.models.coordenada import Coordenada
 from app.helpers.user_helper import has_permit
 from app.models.punto import Punto
@@ -36,6 +37,7 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
+    
     puntoNuevo = Punto(**request.form)
 
     if not has_permit("punto_new"):

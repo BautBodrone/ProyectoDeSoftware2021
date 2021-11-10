@@ -39,3 +39,6 @@ class Coordenada(db.Model):
 
     def __str__(self):
         return str(self.latitud)+" "+str(self.longitud)
+
+    def search_id(id):
+        return db.session.query(Coordenada).get(id)

@@ -6,7 +6,6 @@ from app.helpers.user_helper import has_permit
 from app.helpers import configurator
 
 from app.models.user_rol import User_rol
-from app.helpers import configurator
 
 # Protected resources
 def index():

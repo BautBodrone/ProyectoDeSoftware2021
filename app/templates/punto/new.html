@@ -35,9 +35,9 @@
       <input  name="direccion" placeholder="Direccion" required/>
     </p>
       <label for="coordenada">Seleccione una coordenada</label>
-      <select name="coordenada" id="coordenada">
+      <select name="coordenadas" id="coordenadas">
         {% for coordenada in coordenadas %}
-          <option value={{coordenada}}>{{coordenada}}</option>
+          <option value={{coordenada.id}}>{{coordenada}}</option>
         {% endfor %}
       </select>
       <a class="open-button" href="{{ url_for('coordenada_new_punto') }}" onclick="openForm()">CrearNuevo</a>

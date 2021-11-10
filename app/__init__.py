@@ -9,10 +9,10 @@ from app.helpers.auth import authenticated
 
 from config import config
 from app import db
-from app.resources import user, auth, rol , configuration, punto, coordenada
+from app.resources import user, auth, rol , configuration, punto, coordenada, zona
 from app.resources.api.zonas import zonas_api
 from app.resources.api.denuncias import denuncias_api
-from app.helpers import handler, user_helper, configurator
+from app.helpers import handler, user_helper, configurator,coordenada_helper
 
 from app.models.punto import Punto
 
@@ -41,12 +41,18 @@ def create_app(environment="production"):
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
     app.jinja_env.globals.update(is_admin=user_helper.is_admin)
     app.jinja_env.globals.update(configurator=configurator.settings)
+    app.jinja_env.globals.update(search_coordenada=coordenada_helper.search_coordenada)
 
     # Autenticación
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
     app.add_url_rule("/cerrar_sesion", "auth_logout", auth.logout)
     app.add_url_rule("/autenticacion", "auth_authenticate", auth.authenticate, methods=["POST"])
 
+    #Rutas de Zonas
+    app.add_url_rule("/zonas", "zona_index", zona.index)
+    app.add_url_rule("/zonas/nuevo", "zona_new", zona.new)
+    app.add_url_rule("/zonas", "zona_create", zona.create, methods=["POST"])
+    
     # Rutas de Usuarios
     app.add_url_rule("/usuarios", "user_index", user.index)
     app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])

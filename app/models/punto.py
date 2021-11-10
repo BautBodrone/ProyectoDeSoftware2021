@@ -17,7 +17,7 @@ class Punto(db.Model):
     def __init__(self, email=None, nombre=None, coordenadas=None, estado=None, telefono=None, direccion=None):
         self.email = email
         self.nombre = nombre
-        self.coordenadas = coordenadas
+        self.coordenadas.append(coordenada.Coordenada.search_id(coordenadas))
         self.estado = estado
         self.telefono = telefono
         self.direccion = direccion

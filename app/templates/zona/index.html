@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %}Zonas{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header">Zonas</h1>
+  </div>
+{% endblock %}
+{% block content %}
+  {% for zona in zonas %}
+    <li>{{ zona.coordenadas }}</li>
+  {% endfor %}
+  <a href="{{ url_for('home') }}" class="link">Volver</a>
+{% endblock %}

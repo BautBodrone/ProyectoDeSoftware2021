@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %}Coordenada{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <h1>Crear una coordenada</h1>
+  <form action="{{ url_for('zona_create') }}" method="POST">
+    <p>
+      <label>Nombre <label></br>
+      <input type="text" name="nombre" placeholder="Nombre"/>
+    </p>
+    <p>
+        <label>Color <label></br>
+        <input type="color" id="color" name="color" value="#FF6E4E" >
+    </p>
+    <p>
+        <label>Estado </label>
+        <select class="selectpicker" name="estado" id="estado">
+            <option value=publicado>Publicado</option>
+            <option value=despublicado>Despublicado</option>
+        </select>
+    </p>
+    <p>
+        <label for="coordenada">Seleccione una coordenada</label>
+        <select class="selectpicker" name="coordenadas" id="coordenadas" multiple data-live-search="true">
+          {% for coordenada in coordenadas %}
+            <option value={{coordenada.id}}>{{coordenada}}</option>
+          {% endfor %}
+        </select>
+    </p>
+    <p>
+      <button type="submit" value="Crear">Crear</button>
+      <button type="reset">Limpiar</button>
+    </p>
+  </form>
+  <a href="{{ url_for('zona_index') }}" class="link">Volver</a>
+{% endblock %}

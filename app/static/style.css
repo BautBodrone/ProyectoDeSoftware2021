@@ -145,3 +145,7 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+#mapid{
+  height: 70vh;
+}

@@ -3,18 +3,33 @@ from sqlalchemy.sql.expression import null
 from sqlalchemy.sql.sqltypes import Date
 from app.db import db
 import datetime 
+from sqlalchemy_utils import ChoiceType
 
 class Denuncia(db.Model):
+
+    ESTADOS = [
+        ('sinConfirmar','Sin Confirmar'),
+        ('curso','Curso'),
+        ('resuelta','Resuelta'),
+        ('cerrada','Cerrada')
+    ]
+
+    CATEGORIAS = [
+        ('cañeria_rota','Cañeria Rota'),
+        ('calle_inundable','Calle Inundable'),
+        ('calle_rota','Calle rota'),
+        ('otro','Otro')
+    ]
     
     __tablename__ = "denuncias" 
     id = Column(Integer, primary_key=True)
     titulo = Column(String(30),unique=True)
-    categoria = Column(String(30))
+    categoria = Column(ChoiceType(CATEGORIAS))
     fechaC = Column(Date)
     fechaF = Column(Date)
     descripcion = Column(String(30))
     coordenadas = Column(String(30))
-    estado = Column(String(30))
+    estado = Column(ChoiceType(ESTADOS))
     apellidoD = Column(String(30))
     nombreD = Column(String(30))
     telefono = Column(String(30))
@@ -22,13 +37,12 @@ class Denuncia(db.Model):
     
 
     def __init__(self , titulo=None,categoria=None,descripcion=None,
-                    coordenadas=None,estado=None,apellidoD=None ,nombreD=None,telefono=None ,emailD=None):
+                    coordenadas=None,fechaC=None,fechaF=None,estado=None,apellidoD=None ,nombreD=None,telefono=None ,emailD=None):
         self.titulo = titulo
         self.categoria = categoria
         self.descripcion = descripcion
         self.coordenadas = coordenadas
         self.fechaC =  datetime.date.today()
-        self.fechaF = null
         self.estado = estado
         self.apellidoD = apellidoD
         self.nombreD = nombreD
@@ -72,8 +86,6 @@ class Denuncia(db.Model):
             self.telefono = data["telefono"]
         if self.emailD != data["emailD"]:
             self.emailD = data["emailD"]
-        if "cerrado" == data["fechaF"]:
-            self.fechaF = datetime.date.today()
         db.session.commit()
 
     def print(self):

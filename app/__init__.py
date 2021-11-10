@@ -13,17 +13,13 @@ from app import db
 from app.resources import issue, user, auth, punto, rol , configuration,puntos
 
 
-<<<<<<< HEAD
 from app.resources import issue, user, auth, rol, configuration, punto, coordenada
 from app.db import db
 from app.models.punto import Punto
-=======
-from app.models.puntos import Puntos
-
->>>>>>> development
 from app.resources.api.issue import issue_api
 from app.helpers import handler, user_helper
 from app.helpers import auth as helper_auth
+from app.helpers import configurator
 
 
 def create_app(environment="production"):
@@ -46,10 +42,7 @@ def create_app(environment="production"):
     app.jinja_env.globals.update(my_user=user_helper.user)
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
     app.jinja_env.globals.update(is_admin=user_helper.is_admin)
-<<<<<<< HEAD
     app.jinja_env.globals.update(configurator=configurator.settings)
-=======
->>>>>>> development
 
     # Autenticación
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)

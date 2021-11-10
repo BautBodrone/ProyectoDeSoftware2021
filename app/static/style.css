@@ -112,12 +112,9 @@ td {
 .form {
   margin-top: 20px;
 }
-<<<<<<< HEAD
-
 #coordenadaPopUp{
   display: none;
 }
-=======
 tr:nth-child(even) {
   background-color: #dddddd;
 }
@@ -131,4 +128,4 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
->>>>>>> development
+

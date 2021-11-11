@@ -86,7 +86,7 @@ def create_punto():
         flash("Coordenada con esa longitud y latitud ya existe", "error")
         return redirect(request.referrer)
     
-    return redirect(url_for("punto_nuevo"))
+    return redirect(url_for("punto_new"))
 
 def delete():
     """

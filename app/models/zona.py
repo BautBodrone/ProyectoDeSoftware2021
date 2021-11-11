@@ -34,3 +34,6 @@ class Zona(db.Model):
     def save(self, new_zona):
         db.session.add(new_zona)
         db.session.commit()
+
+    def search_id(id):
+        return db.session.query(Zona).get(id)

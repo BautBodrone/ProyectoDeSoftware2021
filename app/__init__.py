@@ -52,7 +52,8 @@ def create_app(environment="production"):
     app.add_url_rule("/zonas", "zona_index", zona.index)
     app.add_url_rule("/zonas/nuevo", "zona_new", zona.new)
     app.add_url_rule("/zonas", "zona_create", zona.create, methods=["POST"])
-    
+    app.add_url_rule("/zonas/delete","zona_delete", zona.delete, methods=["POST"])
+
     # Rutas de Usuarios
     app.add_url_rule("/usuarios", "user_index", user.index)
     app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])

@@ -33,9 +33,9 @@ def delete():
     if not authenticated(session):
         abort(401)
 
-    # if not has_permit("zona_delete"):
-    #     flash("No cuenta con los permisos necesarios")
-    #     return redirect(request.referrer)
+    if not has_permit("zona_delete"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
 
     zona = Zona.search_id(request.form["zona_id"])
     zona.delete()

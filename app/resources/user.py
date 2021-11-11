@@ -5,8 +5,6 @@ from app.helpers.auth import authenticated
 from app.helpers.user_helper import has_permit
 from app.helpers import configurator
 
-from app.models.user_rol import User_rol
-
 # Protected resources
 def index():
     if not authenticated(session):

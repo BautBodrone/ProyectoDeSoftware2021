@@ -1,7 +1,8 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String
 from app.db import db
-from app.models import coordenada, punto_coordenada
-from sqlalchemy.orm import relationship
+from app.models import coordenada
+
+punto_coordenada = db.Table("puntos_coordenadas",db.Column("puntos_id",db.ForeignKey("puntos.id")),db.Column("coordenadas_id",db.ForeignKey("coordenadas.id")))
 
 class Punto(db.Model):
     
@@ -9,7 +10,7 @@ class Punto(db.Model):
     id = Column(Integer, primary_key=True)
     email = Column(String(30))
     nombre = Column(String(30), unique=True)
-    coordenadas = relationship("Coordenada", secondary="punto_coordenada")
+    coordenadas = db.relationship("Coordenada", secondary=punto_coordenada, lazy='subquery',backref=db.backref('puntos', lazy=True))
     estado = Column(String(30))
     telefono = Column(String(30))
     direccion = Column(String(30))

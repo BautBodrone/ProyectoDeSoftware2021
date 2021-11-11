@@ -1,8 +1,5 @@
 from sqlalchemy import Column, Integer, String
 from app.db import db
-from sqlalchemy.orm import relationship
-
-from app.models import rol_permiso, rol
 
 class Permiso(db.Model):
 
@@ -10,7 +7,6 @@ class Permiso(db.Model):
     id = Column(Integer,primary_key = True)
     nombre = Column(String(30))
     descripcion = Column(String(255))
-    rols = relationship("Rol",secondary = "rols_permisos")
     
     def __init__(self, nombre, descripcion):
         self.nombre = nombre

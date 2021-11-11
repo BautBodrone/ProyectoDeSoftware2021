@@ -9,7 +9,7 @@ from app.helpers.auth import authenticated
 
 from config import config
 from app import db
-from app.resources import user, auth, rol , configuration, punto, coordenada, zona
+from app.resources import permiso, user, auth, rol , configuration, punto, coordenada, zona
 from app.resources.api.zonas import zonas_api
 from app.resources.api.denuncias import denuncias_api
 from app.helpers import handler, user_helper, configurator,coordenada_helper
@@ -65,6 +65,9 @@ def create_app(environment="production"):
 
     # Ruta de Roles
     app.add_url_rule("/roles", "rol_index", rol.index)
+
+    # Ruta de permisos
+    app.add_url_rule("/permisos","permiso_index", permiso.index)
 
     # Rutas de la configuracion
     app.add_url_rule("/configuracion", "configuration_edit", configuration.edit)

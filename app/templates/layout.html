@@ -50,7 +50,7 @@
       {% endblock %}
     </div>
     
-    <div class="navbar" id="navbar" onmouseover="toggleNavbar()" onmouseout="toggleNavbar()">
+    <div class="navbar" id="navbar" >
     {% block navbar %}
       <a href="/" class="navbar" id="home" >Inicio</a>
       {% if is_authenticated(session) %}

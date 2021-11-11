@@ -16,9 +16,11 @@
 
 {% block content %}
 
-<a href="{{ url_for('puntos_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
+<div>
+<a href="{{ url_for('puntos_new') }}" class="link" style="float:right;  margin-top: 5px; width:75px" >Nuevo</a>
 <form action="{{ url_for('puntos_filtro') }}" method="POST">
   <h4>Filtrar</h4> 
+  <div>
       <input name="nombre" placeholder="Nombre"/>
       <select  name="estado">
         <option value="" selected>Seleccione un estado</option>
@@ -27,7 +29,8 @@
       </select>
       <input type="submit" value="Filtrar">
     </form>
-    <br>
+    <br></div>
+</div>
   <table>
     <tr>
         <th>  Email  </th>

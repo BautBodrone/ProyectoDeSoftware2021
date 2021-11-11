@@ -29,24 +29,25 @@
           <option value='z..a'>Z..A</option>
         </select>
     </p>
-    <p>
-      <p>Paleta aplicación privada:</p>
+    <div>
+      <h5>Paleta aplicación privada:</h5>
       <label for="private_bg_color" class="dropbtn">Fondo</label>
       <input type="color" id="private_bg_color" name="private_bg_color" value="{{ configurator().get_private_bg_color() }}" />
       <label for="private_bg_color" class="dropbtn">  Acentos</label>
       <input type="color" id="private_accent_color" name="private_accent_color" value="{{ configurator().get_private_accent_color() }}" />
       <label for="private_bg_color" class="dropbtn">  Letras</label>
       <input type="color" id="private_leters_color" name="private_letters_color" value="{{ configurator().get_private_letters_color() }}" />
-    </p>
-    <p>
-      <p>Paleta aplicación pública:</p>
+    </div>
+    <div>
+      <h5>Paleta aplicación pública:</h5>
+      
       <label for="public_bg_color" class="dropbtn">Fondo</label>
       <input type="color" id="public_bg_color" name="public_bg_color" value="{{ configurator().get_public_bg_color() }}" />
       <label for="public_bg_color" class="dropbtn">   Acentos</label>
       <input type="color" id="public_accent_color" name="public_accent_color" value="{{ configurator().get_public_accent_color() }}" />
       <label for="public_bg_color" class="dropbtn">   Letras</label>
       <input type="color" id="public_leters_color" name="public_letters_color" value="{{ configurator().get_public_letters_color() }}" />
-    </p>
+    </div>
     <button type="reset">Limpiar</button>
     <input type="submit" value="Guardar">
     <br>

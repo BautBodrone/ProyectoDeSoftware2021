@@ -15,7 +15,8 @@
 {% endblock %}
 
 {% block content %}
-<a href="{{ url_for('user_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
+<div>
+<a href="{{ url_for('user_new') }}" class="link" style="float:right;  margin-top: 5px; width:75px" >Nuevo</a>
 <form action="{{ url_for('user_filtro') }}" method="POST">
   <h4>Filtrar</h4> 
       <input name="first_name" placeholder="Nombre" />
@@ -27,6 +28,8 @@
       <input type="submit" value="Filtrar">
     </form>
   <br>
+</div>
+
   <table>
     <tr>
         <th>  Email  </th>

@@ -1,5 +1,6 @@
 var mini = true;
 function toggleNavbar() {
+    
     if (mini) {
         console.log("opening sidebar");
         document.getElementById("navbar").style.width = "300px";

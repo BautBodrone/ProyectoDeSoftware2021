@@ -4,15 +4,32 @@ body {
   font-family: 'Montserrat', Helvetica, sans-serif;
   font-size: 1em;
   min-height: 100vh;
-  
   height: 100%;
 }
+#content{
+  margin-left: 2%;
+}
 form label, form select, form option{
+  display: block;
+  
+}
+  form div label, form div select, form div option{
   display: inline-block;
-  width: 80px;
+  margin-bottom: 2%;
+  
 }
 form button{
   margin-right: 20px;
+  width: auto;
+}
+
+form h5 {
+  margin-bottom: 20px;
+}
+form label{
+  margin-left: 20px;
+  width: auto;
+  text-align: justify;
 }
 .header {
   padding: 30px;
@@ -27,7 +44,7 @@ form button{
 }
 
 #footer {
-  position:fixed;
+  position:fixed ;
   bottom:0; 
   min-height:2em;
   text-align: center;
@@ -156,11 +173,16 @@ a.page {
     font-size:90%;
     
   }
- 
+  
+  .navbar{
+    width: 300px;
+  }
   
 }
 @media screen and (min-width: 360px) and ( max-width:768px)  {
-    .content{
+    
+
+  .content{
       
       display:grid;
       width: 100%;
@@ -168,6 +190,8 @@ a.page {
       font-size: x-small;
        
     }
+
+     
     .content table  {
       align-content: center;
       table-layout:fixed;
@@ -182,6 +206,10 @@ a.page {
       width: 72px;
       height: 30px;
       font-size: small;
+    }
+    .navbar{
+      width: 100%;
+
     }
   }
   

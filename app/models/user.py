@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql.expression import false
 from app.db import db
 
 from app.models import user_rol,rol
@@ -14,7 +15,8 @@ class User(db.Model):
     password = Column(String(30))
     rols = relationship("Rol",secondary = "users_rols",viewonly=True)
     activo = Column(Boolean)
-   # denuncia_id = relationship('Denuncia')
+    denuncias = relationship('Denuncia', backref='author', lazy='dynamic',
+                        primaryjoin="User.id == Denuncia.asignadoA_id")
 
     def __init__(self, first_name=None, last_name=None, email=None, password=None):
         self.first_name = first_name
@@ -105,3 +107,13 @@ class User(db.Model):
             for permiso in rol.permisos:
                 permisos.append(permiso)
         return permisos
+
+    def poseePermiso():
+        permisos = []
+        for rol in self.rols:
+            for permiso in rol.permisos:
+                permisos.append(permiso)
+        if (len(permisos)>0):
+            return True
+        else:
+            return False

@@ -30,11 +30,11 @@ def new():
     if not authenticated(session):
         abort(401)
     users = User.query.all()
-    return render_template("denuncia/new.html", users)
+    return render_template("denuncia/new.html", users=users)
 
 def create():
     """
-        El metodo ,si esta autenticado, creara un nuevo 
+        El metodo ,si esta autenticado, creara una nueva denuncia
     """
 
     if not authenticated(session):

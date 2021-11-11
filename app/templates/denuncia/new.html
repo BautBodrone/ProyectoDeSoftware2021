@@ -53,11 +53,13 @@
         <input name="emailD" placeholder="emailD"/>
       </p>
       <p>
-      <select class="selectpicker" name="users" id="users" multiple data-live-search="true">
+      <select class="selectpicker" name="asignadoA_id" id="asignadoA_id">
         {% for user in users %}
-          {% if user.getPermisos() != None %}
-            <option value={{user.first_name}}>{{first_name}}</option>
-          {% endif %}
+          {% for rol in user.rols %}
+            {% if rol.nombre != None %}
+              <option value={{user.id}}>{{user.first_name}}</option>
+            {% endif %}
+          {% endfor %}
         {% endfor %}
       </select>
       </p>

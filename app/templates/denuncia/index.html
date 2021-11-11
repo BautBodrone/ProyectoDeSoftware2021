@@ -35,6 +35,7 @@
       <th>  Nombre denunciante  </th>
       <th>  telefono del denunciante  </th>
       <th>  Email denunciante  </th>
+      <th>  Asignado A  </th>
   </tr>
   {% for denuncia in denuncias.items %}
   <tr>
@@ -53,6 +54,7 @@
     <td>{{ denuncia.nombreD }}</td>
     <td>{{ denuncia.telefono }}</td>
     <td>{{ denuncia.emailD }}</td>
+    <td>{{ denuncia.asignadoA_id }}</td>
     <td>
       <form action=""  >
         <button type="submit" class="btn btn-info mt-2 ml-2">Seguimientos</button>

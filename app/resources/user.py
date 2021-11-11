@@ -12,7 +12,7 @@ def index():
 
     if not has_permit("user_index"):
         flash("No cuenta con los permisos necesarios")
-        return redirect(request.referrer)
+        return render_template("home.html")
 
     page = request.args.get('page',1, type=int)
     page_config = configurator.settings().get_rows_per_page()
@@ -98,7 +98,7 @@ def add_rols():
     user_id = request.args["user_id"]
     roles = request.form.getlist("roles[]")
     for rol in roles:
-        User_rol.add(user_id, rol)
+        User.rols.add(user_id, rol)
 
     flash("Insercion exitosa", "success")
 

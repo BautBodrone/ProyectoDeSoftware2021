@@ -12,8 +12,11 @@ def user(email):
     return User.search_email(email)
 
 def has_permit(permit):
-    user = User.search_user_email(session["user"])
-    for permit_user in user.get_permisos():
-        if (permit_user.nombre == permit):
-            return True
-    return False
+    try:
+        user = User.search_user_email(session["user"])
+        for permit_user in user.get_permisos():
+            if (permit_user.nombre == permit):
+                return True
+        return False
+    except:
+        return False

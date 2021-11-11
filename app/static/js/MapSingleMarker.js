@@ -11,7 +11,11 @@ export class Map {
     }
     initializeMap(selector) {
         this.map = L.map(selector).setView([initialLat, initialLng], 13);
-        L.tileLayer(mapLayerUrl).addTo(this.map);    
+        L.tileLayer(mapLayerUrl).addTo(this.map);
+        if ((document.getElementById('lat').value != '') && (document.getElementById('lng').value != '')){
+            this.first_marker = L.latLng((document.getElementById('lat').value), (document.getElementById('lng').value));
+            this.addMarker(this.first_marker);
+        }    
     };
 
     addMarker({ lat, lng }) {

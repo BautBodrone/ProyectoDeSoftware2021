@@ -52,7 +52,7 @@
     <tr>
       <td>{{ punto.email }}</td>
       <td>{{ punto.nombre }} </td>
-      <td>{{ punto.lat }}, {{ punto.lng }} </td>
+      <td>{{ '%0.4f'| format(punto.lat|float) }}, {{ '%0.4f'| format(punto.lng|float) }} </td>
       <td>{{ punto.estado }}</td>
       <td>{{ punto.telefono }} </td>
       <td>{{ punto.direccion }} </td>

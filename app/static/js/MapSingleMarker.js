@@ -12,11 +12,25 @@ export class Map {
     initializeMap(selector) {
         this.map = L.map(selector).setView([initialLat, initialLng], 13);
         L.tileLayer(mapLayerUrl).addTo(this.map);
+        this.addMarkersAndZones();
+    };
+    
+    addMarkersAndZones(){
         if ((document.getElementById('lat').value != '') && (document.getElementById('lng').value != '')){
             this.first_marker = L.latLng((document.getElementById('lat').value), (document.getElementById('lng').value));
             this.addMarker(this.first_marker);
-        }    
-    };
+        };
+        this.zones = document.getElementsByClass('zonas');
+        for (zone in this.zones){
+            this.addZone(zone);
+        }
+    }
+
+    addZone(zone){
+        L.polygon(
+            zone
+        ).addTo(mymap);
+    }
 
     addMarker({ lat, lng }) {
         if (this.marker) {

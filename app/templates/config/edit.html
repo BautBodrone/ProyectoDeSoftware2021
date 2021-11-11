@@ -6,14 +6,14 @@
 {% block header %}
   <div>
     {{ super() }}
-    <h1 id="header">Configuracion</h1>
+    <h1 id="header">Configuración de Página</h1>
   </div>
 {% endblock %}
 {% block navbar %}
 {{ super() }}
 {% endblock %}
 {% block content %}
-  <p>Página de configuracion de la aplicación</p>
+  <h4>Página de configuracion de la aplicación</h4>
   {% if is_authenticated(session) %}
   <form action="{{ url_for('configuration_update') }}" method="POST">
     <p>
@@ -52,5 +52,7 @@
     <br>
   </form>    
   {% endif %}
-  <a href="{{ url_for('home') }}" class="link">Volver</a>
+  <div style="margin-top:20px  ">
+    <a href="{{ url_for('home') }}" class="link">Volver</a>
+  </div>
 {% endblock %}

@@ -36,7 +36,12 @@
         <th>  Estado  </th>
         <th>  Telefono  </th>
         <th>  Dirección  </th>
-        <th>  Actions  </th>
+        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_edit') %}
+        <th>  Editar  </th>
+        {% endif %}
+        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_delete') %}
+        <th>  Eliminar  </th>
+        {% endif %}
     </tr>
   {% for punto in puntos.items %}
     <tr>
@@ -49,12 +54,14 @@
       <td>
         {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_edit') %}
         <form action="{{ url_for('puntos_edit', id = punto.id ) }}"  >
-          <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
+          <button type="submit" class="btn btn-warning  ">Editar</button>
         </form>
+      </td>
         {% endif %}
+      <td>
         {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_delete') %}
         <form action="{{ url_for('puntos_delete', id = punto.id) }}" method="POST" enctype="multipart/form-data">
-          <button onclick="return confirm('¿Esta seguro de que desea eliminar este punto de encuentro?');" class="btn btn-danger mt-2 ml-2">eliminar</a>
+          <button onclick="return confirm('¿Esta seguro de que desea eliminar este punto de encuentro?');"  class="btn btn-danger ">eliminar</a>
         </form>
         {% endif %}
       </td>

@@ -26,12 +26,13 @@
       @media (max-width: 768px, min-width:360){
           .navbar a{
             display:hidden;
+  
           }
       }
-      @chica (max-width:360){
-        .navbar a{
-            display:hidden;
-          }
+      @media (max-width:360){
+        a{
+          color:red
+        }
       }
     </style>
     {% block head %}
@@ -51,7 +52,7 @@
     
     <div class="navbar" id="navbar" onmouseover="toggleNavbar()" onmouseout="toggleNavbar()">
     {% block navbar %}
-      <a href="/" class="navbar" id="home" >Home</a>
+      <a href="/" class="navbar" id="home" >Inicio</a>
       {% if is_authenticated(session) %}
         <a href="{{ url_for('puntos_index') }}" class="navbar">Puntos de Encuentro</a>
         <a href="{{ url_for('configuration_edit') }}" class="navbar" >Configuracion</a>
@@ -96,7 +97,7 @@
     </div>
     <div id="footer">
       {% block footer %}
-      <a> proyecto de software </a>
+      <a> Proyecto de software - Grupo 33 © </a>
       {% endblock %}
     </div> 
     {% block scripts %}

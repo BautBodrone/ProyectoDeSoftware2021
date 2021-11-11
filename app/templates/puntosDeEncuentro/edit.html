@@ -11,8 +11,9 @@
 {% endblock %}
 
 {% block navbar %}
+ <a href="/" class="navbar" id="home" >Inicio</a>
 {% if is_authenticated(session) %}
-  <a href="{{ url_for('puntos_index') }}" class="navbar selected">Puntos de Encuentro</a>
+  <a href="{{ url_for('puntos_index') }}" class="navbar active">Puntos de Encuentro</a>
   <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
   {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
     <a href="{{ url_for('rol_index') }}" class="navbar">Roles</a>
@@ -23,6 +24,7 @@
   <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
 {% endif %}
 {% endblock %}
+
 
 {% block content %}
   <form action="{{ url_for('puntos_update') }}" method="POST">

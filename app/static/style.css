@@ -147,18 +147,23 @@ tr:nth-child(even) {
 }
 
 .map-fullpage{
-  height: 70vh;
+  height: 60vh;
+  display: flex;
+  flex-grow: 100;
 }
 
 .mapform{
+  float:right;
   height: 20rem;
   width: 40rem;
+  display: flex;
+  flex-grow: 100;
 }
 
 .map-container{
   margin-top: 1rem;
 }
 
-#lat, #lng {
+#lat, #lng, #coordenadas {
   display: none;
 }

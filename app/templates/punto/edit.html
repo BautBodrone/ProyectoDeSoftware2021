@@ -1,6 +1,17 @@
 {% extends "layout.html" %}
 {% block title %}Puntos de Encuentro{% endblock %}
 {% block head %}
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+  <script type="module" src="/static/js/map.js" ></script>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
   {{ super() }}
 {% endblock %}
 {% block header %}
@@ -25,23 +36,23 @@
 {% endblock %}
 
 {% block content %}
-  <form id="form-map" action="{{ url_for('punto_update') }}" method="POST">
-    <input type="hidden" class="form-control"  id="id" name="id" value="{{punto.id}}">
-    <p>
-      <label>Nombre<label></br>
-      <input name="nombre" placeholder="Nombre" value="{{punto.nombre}}" required/>
-    </p>
-    <p>
-      <label>Direccion<label></br>
-      <input  name="direccion" placeholder="Direccion" value="{{punto.direccion}}"required/>
-    </p>
-    <input type="text" name="lat" id="lat" value="{{ punto.lat }}">
-    <input type="text" name="lng" id="lng" value="{{ punto.lng }}">
+  <form id="form-map" class="one-mark" action="{{ url_for('punto_update') }}" method="POST">
+    <input type="text" name="lat" class="lat" id="lat" value="{{ punto.lat }}">
+    <input type="text" name="lng" class="lng" id="lng" value="{{ punto.lng }}">
     <div class="map-container">
       <div id="mapid" class="mapform" ></div>
     </div>
+    <input type="hidden" class="form-control"  id="id" name="id" value="{{punto.id}}">
     <p>
-     <label>Estado<label></br>
+      <label>Nombre<label>
+      <input name="nombre" placeholder="Nombre" value="{{punto.nombre}}" required/>
+    </p>
+    <p>
+      <label>Direccion<label>
+      <input  name="direccion" placeholder="Direccion" value="{{punto.direccion}}"required/>
+    </p>
+    <p>
+     <label>Estado<label>
         <select id="estado" name="estado" value="{{punto.estado}}"required>
          <option value="" disabled hidden>
           Seleccione un estado
@@ -51,11 +62,11 @@
     </select>
     </p>
     <p>
-      <label>Telefono<label></br>
+      <label>Telefono<label>
       <input name="telefono" placeholder="Telefono" value="{{punto.telefono}}"/>
     </p>
     <p>
-      <label>Email<label></br>
+      <label>Email<label>
       <input name="email" placeholder="Email" value="{{punto.email}}"/>
     </p>
     <p>

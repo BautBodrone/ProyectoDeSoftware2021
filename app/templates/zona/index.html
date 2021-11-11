@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %}Zonas{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header">Zonas</h1>
+  </div>
+{% endblock %}
+{% block content %}
+  <div class="map-container">
+    <div id="mapid" class="map-fullpage" ></div>
+  </div>
+  {% for zona in zonas %}
+    <li>{{ zona.coordenadas }}</li>
+    <form action="{{ url_for('zona_delete') }}" method="POST" enctype="multipart/form-data">
+        <input type="hidden" id="zona_id" name="zona_id" value="{{ zona.id }}">
+        <button onclick="return confirm('¿Esta seguro de que desea eliminar este usuario?');" class="btn btn-danger mt-2 ml-2">eliminar</a>
+    </form>
+  {% endfor %}
+  <a href="{{ url_for('home') }}" class="link">Volver</a>
+{% endblock %}

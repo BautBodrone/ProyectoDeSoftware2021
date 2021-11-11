@@ -66,3 +66,7 @@ class Punto(db.Model):
             'email': self.email,
             'id':self.id
         }
+    
+    def publicados():
+        return db.session.query(Punto).filter_by(estado='Publicado').all()
+    

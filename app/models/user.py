@@ -8,10 +8,10 @@ class User(db.Model):
     
     __tablename__ = "users" 
     id = Column(Integer, primary_key=True)
-    first_name = Column(String(30))
-    last_name = Column(String(30))
-    email = Column(String(30),unique=True)
-    password = Column(String(30))
+    first_name = Column(String(30),nullable=False)
+    last_name = Column(String(30),nullable=False)
+    email = Column(String(30),unique=True,nullable=False)
+    password = Column(String(30),nullable=False)
     rols = relationship("Rol",secondary = "users_rols")
     activo = Column(Boolean)
 

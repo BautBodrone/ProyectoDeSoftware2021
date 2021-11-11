@@ -55,10 +55,22 @@ a.link {
   margin-bottom: 5px;
   line-height: 1.5;
   text-decoration: none;
+  letter-spacing: 1px;
+
+}
+.usuario{
+  text-transform: uppercase;
+  font-size: 10px;
+  padding: 10px 15px;
+  border-radius: 0;
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  line-height: 1 ;
+  text-decoration: none;
   margin-top: 50px;
   letter-spacing: 1px;
 }
-
 a.page {
   pointer-events: none;
   cursor: default;
@@ -67,7 +79,7 @@ a.page {
 .navbar {
   font-family: 'Montserrat', sans-serif;
   float: left;
-  width: 5%;
+  width: 15%;
   padding-left: 1%;
   padding-top: 1%;
   padding-right: 1%;
@@ -98,23 +110,43 @@ a.page {
 
 .content { 
   padding-top: 1%;
-  padding-right: 3%;
-  padding-left: 3%;
-  float: center;
-  margin: 0 auto;
-  width: 90%;
-}
-
-@media screen and (min-width: 768px) {
-  .content {
-    padding-top: 1%;
     padding-right: 3%;
     padding-left: 3%;
     float: center;
-    margin: 0 auto;
-    width: 100%;
-  }
+    margin: 10px auto;
+    width: 50%;
+    height: auto;
 }
+
+.content table, th,td, .content table button{
+
+  border-collapse: collapse;
+  table-layout:fixed;
+  width: 100%;
+   
+}
+
+@media screen and (min-width: 768px) {
+  .content  {
+    height: auto;
+    padding-right: 3%;
+    padding-left: 3%;
+    float: center;
+    margin: 10px auto;
+    width: 60%;
+    
+  }
+
+  .content table button {
+    height: 40px;
+    width: 80px;
+    border-collapse: collapse;
+  }
+  
+  
+}
+
+
 
 table, td, th {
   border: 1px solid rgb(32, 32, 32);
@@ -129,7 +161,7 @@ table {
   min-width: 50%;
 }
 
-th {
+th , td{
   height: 1%;
 }
 
@@ -140,3 +172,10 @@ th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+.paginado{
+  margin-top: 10px;
+  height:80px;
+   
+}
+

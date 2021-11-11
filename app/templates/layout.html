@@ -6,7 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <script src="{{ url_for('static', filename='sidenavbar.js') }}"></script>
     <style>
-      body, #footer, a.navbar{
+      body, #footer, a.navbar, .usuario{
         background-color: {{ configurator().get_private_bg_color() }};
         color: {{ configurator().get_private_letters_color() }};
       }
@@ -14,23 +14,28 @@
         background-color: {{ configurator().get_private_accent_color() }};
         color: {{ configurator().get_private_letters_color() }};
       }
-      a.navbar.selected{
+      a.navbar.active{
         filter: brightness(1.5);
       }
       a.navbar:hover {
         filter: brightness(0.88);
       }
-      a.link.selected {
+      a.link.active {
         filter: brightness(1.5);
       }
-      @media (max-width: 768px){
+      @media (max-width: 768px, min-width:360){
           .navbar a{
+            display:hidden;
+          }
+      }
+      @chica (max-width:360){
+        .navbar a{
             display:hidden;
           }
       }
     </style>
     {% block head %}
-      <link rel="icon" href="/static/imgs/logo.png" type="image/x-icon" >
+      <link rel="icon" href="/static/imgs/logo.png" type="image/x-icon" > 
       <title>{% block title %}{% endblock %}</title>
     {% endblock %}
   </head>
@@ -39,24 +44,39 @@
       {% block header %}
       <a href="{{ url_for('home') }}"><img src="/static/imgs/logo.png" alt="logo" width="100" style="position:absolute; left:5%;"></a>
       {% if is_authenticated(session) %}
-        <a class="link selected" href= "{{ url_for('user_edit', user_id = my_user(is_authenticated(session)).id ) }}" style="float:right;">{{ is_authenticated(session) }}</a>
+        <a class="usuario" href= "{{ url_for('user_edit', user_id = my_user(is_authenticated(session)).id ) }}" style="float:right;">{{ is_authenticated(session) }}</a>
       {% endif %}
       {% endblock %}
     </div>
-
+    
     <div class="navbar" id="navbar" onmouseover="toggleNavbar()" onmouseout="toggleNavbar()">
     {% block navbar %}
+      <a href="/" class="navbar" id="home" >Home</a>
       {% if is_authenticated(session) %}
         <a href="{{ url_for('puntos_index') }}" class="navbar">Puntos de Encuentro</a>
-        <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
+        <a href="{{ url_for('configuration_edit') }}" class="navbar" >Configuracion</a>
         {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
-          <a href="{{ url_for('rol_index') }}" class="navbar">Roles</a>
-          <a href="{{ url_for('user_index') }}" class="navbar">Usuarios</a>
+          <a href="{{ url_for('rol_index') }}" class="navbar" >Roles</a>
+          <a href="{{ url_for('user_index') }}" class="navbar" >Usuarios</a>
         {% endif %}
         <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
       {% else %}
         <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
       {% endif %}
+      <script type="text/javascript">
+         const currentLocation = location.href;
+         console.log(currentLocation)
+         const menuItem = document.querySelectorAll('a');
+         const menuLength = menuItem.length;
+         for (let i = 0 ; i< menuLength; i ++ ){
+        
+           if (menuItem[i].href === currentLocation){
+             menuItem[i].classList.add("active")
+             console.log(menuItem[i])
+           }
+         }
+      
+      </script>
     {% endblock %}
     </div>
     <div class="content" id="content">

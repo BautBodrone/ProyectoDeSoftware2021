@@ -6,11 +6,11 @@ from werkzeug.utils import redirect
 from flask_session import Session
 from flask_sqlalchemy import _SessionSignalEvents
 from app.helpers.auth import authenticated
-from app.models import denuncia
+from app.models import denuncia, seguimiento
 
 from config import config
 
-from app.resources import issue, user, auth, rol, configuration, puntos, denuncia
+from app.resources import issue, user, auth, rol, configuration, puntos, denuncia, seguimiento
 from app.db import db
 from app.models.puntos import Puntos
 from app.models.user import User
@@ -96,6 +96,12 @@ def create_app(environment="production"):
     app.add_url_rule("/denuncias/edit/<denuncia_id>","denuncia_edit",denuncia.edit)
     app.add_url_rule("/denuncias/edit","denuncia_edit_finish",denuncia.edit_finish, methods=["POST"])
     app.add_url_rule("/denuncias/filtro","denuncia_filtro",denuncia.filtro, methods=["POST"] )
+
+    #Rutas de seguimientos
+    app.add_url_rule("/seguimientos", "seguimiento_index", seguimiento.index)
+    app.add_url_rule("/seguimientos", "seguimiento_create", seguimiento.create, methods=["POST"])
+    app.add_url_rule("/seguimientos/nuevo", "seguimiento_new", seguimiento.new)
+    app.add_url_rule("/seguimientos/delete", "seguimiento_delete", seguimiento.delete, methods=["POST"])
 
     #DATA TABLE
     @app.route('/api/data')

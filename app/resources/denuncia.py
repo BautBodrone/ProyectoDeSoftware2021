@@ -115,7 +115,7 @@ def filtro():
                  denuncias=Denuncia.query.paginate(page=page,per_page=pagConf)
 
     if (fechaC != "" and fechaF !="" ):
-          denuncias=denuncias.query.filter(and_(Denuncia.fechaC >= fechaC , Denuncia.fechaF<= fechaF)).paginate(page=page,per_page=pagConf)
+          denuncias=denuncias.query.filter(and_(Denuncia.fechaC >= fechaC , Denuncia.fechaC<= fechaF)).paginate(page=page,per_page=pagConf)
     else:
         if (fechaC != "" and fechaF =="" ):  
                 denuncias=denuncias.query.filter(Denuncia.fechaC >= fechaC).paginate(page=page,per_page=pagConf)

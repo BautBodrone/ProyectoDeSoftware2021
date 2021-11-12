@@ -2,33 +2,33 @@ from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.sql.schema import ForeignKey 
 from sqlalchemy.sql.expression import null
 from sqlalchemy.sql.sqltypes import Date
+from sqlalchemy.orm import relationship
 from app.db import db
 import datetime 
-from sqlalchemy_utils import ChoiceType
 
 class Seguimiento(db.Model):
 
     __tablename__ = "seguimientos" 
     id = Column(Integer, primary_key=True)
-    denuncia_id= Column(Integer,ForeignKey('denuncia.id'))
-    user_id = Column(Integer, ForeignKey('user.id'))
+    #denuncia = relationship("Denuncia", back_populates="seguimientos")
+    #user = relationship("User", back_populates="seguimientos")
     fechaC = Column(Date)
     descripcion = Column(String(30))
 
-    def __init__(self , titulo=None,descripcion=None,userId=None,denuncia_id=None):
+    def __init__(self , titulo=None,descripcion=None,user=None,denuncia=None):
         self.titulo = titulo
         self.descripcion = descripcion
         self.fechaC =  datetime.date.today()
-        self.userId =userId
-        self.denuncia_id =denuncia_id
+        self.user =user
+        self.denuncia =denuncia
     
     def delete(self):
         db.session.delete(self)
         db.session.commit()
 
     @classmethod 
-    def save(self, new_denuncia):
-        db.session.add(new_denuncia)
+    def save(self, new_seguimiento):
+        db.session.add(new_seguimiento)
         db.session.commit()
 
     def edit(self,data):

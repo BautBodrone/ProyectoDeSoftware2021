@@ -29,3 +29,10 @@ def server_error(e):
         "error_description": "Ups, hubo un error de parte del servidor",
     }
     return render_template("error.html", **kwargs), 500
+
+def range_not_satisfiable(e):
+    kwargs = {
+        "error_name": "416 Range Not Satisfiable",
+        "error_description": "Pedido fuera del rango disponible",
+    }
+    return render_template("error.html", **kwargs), 416

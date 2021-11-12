@@ -1,10 +1,7 @@
 from flask import redirect, render_template, request, url_for, session, abort, flash
-from app.models import coordenada
-from app.models.coordenada import Coordenada
 from app.helpers.user_helper import has_permit
 from app.models.punto import Punto
 from app.helpers.auth import authenticated
-from app.db import db
 from app.helpers import configurator
 
 
@@ -28,7 +25,7 @@ def new():
     if not authenticated(session):
         abort(401)
 
-    if not has_permit("punto_index"):
+    if not has_permit("punto_new"):
         flash("No cuenta con los permisos necesarios")
         return redirect(request.referrer)
 
@@ -79,25 +76,9 @@ def edit(id):
     punto = Punto.query.filter_by(id=int(id)).first()
     return render_template("punto/edit.html", punto=punto)
 
-def new():
-    """
-        El metodo , si esta autenticado, mostrara una pagina para crear un nuevo punto de encuentro
-    """
-
-    if not authenticated(session):
-        abort(401)
-
-    # if not has_permit("punto_index"):
-    #     flash("No cuenta con los permisos necesarios")
-    #     return redirect(request.referrer)
-
-    coordenadas = Coordenada.query.all()
-
-    return render_template("punto/new.html", coordenadas=coordenadas)
-
 def update():
     data = request.form
-    punto = Punto.search_punto(data["id"])
+    punto = Punto.search_id(data["id"])
     try:
         punto.update(data)
     except:
@@ -125,4 +106,8 @@ def filtro():
                 puntos=Punto.query.filter_by(estado=estado).paginate(page=page,per_page=page_config)
             else:
                 puntos=Punto.query.paginate(page=page,per_page=page_config)
+<<<<<<< HEAD
     return render_template("punto/index.html", puntos=puntos, estado=estado, nombre=nombre )
+=======
+    return render_template("punto/index.html", puntos=puntos )
+>>>>>>> development

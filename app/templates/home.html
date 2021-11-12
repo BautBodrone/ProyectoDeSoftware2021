@@ -2,6 +2,17 @@
 {% block title %}La Plata inundaciones{% endblock %}
 {% block head %}
   {{ super() }}
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+  <script type="module" src="/static/js/map.js" ></script>
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
 {% endblock %}
 {% block header %}
   <div>
@@ -9,7 +20,25 @@
     <h1 id="header">Inicio</h1>
   </div>
 {% endblock %}
-{%block content%}
-<h3>Bienvenido! </h3>
-<p>En esta web usted podrá gestionar las zonas inundables de la ciudad de La Plata...</p>
-{%endblock%}
+{% block navbar %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <div class="map-container">
+    {% for recorrido in recorridos %}
+      <input id="{{ recorrido }}" class="recorridos" type="hidden" value="{{ recorrido.coordenadas }}" >
+      <input id="{{ recorrido }}" class="recorridos-nombre" type="hidden" value="{{ recorrido.nombre }}" >
+    {% endfor %} 
+    {% for punto in puntos %}
+      <input id="{{ punto }}" class="punto-lat" type="hidden" value="{{ punto.lat }}">
+      <input id="{{ punto }}" class="punto-lng" type="hidden" value="{{ punto.lng }}">
+      <input id="{{ punto }}" class="punto-nombre" type="hidden" value="{{ punto.nombre }}">
+    {% endfor %}
+    {% for zona in zonas %}
+      <input id="{{ zona }}" class="zonas" type="hidden" value="{{ zona.coordenadas }}" >
+      <input id="{{ zona }}" class="zonas-colores" type="hidden" value="{{ zona.color }}" >
+      <input id="{{ zona }}" class="zonas-nombre" type="hidden" value="{{ zona.nombre }}" >
+    {% endfor %}
+    <div id="mapid" class="map-fullpage"></div>
+  </div>
+{% endblock %}

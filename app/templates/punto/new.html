@@ -1,6 +1,17 @@
 {% extends "layout.html" %}
 {% block title %}Puntos de Encuentro{% endblock %}
 {% block head %}
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+  <script type="module" src="/static/js/map.js" ></script>
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
   {{ super() }}
 {% endblock %}
 {% block header %}
@@ -11,41 +22,48 @@
 {% endblock %}
 
 {% block navbar %}
- <a href="/" class="navbar" id="home" >Inicio</a>
+<a href="/" class="navbar" id="home" >Inicio</a>
 {% if is_authenticated(session) %}
-  <a href="{{ url_for('punto_index') }}" class="navbar selected">Puntos de Encuentro</a>
+  <a href="{{ url_for('recorrido_index') }}" class="navbar">Recorrido</a>
+  <a href="{{ url_for('zona_index') }}" class="navbar">Zonas</a>
+  <a href="{{ url_for('punto_index') }}" class="navbar active">Puntos de Encuentro</a>
   <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
   {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
-    <a href="{{ url_for('rol_index') }}" class="navbar">Roles</a>
-    <a href="{{ url_for('user_index') }}" class="navbar">Usuarios</a>
-    {% endif %}
-    <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
+    <a href="{{ url_for('rol_index') }}" class="navbar" >Roles</a>
+    <a href="{{ url_for('user_index') }}" class="navbar" >Usuarios</a>
+  {% endif %}
+  <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
 {% else %}
   <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
 {% endif %}
 {% endblock %}
 
 {% block content %}
-
-  <form action="{{ url_for('punto_create') }}" method="POST">
-
+  <form id= "form-map" class="one-mark" action="{{ url_for('punto_create') }}" method="POST">
+    <input id="punto-lat" class="punto-lat" name="lat" type="hidden" >
+    <input id="punto-lng" class="punto-lng" name="lng" type="hidden" >
+    <div class="map-container">
+      <div id="mapid" class="mapform" ></div>
+    </div>
     <p>
+<<<<<<< HEAD
       <label>Nombre<label></br>
       <input name="nombre" placeholder="Nombre" required maxlength=20/>
     </p>
     <p>
       <label>Direccion<label></br>
       <input  name="direccion" placeholder="Direccion" required  maxlength=15/>
+=======
+      <label>Nombre<label>
+      <input name="nombre" placeholder="Nombre" required/>
     </p>
-      <label for="coordenada">Seleccione una coordenada</label>
-      <select name="coordenadas" id="coordenadas">
-        {% for coordenada in coordenadas %}
-          <option value={{coordenada.id}}>{{coordenada}}</option>
-        {% endfor %}
-      </select>
-      <a class="open-button" href="{{ url_for('coordenada_new_punto') }}" onclick="openForm()">CrearNuevo</a>
-    <p> 
-     <label>Estado<label></br>
+    <p>
+      <label>Direccion<label>
+      <input  name="direccion" placeholder="Direccion" required/>
+>>>>>>> development
+    </p>
+     
+     <label>Estado</label>
      <select name="estado" required>
         <option value="" selected disabled hidden>
           Seleccione un estado
@@ -55,6 +73,7 @@
      </select>
     </p>
     <p>
+<<<<<<< HEAD
       <label>Telefono<label></br>
       <input type="number" name="telefono" placeholder="Telefono" required maxlength=15/>
     </p>
@@ -69,4 +88,20 @@
     </p>
   </form>
 
+=======
+      <label>Telefono<label>
+      <input name="telefono" placeholder="Telefono"/>
+    </p>
+    <p>
+      <label>Email<label>
+      <input name="email" placeholder="Email"/>
+    </p>
+    <p>
+      <input type="submit" value="Crear">
+      <input type="reset" value="Limpiar">
+    </p>
+  </form>
+
+
+>>>>>>> development
 {% endblock %}

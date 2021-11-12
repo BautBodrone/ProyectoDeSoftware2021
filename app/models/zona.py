@@ -1,14 +1,11 @@
 from sqlalchemy.orm import defaultload
 from app.db import db
 from sqlalchemy_utils import ChoiceType
-from app.models.coordenada import Coordenada
-
-zona_coordenada = db.Table("zonas_coordenadas",db.Column("zonas_id",db.ForeignKey("zonas.id")),db.Column("coordenadas_id",db.ForeignKey("coordenadas.id")))
 
 class Zona(db.Model):
 
     ESTADOS = [
-        ('publicado','Plublicado'),
+        ('publicado','Publicado'),
         ('despublicado','Despublicado')
     ]
 
@@ -17,14 +14,23 @@ class Zona(db.Model):
     nombre = db.Column(db.String(30),nullable=False)
     estado = db.Column(ChoiceType(ESTADOS),nullable=False)
     color = db.Column(db.String(10), default="#FF6E4E",nullable=False)
-    coordenadas = db.relationship("Coordenada", secondary=zona_coordenada, lazy='subquery',backref=db.backref('zonas', lazy=True))
+    coordenadas = db.Column(db.String(255), nullable=False)
 
     def __init__(self, nombre = None, estado = None, color = None, coordenadas = None):
         self.nombre = nombre
         self.estado = estado
         self.color = color
-        for coordenada in coordenadas:
-            self.coordenadas.append(Coordenada.search_id(coordenada))
+        self.coordenadas = coordenadas
+
+    def update(self, zona):
+        """
+            Actualiza el zona con los valores pasados por parametro
+        """
+        self.nombre = zona["nombre"]
+        self.estado = zona["estado"]
+        self.color = zona["color"]
+        self.coordenadas = zona["coordenadas"]
+        db.session.commit()
 
     def delete(self):
         db.session.delete(self)
@@ -38,4 +44,8 @@ class Zona(db.Model):
     def search_id(id):
         return db.session.query(Zona).get(id)
 
-    
+    def publicados():
+        try:
+            return db.session.query(Zona).filter_by(estado='publicado').all()
+        except:
+            return []

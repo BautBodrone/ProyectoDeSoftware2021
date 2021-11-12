@@ -7,6 +7,10 @@ from app.helpers import configurator
 
 # Protected resources
 def index():
+    """
+        El metodo mostrara todos los usuarios en una tabla
+    """
+
     if not authenticated(session):
         abort(401)
 
@@ -23,6 +27,10 @@ def index():
 
 
 def new():
+    """
+        El metodo ,si esta autenticado,saltara a una nueva pagina para crear un usuario
+    """
+
     if not authenticated(session):
         abort(401)
 
@@ -34,6 +42,10 @@ def new():
 
 
 def create():
+    """
+        El metodo ,si esta autenticado, creara un nuevo usuario
+    """
+
     if not authenticated(session):
         abort(401)
 
@@ -51,6 +63,10 @@ def create():
     return redirect(url_for("user_index"))
 
 def delete():
+    """
+        El metodo ,si esta autenticado, eliminara al usuario seleccionado
+    """
+
     if not authenticated(session):
         abort(401)
 
@@ -65,6 +81,9 @@ def delete():
     return redirect(url_for('user_index'))
 
 def edit(user_id):
+    """
+        El metodo ,si esta autenticado, saltara a una nueva pagina para editar un usuario
+    """
     if not authenticated(session):
         abort(401)
 
@@ -76,6 +95,10 @@ def edit(user_id):
     return render_template("user/edit.html", user=user)
 
 def edit_finish():
+    """
+        El metodo , si esta autentiticado, podra cambiar los datos de un usuario
+    """
+
     if not authenticated(session):
         abort(401)
 
@@ -93,6 +116,10 @@ def edit_finish():
     return redirect(url_for("user_index"))
 
 def add_rols():
+    """
+        El metodo ,si esta autenticado, añadira el nuevo rol al usuario seleccionado 
+    """
+    
     if not authenticated(session):
         abort(401)
 

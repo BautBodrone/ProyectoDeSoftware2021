@@ -1,33 +1,31 @@
 {% extends "layout.html" %}
-{% block title %}Puntos de Encuentro{% endblock %}
+{% block title %}Zonas{% endblock %}
 {% block head %}
+  {{ super() }}
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""></script>
   <script type="module" src="/static/js/map.js" ></script>
-
+  
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
-  {{ super() }}
 {% endblock %}
 {% block header %}
   <div>
     {{ super() }}
-    <h1 id="header">Editar punto de encuentro</h1>
+    <h1 id="header">Edita zona</h1>
   </div>
 {% endblock %}
-
 {% block navbar %}
-<a href="/" class="navbar" id="home" >Inicio</a>
+<a href="{{ url_for('denuncia_index') }}" class="navbar">Denuncia</a>
 {% if is_authenticated(session) %}
-
   <a href="{{ url_for('recorrido_index') }}" class="navbar">Recorrido</a>
-  <a href="{{ url_for('zona_index') }}" class="navbar">Zonas</a>
-  <a href="{{ url_for('punto_index') }}" class="navbar active">Puntos de Encuentro</a>
+  <a href="{{ url_for('zona_index') }}" class="navbar active">Zonas</a>
+  <a href="{{ url_for('punto_index') }}" class="navbar">Puntos de Encuentro</a>
   <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
   {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
     <a href="{{ url_for('rol_index') }}" class="navbar" >Roles</a>
@@ -38,47 +36,31 @@
   <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
 {% endif %}
 {% endblock %}
-
-
 {% block content %}
-  <form id="form-map" class="one-mark" action="{{ url_for('punto_update') }}" method="POST">
-    <input id="punto-lat" class="punto-lat" name="punto-lat" type="hidden" value="{{ punto.lat }}">
-      <input id="punto-lng" class="punto-lng" name="punto-lng" type="hidden" value="{{ punto.lng }}">
-      <input id="{{ punto }}" class="punto-nombre" type="hidden" value="{{ punto.nombre }}">
+<form id="form-map"  action="{{ url_for('zona_update') }}" method="POST">
+    <input id="coordenadas" class="coordenadas" name="coordenadas" type="hidden">
     <div class="map-container">
       <div id="mapid" class="mapform" ></div>
     </div>
-    <input type="hidden" class="form-control"  id="id" name="id" value="{{punto.id}}">
+    <input type="hidden" class="form-control"  id="id" name="id" value="{{zona.id}}">
     <p>
       <label>Nombre<label>
-      <input name="nombre" placeholder="Nombre" value="{{punto.nombre}}" required maxlength=20/>
+      <input name="nombre" placeholder="Nombre" value="{{ zona.nombre}}" required/>
     </p>
     <p>
-      <label>Direccion<label>
-      <input  name="direccion" placeholder="Direccion" value="{{punto.direccion}}"required maxlength=15/>
+      <label>Color<label>
+      <input  type="color" name="color" placeholder="Direccion" value="{{ zona.color }}"required/>
     </p>
     <p>
-     <label>Estado<label>
-        <select id="estado" name="estado" value="{{punto.estado}}"required>
-         <option value="" disabled hidden>
-          Seleccione un estado
-        </option>
-        <option value="Publicado">Publicado</option>
-        <option value="Despublicado">Despublicado</option>
-    </select>
+      <label for="estado">Estado:</label>
+        <select id="estado" name="estado">
+          <option value="publicado">Publicado</option>
+          <option value="despublicado">Despublicado</option>
+        </select>
     </p>
-    <p>
-      <label>Telefono<label></br>
-      <input type="number" name="telefono" placeholder="Telefono" value="{{punto.telefono}}" maxlength=15/>
-    </p>
-    <p>
-      <label>Email<label></br>
-      <input type="email" name="email" placeholder="Email" value="{{punto.email}}" maxlength=20/>
-    </p>
-    <p>
       <input type="submit" value="Modificar">
       <input type="reset" value="reset">
     </p>
   </form>
-  <a href="{{ url_for('punto_index') }}" class="link">Volver</a>
+  <a href="{{ url_for('zona_index') }}" class="link">Volver</a>
 {% endblock %}

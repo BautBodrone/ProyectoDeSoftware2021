@@ -10,7 +10,7 @@ from app.helpers.auth import authenticated
 from config import config
 from app import db
 from app.resources import permiso, user, auth, rol , configuration, punto, coordenada, zona
-from app.resources.api.zonas import zonas_api
+from app.resources.api.zona import zonas_api
 from app.resources.api.denuncias import denuncias_api
 from app.helpers import handler, user_helper, configurator,coordenada_helper
 
@@ -92,8 +92,8 @@ def create_app(environment="production"):
     app.add_url_rule("/puntos/delete/<id>", "punto_delete", punto.delete, methods=["POST"])
 
     # Rutas del api zonas
-    #app.add_url_rule("/zonas-inundables", "/", api.zonas.index)
-    #app.add_url_rule("/zonas-inundables/:<id>", "/", api.zonas.get_id)
+    # app.add_url_rule("/zonas-inundables", "api_zona_index", zonas_api.index)
+    # app.add_url_rule("/zonas-inundables/:<id>", "/", zonas_api.get_id)
 
     # Rutas del api denuncias
     #app.add_url_rule("/denuncias", "/", api.denuncias.index, methods=["POST"])
@@ -105,9 +105,10 @@ def create_app(environment="production"):
 
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")
+    
+    api.register_blueprint(zonas_api)
+    api.register_blueprint(denuncias_api)
     app.register_blueprint(api)
-    app.register_blueprint(zonas_api)
-    app.register_blueprint(denuncias_api)
 
     # Handlers
     app.register_error_handler(400, handler.bad_request)

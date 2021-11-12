@@ -37,5 +37,3 @@ class Zona(db.Model):
 
     def search_id(id):
         return db.session.query(Zona).get(id)
-
-    

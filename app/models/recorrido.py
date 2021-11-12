@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
+from app.db import db
 from sqlalchemy_utils import ChoiceType
 
 from app.db import db
@@ -11,10 +12,10 @@ class Recorrido(db.Model):
     ]
 
     __tablename__ = "recorridos"
-    id = Column(Integer, primary_key=True)
-    nombre = Column(String(30), unique=True,nullable=False)
-    descripcion = Column(String(60))
-    estado = Column(ChoiceType(ESTADOS))
+    id = db.Column(Integer, primary_key=True)
+    nombre = db.Column(String(30), unique=True,nullable=False)
+    descripcion = db.Column(String(60))
+    estado = db.Column(ChoiceType(ESTADOS))
     coordenadas = db.Column(db.String(255), nullable=False)
 
     def __init__(self,nombre=None, descripcion=None, coordenadas=None, estado=None):
@@ -33,15 +34,23 @@ class Recorrido(db.Model):
         db.session.commit()
 
     def edit(self,data):
-        if self.nombre != data["nombre"]:
-            self.nombre = data["nombre"]
-        if self.descripcion != data["descripcion"]:
-            self.descripcion = data["descripcion"]
-        if self.coordenadas != data["coordenadas"]:
-            self.coordenadas = data["coordenadas"]
-        if self.estado != data["estado"]:
-            self.estado = data["estado"]
+        self.nombre = data["nombre"]
+        self.descripcion = data["descripcion"]
+        self.coordenadas = data["coordenadas"]
+        self.estado = data["estado"]
         db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    @classmethod 
+    def save(self, new_recorrido):
+        db.session.add(new_recorrido)
+        db.session.commit()
+
+    def search_id(id):
+        return db.session.query(Zona).get(id)
         
     def publicados():
         try:

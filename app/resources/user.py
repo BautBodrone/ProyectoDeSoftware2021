@@ -3,9 +3,6 @@ from flask import flash, redirect, render_template, request, url_for, session, a
 from app.models.user import User
 from app.helpers.auth import authenticated
 
-
-pagConf=4
-
 # Protected resources
 def index():
     """
@@ -14,6 +11,10 @@ def index():
 
     if not authenticated(session):
         abort(401)
+
+    if not has_permit("user_index"):
+        flash("No cuenta con los permisos necesarios")
+        return render_template("home.html")
 
     page = request.args.get('page',1, type=int)
     users = User.query.paginate(page=page,per_page=pagConf)
@@ -103,7 +104,7 @@ def add_rols():
     user_id = request.args["user_id"]
     roles = request.form.getlist("roles[]")
     for rol in roles:
-        User_rol.add(user_id, rol)
+        User.rols.add(user_id, rol)
 
     flash("Insercion exitosa", "success")
 

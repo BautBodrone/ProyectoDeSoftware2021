@@ -9,7 +9,7 @@ from app.helpers.auth import authenticated
 
 from config import config
 from app import db
-from app.resources import user, auth, rol , configuration, punto, zona, home, permiso, denuncia, seguimiento
+from app.resources import user, auth, rol , configuration, punto, zona, home, permiso, denuncia, seguimiento, recorrido
 from app.resources.api.zona import zonas_api
 from app.resources.api.denuncias import denuncias_api
 from app.helpers import handler, user_helper, configurator
@@ -45,6 +45,9 @@ def create_app(environment="production"):
     # home
     app.add_url_rule("/", "home", home.index)
 
+    # home
+    app.add_url_rule("/", "home", home.index)
+
     # Autenticación
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
     app.add_url_rule("/cerrar_sesion", "auth_logout", auth.logout)
@@ -58,6 +61,16 @@ def create_app(environment="production"):
     app.add_url_rule("/zonas/edit/<id>", "zona_edit", zona.edit)
     app.add_url_rule("/zonas/update","zona_update", zona.update, methods=["POST"])
     app.add_url_rule("/zonas/filtro","zona_filtro", zona.filtro, methods=["POST"] )
+
+    #Rutas de Recorridos
+    app.add_url_rule("/recorridos", "recorrido_index", recorrido.index)
+    app.add_url_rule("/recorridos/nuevo", "recorrido_new", recorrido.new)
+    app.add_url_rule("/recorridos", "recorrido_create", recorrido.create, methods=["POST"])
+    app.add_url_rule("/recorridos/delete","recorrido_delete", recorrido.delete, methods=["POST"])
+    app.add_url_rule("/recorridos/edit/<id>", "recorrido_edit", recorrido.edit)
+    app.add_url_rule("/recorridos/update","recorrido_update", recorrido.update, methods=["POST"])
+    app.add_url_rule("/recorridos/filtro","recorrido_filtro", recorrido.filtro, methods=["POST"] )
+
 
     # Rutas de Usuarios
     app.add_url_rule("/usuarios", "user_index", user.index)

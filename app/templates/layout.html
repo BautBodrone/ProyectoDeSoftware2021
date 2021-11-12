@@ -61,6 +61,7 @@
     {% block navbar %}
       <a href="/" class="navbar" id="home" >Inicio</a>
       {% if is_authenticated(session) %}
+        <a href="{{ url_for('recorrido_index') }}" class="navbar">Recorrido</a>
         <a href="{{ url_for('zona_index') }}" class="navbar">Zonas</a>
         <a href="{{ url_for('punto_index') }}" class="navbar">Puntos de Encuentro</a>
         <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>

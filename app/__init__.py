@@ -9,7 +9,7 @@ from app.helpers.auth import authenticated
 
 from config import config
 from app import db
-from app.resources import user, auth, rol , configuration, punto, zona, home, permiso
+from app.resources import user, auth, rol , configuration, punto, zona, home, permiso, denuncia, seguimiento
 from app.resources.api.zona import zonas_api
 from app.resources.api.denuncias import denuncias_api
 from app.helpers import handler, user_helper, configurator
@@ -88,6 +88,22 @@ def create_app(environment="production"):
     app.add_url_rule("/puntos/edit/<id>", "punto_edit", punto.edit)
     app.add_url_rule("/puntos/update","punto_update",punto.update, methods=["POST"])  
     app.add_url_rule("/puntos/delete/<id>", "punto_delete", punto.delete, methods=["POST"])
+
+     #  Rutas de Denuncias
+    app.add_url_rule("/denuncias", "denuncia_index", denuncia.index)
+    app.add_url_rule("/denuncias", "denuncia_create", denuncia.create, methods=["POST"])
+    app.add_url_rule("/denuncias/nuevo", "denuncia_new", denuncia.new)
+    app.add_url_rule("/denuncias/delete", "denuncia_delete", denuncia.delete, methods=["POST"])
+    app.add_url_rule("/denuncias/edit/<denuncia_id>","denuncia_edit",denuncia.edit)
+    app.add_url_rule("/denuncias/edit","denuncia_edit_finish",denuncia.edit_finish, methods=["POST"])
+    app.add_url_rule("/denuncias/filtro","denuncia_filtro",denuncia.filtro, methods=["POST"] )
+
+    #Rutas de seguimientos
+    app.add_url_rule("/seguimientos", "seguimiento_index", seguimiento.index)
+    app.add_url_rule("/seguimientos", "seguimiento_create", seguimiento.create, methods=["POST"])
+    app.add_url_rule("/seguimientos/nuevo", "seguimiento_new", seguimiento.new)
+    app.add_url_rule("/seguimientos/delete", "seguimiento_delete", seguimiento.delete, methods=["POST"])
+
 
     # Rutas del api zonas
     # app.add_url_rule("/zonas-inundables", "api_zona_index", zonas_api.index)

@@ -60,6 +60,28 @@ export class Map {
                 this.addZone(zona,color,nombre);
             }
         }
+        if (document.getElementsByClassName('recorridos') != null){
+            let recorridos = document.getElementsByClassName('recorridos');
+            let nombres = document.getElementsByClassName('recorridos-nombre');
+            for (let i = 0; i < recorridos.length; i++) {
+                console.log(nombres[i].value);
+                let nombre = nombres[i].value;
+                let coordenadas = recorridos[i].value.split(",");
+                let linea = [];
+                for (var j = 0; j < coordenadas.length; j=j+2) {
+                    let coordenada = [];
+                    coordenada.push(coordenadas[j],coordenadas[j+1]);
+                    linea.push(coordenada);
+                }
+                this.addLine(linea,nombre);
+            }
+        }
+    }
+    
+    addLine(linea, nombre){
+        L.polyline(
+            linea,{color: 'green'}
+        ).addTo(this.map).bindPopup(nombre);
     }
 
     addZone(zona, color, nombre){

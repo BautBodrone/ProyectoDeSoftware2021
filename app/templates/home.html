@@ -26,8 +26,8 @@
 {% block content %}
   <div class="map-container">
     {% for recorrido in recorridos %}
-      <input id="{{ recorrido }}" class="recorrido" type="hidden" value="{{ recorrido.coordenadas }}" >
-      <input id="{{ recorrido }}" class="recorrido-nombre" type="hidden" value="{{ recorrido.nombre }}" >
+      <input id="{{ recorrido }}" class="recorridos" type="hidden" value="{{ recorrido.coordenadas }}" >
+      <input id="{{ recorrido }}" class="recorridos-nombre" type="hidden" value="{{ recorrido.nombre }}" >
     {% endfor %} 
     {% for punto in puntos %}
       <input id="{{ punto }}" class="punto-lat" type="hidden" value="{{ punto.lat }}">

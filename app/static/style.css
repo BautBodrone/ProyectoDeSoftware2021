@@ -45,6 +45,7 @@ form label{
   padding: 30px;
   text-align: center;
   font-size: 30px;
+  position: relative;
 }
 
 .clear {

@@ -19,12 +19,31 @@
 <a href="{{ url_for('user_new') }}" class="link" style="float:right;  margin-top: 5px; width:75px" >Nuevo</a>
 <form class="tabla" action="{{ url_for('user_filtro') }}" method="POST">
   <h4>Filtrar</h4> 
-      <input name="first_name" placeholder="Nombre" />
-      <select  name="activo" >
+      <input name="first_name" placeholder="Nombre" value="{{ first_name}}" />
+      
+      {{activo}}
+      
+      {% if (activo == "1") %}
+        <select name="activo" >
         <option value="" selected>Seleccione un estado</option>
+        <option selected value="1">Activo</option>
+        <option value="0">Bloqueado</option>
+      </select>
+      {% else %}
+      {% if (activo == "0") %}
+        <select name="activo" >
+        <option value="" >Seleccione un estado</option>
+        <option  value="1">Activo</option>
+        <option  selected value="0">Bloqueado</option>
+      </select>
+      {% else %}
+      <select name="activo" >
+        <option  selected value="" selected>Seleccione un estado</option>
         <option value="1">Activo</option>
         <option value="0">Bloqueado</option>
       </select>
+       {% endif %}
+      {% endif %} 
       <input type="submit" value="Filtrar">
     </form>
   <br>

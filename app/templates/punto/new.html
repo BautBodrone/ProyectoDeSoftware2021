@@ -31,11 +31,11 @@
 
     <p>
       <label>Nombre<label></br>
-      <input name="nombre" placeholder="Nombre" required/>
+      <input name="nombre" placeholder="Nombre" required maxlength=20/>
     </p>
     <p>
       <label>Direccion<label></br>
-      <input  name="direccion" placeholder="Direccion" required/>
+      <input  name="direccion" placeholder="Direccion" required  maxlength=15/>
     </p>
       <label for="coordenada">Seleccione una coordenada</label>
       <select name="coordenadas" id="coordenadas">
@@ -56,21 +56,17 @@
     </p>
     <p>
       <label>Telefono<label></br>
-      <input name="telefono" placeholder="Telefono" required/>
+      <input type="number" name="telefono" placeholder="Telefono" required maxlength=15/>
     </p>
     <p>
       <label>Email<label></br>
-      <input name="email" placeholder="Email" required/>
+      <input type="email" name="email" placeholder="Email" required maxlength=20/>
     </p>
     <p>
       <input type="submit" value="Crear" style="margin-right:10px">
       <button type="reset">Limpiar</button>
-      <a href="{{ url_for('puntos_index') }}" class="link" style="float:center">Volver</a>
+      <a href="{{ url_for('punto_index') }}" class="link" style="float:center">Volver</a>
     </p>
   </form>
-<<<<<<< HEAD:app/templates/punto/new.html
-  <a href="{{ url_for('punto_index') }}" class="link">Volver</a>
-=======
-  
->>>>>>> refactoring-layout:app/templates/puntosDeEncuentro/new.html
+
 {% endblock %}

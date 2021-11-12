@@ -32,19 +32,19 @@
     </div>
     <p>
       <label>Email<label></br>
-      <input name="email" placeholder="{{user.email}}" value="{{user.email}}" required/>
+      <input name="email" placeholder="{{user.email}}" value="{{user.email}}" required maxlength=20/>
     </p>
     <p>
       <label>Clave<label></br>
-      <input type="password" name="password" placeholder="{{user.password}}" value="{{user.password}}"/>
+      <input type="password" name="password" placeholder="{{user.password}}" value="{{user.password}} " maxlength=20 minlength=8/>
     </p>
     <p>
       <label>Nombre<label></br>
-      <input name="first_name" placeholder="{{user.first_name}}" value="{{user.first_name}}"/>
+      <input name="first_name" placeholder="{{user.first_name}}" value="{{user.first_name}}"maxlength=20 />
     </p>
     <p>
       <label>Apellido<label></br>
-      <input name="last_name" placeholder="{{user.last_name}}" value="{{user.last_name}}"/>
+      <input name="last_name" placeholder="{{user.last_name}}" value="{{user.last_name}}"maxlength=20/>
     </p>
     <p>
       {% if not is_admin(user.email) %}
@@ -56,7 +56,7 @@
       {% endif %}
     </p>
     <p>
-      <input type="submit" value="Editar">
+      <input onclick="return confirm('¿Esta seguro de que desea editar este usuario?');" type="submit" value="Editar">
       <button type="reset">Limpiar</button>
     </p>
   </form>

@@ -23,6 +23,7 @@ def create():
 
     try:
         Zona.save(new_zona)
+        flash("Se creo con exito", "success") 
     except:
         flash("error", "error")
         return redirect(request.referrer)

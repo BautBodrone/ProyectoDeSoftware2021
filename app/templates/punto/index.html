@@ -19,17 +19,35 @@
 
 <div>
 <a href="{{ url_for('punto_new') }}" class="link" style="float:right;  margin-top: 5px; width:75px" >Nuevo</a>
-<form action="{{ url_for('punto_filtro') }}" method="POST">
+<form  class="tabla" action="{{ url_for('punto_filtro') }}" method="POST">
   <h4>Filtrar</h4> 
   <div>
-      <input name="nombre" placeholder="Nombre"/>
-      <select  name="estado">
-        <option value="" selected>Seleccione un estado</option>
+      <input name="nombre" placeholder="Nombre" value="{{nombre}}"/>    
+
+      {% if (estado == "Despublicado") %}
+        <select  name="estado">
+        <option value="" >Seleccione un estado</option>
         <option value="Publicado">Publicado</option>
+        <option selected value="Despublicado">Despublicado</option>
+      </select>
+      {% else %}
+      {% if (estado == "Publicado") %}
+        <select   name="estado">
+        <option value="" >Seleccione un estado</option>
+        <option selected value="Publicado">Publicado</option>
+        <option value="Despublicado">Despublicado</option>
+        </select>
+      {% else %}
+      <select name="estado" >
+        <option selected value="" >Seleccione un estado</option>
+        <option  value="Publicado">Publicado</option>
         <option value="Despublicado">Despublicado</option>
       </select>
+       {% endif %}
+      {% endif %} 
       <input type="submit" value="Filtrar">
     </form>
+     
     <br></div>
 </div>
   <table>

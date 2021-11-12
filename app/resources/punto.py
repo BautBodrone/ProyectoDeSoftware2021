@@ -7,6 +7,7 @@ from app.helpers.auth import authenticated
 from app.db import db
 from app.helpers import configurator
 
+
 # Public resources
 def index():
     """
@@ -46,11 +47,11 @@ def create():
 
     try:
         Punto.save(puntoNuevo)
+        flash("Nuevo punto creado")
     except:
         flash("error")
         return redirect(request.referrer)
 
-    flash("Se creo con exito", "success")
     return redirect(url_for("punto_index"))
 
 
@@ -123,5 +124,5 @@ def filtro():
             if(estado !="" and nombre==""):
                 puntos=Punto.query.filter_by(estado=estado).paginate(page=page,per_page=page_config)
             else:
-                puntos=Punto.query.paginate(page=page,per_page=page_confif)
-    return render_template("punto/index.html", puntos=puntos )
+                puntos=Punto.query.paginate(page=page,per_page=page_config)
+    return render_template("punto/index.html", puntos=puntos, estado=estado, nombre=nombre )

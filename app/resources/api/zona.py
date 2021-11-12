@@ -27,15 +27,12 @@ def get_id(id):
     id=(id.replace(":",""))
     try:
         if id.isnumeric():
-            print("+++++++++++++++++++++++++++++++++++++++")
             zona = Zona.query.filter_by(id=id).first()
-            print(zona)
             if zona != None:
                 
                 atributos = ZonaSchema.dump(zona)
                 return jsonify(atributos=atributos)
             else:
-                print("+++++++++++++++++++++++++++++++++++++++")
                 return handler.range_not_satisfiable("error")
         else:
             raise AttributeError

@@ -20,6 +20,21 @@ class ZonaSchema(object):
         dict = {}
         for attr in obj.__table__.columns:
             if getattr(obj,"estado") == "publicado":
-                if attr.name != "estado":
+                print( "=============================")
+                print(attr.name)
+                if attr.name == "coordenadas":
+                    coordenadas = {}
+                    list = []
+                    lat_long = (getattr(obj, attr.name)).split(",")
+                    for i in range(len(lat_long)):
+                        if (i%2)==0:
+                            coordenadas["latitud"]=lat_long[i]
+                        else:
+                            coordenadas["longitud"]=lat_long[i]
+                            list.append(coordenadas)
+                            coordenadas = {}
+                    dict["coordenadas"]=list
+                elif attr.name != "estado":
                     dict[attr.name]= getattr(obj, attr.name)
+                
         return dict

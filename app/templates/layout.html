@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <html lang="es">
   <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
@@ -8,10 +9,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-
+    <script src="{{ url_for('static', filename='sidenavbar.js') }}"></script>
 
     <style>
-      body, #footer, a.navbar{
+      body, #footer, a.navbar, .usuario{
         background-color: {{ configurator().get_private_bg_color() }};
         color: {{ configurator().get_private_letters_color() }};
       }
@@ -19,19 +20,29 @@
         background-color: {{ configurator().get_private_accent_color() }};
         color: {{ configurator().get_private_letters_color() }};
       }
-      a.navbar.selected{
+      a.navbar.active{
         filter: brightness(1.5);
       }
       a.navbar:hover {
         filter: brightness(0.88);
       }
-      a.link.selected {
+      a.link.active {
         filter: brightness(1.5);
       }
-
+      @media (max-width: 768px, min-width:360){
+          .navbar a{
+            display:hidden;
+  
+          }
+      }
+      @media (max-width:360){
+        a{
+          color:red
+        }
+      }
     </style>
     {% block head %}
-      <link rel="icon" href="/static/imgs/logo.png" type="image/x-icon" >
+      <link rel="icon" href="/static/imgs/logo.png" type="image/x-icon" > 
       <title>{% block title %}{% endblock %}</title>
     {% endblock %}
   </head>
@@ -40,24 +51,39 @@
       {% block header %}
       <a href="{{ url_for('home') }}"><img src="/static/imgs/logo.png" alt="logo" width="100" style="position:absolute; left:5%;"></a>
       {% if is_authenticated(session) %}
-        <a class="link selected" href= "{{ url_for('user_edit', user_id = my_user(is_authenticated(session)).id ) }}" style="float:right;">{{ is_authenticated(session) }}</a>
+        <a class="usuario" href= "{{ url_for('user_edit', user_id = my_user(is_authenticated(session)).id ) }}" style="float:right;">{{ is_authenticated(session) }}</a>
       {% endif %}
       {% endblock %}
     </div>
-
-    <div class="navbar" id="navbar">
+    
+    <div class="navbar" id="navbar" >
     {% block navbar %}
+      <a href="/" class="navbar" id="home" >Inicio</a>
       {% if is_authenticated(session) %}
         <a href="{{ url_for('punto_index') }}" class="navbar">Puntos de Encuentro</a>
         <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
         {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
-          <a href="{{ url_for('rol_index') }}" class="navbar">Roles</a>
-          <a href="{{ url_for('user_index') }}" class="navbar">Usuarios</a>
+          <a href="{{ url_for('rol_index') }}" class="navbar" >Roles</a>
+          <a href="{{ url_for('user_index') }}" class="navbar" >Usuarios</a>
         {% endif %}
         <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
       {% else %}
         <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
       {% endif %}
+      <script type="text/javascript">
+         const currentLocation = location.href;
+         console.log(currentLocation)
+         const menuItem = document.querySelectorAll('a');
+         const menuLength = menuItem.length;
+         for (let i = 0 ; i< menuLength; i ++ ){
+        
+           if (menuItem[i].href === currentLocation){
+             menuItem[i].classList.add("active")
+             console.log(menuItem[i])
+           }
+         }
+      
+      </script>
     {% endblock %}
     </div>
     <div class="content" id="content">
@@ -77,9 +103,10 @@
     </div>
     <div id="footer">
       {% block footer %}
-      <a> proyecto de software </a>
+      <a> Proyecto de software - Grupo 33 © </a>
       {% endblock %}
     </div> 
-    {% block scripts %}{% endblock %} 
+    {% block scripts %}
+    {% endblock %} 
   </body>
 </html>

@@ -6,24 +6,14 @@
 {% block header %}
   <div>
     {{ super() }}
-    <h1 id="header">Configuracion</h1>
+    <h1 id="header">Configuración de Página</h1>
   </div>
 {% endblock %}
 {% block navbar %}
-{% if is_authenticated(session) %}
-  <a href="{{ url_for('punto_index') }}" class="navbar">Puntos de Encuentro</a>
-  <a href="{{ url_for('configuration_edit') }}" class="navbar selected">Configuracion</a>
-  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
-    <a href="{{ url_for('rol_index') }}" class="navbar">Roles</a>
-    <a href="{{ url_for('user_index') }}" class="navbar">Usuarios</a>
-    {% endif %}
-    <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
-{% else %}
-  <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
-{% endif %}
+{{ super() }}
 {% endblock %}
 {% block content %}
-  <p>Página de configuracion de la aplicación</p>
+  <h4>Página de configuracion de la aplicación</h4>
   {% if is_authenticated(session) %}
   <form action="{{ url_for('configuration_update') }}" method="POST">
     <p>
@@ -39,28 +29,31 @@
           <option value='z..a'>Z..A</option>
         </select>
     </p>
-    <p>
-      <p>Paleta aplicación privada:</p>
+    <div>
+      <h5>Paleta aplicación privada:</h5>
       <label for="private_bg_color" class="dropbtn">Fondo</label>
       <input type="color" id="private_bg_color" name="private_bg_color" value="{{ configurator().get_private_bg_color() }}" />
       <label for="private_bg_color" class="dropbtn">  Acentos</label>
       <input type="color" id="private_accent_color" name="private_accent_color" value="{{ configurator().get_private_accent_color() }}" />
       <label for="private_bg_color" class="dropbtn">  Letras</label>
       <input type="color" id="private_leters_color" name="private_letters_color" value="{{ configurator().get_private_letters_color() }}" />
-    </p>
-    <p>
-      <p>Paleta aplicación pública:</p>
+    </div>
+    <div>
+      <h5>Paleta aplicación pública:</h5>
+      
       <label for="public_bg_color" class="dropbtn">Fondo</label>
       <input type="color" id="public_bg_color" name="public_bg_color" value="{{ configurator().get_public_bg_color() }}" />
       <label for="public_bg_color" class="dropbtn">   Acentos</label>
       <input type="color" id="public_accent_color" name="public_accent_color" value="{{ configurator().get_public_accent_color() }}" />
       <label for="public_bg_color" class="dropbtn">   Letras</label>
       <input type="color" id="public_leters_color" name="public_letters_color" value="{{ configurator().get_public_letters_color() }}" />
-    </p>
+    </div>
     <button type="reset">Limpiar</button>
     <input type="submit" value="Guardar">
     <br>
   </form>    
   {% endif %}
-  <a href="{{ url_for('home') }}" class="link">Volver</a>
+  <div style="margin-top:20px  ">
+    <a href="{{ url_for('home') }}" class="link">Volver</a>
+  </div>
 {% endblock %}

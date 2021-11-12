@@ -10,12 +10,13 @@
   </div>
 {% endblock %}
 {% block navbar %}
+<a href="/" class="navbar" id="home" >Inicio</a>
 {% if is_authenticated(session) %}
   <a href="{{ url_for('punto_index') }}" class="navbar">Puntos de Encuentro</a>
   <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
   {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
     <a href="{{ url_for('rol_index') }}" class="navbar">Roles</a>
-    <a href="{{ url_for('user_index') }}" class="navbar selected">Usuarios</a>
+    <a href="{{ url_for('user_index') }}" class="navbar active">Usuarios</a>
     {% endif %}
     <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
 {% else %}
@@ -27,19 +28,19 @@
   <form action="{{ url_for('user_create') }}" method="POST">
     <p>
       <label>Email<label></br>
-      <input name="email" placeholder="Correo"/>
+      <input name="email" placeholder="Correo"/ required>
     </p>
     <p>
       <label>Clave<label></br>
-      <input type="password" name="password" placeholder="Clave"/>
+      <input type="password" name="password" placeholder="Clave" required/>
     </p>
     <p>
       <label>Nombre<label></br>
-      <input name="first_name" placeholder="Nombre"/>
+      <input name="first_name" placeholder="Nombre" required/>
     </p>
     <p>
       <label>Apellido<label></br>
-      <input name="last_name" placeholder="Apellido"/>
+      <input name="last_name" placeholder="Apellido" required/>
     </p>
     <p>
       <input type="submit" value="Crear">

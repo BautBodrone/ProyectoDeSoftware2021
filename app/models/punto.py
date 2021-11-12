@@ -8,12 +8,15 @@ class Punto(db.Model):
     
     __tablename__ = "puntos" 
     id = Column(Integer, primary_key=True)
-    email = Column(String(30))
-    nombre = Column(String(30), unique=True)
+
     coordenadas = db.relationship("Coordenada", secondary=punto_coordenada, lazy='subquery',backref=db.backref('puntos', lazy=True))
-    estado = Column(String(30))
-    telefono = Column(String(30))
-    direccion = Column(String(30))
+    email = Column(String(30),nullable=False)
+    nombre = Column(String(30), unique=True,nullable=False)
+    coordenadas = Column(String(30), unique=True,nullable=False)
+    estado = Column(String(30),nullable=False)
+    telefono = Column(String(30),nullable=False)
+    direccion = Column(String(30),nullable=False)
+
 
     def __init__(self, email=None, nombre=None, coordenadas=None, estado=None, telefono=None, direccion=None):
         self.email = email

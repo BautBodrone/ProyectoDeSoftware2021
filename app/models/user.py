@@ -7,11 +7,12 @@ class User(db.Model):
     
     __tablename__ = "users" 
     id = Column(Integer, primary_key=True)
-    first_name = Column(String(30))
-    last_name = Column(String(30))
-    email = Column(String(30),unique=True)
-    password = Column(String(30))
+
     rols = db.relationship("Rol",secondary = user_rol, lazy='subquery',backref=db.backref('users', lazy=True))
+    first_name = Column(String(30),nullable=False)
+    last_name = Column(String(30),nullable=False)
+    email = Column(String(30),unique=True,nullable=False)
+    password = Column(String(30),nullable=False)
     activo = Column(Boolean)
 
     def __init__(self, first_name=None, last_name=None, email=None, password=None):

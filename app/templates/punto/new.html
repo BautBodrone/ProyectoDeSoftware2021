@@ -11,8 +11,10 @@
 {% endblock %}
 
 {% block navbar %}
+ <a href="/" class="navbar" id="home" >Inicio</a>
 {% if is_authenticated(session) %}
-  <a href="{{ url_for('punto_index') }}" class="navbar selected">Puntos de Encuentro</a>
+
+  <a href="{{ url_for('punto_index') }}" class="navbar active">Puntos de Encuentro</a>
   <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
   {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
     <a href="{{ url_for('rol_index') }}" class="navbar">Roles</a>
@@ -25,7 +27,9 @@
 {% endblock %}
 
 {% block content %}
+
   <form action="{{ url_for('punto_create') }}" method="POST">
+
     <p>
       <label>Nombre<label></br>
       <input name="nombre" placeholder="Nombre" required/>
@@ -53,16 +57,18 @@
     </p>
     <p>
       <label>Telefono<label></br>
-      <input name="telefono" placeholder="Telefono"/>
+      <input name="telefono" placeholder="Telefono" required/>
     </p>
     <p>
       <label>Email<label></br>
-      <input name="email" placeholder="Email"/>
+      <input name="email" placeholder="Email" required/>
     </p>
     <p>
-      <input type="submit" value="Crear">
+      <input type="submit" value="Crear" style="margin-right:10px">
       <button type="reset">Limpiar</button>
+      <a href="{{ url_for('punto_index') }}" class="link" style="float:center">Volver</a>
     </p>
   </form>
-  <a href="{{ url_for('punto_index') }}" class="link">Volver</a>
+
+
 {% endblock %}

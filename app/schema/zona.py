@@ -9,7 +9,7 @@ class ZonaSchema(object):
         
     @classmethod
     def _serialize_collection(cls, collection):
-        return{
+        return {
             "zonas":[cls._serialize(item) for item in collection.items],
             "total":collection.total,
             "pagina":collection.page,

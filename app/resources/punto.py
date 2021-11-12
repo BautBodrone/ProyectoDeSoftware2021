@@ -123,5 +123,5 @@ def filtro():
             if(estado !="" and nombre==""):
                 puntos=Punto.query.filter_by(estado=estado).paginate(page=page,per_page=page_config)
             else:
-                puntos=Punto.query.paginate(page=page,per_page=page_confif)
+                puntos=Punto.query.paginate(page=page,per_page=page_config)
     return render_template("punto/index.html", puntos=puntos )

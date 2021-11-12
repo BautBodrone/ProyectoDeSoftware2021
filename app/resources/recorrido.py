@@ -47,6 +47,7 @@ def update():
     data = request.form
     recorrido = Recorrido.search_id(data["id"])
     try:
+        print("========================")
         recorrido.update(data)
     except:
         flash("error")

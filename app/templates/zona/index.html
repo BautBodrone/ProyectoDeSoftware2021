@@ -23,6 +23,44 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
+<table>
+  <tr>
+      <th>  Nombre  </th>
+      <th>  Color  </th>
+      <th>  Estado   </th>
+      <th>Coordenadas</th>
+      <th>  Editar  </th>
+      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_delete') %}
+      <th>  Eliminar  </th>
+      {% endif %}
+  </tr>
+{% for zona in zonas.items %}
+  <tr>
+    <td>{{ zona.nombre }}</td>
+    <td>{{ zona.color }} </td>
+    <td>{{ zona.estado }} </td>
+    <td>{{ zona.coordenadas }} </td>
+
+    <td>
+      <form action="{{  url_for('zona_edit', id = zona.id ) }}"  >
+        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_edit') %}
+        <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
+        {% endif %}
+      </form>
+      </td>
+    
+    
+      <td>
+      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_delete') %}
+      <form action="{{ url_for('zona_delete') }}" method="POST" enctype="multipart/form-data">
+        <input type="hidden" id="zona_id" name="zona_id" value="{{zona.id}}">
+        <button onclick="return confirm('¿Esta seguro de que desea eliminar este zona?');" class="btn btn-danger mt-2 ml-2">eliminar</a>
+      </form>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
   {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_new') %}
   <a href="{{ url_for('zona_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
   {% endif %}
@@ -34,20 +72,6 @@
     {% endfor %}
     <div id="mapid" class="mapform"></div>
   </div>
-  {% for zona in zonas.items %}
-    <p>{{ zona.nombre }}</p>
-    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_edit') %}
-        <form action="{{ url_for('zona_edit', id = zona.id ) }}"  >
-          <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
-        </form>
-    {% endif %}
-    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_delete') %}
-    <form action="{{ url_for('zona_delete') }}" method="POST" enctype="multipart/form-data">
-        <input type="hidden" id="zona_id" name="zona_id" value="{{ zona.id }}">
-        <button onclick="return confirm('¿Esta seguro de que desea eliminar esta Zona?');" class="btn btn-danger mt-2 ml-2">eliminar</button>
-    </form>
-    {% endif %}
-  {% endfor %}
 
   {% if zonas.has_prev %}
   <a class="link" href="{{ url_for('zona_index', page_num=zonas.prev_num,) }}">Anterior</a>

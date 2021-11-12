@@ -86,5 +86,5 @@ def filtro():
             if(estado !="" and nombre==""):
                 zonas=Zona.query.filter_by(estado=estado).paginate(page=page,per_page=page_config)
             else:
-                zonas=Zona.query.paginate(page=page,per_page=page_confif)
+                zonas=Zona.query.paginate(page=page,per_page=page_config)
     return render_template("zona/index.html", zonas=zonas )

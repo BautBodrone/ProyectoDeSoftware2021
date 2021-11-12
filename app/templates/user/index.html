@@ -11,23 +11,13 @@
 {% endblock %}
 
 {% block navbar %}
-{% if is_authenticated(session) %}
-  <a href="{{ url_for('zona_index') }}" class="navbar">Zona</a>
-  <a href="{{ url_for('punto_index') }}" class="navbar">Puntos de Encuentro</a>
-  <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
-  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
-    <a href="{{ url_for('rol_index') }}" class="navbar">Roles</a>
-    <a href="{{ url_for('user_index') }}" class="navbar selected">Usuarios</a>
-    {% endif %}
-    <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
-{% else %}
-  <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
-{% endif %}
+  {{ super() }}
 {% endblock %}
 
 {% block content %}
-<a href="{{ url_for('user_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
-<form action="{{ url_for('user_filtro') }}" method="POST">
+<div>
+<a href="{{ url_for('user_new') }}" class="link" style="float:right;  margin-top: 5px; width:75px" >Nuevo</a>
+<form class="tabla" action="{{ url_for('user_filtro') }}" method="POST">
   <h4>Filtrar</h4> 
       <input name="first_name" placeholder="Nombre" />
       <select  name="activo" >
@@ -38,6 +28,8 @@
       <input type="submit" value="Filtrar">
     </form>
   <br>
+</div>
+
   <table>
     <tr>
         <th>  Email  </th>
@@ -45,7 +37,10 @@
         <th>  Apellido  </th>
         <th>  Roles  </th>
         <th>  Estado  </th>
-        <th>  Actions  </th>
+        <th>  Editar  </th>
+        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_delete') %}
+        <th>  Eliminar  </th>
+        {% endif %}
     </tr>
   {% for user in users.items %}
     <tr>
@@ -64,10 +59,13 @@
           Bloqueado
         {% endif %}
       </td>
+      
       <td>
         <form action="{{ url_for('user_edit', user_id = user.id ) }}"  >
           <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
         </form>
+        </td>
+        <td>
         {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_delete') %}
         <form action="{{ url_for('user_delete') }}" method="POST" enctype="multipart/form-data">
           <input type="hidden" id="user_id" name="user_id" value="{{user.id}}">
@@ -79,6 +77,7 @@
     {% endfor %}
   </table>
 
+<div class="paginado">
   {% if users.has_prev %}
   <a class="link" href="{{ url_for('user_index', page_num=users.prev_num,) }}">Anterior</a>
   {% endif %}
@@ -97,4 +96,6 @@
 
 
   <a href="{{ url_for('home') }}" class="link">Volver</a>
+
+   </div>
 {% endblock %}

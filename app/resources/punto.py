@@ -34,6 +34,7 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
+    
     puntoNuevo = Punto(**request.form)
 
     if not has_permit("punto_new"):

@@ -1,9 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.sql.schema import PrimaryKeyConstraint
 from sqlalchemy_utils import ChoiceType
 
 from app.db import db
-
 
 class Recorrido(db.Model):
 
@@ -15,13 +13,13 @@ class Recorrido(db.Model):
     __tablename__ = "recorridos"
     id = Column(Integer, primary_key=True)
     nombre = Column(String(30), unique=True,nullable=False)
-    descrpcion = Column(String(60))
+    descripcion = Column(String(60))
     estado = Column(ChoiceType(ESTADOS))
     coordenadas = db.Column(db.String(255), nullable=False)
 
-    def __init__(self,nombre=None, descipcion=None, coordenadas=None, estado=None):
+    def __init__(self,nombre=None, descripcion=None, coordenadas=None, estado=None):
         self.nombre = nombre
-        self.descrpcion = descipcion
+        self.descripcion = descripcion
         self.coordenadas = coordenadas
         self.estado = estado
 
@@ -37,8 +35,8 @@ class Recorrido(db.Model):
     def edit(self,data):
         if self.nombre != data["nombre"]:
             self.nombre = data["nombre"]
-        if self.descrpcion != data["descrpcion"]:
-            self.descrpcion = data["descrpcion"]
+        if self.descripcion != data["descripcion"]:
+            self.descripcion = data["descripcion"]
         if self.coordenadas != data["coordenadas"]:
             self.coordenadas = data["coordenadas"]
         if self.estado != data["estado"]:

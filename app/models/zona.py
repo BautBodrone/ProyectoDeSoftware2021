@@ -2,8 +2,6 @@ from sqlalchemy.orm import defaultload
 from app.db import db
 from sqlalchemy_utils import ChoiceType
 
-zona_coordenada = db.Table("zonas_coordenadas",db.Column("zonas_id",db.ForeignKey("zonas.id")),db.Column("coordenadas_id",db.ForeignKey("coordenadas.id")))
-
 class Zona(db.Model):
 
     ESTADOS = [

@@ -11,25 +11,17 @@
 {% endblock %}
 
 {% block navbar %}
-{% if is_authenticated(session) %}
-  <a href="{{ url_for('zona_index') }}" class="navbar">Zona</a>
-  <a href="{{ url_for('punto_index') }}" class="navbar selected">Puntos de Encuentro</a>
-  <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
-  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
-    <a href="{{ url_for('rol_index') }}" class="navbar">Roles</a>
-    <a href="{{ url_for('user_index') }}" class="navbar">Usuarios</a>
-    {% endif %}
-    <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
-{% else %}
-  <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
-{% endif %}
+  {{ super() }}
 {% endblock %}
 
 {% block content %}
 
-<a href="{{ url_for('punto_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
+
+<div>
+<a href="{{ url_for('punto_new') }}" class="link" style="float:right;  margin-top: 5px; width:75px" >Nuevo</a>
 <form action="{{ url_for('punto_filtro') }}" method="POST">
   <h4>Filtrar</h4> 
+  <div>
       <input name="nombre" placeholder="Nombre"/>
       <select  name="estado">
         <option value="" selected>Seleccione un estado</option>
@@ -38,7 +30,8 @@
       </select>
       <input type="submit" value="Filtrar">
     </form>
-    <br>
+    <br></div>
+</div>
   <table>
     <tr>
         <th>  Email  </th>
@@ -47,7 +40,12 @@
         <th>  Estado  </th>
         <th>  Telefono  </th>
         <th>  Dirección  </th>
-        <th>  Actions  </th>
+        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_edit') %}
+        <th>  Editar  </th>
+        {% endif %}
+        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_delete') %}
+        <th>  Eliminar  </th>
+        {% endif %}
     </tr>
   {% for punto in puntos.items %}
     <tr>
@@ -60,12 +58,15 @@
       <td>
         {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_edit') %}
         <form action="{{ url_for('punto_edit', id = punto.id ) }}"  >
-          <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
+          <button type="submit" class="btn btn-warning  ">Editar</button>
         </form>
+      </td>
         {% endif %}
+      <td>
         {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_delete') %}
+
         <form action="{{ url_for('punto_delete', id = punto.id) }}" method="POST" enctype="multipart/form-data">
-          <button onclick="return confirm('¿Esta seguro de que desea eliminar este punto de encuentro?');" class="btn btn-danger mt-2 ml-2">eliminar</a>
+          <button onclick="return confirm('¿Esta seguro de que desea eliminar este punto de encuentro?');"  class="btn btn-danger ">eliminar</a> 
         </form>
         {% endif %}
       </td>
@@ -74,7 +75,7 @@
   </table>
 
 
-
+<div class="paginado">
   {% if puntos.has_prev %}
   <a class="link" href="{{ url_for('punto_index', page_num=puntos.prev_num,) }}">Anterior</a>
   {% endif %}
@@ -93,4 +94,6 @@
 
 
   <a href="{{ url_for('home') }}" class="link">Volver</a>
+
+  </div>
 {% endblock %}

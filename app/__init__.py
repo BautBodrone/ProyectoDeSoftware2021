@@ -9,8 +9,8 @@ from app.helpers.auth import authenticated
 
 from config import config
 from app import db
-from app.resources import user, auth, rol , configuration, punto, zona, home
-from app.resources.api.zonas import zonas_api
+from app.resources import user, auth, rol , configuration, punto, zona, home, permiso
+from app.resources.api.zona import zonas_api
 from app.resources.api.denuncias import denuncias_api
 from app.helpers import handler, user_helper, configurator
 
@@ -71,6 +71,9 @@ def create_app(environment="production"):
     # Ruta de Roles
     app.add_url_rule("/roles", "rol_index", rol.index)
 
+    # Ruta de permisos
+    app.add_url_rule("/permisos","permiso_index", permiso.index)
+
     # Rutas de la configuracion
     app.add_url_rule("/configuracion", "configuration_edit", configuration.edit)
     app.add_url_rule("/configuracion", "configuration_update", configuration.save, methods=["POST"])
@@ -78,7 +81,7 @@ def create_app(environment="production"):
     #Rutas de Puntos de encuentro
     app.add_url_rule("/puntos", "punto_index", punto.index)
     app.add_url_rule("/puntos", "punto_create", punto.create, methods=["POST"])
-    app.add_url_rule("/puntos/nuevo", "punto_new", punto.new)
+    app.add_url_rule("/puntos/nuevo", "punto_new", punto.new )
     app.add_url_rule("/puntos/filtro","punto_filtro",punto.filtro, methods=["POST"] )
 
     #Editar punto de encuentro
@@ -87,8 +90,8 @@ def create_app(environment="production"):
     app.add_url_rule("/puntos/delete/<id>", "punto_delete", punto.delete, methods=["POST"])
 
     # Rutas del api zonas
-    #app.add_url_rule("/zonas-inundables", "/", api.zonas.index)
-    #app.add_url_rule("/zonas-inundables/:<id>", "/", api.zonas.get_id)
+    # app.add_url_rule("/zonas-inundables", "api_zona_index", zonas_api.index)
+    # app.add_url_rule("/zonas-inundables/:<id>", "/", zonas_api.get_id)
 
     # Rutas del api denuncias
     #app.add_url_rule("/denuncias", "/", api.denuncias.index, methods=["POST"])
@@ -96,9 +99,10 @@ def create_app(environment="production"):
 
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")
+    
+    api.register_blueprint(zonas_api)
+    api.register_blueprint(denuncias_api)
     app.register_blueprint(api)
-    app.register_blueprint(zonas_api)
-    app.register_blueprint(denuncias_api)
 
     # Handlers
     app.register_error_handler(400, handler.bad_request)

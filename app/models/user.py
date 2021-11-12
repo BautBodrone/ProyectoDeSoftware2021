@@ -1,18 +1,18 @@
 from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.orm import relationship
 from app.db import db
 
-from app.models import user_rol,rol
+user_rol = db.Table("users_rols",db.Column("users_id",db.ForeignKey("users.id")),db.Column("rols_id",db.ForeignKey("rols.id")))
 
 class User(db.Model):
     
     __tablename__ = "users" 
     id = Column(Integer, primary_key=True)
-    first_name = Column(String(30))
-    last_name = Column(String(30))
-    email = Column(String(30),unique=True)
-    password = Column(String(30))
-    rols = relationship("Rol",secondary = "users_rols")
+
+    rols = db.relationship("Rol",secondary = user_rol, lazy='subquery',backref=db.backref('users', lazy=True))
+    first_name = Column(String(30),nullable=False)
+    last_name = Column(String(30),nullable=False)
+    email = Column(String(30),unique=True,nullable=False)
+    password = Column(String(30),nullable=False)
     activo = Column(Boolean)
 
     def __init__(self, first_name=None, last_name=None, email=None, password=None):

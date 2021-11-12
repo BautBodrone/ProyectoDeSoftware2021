@@ -6,7 +6,7 @@
 {% block header %}
   <div>
     {{ super() }}
-    <h1 id="header">Roles</h1>
+    <h1 id="header">Permisos solo para crear tabla</h1>
   </div>
 {% endblock %}
 
@@ -15,8 +15,8 @@
 {% endblock %}
 
 {% block content %}
-  {% for rol in rols %}
-    <li>{{ rol.nombre }}: {% for permiso in rol.permisos %} {{ permiso.descripcion }}, {% endfor %}</li>
+  {% for permiso in permisos %}
+    <li>{{ permiso.nombre }}</li>
   {% endfor %}
   <a href="{{ url_for('home') }}" class="link">Volver</a>
 {% endblock %}

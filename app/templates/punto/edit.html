@@ -22,6 +22,7 @@
 {% endblock %}
 
 {% block navbar %}
+ <a href="/" class="navbar" id="home" >Inicio</a>
 {% if is_authenticated(session) %}
   <a href="{{ url_for('zona_index') }}" class="navbar">Zona</a>
   <a href="{{ url_for('punto_index') }}" class="navbar selected">Puntos de Encuentro</a>
@@ -35,6 +36,7 @@
   <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
 {% endif %}
 {% endblock %}
+
 
 {% block content %}
   <form id="form-map" class="one-mark" action="{{ url_for('punto_update') }}" method="POST">

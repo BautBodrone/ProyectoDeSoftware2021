@@ -1,16 +1,14 @@
 from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import relationship
 from app.db import db
 
-from app.models import permiso, user
+rol_permiso = db.Table("rols_permisos",db.Column("rols_id",db.ForeignKey("rols.id")),db.Column("permisos_id",db.ForeignKey("permisos.id")))
 
 class Rol(db.Model):
 
     __tablename__ = 'rols'
     id = Column(Integer,primary_key=True)
     nombre = Column(String(30))
-    users = relationship("User",secondary = "users_rols")
-    permisos = relationship("Permiso",secondary = "rols_permisos")
+    permisos = db.relationship("Permiso",secondary = rol_permiso, lazy='subquery',backref=db.backref('rols', lazy=True))
 
     def __init__(self,nombre):
         self.nombre = nombre

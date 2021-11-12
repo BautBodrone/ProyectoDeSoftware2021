@@ -64,7 +64,6 @@ export class Map {
             let recorridos = document.getElementsByClassName('recorridos');
             let nombres = document.getElementsByClassName('recorridos-nombre');
             for (let i = 0; i < recorridos.length; i++) {
-                console.log(nombres[i].value);
                 let nombre = nombres[i].value;
                 let coordenadas = recorridos[i].value.split(",");
                 let linea = [];

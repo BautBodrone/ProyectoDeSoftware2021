@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %}Denuncia{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <h1>Crear Seguimiento para {{seguimiento.denuncia.titulo}}</h1>
+  <form action="{{ url_for('seguimiento_create') }}" method="POST">
+    <p>
+      <label>Descripcion <label></br>
+      <input name="descripcion" placeholder="descripcion"/>
+    </p>
+    <p>
+    <label> Usuario Encargado:  <label>
+    <select class="selectpicker" name="asignadoA_id" id="asignadoA_id">
+    {% for user in users %}
+        {% for rol in user.rols %}
+        {% if rol.nombre != None %}
+            <option value={{user}}>{{user.first_name}}</option>
+        {% endif %}
+        {% endfor %}
+    {% endfor %}
+    </select>
+    </p>
+    <p>
+      <input type="submit" value="Crear">
+      <button type="reset">Limpiar</button>
+    </p>
+  </form>
+  <a href="{{ url_for('seguimiento_index') }}" class="link">Volver</a>
+{% endblock %}

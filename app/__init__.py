@@ -9,10 +9,10 @@ from app.helpers.auth import authenticated
 
 from config import config
 from app import db
-from app.resources import permiso, user, auth, rol , configuration, punto, coordenada, zona
+from app.resources import user, auth, rol , configuration, punto, zona, home, permiso, denuncia, seguimiento, recorrido
 from app.resources.api.zona import zonas_api
 from app.resources.api.denuncias import denuncias_api
-from app.helpers import handler, user_helper, configurator,coordenada_helper
+from app.helpers import handler, user_helper, configurator
 
 from app.models.punto import Punto
 
@@ -41,7 +41,12 @@ def create_app(environment="production"):
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
     app.jinja_env.globals.update(is_admin=user_helper.is_admin)
     app.jinja_env.globals.update(configurator=configurator.settings)
-    app.jinja_env.globals.update(search_coordenada=coordenada_helper.search_coordenada)
+    
+    # home
+    app.add_url_rule("/", "home", home.index)
+
+    # home
+    app.add_url_rule("/", "home", home.index)
 
     # Autenticación
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
@@ -53,6 +58,19 @@ def create_app(environment="production"):
     app.add_url_rule("/zonas/nuevo", "zona_new", zona.new)
     app.add_url_rule("/zonas", "zona_create", zona.create, methods=["POST"])
     app.add_url_rule("/zonas/delete","zona_delete", zona.delete, methods=["POST"])
+    app.add_url_rule("/zonas/edit/<id>", "zona_edit", zona.edit)
+    app.add_url_rule("/zonas/update","zona_update", zona.update, methods=["POST"])
+    app.add_url_rule("/zonas/filtro","zona_filtro", zona.filtro, methods=["POST"] )
+
+    #Rutas de Recorridos
+    app.add_url_rule("/recorridos", "recorrido_index", recorrido.index)
+    app.add_url_rule("/recorridos/nuevo", "recorrido_new", recorrido.new)
+    app.add_url_rule("/recorridos", "recorrido_create", recorrido.create, methods=["POST"])
+    app.add_url_rule("/recorridos/delete","recorrido_delete", recorrido.delete, methods=["POST"])
+    app.add_url_rule("/recorridos/edit/<id>", "recorrido_edit", recorrido.edit)
+    app.add_url_rule("/recorridos/update","recorrido_update", recorrido.update, methods=["POST"])
+    app.add_url_rule("/recorridos/filtro","recorrido_filtro", recorrido.filtro, methods=["POST"] )
+
 
     # Rutas de Usuarios
     app.add_url_rule("/usuarios", "user_index", user.index)
@@ -73,13 +91,6 @@ def create_app(environment="production"):
     app.add_url_rule("/configuracion", "configuration_edit", configuration.edit)
     app.add_url_rule("/configuracion", "configuration_update", configuration.save, methods=["POST"])
 
-    # Rutas de Coordenadas
-    app.add_url_rule("/coordenadas/index", "coordenada_index", coordenada.index)
-    app.add_url_rule("/coordenadas/nuevo", "coordenada_new", coordenada.new)
-    app.add_url_rule("/coordenadas/nuevo/punto", "coordenada_new_punto", coordenada.new_punto)
-    app.add_url_rule("/coordenadas", "coordenada_create", coordenada.create, methods=["POST"])
-    app.add_url_rule("/puntos/nuevo", "coordenada_create_punto", coordenada.create_punto, methods=["POST"])
-
     #Rutas de Puntos de encuentro
     app.add_url_rule("/puntos", "punto_index", punto.index)
     app.add_url_rule("/puntos", "punto_create", punto.create, methods=["POST"])
@@ -91,6 +102,22 @@ def create_app(environment="production"):
     app.add_url_rule("/puntos/update","punto_update",punto.update, methods=["POST"])  
     app.add_url_rule("/puntos/delete/<id>", "punto_delete", punto.delete, methods=["POST"])
 
+     #  Rutas de Denuncias
+    app.add_url_rule("/denuncias", "denuncia_index", denuncia.index)
+    app.add_url_rule("/denuncias", "denuncia_create", denuncia.create, methods=["POST"])
+    app.add_url_rule("/denuncias/nuevo", "denuncia_new", denuncia.new)
+    app.add_url_rule("/denuncias/delete", "denuncia_delete", denuncia.delete, methods=["POST"])
+    app.add_url_rule("/denuncias/edit/<denuncia_id>","denuncia_edit",denuncia.edit)
+    app.add_url_rule("/denuncias/edit","denuncia_edit_finish",denuncia.edit_finish, methods=["POST"])
+    app.add_url_rule("/denuncias/filtro","denuncia_filtro",denuncia.filtro, methods=["POST"] )
+
+    #Rutas de seguimientos
+    app.add_url_rule("/seguimientos", "seguimiento_index", seguimiento.index)
+    app.add_url_rule("/seguimientos", "seguimiento_create", seguimiento.create, methods=["POST"])
+    app.add_url_rule("/seguimientos/nuevo", "seguimiento_new", seguimiento.new)
+    app.add_url_rule("/seguimientos/delete", "seguimiento_delete", seguimiento.delete, methods=["POST"])
+
+
     # Rutas del api zonas
     # app.add_url_rule("/zonas-inundables", "api_zona_index", zonas_api.index)
     # app.add_url_rule("/zonas-inundables/:<id>", "/", zonas_api.get_id)
@@ -98,10 +125,6 @@ def create_app(environment="production"):
     # Rutas del api denuncias
     #app.add_url_rule("/denuncias", "/", api.denuncias.index, methods=["POST"])
     
-    # Ruta para el Home (usando decorator)
-    @app.route("/")
-    def home():
-        return render_template("home.html")
 
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")

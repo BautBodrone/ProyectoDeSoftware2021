@@ -1,6 +1,17 @@
 {% extends "layout.html" %}
 {% block title %}Puntos de Encuentro{% endblock %}
 {% block head %}
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+  <script type="module" src="/static/js/map.js" ></script>
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
   {{ super() }}
 {% endblock %}
 {% block header %}
@@ -27,26 +38,22 @@
 {% endblock %}
 
 {% block content %}
-
-  <form action="{{ url_for('punto_create') }}" method="POST">
-
+  <form id= "form-map" class="one-mark" action="{{ url_for('punto_create') }}" method="POST">
+    <input id="punto-lat" class="punto-lat" name="lat" type="hidden" >
+    <input id="punto-lng" class="punto-lng" name="lng" type="hidden" >
+    <div class="map-container">
+      <div id="mapid" class="mapform" ></div>
+    </div>
     <p>
-      <label>Nombre<label></br>
+      <label>Nombre<label>
       <input name="nombre" placeholder="Nombre" required/>
     </p>
     <p>
-      <label>Direccion<label></br>
+      <label>Direccion<label>
       <input  name="direccion" placeholder="Direccion" required/>
     </p>
-      <label for="coordenada">Seleccione una coordenada</label>
-      <select name="coordenadas" id="coordenadas">
-        {% for coordenada in coordenadas %}
-          <option value={{coordenada.id}}>{{coordenada}}</option>
-        {% endfor %}
-      </select>
-      <a class="open-button" href="{{ url_for('coordenada_new_punto') }}" onclick="openForm()">CrearNuevo</a>
-    <p> 
-     <label>Estado<label></br>
+     
+     <label>Estado</label>
      <select name="estado" required>
         <option value="" selected disabled hidden>
           Seleccione un estado
@@ -56,17 +63,16 @@
      </select>
     </p>
     <p>
-      <label>Telefono<label></br>
-      <input name="telefono" placeholder="Telefono" required/>
+      <label>Telefono<label>
+      <input name="telefono" placeholder="Telefono"/>
     </p>
     <p>
-      <label>Email<label></br>
-      <input name="email" placeholder="Email" required/>
+      <label>Email<label>
+      <input name="email" placeholder="Email"/>
     </p>
     <p>
-      <input type="submit" value="Crear" style="margin-right:10px">
-      <button type="reset">Limpiar</button>
-      <a href="{{ url_for('punto_index') }}" class="link" style="float:center">Volver</a>
+      <input type="submit" value="Crear">
+      <input type="reset" value="Limpiar">
     </p>
   </form>
 

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Zonas{% endblock %}
+{% block title %}Recorridos{% endblock %}
 {% block head %}
   {{ super() }}
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
@@ -17,53 +17,52 @@
 {% block header %}
   <div>
     {{ super() }}
-    <h1 id="header">Zonas</h1>
+    <h1 id="header">Recorridos</h1>
   </div>
 {% endblock %}
 {% block navbar %}
   {{ super() }}
 {% endblock %}
 {% block content %}
-  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_new') %}
-  <a href="{{ url_for('zona_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
+  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_new') %}
+  <a href="{{ url_for('recorrido_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
   {% endif %}
   <div class="map-container">
-    {% for zona in zonas.items %}
-      <input id="{{ zona }}" class="zonas" type="hidden" value="{{ zona.coordenadas }}" >
-      <input id="{{ zona }}" class="zonas-colores" type="hidden" value="{{ zona.color }}" >
-      <input id="{{ zona }}" class="zonas-nombre" type="hidden" value="{{ zona.nombre }}" >
+    {% for recorrido in recorridos.items %}
+      <input id="{{ recorrido }}" class="recorridos" type="hidden" value="{{ recorrido.coordenadas }}" >
+      <input id="{{ recorrido }}" class="recorridos-nombre" type="hidden" value="{{ recorrido.nombre }}" >
     {% endfor %}
     <div id="mapid" class="mapform"></div>
   </div>
-  {% for zona in zonas.items %}
-    <p>{{ zona.nombre }}</p>
-    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_edit') %}
-        <form action="{{ url_for('zona_edit', id = zona.id ) }}"  >
+  {% for recorrido in recorridos.items %}
+    <p>{{ recorrido.nombre }}</p>
+    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_edit') %}
+        <form action="{{ url_for('recorrido_edit', id = recorrido.id ) }}"  >
           <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
         </form>
     {% endif %}
-    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_delete') %}
-    <form action="{{ url_for('zona_delete') }}" method="POST" enctype="multipart/form-data">
-        <input type="hidden" id="zona_id" name="zona_id" value="{{ zona.id }}">
+    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_delete') %}
+    <form action="{{ url_for('recorrido_delete') }}" method="POST" enctype="multipart/form-data">
+        <input type="hidden" id="recorrido_id" name="recorrido_id" value="{{ recorrido.id }}">
         <button onclick="return confirm('¿Esta seguro de que desea eliminar esta Zona?');" class="btn btn-danger mt-2 ml-2">eliminar</button>
     </form>
     {% endif %}
   {% endfor %}
 
-  {% if zonas.has_prev %}
-  <a class="link" href="{{ url_for('zona_index', page_num=zonas.prev_num,) }}">Anterior</a>
+  {% if recorridos.has_prev %}
+  <a class="link" href="{{ url_for('recorrido_index', page_num=recorridos.prev_num,) }}">Anterior</a>
   {% endif %}
-  {% for page_num in zonas.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+  {% for page_num in recorridos.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
      {% if page_num%}
-       {% if zonas.page == page_num%}
+       {% if recorridos.page == page_num%}
          <a href="" class="link selected">{{page_num}}</a>
        {% else %}
-         <a href="{{ url_for('zona_index',page=page_num)}}" class="link">{{page_num}}</a>
+         <a href="{{ url_for('recorrido_index',page=page_num)}}" class="link">{{page_num}}</a>
        {% endif %}
      {% endif %}
   {% endfor %}
- {% if zonas.has_next %}
-  <a class="link" href="{{ url_for('zona_index', page=zonas.next_num) }}">Siguiente</a>
+ {% if recorridos.has_next %}
+  <a class="link" href="{{ url_for('recorrido_index', page=recorridos.next_num) }}">Siguiente</a>
   {% endif %}
 
 

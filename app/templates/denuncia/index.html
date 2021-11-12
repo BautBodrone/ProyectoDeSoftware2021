@@ -14,9 +14,11 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-<h1>Denuncias</h1>
-<form action="{{ url_for('denuncia_filtro') }}" method="POST">
-  <h3>Filtrar</h3> 
+<div>
+<a href="{{ url_for('denuncia_new') }}" class="link" style="float:right;  margin-top: 5px;">Nuevo</a>
+<form class="tabla" action="{{ url_for('denuncia_filtro') }}" method="POST">
+  <h4>Filtrar</h4> 
+  <div>
       <input name="titulo" placeholder="Titulo" value="{{titulo}}"/>
       <select  name="estado">
         <option value="" selected>Seleccione un estado</option>
@@ -25,13 +27,15 @@
         <option value="resuelta">Resuelta</option>
         <option value="cerrada">Cerrada</option>
       </select>
-  <p>
+   
     <label>Rango de fechas: <label></br>
     <input type="date" name="fechaC"  />
     <input type="date" name="fechaF" />
-  </p>
+   
   <input type="submit" value="Filtrar">
 </form>
+<br></div>
+</div>
 <table>
   <tr>
       <th>  Titulo  </th>
@@ -105,5 +109,5 @@
 
 
 <a href="{{ url_for('home') }}" class="link">Volver</a>
-<a href="{{ url_for('denuncia_new') }}" class="link">Nuevo</a>
+
 {% endblock %}

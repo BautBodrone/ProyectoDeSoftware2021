@@ -106,8 +106,4 @@ def filtro():
                 puntos=Punto.query.filter_by(estado=estado).paginate(page=page,per_page=page_config)
             else:
                 puntos=Punto.query.paginate(page=page,per_page=page_config)
-<<<<<<< HEAD
     return render_template("punto/index.html", puntos=puntos, estado=estado, nombre=nombre )
-=======
-    return render_template("punto/index.html", puntos=puntos )
->>>>>>> development

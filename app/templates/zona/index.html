@@ -45,11 +45,7 @@
     {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_delete') %}
     <form action="{{ url_for('zona_delete') }}" method="POST" enctype="multipart/form-data">
         <input type="hidden" id="zona_id" name="zona_id" value="{{ zona.id }}">
-<<<<<<< HEAD
-        <button onclick="return confirm('¿Esta seguro de que desea eliminar esta zona?');" class="btn btn-danger mt-2 ml-2">eliminar</a>
-=======
         <button onclick="return confirm('¿Esta seguro de que desea eliminar esta Zona?');" class="btn btn-danger mt-2 ml-2">eliminar</button>
->>>>>>> development
     </form>
     {% endif %}
   {% endfor %}

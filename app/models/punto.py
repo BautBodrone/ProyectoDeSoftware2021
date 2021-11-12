@@ -16,8 +16,8 @@ class Punto(db.Model):
     def __init__(self, email, nombre, lat, lng, estado, telefono, direccion):
         self.email = email
         self.nombre = nombre
-        self.lat = lat;
-        self.lng = lng;
+        self.lat = lat
+        self.lng = lng
         self.estado = estado
         self.telefono = telefono
         self.direccion = direccion

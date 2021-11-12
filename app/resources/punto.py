@@ -24,7 +24,7 @@ def new():
     if not authenticated(session):
         abort(401)
 
-    if not has_permit("punto_index"):
+    if not has_permit("punto_new"):
         flash("No cuenta con los permisos necesarios")
         return redirect(request.referrer)
 

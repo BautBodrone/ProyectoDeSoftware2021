@@ -58,7 +58,7 @@
       <td>{{ denuncia.fechaF }}</td>
     {% endif %}
     <td>{{ denuncia.descripcion }}</td>
-    <td>{{ denuncia.coordenadas }}</td>
+    <td>{{ denuncia.lat , denuncia.lng }}</td>
     <td>{{ denuncia.estado }}</td>
     <td>{{ denuncia.apellidoD }}</td>
     <td>{{ denuncia.nombreD }}</td>
@@ -85,6 +85,24 @@
   </tr>
   {% endfor %}
 </table>
+
+<div class="paginado">
+  {% if denuncias.has_prev %}
+  <a class="link" href="{{ url_for('denuncia_index', page_num=denuncias.prev_num,) }}">Anterior</a>
+  {% endif %}
+  {% for page_num in denuncias.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+     {% if page_num%}
+       {% if denuncias.page == page_num%}
+         <a href="" class="link selected">{{page_num}}</a>
+       {% else %}
+         <a href="{{ url_for('denuncia_index',page=page_num)}}" class="link">{{page_num}}</a>
+       {% endif %}
+     {% endif %}
+  {% endfor %}
+ {% if denuncias.has_next %}
+  <a class="link" href="{{ url_for('denuncia_index', page=denuncias.next_num) }}">Siguiente</a>
+  {% endif %}
+
 
 <a href="{{ url_for('home') }}" class="link">Volver</a>
 <a href="{{ url_for('denuncia_new') }}" class="link">Nuevo</a>

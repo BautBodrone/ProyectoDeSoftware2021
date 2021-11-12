@@ -22,8 +22,9 @@
 {% endblock %}
 {% block content %}
   <h1>Editar una Denuncia</h1>
-  <form id="form-map" action="{{ url_for('denuncia_edit_finish') }}" method="POST">
-    <input type="hidden" class="coordenadas" name="coordenadas" id="coordenadas">
+  <form id="form-map" class="one-mark" action="{{ url_for('denuncia_edit_finish') }}" method="POST">
+    <input class="punto-lat" type="hidden" >
+    <input class="punto-lng" type="hidden" >
     <div class="map-container">
       <div id="mapid" class="mapform" ></div>
     </div>

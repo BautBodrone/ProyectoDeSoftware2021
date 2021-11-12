@@ -39,8 +39,8 @@
 
 {% block content %}
   <form id= "form-map" class="one-mark" action="{{ url_for('punto_create') }}" method="POST">
-    <input class="punto-lat" type="hidden" >
-    <input class="punto-lng" type="hidden" >
+    <input id="punto-lat" class="punto-lat" name="lat" type="hidden" >
+    <input id="punto-lng" class="punto-lng" name="lng" type="hidden" >
     <div class="map-container">
       <div id="mapid" class="mapform" ></div>
     </div>

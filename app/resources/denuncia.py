@@ -6,9 +6,7 @@ from app.helpers.auth import authenticated
 from app.db import db
 from sqlalchemy import and_
 from app.models.user import User
-
-
-pagConf=4
+from app.helpers import configurator
 
 # Protected resources
 def index():
@@ -19,6 +17,7 @@ def index():
     if not authenticated(session):
         abort(401)
 
+    pagConf = configurator.settings().get_rows_per_page()
     page = request.args.get('page',1, type=int)
     denuncias = Denuncia.query.paginate(page=page,per_page=pagConf)
     
@@ -39,7 +38,7 @@ def create():
 
     if not authenticated(session):
         abort(401)
-
+    print(request.form)
     new_denuncia = Denuncia(**request.form)
     
     try:
@@ -95,6 +94,7 @@ def filtro():
     """
         El metodo hara un filtro de los usuarios dependiendo de los datos ingresados 
     """
+    pagConf = configurator.settings().get_rows_per_page()
     page = request.args.get('page',1, type=int)
     data = request.form
     estado = data["estado"]

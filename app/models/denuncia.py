@@ -31,7 +31,8 @@ class Denuncia(db.Model):
     fechaC = Column(Date)
     fechaF = Column(Date)
     descripcion = Column(String(30))
-    coordenadas = Column(String(255))
+    lat = Column(String(30))
+    lng = Column(String(30))
     estado = Column(ChoiceType(ESTADOS))
     apellidoD = Column(String(30))
     nombreD = Column(String(30))
@@ -41,13 +42,15 @@ class Denuncia(db.Model):
 
     
     def __init__(self , titulo,categoria,descripcion,
-                    coordenadas,fechaC,fechaF,estado,apellidoD 
+                    lat,lng,estado,apellidoD 
                     ,nombreD,telefono ,emailD,asignadoA):
         self.titulo = titulo
         self.categoria = categoria
         self.descripcion = descripcion
-        self.coordenadas = coordenadas
+        self.lat = lat
+        self.lng = lng
         self.fechaC =  datetime.date.today()
+        self.fechaF = None
         self.estado = estado
         self.apellidoD = apellidoD
         self.nombreD = nombreD

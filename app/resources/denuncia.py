@@ -42,7 +42,6 @@ def create():
 
     new_denuncia = Denuncia(**request.form)
     
-    new_denuncia.print()
     try:
         Denuncia.save(new_denuncia)
     except:

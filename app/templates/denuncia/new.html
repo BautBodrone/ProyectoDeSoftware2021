@@ -1,11 +1,31 @@
 {% extends "layout.html" %}
-{% block title %}Denuncia{% endblock %}
+{% block title %}Nueva denuncia{% endblock %}
 {% block head %}
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+  <script type="module" src="/static/js/map.js" ></script>
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
   {{ super() }}
 {% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header">Nueva denuncia</h1>
+  </div>
+{% endblock %}
 {% block content %}
-  <h1>Crear una Denuncia</h1>
-  <form action="{{ url_for('denuncia_create') }}" method="POST">
+  <form id="form-map" action="{{ url_for('denuncia_create') }}" method="POST">
+    <input type="hidden" class="coordenadas" name="coordenadas" id="coordenadas">
+    <div class="map-container">
+      <div id="mapid" class="mapform" ></div>
+    </div>
     <p>
       <label>Titulo<label></br>
       <input name="titulo" placeholder="Titulo de denuncia"/>
@@ -23,10 +43,7 @@
       <label>Descripcion <label></br>
       <input name="descripcion" placeholder="descripcion"/>
     </p>
-    <p>
-        <label>Coordenadas <label></br>
-        <input name="coordenadas" placeholder="coordenadas"/>
-      </p>
+    
       <p>
         <label for="estado">Estado:</label>
             <select id="estado" name="estado">

@@ -1,6 +1,16 @@
 {% extends "layout.html" %}
-{% block title %}Denuncias{% endblock %}
+{% block title %}Denuncias {% endblock %}
 {% block head %}
+  {{ super() }}
+{% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header">Denuncias</h1>
+  </div>
+{% endblock %}
+
+{% block navbar %}
   {{ super() }}
 {% endblock %}
 {% block content %}

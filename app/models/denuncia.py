@@ -31,7 +31,7 @@ class Denuncia(db.Model):
     fechaC = Column(Date)
     fechaF = Column(Date)
     descripcion = Column(String(30))
-    coordenadas = Column(String(30))
+    coordenadas = Column(String(255))
     estado = Column(ChoiceType(ESTADOS))
     apellidoD = Column(String(30))
     nombreD = Column(String(30))
@@ -40,9 +40,9 @@ class Denuncia(db.Model):
     asignadoA = Column(Integer, ForeignKey('users.id'))
 
     
-    def __init__(self , titulo=None,categoria=None,descripcion=None,
-                    coordenadas=None,fechaC=None,fechaF=None,estado=None,apellidoD=None 
-                    ,nombreD=None,telefono=None ,emailD=None,asignadoA=None):
+    def __init__(self , titulo,categoria,descripcion,
+                    coordenadas,fechaC,fechaF,estado,apellidoD 
+                    ,nombreD,telefono ,emailD,asignadoA):
         self.titulo = titulo
         self.categoria = categoria
         self.descripcion = descripcion
@@ -109,17 +109,3 @@ class Denuncia(db.Model):
         if self.estado == "cerrada" and self.fechaF == None:
             self.fechaF = datetime.date.today()
         db.session.commit()
-
-    def print(self):
-        print("id =", self.id)
-        print("titulo =", self.titulo)
-        print("categoria =", self.categoria)
-        print("fechaC =", self.fechaC)
-        print("fechaF =", self.fechaF)
-        print("descripcion =", self.descripcion)
-        print("coordenadas =", self.coordenadas)
-        print("estado =", self.estado)
-        print("apellidoD =", self.apellidoD)
-        print("nombreD =", self.nombreD)
-        print("telefono =", self.telefono)
-        print("emailD =", self.emailD)

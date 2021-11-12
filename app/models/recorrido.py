@@ -1,16 +1,14 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.sql.schema import PrimaryKeyConstraint
 from sqlalchemy_utils import ChoiceType
-from sqlalchemy.orm import relationship
 
-from app.models import coordenada,recorrido_coordenada
 from app.db import db
 
 
 class Recorrido(db.Model):
 
     ESTADOS = [
-        ('publicado','Plublicado'),
+        ('publicado','Publicado'),
         ('despublicado','Despublicado')
     ]
 
@@ -19,7 +17,7 @@ class Recorrido(db.Model):
     nombre = Column(String(30), unique=True,nullable=False)
     descrpcion = Column(String(60))
     estado = Column(ChoiceType(ESTADOS))
-    coordenadas = relationship("Coordenada", secondary="recorrido_coordenada")
+    coordenadas = db.Column(db.String(255), nullable=False)
 
     def __init__(self,nombre=None, descipcion=None, coordenadas=None, estado=None):
         self.nombre = nombre
@@ -47,3 +45,8 @@ class Recorrido(db.Model):
             self.estado = data["estado"]
         db.session.commit()
         
+    def publicados():
+        try:
+            return db.session.query(Recorrido).filter_by(estado='Publicado').all()
+        except:
+            return []

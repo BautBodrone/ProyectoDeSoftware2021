@@ -23,6 +23,7 @@
 
 {% block navbar %}
 {% if is_authenticated(session) %}
+  <a href="{{ url_for('zona_index') }}" class="navbar">Zona</a>
   <a href="{{ url_for('punto_index') }}" class="navbar selected">Puntos de Encuentro</a>
   <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
   {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
@@ -37,8 +38,9 @@
 
 {% block content %}
   <form id="form-map" class="one-mark" action="{{ url_for('punto_update') }}" method="POST">
-    <input type="text" name="lat" class="lat" id="lat" value="{{ punto.lat }}">
-    <input type="text" name="lng" class="lng" id="lng" value="{{ punto.lng }}">
+    <input id="punto-lat" class="punto-lat" name="punto-lat" type="hidden" value="{{ punto.lat }}">
+      <input id="punto-lng" class="punto-lng" name="punto-lng" type="hidden" value="{{ punto.lng }}">
+      <input id="{{ punto }}" class="punto-nombre" type="hidden" value="{{ punto.nombre }}">
     <div class="map-container">
       <div id="mapid" class="mapform" ></div>
     </div>

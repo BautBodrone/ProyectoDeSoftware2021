@@ -9,10 +9,10 @@ from app.helpers.auth import authenticated
 
 from config import config
 from app import db
-from app.resources import user, auth, rol , configuration, punto, coordenada, zona, home
+from app.resources import user, auth, rol , configuration, punto, zona, home
 from app.resources.api.zonas import zonas_api
 from app.resources.api.denuncias import denuncias_api
-from app.helpers import handler, user_helper, configurator,coordenada_helper
+from app.helpers import handler, user_helper, configurator
 
 from app.models.punto import Punto
 
@@ -41,7 +41,6 @@ def create_app(environment="production"):
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
     app.jinja_env.globals.update(is_admin=user_helper.is_admin)
     app.jinja_env.globals.update(configurator=configurator.settings)
-    app.jinja_env.globals.update(search_coordenada=coordenada_helper.search_coordenada)
 
     # home
     app.add_url_rule("/", "home", home.index)
@@ -56,6 +55,9 @@ def create_app(environment="production"):
     app.add_url_rule("/zonas/nuevo", "zona_new", zona.new)
     app.add_url_rule("/zonas", "zona_create", zona.create, methods=["POST"])
     app.add_url_rule("/zonas/delete","zona_delete", zona.delete, methods=["POST"])
+    app.add_url_rule("/zonas/edit/<id>", "zona_edit", zona.edit)
+    app.add_url_rule("/zonas/update","zona_update", zona.update, methods=["POST"])
+    app.add_url_rule("/zonas/filtro","zona_filtro", zona.filtro, methods=["POST"] )
 
     # Rutas de Usuarios
     app.add_url_rule("/usuarios", "user_index", user.index)
@@ -72,13 +74,6 @@ def create_app(environment="production"):
     # Rutas de la configuracion
     app.add_url_rule("/configuracion", "configuration_edit", configuration.edit)
     app.add_url_rule("/configuracion", "configuration_update", configuration.save, methods=["POST"])
-
-    # Rutas de Coordenadas
-    app.add_url_rule("/coordenadas/index", "coordenada_index", coordenada.index)
-    app.add_url_rule("/coordenadas/nuevo", "coordenada_new", coordenada.new)
-    app.add_url_rule("/coordenadas/nuevo/punto", "coordenada_new_punto", coordenada.new_punto)
-    app.add_url_rule("/coordenadas", "coordenada_create", coordenada.create, methods=["POST"])
-    app.add_url_rule("/coordenadas", "coordenada_create_punto", coordenada.create_punto, methods=["POST"])
 
     #Rutas de Puntos de encuentro
     app.add_url_rule("/puntos", "punto_index", punto.index)

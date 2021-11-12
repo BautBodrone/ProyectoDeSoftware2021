@@ -1,7 +1,5 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from app.db import db
-from app.models import coordenada, punto_coordenada
-from sqlalchemy.orm import relationship
 
 class Punto(db.Model):
     
@@ -24,7 +22,7 @@ class Punto(db.Model):
         self.telefono = telefono
         self.direccion = direccion
 
-    def search_punto(id):
+    def search_id(id):
         """
             Retorna punto que tenga el mismo id que el que se paso por parametro
         """
@@ -45,8 +43,8 @@ class Punto(db.Model):
         """
         self.nombre = punto["nombre"]
         self.direccion = punto["direccion"]
-        self.lat = punto["lat"]
-        self.lng = punto["lng"]
+        self.lat = punto["punto-lat"]
+        self.lng = punto["punto-lng"]
         self.estado = punto["estado"]
         self.telefono = punto["telefono"]
         self.email = punto["email"]
@@ -68,5 +66,7 @@ class Punto(db.Model):
         }
     
     def publicados():
-        return db.session.query(Punto).filter_by(estado='Publicado').all()
-    
+        try:
+            return db.session.query(Punto).filter_by(estado='Publicado').all()
+        except:
+            return []

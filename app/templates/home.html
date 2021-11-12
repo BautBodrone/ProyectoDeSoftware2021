@@ -22,6 +22,7 @@
 {% endblock %}
 {% block navbar %}
   {% if is_authenticated(session) %}
+    <a href="{{ url_for('zona_index') }}" class="navbar">Zona</a>
     <a href="{{ url_for('punto_index') }}" class="navbar">Puntos de Encuentro</a>
     <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
     {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
@@ -35,13 +36,19 @@
 {% endblock %}
 {% block content %}
   <div class="map-container">
+    {% for recorrido in recorridos %}
+      <input id="{{ recorrido }}" class="recorrido" type="hidden" value="{{ recorrido.coordenadas }}" >
+      <input id="{{ recorrido }}" class="recorrido-nombre" type="hidden" value="{{ recorrido.nombre }}" >
+    {% endfor %} 
     {% for punto in puntos %}
-      <input type="text" name="lat" class="lat" id="lat" value="{{ punto.lat }}">
-      <input type="text" name="lng" class="lng" id="lng" value="{{ punto.lng }}">
+      <input id="{{ punto }}" class="punto-lat" type="hidden" value="{{ punto.lat }}">
+      <input id="{{ punto }}" class="punto-lng" type="hidden" value="{{ punto.lng }}">
+      <input id="{{ punto }}" class="punto-nombre" type="hidden" value="{{ punto.nombre }}">
     {% endfor %}
     {% for zona in zonas %}
       <input id="{{ zona }}" class="zonas" type="hidden" value="{{ zona.coordenadas }}" >
       <input id="{{ zona }}" class="zonas-colores" type="hidden" value="{{ zona.color }}" >
+      <input id="{{ zona }}" class="zonas-nombre" type="hidden" value="{{ zona.nombre }}" >
     {% endfor %}
     <div id="mapid" class="map-fullpage"></div>
   </div>

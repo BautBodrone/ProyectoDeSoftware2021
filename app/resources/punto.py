@@ -1,9 +1,7 @@
 from flask import redirect, render_template, request, url_for, session, abort, flash
-from app.models.coordenada import Coordenada
 from app.helpers.user_helper import has_permit
 from app.models.punto import Punto
 from app.helpers.auth import authenticated
-from app.db import db
 from app.helpers import configurator
 
 # Public resources
@@ -78,7 +76,7 @@ def edit(id):
 
 def update():
     data = request.form
-    punto = Punto.search_punto(data["id"])
+    punto = Punto.search_id(data["id"])
     try:
         punto.update(data)
     except:

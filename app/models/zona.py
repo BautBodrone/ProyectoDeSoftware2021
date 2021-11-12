@@ -1,14 +1,13 @@
 from sqlalchemy.orm import defaultload
 from app.db import db
 from sqlalchemy_utils import ChoiceType
-from app.models.coordenada import Coordenada
 
 zona_coordenada = db.Table("zonas_coordenadas",db.Column("zonas_id",db.ForeignKey("zonas.id")),db.Column("coordenadas_id",db.ForeignKey("coordenadas.id")))
 
 class Zona(db.Model):
 
     ESTADOS = [
-        ('publicado','Plublicado'),
+        ('publicado','Publicado'),
         ('despublicado','Despublicado')
     ]
 
@@ -25,6 +24,16 @@ class Zona(db.Model):
         self.color = color
         self.coordenadas = coordenadas
 
+    def update(self, zona):
+        """
+            Actualiza el zona con los valores pasados por parametro
+        """
+        self.nombre = zona["nombre"]
+        self.estado = zona["estado"]
+        self.color = zona["color"]
+        self.coordenadas = zona["coordenadas"]
+        db.session.commit()
+
     def delete(self):
         db.session.delete(self)
         db.session.commit()
@@ -36,3 +45,9 @@ class Zona(db.Model):
 
     def search_id(id):
         return db.session.query(Zona).get(id)
+
+    def publicados():
+        try:
+            return db.session.query(Zona).filter_by(estado='publicado').all()
+        except:
+            return []

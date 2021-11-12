@@ -158,10 +158,8 @@ tr:nth-child(even) {
   width: 40rem;
   display: flex;
   flex-grow: 100;
-}
-
-.map-container{
-  margin-top: 1rem;
+  border-radius:10px;
+  margin-bottom: 1rem;
 }
 
 #lat, #lng, #coordenadas {

@@ -17,7 +17,7 @@
 {% block header %}
   <div>
     {{ super() }}
-    <h1 id="header">Nueva zonas</h1>
+    <h1 id="header">Edita zona</h1>
   </div>
 {% endblock %}
 {% block navbar %}
@@ -35,32 +35,29 @@
   {% endif %}
 {% endblock %}
 {% block content %}
-  <form id="form-map" action="{{ url_for('zona_create') }}" method="POST">
-    <p> 
-      <input type="text" class="coordenadas" name="coordenadas" id="coordenadas">
-      <div class="map-container">
-        <div id="mapid" class="mapform" ></div>
-      </div>
-        
+<form id="form-map"  action="{{ url_for('zona_update') }}" method="POST">
+    <input id="coordenadas" class="coordenadas" name="coordenadas" type="hidden">
+    <div class="map-container">
+      <div id="mapid" class="mapform" ></div>
+    </div>
+    <input type="hidden" class="form-control"  id="id" name="id" value="{{zona.id}}">
+    <p>
+      <label>Nombre<label>
+      <input name="nombre" placeholder="Nombre" value="{{ zona.nombre}}" required/>
     </p>
     <p>
-      <label>Nombre <label>
-      <input type="text" name="nombre" placeholder="Nombre"/>
+      <label>Color<label>
+      <input  type="color" name="color" placeholder="Direccion" value="{{ zona.color }}"required/>
     </p>
     <p>
-        <label>Color <label>
-        <input type="color" id="color" name="color" value="#FF6E4E" >
-    </p>
-    <p>
-        <label>Estado </label>
-        <select class="selectpicker" name="estado" id="estado">
-            <option value=publicado>Publicado</option>
-            <option value=despublicado>Despublicado</option>
+      <label for="estado">Estado:</label>
+        <select id="estado" name="estado">
+          <option value="publicado">Publicado</option>
+          <option value="despublicado">Despublicado</option>
         </select>
     </p>
-    <p>
-      <button type="submit" value="Crear">Crear</button>
-      <button type="reset">Limpiar</button>
+      <input type="submit" value="Modificar">
+      <input type="reset" value="reset">
     </p>
   </form>
   <a href="{{ url_for('zona_index') }}" class="link">Volver</a>

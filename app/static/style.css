@@ -1,14 +1,48 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
-@import url('https://fonts.googleapis.com/css?family=Catamaran:400,800');
+
 body {
   font-family: 'Montserrat', Helvetica, sans-serif;
-  font-size: 14px;
+  font-size: 1em;
   min-height: 100vh;
   height: 100%;
 }
+#content{
+  margin-left: 2%;
+}
+form label, form select, form option{
+  display: block;
+  
+}
+div form{
+  display: inline-block;
+}
+ .tabla {
+  display: flex;
+  
+}
+.tabla input, .tabla select{
+  margin-left: 10px;
+}
+  form div label, form div select, form div option{
+  display: inline-block;
+  margin-bottom: 2%;
+  
+}
+form button{
+  margin-right: 20px;
+  width: auto;
+}
 
+form h5 {
+  margin-bottom: 20px;
+}
+form label{
+  margin-right: 20px;
+  width: auto;
+  text-align: justify;
+}
 .header {
-  padding: 20px;
+  padding: 30px;
   text-align: center;
   font-size: 30px;
 }
@@ -20,24 +54,28 @@ body {
 }
 
 #footer {
-  width: 75%;
-  margin: 0 auto;
+  position:fixed ;
+  bottom:0; 
+  min-height:2em;
   text-align: center;
-  bottom: 0;
-  clear: both;
-  position: relative;
-  height: 40px;
-  margin-top: 0px;
+  width: 100%;
 }
 
-#container {
-  width: 75%;
-  height: 90%;
-  margin: 0 auto;
-  padding: 20px 40px;
-  border: solid 1px black;
-  margin-top: 20px;
-  min-height: 400px;
+a.navbar{
+  text-transform: uppercase;
+  font-size: 10px;
+  padding: 15px 10px;
+  border-radius: 0;
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  line-height: 1.5;
+  text-decoration: none;
+  letter-spacing: 1px;
+  text-align: left;
+  height:50px; 
+  width:250px;
 }
 
 a.link {
@@ -50,68 +88,189 @@ a.link {
   margin-bottom: 5px;
   line-height: 1.5;
   text-decoration: none;
+  letter-spacing: 1px;
+
+}
+.usuario{
+  text-transform: uppercase;
+  font-size: 10px;
+  padding: 10px 15px;
+  border-radius: 0;
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  line-height: 1 ;
+  text-decoration: none;
   margin-top: 50px;
   letter-spacing: 1px;
 }
+a.page {
+  pointer-events: none;
+  cursor: default;
+}
+
 .navbar {
   font-family: 'Montserrat', sans-serif;
-    float: left;
-    width: 20%;
-    padding-left: 3%;
-    padding-right: 3%;
-    text-align: center;
-    padding-top: 36px;
-    height: 100%;
+  float: left;
+  width: 15%;
+  padding-left: 1%;
+  padding-top: 1%;
+  padding-right: 1%;
+  text-align: center;
+  transition: 0.5s;
+  overflow-x: hidden;
+  padding-top: 60px;
+  white-space: nowrap;
 }
 
 .navbar a {
   text-decoration: none;
-  font-size: 15px;
-  color: #2196F3;
+  font-size: 1em;
   display: block;
+  width: 100%;
+  height: 3.5em;
 }
 
 .navbar #search {
-	width: 100%;
-	border-radius: 0px;
-	height: 42px;
-	text-align: center;
-	color: rgba(208,207,207,1.00);
-	font-size: 14px;
-	;
-	margin-bottom: 21px;
+  width: 100%;
+  border-radius: 0px;
+  height: 42px;
+  text-align: center;
+  color: rgba(208,207,207,1.00);
+  font-size: 14px;
+  margin-bottom: 21px;
 }
 
-.navbar a:hover {
-  color: #064579;
+
+.content { 
+  padding-top: 1%;
+    padding-right: 3%;
+    padding-left: 3%;
+    float: center;
+    margin: 10px auto;
+    width: 50%;
+    height: auto;
+
 }
 
-.content {
-  margin: 0 auto;
-  width: 400px;
+.content table, th{
+
+  text-align:center;
+  table-layout:fixed;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing:  1px;
+  overflow: hidden;
+  word-wrap:break-word;
+   
 }
+.content table button{
+  vertical-align: top;
+  width: 72px;
+  height: 30px;
+  font-size: small;
+ 
+}
+ 
+
+
+
+@media screen and (min-width: 768px) {
+  .content  {
+    height: auto;
+    padding-left: 300px;
+    float: center;
+    margin: 10px auto;
+    width: 100%;
+    font-size:90%;
+    
+  }
+  
+  .navbar{
+    width: 300px;
+  }
+  
+}
+@media screen and (min-width: 360px) and ( max-width:768px)  {
+    
+
+  .content{
+      
+      display:grid;
+      width: 100%;
+      height: auto;
+      font-size: x-small;
+       
+    }
+
+     
+    .content table  {
+      align-content: center;
+      table-layout:fixed;
+      width: 100%;
+      border-collapse: separate;
+      border-spacing:  1px;
+      overflow: hidden;
+       
+    }
+    .content table button{
+      align-items: center;
+      width: 72px;
+      height: 30px;
+      font-size: small;
+    }
+    .navbar{
+      width: 100%;
+
+    }
+  }
+  
+
+
+
 
 table, td, th {
-  border: 1px solid rgb(0, 0, 0);
+  border: 1px solid rgb(32, 32, 32);
+  text-align: center;
+  padding: 8px;
 }
+
 
 table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th {
-  height: 30px;
-}
-
-td {
   text-align: center;
-  padding: 5px;
+  border-collapse: collapse;
+  min-width: 50%;
 }
+
+th , td{
+  height: 1%;
+}
+
 .form {
-  margin-top: 20px;
+  margin-top: 1%;
 }
+
+#coordenadaPopUp{
+  display: none;
+}
+
 tr:nth-child(even) {
   background-color: #dddddd;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.paginado{
+  margin-top: 10px;
+  height:80px;
+   
 }
 

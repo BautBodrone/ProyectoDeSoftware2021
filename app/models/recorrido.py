@@ -3,12 +3,10 @@ from sqlalchemy_utils import ChoiceType
 
 from app.db import db
 
-recorrido_coordenada = db.Table("recorridos_coordenadas",db.Column("zonas_id",db.ForeignKey("zonas.id")),db.Column("coordenadas_id",db.ForeignKey("coordenadas.id")))
-
 class Recorrido(db.Model):
 
     ESTADOS = [
-        ('publicado','Plublicado'),
+        ('publicado','Publicado'),
         ('despublicado','Despublicado')
     ]
 
@@ -17,7 +15,7 @@ class Recorrido(db.Model):
     nombre = Column(String(30), unique=True,nullable=False)
     descripcion = Column(String(60))
     estado = Column(ChoiceType(ESTADOS))
-    coordenadas = db.relationship("Coordenada", secondary=recorrido_coordenada, lazy='subquery',backref=db.backref('recorridos', lazy=True))
+    coordenadas = db.Column(db.String(255), nullable=False)
 
     def __init__(self,nombre=None, descripcion=None, coordenadas=None, estado=None):
         self.nombre = nombre
@@ -45,3 +43,8 @@ class Recorrido(db.Model):
             self.estado = data["estado"]
         db.session.commit()
         
+    def publicados():
+        try:
+            return db.session.query(Recorrido).filter_by(estado='Publicado').all()
+        except:
+            return []

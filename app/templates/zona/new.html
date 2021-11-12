@@ -1,32 +1,64 @@
 {% extends "layout.html" %}
-{% block title %}Coordenada{% endblock %}
+{% block title %}Zonas{% endblock %}
 {% block head %}
   {{ super() }}
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+  <script type="module" src="/static/js/map.js" ></script>
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+{% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header">Nueva zonas</h1>
+  </div>
+{% endblock %}
+{% block navbar %}
+
+<a href="/" class="navbar" id="home" >Inicio</a>
+{% if is_authenticated(session) %}
+<a href="{{ url_for('zona_index') }}" class="navbar active">Zona</a>
+<a href="{{ url_for('punto_index') }}" class="navbar">Puntos de Encuentro</a>
+<a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
+{% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
+  <a href="{{ url_for('rol_index') }}" class="navbar">Roles</a>
+  <a href="{{ url_for('user_index') }}" class="navbar">Usuarios</a>
+{% endif %}
+<a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
+{% else %}
+<a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
+{% endif %}
+
 {% endblock %}
 {% block content %}
-  <h1>Crear una coordenada</h1>
-  <form action="{{ url_for('zona_create') }}" method="POST">
+  <form id="form-map" action="{{ url_for('zona_create') }}" method="POST">
+    <p> 
+      <input type="text" class="coordenadas" name="coordenadas" id="coordenadas">
+      <div class="map-container">
+        <div id="mapid" class="mapform" ></div>
+      </div>
+        
+    </p>
     <p>
-      <label>Nombre <label></br>
+      <label>Nombre <label>
       <input type="text" name="nombre" placeholder="Nombre"/>
     </p>
     <p>
-        <label>Color <label></br>
+        <label>Color <label>
         <input type="color" id="color" name="color" value="#FF6E4E" >
     </p>
     <p>
         <label>Estado </label>
         <select class="selectpicker" name="estado" id="estado">
-            <option value=publicado>Publicado</option>
-            <option value=despublicado>Despublicado</option>
-        </select>
-    </p>
-    <p>
-        <label for="coordenada">Seleccione una coordenada</label>
-        <select class="selectpicker" name="coordenadas" id="coordenadas" multiple data-live-search="true">
-          {% for coordenada in coordenadas %}
-            <option value={{coordenada.id}}>{{coordenada}}</option>
-          {% endfor %}
+            <option value="publicado">Publicado</option>
+            <option value="despublicado">Despublicado</option>
         </select>
     </p>
     <p>

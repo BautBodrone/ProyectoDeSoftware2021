@@ -16,7 +16,9 @@
 
 {% block content %}
 <div>
+  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_new') %}
 <a href="{{ url_for('user_new') }}" class="link" style="float:right;  margin-top: 5px; width:75px" >Nuevo</a>
+  {% endif %}
 <form class="tabla" action="{{ url_for('user_filtro') }}" method="POST">
   <h4>Filtrar</h4> 
       <input name="first_name" placeholder="Nombre" />
@@ -62,7 +64,9 @@
       
       <td>
         <form action="{{ url_for('user_edit', user_id = user.id ) }}"  >
+          {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_edit') %}
           <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
+          {% endif %}
         </form>
         </td>
         <td>

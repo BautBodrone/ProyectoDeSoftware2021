@@ -2,6 +2,8 @@ from flask import flash, redirect, render_template, request, url_for, session, a
 
 from app.models.user import User
 from app.helpers.auth import authenticated
+from app.helpers.user_helper import has_permit
+from app.helpers import configurator
 
 # Protected resources
 def index():
@@ -17,10 +19,12 @@ def index():
         return render_template("home.html")
 
     page = request.args.get('page',1, type=int)
-    users = User.query.paginate(page=page,per_page=pagConf)
+    page_config = configurator.settings().get_rows_per_page()
+    users = User.query.paginate(page=page,per_page=page_config)
 
 
     return render_template("user/index.html", users=users)
+
 
 def new():
     """
@@ -30,7 +34,12 @@ def new():
     if not authenticated(session):
         abort(401)
 
+    if not has_permit("user_new"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
+
     return render_template("user/new.html")
+
 
 def create():
     """
@@ -39,6 +48,10 @@ def create():
 
     if not authenticated(session):
         abort(401)
+
+    if not has_permit("user_create"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
 
     new_user = User(**request.form)
     try:
@@ -57,6 +70,10 @@ def delete():
     if not authenticated(session):
         abort(401)
 
+    if not has_permit("user_delete"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
+
     user = User.search_user(request.form["user_id"])
     user.delete()
     flash("Se elimino con exito")
@@ -69,6 +86,10 @@ def edit(user_id):
     """
     if not authenticated(session):
         abort(401)
+
+    if not has_permit("user_edit"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
 
     user = User.search_user(user_id)
     
@@ -114,18 +135,19 @@ def filtro():
     """
         El metodo hara un filtro de los usuarios dependiendo de los datos ingresados 
     """
+    page_config = configurator.settings().get_rows_per_page()
     page = request.args.get('page',1, type=int)
     data = request.form
     activo = data["activo"]
     first_name = data["first_name"]
     if (activo != "" and first_name!= ""):
-      users=User.query.filter_by(activo=activo,first_name=first_name).paginate(page=page,per_page=pagConf)
+      users=User.query.filter_by(activo=activo,first_name=first_name).paginate(page=page,per_page=page_config)
     else:
         if (activo == "" and first_name != ""):
-            users=User.query.filter_by(first_name=first_name).paginate(page=page,per_page=pagConf)
+            users=User.query.filter_by(first_name=first_name).paginate(page=page,per_page=page_config)
         else:
             if(activo !="" and first_name==""):
-                users=User.query.filter_by(activo=activo).paginate(page=page,per_page=pagConf)
+                users=User.query.filter_by(activo=activo).paginate(page=page,per_page=page_config)
             else:
-                 users=User.query.paginate(page=page,per_page=pagConf)
+                users=User.query.paginate(page=page,per_page=page_config)
     return render_template("user/index.html", users=users )

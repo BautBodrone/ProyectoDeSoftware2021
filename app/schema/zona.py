@@ -5,7 +5,7 @@ class ZonaSchema(object):
         if many:
             return cls._serialize_collection(obj)
         else:
-            return cls._serialize(obj)
+            return cls._serialize(obj,True)
         
     @classmethod
     def _serialize_collection(cls, collection):
@@ -16,10 +16,10 @@ class ZonaSchema(object):
         }
         
     @classmethod
-    def _serialize(cls, obj):
+    def _serialize(cls, obj, oneObj=False):
         dict = {}
         for attr in obj.__table__.columns:
-            if getattr(obj,"estado") == "publicado":
+            if getattr(obj,"estado") == "publicado" or oneObj:
                 print( "=============================")
                 print(attr.name)
                 if attr.name == "coordenadas":

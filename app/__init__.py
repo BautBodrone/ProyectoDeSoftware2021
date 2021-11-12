@@ -11,7 +11,7 @@ from config import config
 from app import db
 from app.resources import user, auth, rol , configuration, punto, zona, home, permiso, denuncia, seguimiento, recorrido
 from app.resources.api.zona import zonas_api
-from app.resources.api.denuncias import denuncias_api
+from app.resources.api.denuncia import denuncias_api
 from app.helpers import handler, user_helper, configurator
 
 from app.models.punto import Punto

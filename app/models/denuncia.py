@@ -37,11 +37,12 @@ class Denuncia(db.Model):
     nombreD = Column(String(30))
     telefono = Column(String(30))
     emailD = Column(String(30))
-    #asignadoA = relationship('User' , back_populates="denuncias")
+    asignadoA = Column(Integer, ForeignKey('users.id'))
+
     
     def __init__(self , titulo=None,categoria=None,descripcion=None,
                     coordenadas=None,fechaC=None,fechaF=None,estado=None,apellidoD=None 
-                        ,nombreD=None,telefono=None ,emailD=None):
+                    ,nombreD=None,telefono=None ,emailD=None,asignadoA=None):
         self.titulo = titulo
         self.categoria = categoria
         self.descripcion = descripcion
@@ -52,6 +53,7 @@ class Denuncia(db.Model):
         self.nombreD = nombreD
         self.telefono = telefono
         self.emailD = emailD
+        self.asignadoA=asignadoA
 
     def delete(self):
         db.session.delete(self)

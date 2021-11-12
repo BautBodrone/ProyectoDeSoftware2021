@@ -53,6 +53,18 @@
         <input name="emailD" placeholder="emailD"/>
       </p>
     <p>
+      <label>Usuario Encargado : <label></br>
+      <select class="selectpicker" name="asignadoA" id="asignadoA">
+        {% for user in users %}
+          {% for rol in user.rols %}
+            {% if rol.nombre != None %}
+              <option value={{user.id}}>{{user.first_name}}</option>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </select>
+      </p>
+    <p>
       <input type="submit" value="Crear">
       <button type="reset">Limpiar</button>
     </p>

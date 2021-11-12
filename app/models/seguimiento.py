@@ -10,8 +10,8 @@ class Seguimiento(db.Model):
 
     __tablename__ = "seguimientos" 
     id = Column(Integer, primary_key=True)
-    #denuncia = relationship("Denuncia", back_populates="seguimientos")
-    #user = relationship("User", back_populates="seguimientos")
+    #denuncia = relationship("Denuncia")
+    #user = relationship("User")
     fechaC = Column(Date)
     descripcion = Column(String(30))
 

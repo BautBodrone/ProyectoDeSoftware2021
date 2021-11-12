@@ -122,5 +122,5 @@ def filtro():
         else:
             if (fechaC == "" and fechaF !="" ):  
                 denuncias=denuncias.query.filter(Denuncia.fechaF <= fechaF).paginate(page=page,per_page=pagConf)
-    return render_template("denuncia/index.html", denuncias=denuncias )
+    return render_template("denuncia/index.html", denuncias=denuncias , titulo=titulo )
 

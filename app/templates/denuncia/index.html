@@ -7,7 +7,7 @@
 <h1>Denuncias</h1>
 <form action="{{ url_for('denuncia_filtro') }}" method="POST">
   <h3>Filtrar</h3> 
-      <input name="titulo" placeholder="Titulo"/>
+      <input name="titulo" placeholder="Titulo" value="{{titulo}}"/>
       <select  name="estado">
         <option value="" selected>Seleccione un estado</option>
         <option value="sinConfirmar">Sin Confirmar</option>
@@ -35,6 +35,7 @@
       <th>  Nombre denunciante  </th>
       <th>  telefono del denunciante  </th>
       <th>  Email denunciante  </th>
+      <th>  Asignado A  </th>
   </tr>
   {% for denuncia in denuncias.items %}
   <tr>
@@ -53,6 +54,7 @@
     <td>{{ denuncia.nombreD }}</td>
     <td>{{ denuncia.telefono }}</td>
     <td>{{ denuncia.emailD }}</td>
+    <td>{{ denuncia.asignadoA}}</td>
     <td>
       <form action="">
         <button type="submit" class="btn btn-info mt-2 ml-2">Seguimientos</button>

@@ -5,9 +5,22 @@
 {% endblock %}
 {% block content %}
 <h1>Seguimientos para denuncia {{denuncia_id}}</h1>
-{% for seguimiento in seguimientos.items %}
-    <li>{{ seguimiento.user}} - {{ seguimiento.fechaC }} - {{ seguimiento.descripcion }}</li>
-{% endfor %}
+<table>
+  <tr>
+      <th>  User id  </th>
+      <th>  Fecha de Creacion  </th>
+      <th>  Descripcion  </th>
+  </tr>
+  {% for seguimiento in seguimientos.items %}
+  <tr>
+    <td>{{ seguimiento.user }}</td>
+    <td>{{ seguimiento.fechaC }}</td>
+    <td>{{ seguimiento.descripcion }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+
 <a href="{{ url_for('denuncia_index') }}" class="link">Volver</a>
 <form action="{{ url_for('seguimiento_new')}}">
   <button type="submit" class="btn btn-info mt-2 ml-2">Nuevo</button>

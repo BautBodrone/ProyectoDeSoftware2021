@@ -10,8 +10,8 @@ class Seguimiento(db.Model):
 
     __tablename__ = "seguimientos" 
     id = Column(Integer, primary_key=True)
-    user = Column(Integer, ForeignKey('users.id'))
-    denuncia = Column(Integer, ForeignKey('denuncias.id'))
+    user = Column(Integer)
+    denuncia = Column(Integer)
     fechaC = Column(Date)
     descripcion = Column(String(80))
 
@@ -27,11 +27,4 @@ class Seguimiento(db.Model):
     @classmethod 
     def save(self, new_seguimiento):
         db.session.add(new_seguimiento)
-        db.session.commit()
-
-    def edit(self,data):
-        if self.titulo != data["titulo"]:
-            self.titulo = data["titulo"]
-        if self.descripcion != data["descripcion"]:
-            self.descripcion = data["descripcion"]
         db.session.commit()

@@ -27,11 +27,11 @@
     <input type="hidden" class="form-control"  id="id" name="id" value="{{recorrido.id}}">
     <p>
       <label>Nombre<label>
-      <input name="nombre" placeholder="Nombre" value="{{ recorrido.nombre}}" required/>
+      <input name="nombre" placeholder="{{ recorrido.nombre}}" value="{{ recorrido.nombre}}" required/>
     </p>
     <p>
       <label>Descripcion<label>
-      <input  type="text" name="descripcion" value="{{ recorrido.descripcion }}"required/>
+      <input  type="text" name="{{ recorrido.descripcion }}" value="{{ recorrido.descripcion }}"required/>
     </p>
     <p>
       <label for="estado">Estado:</label>

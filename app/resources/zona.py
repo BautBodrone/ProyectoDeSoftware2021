@@ -7,6 +7,9 @@ from app.models.zona import Zona
 from app.helpers import configurator
 
 def index():
+    """
+        El metodo mostrara todos las zonas en una tabla
+    """
 
     page = request.args.get('page',1, type=int)
     page_config = configurator.settings().get_rows_per_page()
@@ -15,10 +18,16 @@ def index():
     return render_template("zona/index.html", zonas=zonas)
 
 def new():
+    """
+        El metodo ,si esta autenticado,saltara a una nueva pagina para crear una zona
+    """
     zonas = Zona.query.all()
     return render_template("zona/new.html", zonas=zonas)
 
 def create():
+    """
+        El metodo ,si esta autenticado, creara una nueva zona
+    """
     req = request.form
     new_zona = Zona(nombre=req["nombre"],estado=req["estado"],
     color=req["color"],coordenadas=req.getlist("coordenadas"))
@@ -32,6 +41,9 @@ def create():
     return redirect(url_for("zona_index"))
 
 def edit(id):
+    """
+        El metodo ,si esta autenticado, saltara a una nueva pagina para editar una zona
+    """
     if not authenticated(session):
         abort(401)
 
@@ -44,6 +56,9 @@ def edit(id):
 
 
 def update():
+    """
+        El metodo , si esta autentiticado, podra cambiar los datos de una zona
+    """
     data = request.form
     zona = Zona.search_id(data["id"])
     try:
@@ -55,12 +70,15 @@ def update():
     return redirect(url_for("zona_index"))
 
 def delete():
+    """
+        El metodo ,si esta autenticado, eliminara a la zona
+    """
     if not authenticated(session):
         abort(401)
 
-    # if not has_permit("zona_delete"):
-    #     flash("No cuenta con los permisos necesarios")
-    #     return redirect(request.referrer)
+    if not has_permit("zona_delete"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
 
     zona = Zona.search_id(request.form["zona_id"])
     zona.delete()

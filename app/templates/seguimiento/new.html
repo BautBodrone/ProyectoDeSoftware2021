@@ -4,7 +4,7 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-  <h1>Crear Seguimiento para {{seguimiento.denuncia.titulo}}</h1>
+  <h1>Crear Seguimiento </h1>
   <form action="{{ url_for('seguimiento_create') }}" method="POST">
     <p>
       <label>Descripcion <label></br>
@@ -12,7 +12,7 @@
     </p>
     <p>
     <label> Usuario Encargado:  <label>
-    <select class="selectpicker" name="asignadoA_id" id="asignadoA_id">
+    <select class="selectpicker" name="user" id="user">
     {% for user in users %}
         {% for rol in user.rols %}
         {% if rol.nombre != None %}
@@ -27,5 +27,5 @@
       <button type="reset">Limpiar</button>
     </p>
   </form>
-  <a href="{{ url_for('seguimiento_index') }}" class="link">Volver</a>
+  <button onclick="history.back()" class="btn btn-info mt-2 ml-2">Volver</button>
 {% endblock %}

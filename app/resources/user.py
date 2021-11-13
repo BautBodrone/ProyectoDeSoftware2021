@@ -49,16 +49,16 @@ def create():
     if not authenticated(session):
         abort(401)
 
-    if not has_permit("user_create"):
+    if not has_permit("user_new"):
         flash("No cuenta con los permisos necesarios")
         return redirect(request.referrer)
 
     new_user = User(**request.form)
-    try:
-        User.save(new_user)
-    except:
-        flash("Usuario con ese nombre o email ya existe", "error")
-        return redirect(request.referrer)
+    # try:
+    User.save(new_user)
+    # except:
+    #     flash("Usuario con ese nombre o email ya existe", "error")
+    #     return redirect(request.referrer)
     
     return redirect(url_for("user_index"))
 

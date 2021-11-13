@@ -13,7 +13,6 @@ def index():
     """
         El metodo mostrara todos las denuncias en una tabla
     """
-
     if not authenticated(session):
         abort(401)
 
@@ -25,9 +24,9 @@ def index():
 
 def new():
 
-
     if not authenticated(session):
         abort(401)
+
     users = User.query.all()
     return render_template("denuncia/new.html", users=users)
 
@@ -36,9 +35,6 @@ def create():
         El metodo ,si esta autenticado, creara una nueva denuncia
     """
 
-    if not authenticated(session):
-        abort(401)
-    print(request.form)
     new_denuncia = Denuncia(**request.form)
     
     try:
@@ -51,7 +47,7 @@ def create():
 
 def delete():
     """
-        El metodo ,si esta autenticado, eliminara al usuario seleccionado
+        El metodo ,si esta autenticado, eliminara la denuncia seleccionada
     """
 
     if not authenticated(session):
@@ -65,7 +61,7 @@ def delete():
 
 def edit(denuncia_id):
     """
-        El metodo ,si esta autenticado, saltara a una nueva pagina para editar un usuario
+        El metodo ,si esta autenticado, saltara a una nueva pagina para editar una denuncia
     """
     if not authenticated(session):
         abort(401)
@@ -92,7 +88,7 @@ def edit_finish():
 
 def filtro():
     """
-        El metodo hara un filtro de los usuarios dependiendo de los datos ingresados 
+        El metodo hara un filtro de las denuncias dependiendo de los datos ingresados 
     """
     pagConf = configurator.settings().get_rows_per_page()
     page = request.args.get('page',1, type=int)

@@ -7,7 +7,10 @@ from app.models.recorrido import Recorrido
 from app.helpers import configurator
 
 def index():
-
+    """
+        Busca de confi la cantidad de paginas y cantidad de elementos que debe mostrar
+        Luego metodo mostrara todos los recorridos en una tabla
+    """
     page = request.args.get('page',1, type=int)
     page_config = configurator.settings().get_rows_per_page()
     recorridos = Recorrido.query.paginate(page=page,per_page=page_config)
@@ -15,10 +18,16 @@ def index():
     return render_template("recorrido/index.html", recorridos=recorridos)
 
 def new():
+    """
+        El metodo ,si esta autenticado,saltara a una nueva pagina para crear un recorrido
+    """
     recorridos = Recorrido.query.all()
     return render_template("recorrido/new.html", recorridos=recorridos)
 
 def create():
+    """
+        El metodo ,si esta autenticado, creara un nuevo recorrido
+    """
     req = request.form
     new_recorrido = Recorrido(nombre=req["nombre"],estado=req["estado"],
     descripcion=req["descripcion"],coordenadas=req.getlist("coordenadas"))
@@ -26,12 +35,16 @@ def create():
     try:
         Recorrido.save(new_recorrido)
     except:
-        flash("error", "error")
+        flash("Ya existe otro recorrido con ese nombre", "error")
         return redirect(request.referrer)
 
     return redirect(url_for("recorrido_index"))
 
 def edit(id):
+    """
+        El metodo ,si esta autenticado, saltara a una nueva pagina para editar un recorrido
+        Se busca el objeto por id para podes poner los placeholders con sus
+    """
     if not authenticated(session):
         abort(401)
 
@@ -44,23 +57,31 @@ def edit(id):
 
 
 def update():
+    """
+        El metodo , si esta autentiticado, podra cambiar los datos de un recorrido
+    """
+    
     data = request.form
     recorrido = Recorrido.search_id(data["id"])
     try:
         recorrido.update(data)
     except:
-        flash("error")
+        flash("Ya existe otro recorrido con ese nombre")
         return redirect(request.referrer)
     flash("Se edito con exito", "success")
     return redirect(url_for("recorrido_index"))
 
 def delete():
+    """
+        El metodo ,si esta autenticado, eliminara al recorrido seleccionado
+        por interfaz
+    """
     if not authenticated(session):
         abort(401)
 
-    # if not has_permit("recorrido_delete"):
-    #     flash("No cuenta con los permisos necesarios")
-    #     return redirect(request.referrer)
+    if not has_permit("recorrido_delete"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
 
     recorrido = Recorrido.search_id(request.form["recorrido_id"])
     recorrido.delete()

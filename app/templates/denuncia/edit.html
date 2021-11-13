@@ -23,12 +23,11 @@
 {% block content %}
   <h1>Editar una Denuncia</h1>
   <form id="form-map" class="one-mark" action="{{ url_for('denuncia_edit_finish') }}" method="POST">
-    <input class="punto-lat" type="hidden" >
-    <input class="punto-lng" type="hidden" >
+    <input class="punto-lat" name="lat" type="hidden" >
+    <input class="punto-lng" name="lng" type="hidden" >
     <div class="map-container">
       <div id="mapid" class="mapform" ></div>
     </div>
-
     <div class="form-group">
       <input type="hidden" class="form-control"  id="id" name="id" value="{{denuncia.id}}">
     </div>
@@ -50,7 +49,6 @@
       <label>Descripcion<label></br>
       <input name="descripcion" placeholder="{{denuncia.descripcion}}" value="{{denuncia.descripcion}}"/>
     </p>
-
     <p>
       <label for="estado">Estado:</label>
           <select id="estado" name="estado">
@@ -60,7 +58,6 @@
             <option value="cerrada">Cerrada</option>
           </select>
     </p>     
-
     <p>
       <label>Fecha Comienzo<label></br>
       <input type="date" name="fechaC" placeholder="{{denuncia.fechaC}}" value="{{denuncia.fechaC}}" />

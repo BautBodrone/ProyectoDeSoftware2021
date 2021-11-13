@@ -91,8 +91,11 @@ class Denuncia(db.Model):
         if self.descripcion != data["descripcion"]:
             self.descripcion = data["descripcion"]
 
-        if self.coordenadas != data["coordenadas"]:
-            self.coordenadas = data["coordenadas"]
+        if self.lat != data["lat"]:
+            self.lat = data["lat"]
+
+        if self.lng != data["lng"]:
+            self.lng = data["lng"]
 
         if self.estado != data["estado"]:
             self.estado = data["estado"]

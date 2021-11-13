@@ -32,7 +32,7 @@ def new():
 
 def create():
     """
-        El metodo ,si esta autenticado, creara una nueva denuncia
+        El metodo ,si esta autenticado, creara un nuevo seguimiento
     """
 
     if not authenticated(session):
@@ -53,7 +53,7 @@ def create():
 
 def delete():
     """
-        El metodo ,si esta autenticado, eliminara al usuario seleccionado
+        El metodo ,si esta autenticado, eliminara el seguimiento
     """
 
     if not authenticated(session):

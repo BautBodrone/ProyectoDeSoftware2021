@@ -23,7 +23,18 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-
+<form  class="tabla" action="{{ url_for('zona_filtro') }}" method="POST">
+  <h3>Filtrar</h3> 
+        <input name="nombre" placeholder="Nombre"/>  
+        <select  name="estado">
+          <option value="" selected>Seleccione un estado</option>
+          <option value="publicado">Publicado</option>
+          <option value="despublicado">Despublicado</option>
+        </select>
+        <input type="submit" value="Filtrar">
+  </form>
+  <br>
+  
 <table>
   <tr>
       <th>  Nombre  </th>

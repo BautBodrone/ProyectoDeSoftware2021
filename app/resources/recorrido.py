@@ -53,7 +53,6 @@ def edit(id):
         return redirect(request.referrer)
     
     recorrido = Recorrido.query.filter_by(id=int(id)).first()
-    print("++++++++++++++++++++++++++++++++++++++++++++++++s")
     return render_template("recorrido/edit.html", recorrido=recorrido)
 
 
@@ -64,9 +63,6 @@ def update():
     
     data = request.form
     recorrido = Recorrido.search_id(data["id"])
-    print("+++++++++++++++++++++++++++++++++++++++++++s+++++s")
-    print(data)
-    print("+++++++++++++++++++++++++++++++++++++++++++s+++++s")
     try:
         recorrido.update(data)
     except:

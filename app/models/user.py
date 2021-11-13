@@ -1,6 +1,10 @@
 from sqlalchemy import Column, Integer, String, Boolean
 from app.db import db
 from sqlalchemy.orm import relationship
+from werkzeug.security import generate_password_hash, check_password_hash
+
+from app.models.rol import Rol
+
 
 user_rol = db.Table("users_rols",db.Column("users_id",db.ForeignKey("users.id")),db.Column("rols_id",db.ForeignKey("rols.id")))
 
@@ -23,6 +27,8 @@ class User(db.Model):
         self.email = email
         self.password = password
         self.activo = True
+        self.rols.append(Rol.search("operador"))
+        
 
     @classmethod
     def get_email(self):

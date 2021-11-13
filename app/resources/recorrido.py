@@ -35,7 +35,7 @@ def create():
     try:
         Recorrido.save(new_recorrido)
     except:
-        flash("error", "error")
+        flash("Ya existe otro recorrido con ese nombre", "error")
         return redirect(request.referrer)
 
     return redirect(url_for("recorrido_index"))
@@ -43,7 +43,7 @@ def create():
 def edit(id):
     """
         El metodo ,si esta autenticado, saltara a una nueva pagina para editar un recorrido
-        Se busca el objeto por id para podes poner los placeholders con sus valores
+        Se busca el objeto por id para podes poner los placeholders con sus
     """
     if not authenticated(session):
         abort(401)
@@ -53,6 +53,7 @@ def edit(id):
         return redirect(request.referrer)
     
     recorrido = Recorrido.query.filter_by(id=int(id)).first()
+    print("++++++++++++++++++++++++++++++++++++++++++++++++s")
     return render_template("recorrido/edit.html", recorrido=recorrido)
 
 
@@ -60,12 +61,16 @@ def update():
     """
         El metodo , si esta autentiticado, podra cambiar los datos de un recorrido
     """
+    
     data = request.form
     recorrido = Recorrido.search_id(data["id"])
+    print("+++++++++++++++++++++++++++++++++++++++++++s+++++s")
+    print(data)
+    print("+++++++++++++++++++++++++++++++++++++++++++s+++++s")
     try:
         recorrido.update(data)
     except:
-        flash("error")
+        flash("Ya existe otro recorrido con ese nombre")
         return redirect(request.referrer)
     flash("Se edito con exito", "success")
     return redirect(url_for("recorrido_index"))

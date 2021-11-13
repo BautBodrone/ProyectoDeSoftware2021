@@ -46,6 +46,7 @@
       <th>  telefono del denunciante  </th>
       <th>  Email denunciante  </th>
       <th>  Asignado A  </th>
+      <th>  Acciones  </th>
   </tr>
   {% for denuncia in denuncias.items %}
   <tr>
@@ -66,21 +67,21 @@
     <td>{{ denuncia.emailD }}</td>
     <td>{{ denuncia.asignadoA}}</td>
     <td>
-      <form action="">
+      <form action="{{ url_for('seguimiento_index', denuncia_id = denuncia.asignadoA ) }}">
         <button type="submit" class="btn btn-info mt-2 ml-2">Seguimientos</button>
       </form>
+      <form action="{{ url_for('denuncia_edit', denuncia_id = denuncia.id ) }}">
       {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'denuncia_edit') %}
-      <form action="{{ url_for('denuncia_edit', denuncia_id = denuncia.id ) }}"  >
         <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
-      </form>
       {% endif %}
+      </form>
       <br>
-      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'denuncia_delete') %}
       <form action="{{ url_for('denuncia_delete') }}" method="POST" enctype="multipart/form-data">
+      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'denuncia_delete') %}
         <input type="hidden" id="denuncia_id" name="denuncia_id" value="{{denuncia.id}}">
        <button onclick="return confirm('Estas seguro de que deseas eliminar esta denuncia?');" class="btn btn-danger mt-2 ml-2">eliminar</a>
-      </form>
       {% endif %}
+      </form>
     </td>
   </tr>
   {% endfor %}

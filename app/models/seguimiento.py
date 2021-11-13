@@ -10,17 +10,15 @@ class Seguimiento(db.Model):
 
     __tablename__ = "seguimientos" 
     id = Column(Integer, primary_key=True)
-    #denuncia = relationship("Denuncia")
-    #user = relationship("User")
+    user = Column(Integer, ForeignKey('users.id'))
+    denuncia = Column(Integer, ForeignKey('denuncias.id'))
     fechaC = Column(Date)
-    descripcion = Column(String(30))
+    descripcion = Column(String(80))
 
-    def __init__(self , titulo=None,descripcion=None,user=None,denuncia=None):
-        self.titulo = titulo
+    def __init__(self ,descripcion=None,user=None):
         self.descripcion = descripcion
         self.fechaC =  datetime.date.today()
         self.user =user
-        self.denuncia =denuncia
     
     def delete(self):
         db.session.delete(self)

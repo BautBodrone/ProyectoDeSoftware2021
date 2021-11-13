@@ -1,6 +1,4 @@
 from flask import flash, redirect, render_template, request, url_for, session, abort
-from app.models import denuncia
-from app.models import seguimiento
 
 from app.models.seguimiento import Seguimiento
 from app.helpers.auth import authenticated
@@ -9,23 +7,27 @@ from app.models.user import User
 
 pagConf=4
 
-def index():
-    """
-        El metodo mostrara todos las denuncias en una tabla
-    """
+def denuncia(unaDenuncia):
+    denuncia=unaDenuncia
+
+
+def index(denuncia_id):
 
     if not authenticated(session):
         abort(401)
 
-    return render_template("seguimiento/index.html")
+    seguimientos= Seguimiento.query.filter_by(denuncia=denuncia_id)
+    denuncia(denuncia_id)
 
-def new(denuncia):
+    return render_template("seguimiento/index.html",seguimientos=seguimientos,denuncia_id=denuncia_id)
+
+def new():
 
 
     if not authenticated(session):
         abort(401)
     users = User.query.all()
-    return render_template("Seguimiento/new.html", users=users,denuncia=denuncia)
+    return render_template("Seguimiento/new.html", users=users)
 
 def create():
     """
@@ -36,13 +38,17 @@ def create():
         abort(401)
 
     new_seguimiento = Seguimiento(**request.form)
+    new_seguimiento.denuncia= denuncia
     try:
         Seguimiento.save(new_seguimiento)
     except:
-        flash("Denuncia con ese titulo o coordenadas ya existe", "error")
+        flash("Fallo al cargar el seguimiento", "error")
         return redirect(request.referrer)
-    
-    return redirect(url_for("seguimiento_index"))
+
+    seguimientos= Seguimiento.query.filter_by(denuncia=denuncia)
+
+    return render_template("seguimiento/index.html",seguimientos=seguimientos,denuncia_id=denuncia)
+
 
 def delete():
     """

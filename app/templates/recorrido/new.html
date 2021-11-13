@@ -33,23 +33,6 @@
 {% else %}
   <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
 {% endif %}
-{% block navbar %}
-
-<a href="/" class="navbar" id="home" >Inicio</a>
-{% if is_authenticated(session) %}
-<a href="{{ url_for('recorrido_index') }}" class="navbar active">Zona</a>
-<a href="{{ url_for('punto_index') }}" class="navbar">Puntos de Encuentro</a>
-<a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
-{% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
-  <a href="{{ url_for('rol_index') }}" class="navbar">Roles</a>
-  <a href="{{ url_for('user_index') }}" class="navbar">Usuarios</a>
-{% endif %}
-<a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
-{% else %}
-<a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
-{% endif %}
-
-{% endblock %}
 {% block content %}
   <form id="form-map" action="{{ url_for('recorrido_create') }}" method="POST">
       <input type="hidden" class="coordenadas" name="coordenadas" id="coordenadas">

@@ -1,6 +1,9 @@
 Acceso a la aplicación: https://admin-grupo33.proyecto2021.linti.unlp.edu.ar/
+
 Credenciales:
+
     Administrador: admin   Contraseña:123123
+    
     Operario: matias@gmail.com Contraseña: 54321
 
 Grupo 33

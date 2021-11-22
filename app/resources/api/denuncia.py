@@ -15,11 +15,12 @@ denuncias_api = Blueprint("denuncias", __name__, url_prefix="/denuncias")
 @denuncias_api.post("")
 def create():
     try:
-        denuncia = Denuncia(**DenunciaSchema.post_format(request.get_json()))
+        denuncia_aux = DenunciaSchema.post_format(request.get_json())
+        denuncia = Denuncia(**denuncia_aux)
         db.session.add(denuncia)
         try:
             db.session.commit()
-            return jsonify(denuncia)
+            return jsonify(denuncia_aux)
         except exc.IntegrityError:
             return handler.server_error("error")
     except:

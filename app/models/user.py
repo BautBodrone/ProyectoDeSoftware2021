@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Boolean, Text
 from app.db import db
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -17,7 +17,8 @@ class User(db.Model):
     first_name = Column(String(30),nullable=False)
     last_name = Column(String(30),nullable=False)
     email = Column(String(30),unique=True,nullable=False)
-    password = Column(String(30),nullable=False)
+    username = Column(String(30),unique=True,nullable=False)
+    password = Column(Text,nullable=False)
     activo = Column(Boolean)
     denuncias = relationship('Denuncia', backref='author', lazy='dynamic',primaryjoin="User.id == Denuncia.asignadoA")
 
@@ -25,7 +26,7 @@ class User(db.Model):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
-        self.password = password
+        self.password = generate_password_hash(password)
         self.activo = True
         self.rols.append(Rol.search("operador"))
         
@@ -40,7 +41,15 @@ class User(db.Model):
             Revisa en la base de datos para saber si se ingreso correctamente el email y la pass
             al logear
         """
-        return self.query.filter(User.email==params["email"] and User.password==params["password"]).first()
+        aux=self.query.filter(User.email==params["email"]).first()
+        try:
+            if check_password_hash(aux.password,params["password"]):
+                return aux
+            else:
+                return None
+        except AttributeError:
+            return None
+        #return (self.query.filter(User.email==params["email"], check_password_hash(User.password,params["password"])).first())
 
     @classmethod
     def check_permiso(self, email, permiso):

@@ -23,7 +23,10 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-<form  class="tabla" action="{{ url_for('zona_filtro') }}" method="POST">
+{% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_new') %}
+  <a href="{{ url_for('recorrido_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
+{% endif %}}
+<form  class="tabla" action="{{ url_for('recorrido_filtro') }}" method="POST">
   <h3>Filtrar</h3> 
         <input name="nombre" placeholder="Nombre"/>  
         <select  name="estado">
@@ -41,9 +44,8 @@
       <th>  Descripcion  </th>
       <th>  Estado   </th>
       <th>Coordenadas</th>
-      <th>  Editar  </th>
       {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_delete') %}
-      <th>  Eliminar  </th>
+      <th>  Acciones  </th>
       {% endif %}
   </tr>
 {% for recorrido in recorridos.items %}
@@ -51,7 +53,10 @@
     <td>{{ recorrido.nombre }}</td>
     <td>{{ recorrido.descripcion }} </td>
     <td>{{ recorrido.estado }} </td>
-    <td>{{ recorrido.coordenadas }} </td>
+    <td>
+      <iframe  src="{{  url_for('recorrido_show_map', id = recorrido.id ) }}" loading="lazy" name="map" style="width: 100%;height:8rem;">
+      </iframe> 
+    </td>
 
     <td>
       <form action="{{  url_for('recorrido_edit', id = recorrido.id ) }}"  >
@@ -59,10 +64,6 @@
         <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
         {% endif %}
       </form>
-      </td>
-    
-    
-      <td>
       {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_delete') %}
       <form action="{{ url_for('recorrido_delete') }}" method="POST" enctype="multipart/form-data">
         <input type="hidden" id="recorrido_id" name="recorrido_id" value="{{recorrido.id}}">
@@ -76,18 +77,6 @@
 
 
 </br>
-  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_new') %}
-  <a href="{{ url_for('recorrido_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
-  {% endif %}
-  <div class="map-container">
-    {% for recorrido in recorridos.items %}
-      <input id="{{ recorrido }}" class="recorridos" type="hidden" value="{{ recorrido.coordenadas }}" >
-      <input id="{{ recorrido }}" class="recorridos-nombre" type="hidden" value="{{ recorrido.nombre }}" >
-    {% endfor %}
-    <div id="mapid" class="mapform"></div>
-  </div>
-
-
   {% if recorridos.has_prev %}
   <a class="link" href="{{ url_for('recorrido_index', page_num=recorridos.prev_num,) }}">Anterior</a>
   {% endif %}

@@ -24,6 +24,13 @@ def new():
     """
     return render_template("zona/new.html")
 
+def show_map(id):
+    """
+         muestra el mapa dibujando la zona del id
+    """
+    zona = Zona.query.filter_by(id=int(id)).first()
+    return render_template("zona/map.html",zona=zona)
+
 def save_csv():
     """
         Este metodo carga el archivo csv, seteando por defecto "despublicado", 

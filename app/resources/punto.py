@@ -19,6 +19,13 @@ def index():
 
     return render_template("punto/index.html", puntos=puntos)
 
+def show_map(id):
+    """
+        muestra el mapa dibujando el punto del id    
+    """
+    punto = Punto.query.filter_by(id=int(id)).first()
+    return render_template("punto/map.html",punto=punto)
+
 
 def new():
     if not authenticated(session):

@@ -24,6 +24,13 @@ def new():
     recorridos = Recorrido.query.all()
     return render_template("recorrido/new.html", recorridos=recorridos)
 
+def show_map(id):
+    """
+        muestra el mapa dibujando el recorrido del id    
+    """
+    recorrido = Recorrido.query.filter_by(id=int(id)).first()
+    return render_template("recorrido/map.html",recorrido=recorrido)
+
 def create():
     """
         El metodo ,si esta autenticado, creara un nuevo recorrido

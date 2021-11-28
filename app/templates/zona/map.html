@@ -3,6 +3,7 @@
 <html lang="es">
 <head>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
+  <script type="module" src="/static/js/map.js" ></script>
   
   <link rel="icon" href="/static/imgs/logo.png" type="image/x-icon" > 
   <title> {{ zona.nombre }}</title>
@@ -20,40 +21,6 @@
     <input id="{{ zona }}" class="zonas-colores" type="hidden" value="{{ zona.color }}" >
     <input id="{{ zona }}" class="zonas-nombre" type="hidden" value="{{ zona.nombre }}" >
     <div id="mapid" class="map-table"></div>
-    <script type="text/javascript">
-        const initialLat = -34.9186;
-        const initialLng = -57.956;
-        const mapLayerUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-        
-        class Map {
-          constructor({ selector }) {
-              this.initializeMap(selector);
-          };
-          initializeMap(selector) {
-              this.map = L.map(selector).setView([initialLat, initialLng], 13);
-              L.tileLayer(mapLayerUrl).addTo(this.map);
-          };
-          addZone(zona, color, nombre){
-            var polygon = L.polygon(
-                zona, {color:color}
-            ).addTo(this.map).bindPopup(nombre);
-            this.map.fitBounds(polygon.getBounds());;
-         };
-        }
-        window.onload = () => {
-          const map = new Map({
-            selector: 'mapid'
-        });
-        var coordenadas = '{{zona.coordenadas}}'.split(",");
-        var zona = [];
-        for (var j = 0; j < coordenadas.length; j=j+2) {
-            var coordenada = [];
-            coordenada.push(coordenadas[j],coordenadas[j+1]);
-            zona.push(coordenada);
-        }
-        map.addZone(zona,'{{ zona.color }}','{{ zona.nombre }}');
-        }
-    </script>
   </div>
 </body>
 </html>

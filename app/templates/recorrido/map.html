@@ -3,6 +3,7 @@
 <html lang="es">
 <head>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
+  <script type="module" src="/static/js/map.js" ></script>
   
   <link rel="icon" href="/static/imgs/logo.png" type="image/x-icon" > 
   <title> {{ recorrido.nombre }}</title>
@@ -20,40 +21,6 @@
     <input id="{{ recorrido }}" class="recorridos-colores" type="hidden" value="{{ recorrido.color }}" >
     <input id="{{ recorrido }}" class="recorridos-nombre" type="hidden" value="{{ recorrido.nombre }}" >
     <div id="mapid" class="map-table"></div>
-    <script type="text/javascript">
-        const initialLat = -34.9186;
-        const initialLng = -57.956;
-        const mapLayerUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-        
-        class Map {
-          constructor({ selector }) {
-              this.initializeMap(selector);
-          };
-          initializeMap(selector) {
-              this.map = L.map(selector).setView([initialLat, initialLng], 13);
-              L.tileLayer(mapLayerUrl).addTo(this.map);
-          };
-          addZone(recorrido, nombre){
-            var polyline = L.polyline(
-                recorrido, {color: 'green'}
-            ).addTo(this.map).bindPopup(nombre);
-            this.map.fitBounds(polyline.getBounds());;
-         };
-        }
-        window.onload = () => {
-          const map = new Map({
-            selector: 'mapid'
-        });
-        var coordenadas = '{{recorrido.coordenadas}}'.split(",");
-        var recorrido = [];
-        for (var j = 0; j < coordenadas.length; j=j+2) {
-            var coordenada = [];
-            coordenada.push(coordenadas[j],coordenadas[j+1]);
-            recorrido.push(coordenada);
-        }
-        map.addZone(recorrido,'{{ recorrido.nombre }}');
-        }
-    </script>
   </div>
 </body>
 </html>

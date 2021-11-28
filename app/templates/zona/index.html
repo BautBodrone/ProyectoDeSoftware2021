@@ -10,26 +10,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-  <script>
-    const initialLat = -34.9186;
-    const initialLng = -57.956;
-    const mapLayerUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-    class Map {
-        constructor({ selector }) {
-          this.initializeMap(selector);
-      }
-      initializeMap(selector) {
-          this.map = L.map(selector).setView([initialLat, initialLng], 13);
-          L.tileLayer(mapLayerUrl).addTo(this.map);
-      };
-      addZone(zona, color, nombre){
-        let polygon = L.polygon(
-            zona, {color:color}
-        ).addTo(this.map).bindPopup(nombre);
-        this.map.fitBounds(polygon.getBounds());
-      };
-    }
-  </script>
+  
 {% endblock %}
 {% block header %}
   <div>

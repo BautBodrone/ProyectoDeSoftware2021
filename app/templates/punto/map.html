@@ -3,6 +3,7 @@
 <html lang="es">
 <head>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
+  <script type="module" src="/static/js/map.js" ></script>
   
   <link rel="icon" href="/static/imgs/logo.png" type="image/x-icon" > 
   <title> {{ punto.nombre }}</title>
@@ -16,36 +17,10 @@
 </head>
 <body>
   <div class="map-container">
-    <input id="{{ punto }}" class="puntos" type="hidden" value="{{ punto.lat }}" >
-    <input id="{{ punto }}" class="puntos" type="hidden" value="{{ punto.lng }}" >
-    <input id="{{ punto }}" class="puntos-colores" type="hidden" value="{{ punto.color }}" >
-    <input id="{{ punto }}" class="puntos-nombre" type="hidden" value="{{ punto.nombre }}" >
+    <input id="{{ punto }}" class="punto-lat" type="hidden" value="{{ punto.lat }}">
+    <input id="{{ punto }}" class="punto-lng" type="hidden" value="{{ punto.lng }}">
+    <input id="{{ punto }}" class="punto-nombre" type="hidden" value="{{ punto.nombre }}">
     <div id="mapid" class="map-table"></div>
-    <script type="text/javascript">
-        const initialLat = -34.9186;
-        const initialLng = -57.956;
-        const mapLayerUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-        
-        class Map {
-          constructor({ selector }) {
-              this.initializeMap(selector);
-          };
-          initializeMap(selector) {
-              this.map = L.map(selector).setView([initialLat, initialLng], 13);
-              L.tileLayer(mapLayerUrl).addTo(this.map);
-          };
-          addMarker( lat, lng ) {
-            this.marker = L.marker([lat, lng]).addTo(this.map);
-            this.map.setView([lat, lng], 13);
-         };
-        }
-        window.onload = () => {
-          const map = new Map({
-            selector: 'mapid'
-        });
-        map.addMarker('{{ punto.lat }}','{{ punto.lng }}');
-        }
-    </script>
   </div>
 </body>
 </html>

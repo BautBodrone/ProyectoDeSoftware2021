@@ -78,15 +78,17 @@ export class Map {
     }
     
     addLine(linea, nombre){
-        L.polyline(
+        var polyline = L.polyline(
             linea,{color: 'green'}
         ).addTo(this.map).bindPopup(nombre);
+        this.map.fitBounds(polyline.getBounds());
     }
 
     addZone(zona, color, nombre){
-        L.polygon(
+        var polygon = L.polygon(
             zona, {color:color}
         ).addTo(this.map).bindPopup(nombre);
+        this.map.fitBounds(polygon.getBounds());
     }
 
     addOneMarker({ lat, lng }) {

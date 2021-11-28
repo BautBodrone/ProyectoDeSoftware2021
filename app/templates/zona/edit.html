@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Zonas{% endblock %}
+{% block title %}{{zona.nombre}}{% endblock %}
 {% block head %}
   {{ super() }}
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
@@ -16,14 +16,18 @@
 {% block header %}
   <div>
     {{ super() }}
-    <h1 id="header">Edita zona</h1>
+    <h1 id="header">Editar zona</h1>
   </div>
 {% endblock %}
 {% block content %}
 <form id="form-map"  action="{{ url_for('zona_update') }}" method="POST">
     <input id="coordenadas" class="coordenadas" name="coordenadas" type="hidden">
     <div class="map-container">
+      <input id="{{ zona }}" class="zonas" type="hidden" value="{{ zona.coordenadas }}" >
+      <input id="{{ zona }}" class="zonas-colores" type="hidden" value="{{ zona.color }}" >
+      <input id="{{ zona }}" class="zonas-nombre" type="hidden" value="{{ zona.nombre }}" >
       <div id="mapid" class="mapform" ></div>
+      <script></script>
     </div>
     <input type="hidden" class="form-control"  id="id" name="id" value="{{zona.id}}">
     <p>

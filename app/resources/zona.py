@@ -5,6 +5,7 @@ from app.helpers.auth import authenticated
 from app.helpers.user_helper import has_permit
 from app.models.zona import Zona
 from app.helpers import configurator
+import csv
 
 def index():
     """
@@ -21,9 +22,33 @@ def new():
     """
         El metodo ,si esta autenticado,saltara a una nueva pagina para crear una zona
     """
-    zonas = Zona.query.all()
-    return render_template("zona/new.html", zonas=zonas)
+    return render_template("zona/new.html")
 
+def save_csv():
+    """
+        Este metodo carga el archivo csv, seteando por defecto "despublicado", 
+        formateando las coordenadas a csv sin caracteres especiales.
+    """
+    if request.files:
+        uploaded_file = request.files['csv']
+        if '.csv' in uploaded_file.filename:  
+            if uploaded_file.filename != '':
+                csv_file = csv.DictReader(uploaded_file.read().decode('utf-8').splitlines())
+                for row in csv_file:
+                    if 'name' in row and 'area' in row:               
+                        row['area'] = row['area'].translate(str.maketrans('', '', '{[]!@#$}'))
+                        newZona = Zona(nombre=row['name'],estado='despublicado',coordenadas=row['area'])
+                        try:
+                            Zona.upload(newZona)
+                        except:
+                            flash("error", "error")
+                            return redirect(request.referrer)
+                    else:
+                        flash("El archivo no cumple con los requerimientos")
+        else: 
+            flash("El archivo debe ser un .csv")
+    return redirect(url_for("zona_index"))    
+    
 def create():
     """
         El metodo ,si esta autenticado, creara una nueva zona
@@ -59,7 +84,9 @@ def update():
     """
         El metodo , si esta autentiticado, podra cambiar los datos de una zona
     """
-    data = request.form
+    req = request.form
+    data = Zona(nombre=req["nombre"],estado=req["estado"],
+    color=req["color"],coordenadas=req.getlist("coordenadas"))
     zona = Zona.search_id(data["id"])
     try:
         zona.update(data)

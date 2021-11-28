@@ -45,9 +45,6 @@ def create_app(environment="production"):
     # home
     app.add_url_rule("/", "home", home.index)
 
-    # home
-    app.add_url_rule("/", "home", home.index)
-
     # Autenticación
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
     app.add_url_rule("/cerrar_sesion", "auth_logout", auth.logout)
@@ -56,11 +53,12 @@ def create_app(environment="production"):
     #Rutas de Zonas
     app.add_url_rule("/zonas", "zona_index", zona.index)
     app.add_url_rule("/zonas/nuevo", "zona_new", zona.new)
+    app.add_url_rule("/zonas/edit/<id>", "zona_edit", zona.edit)
     app.add_url_rule("/zonas", "zona_create", zona.create, methods=["POST"])
     app.add_url_rule("/zonas/delete","zona_delete", zona.delete, methods=["POST"])
-    app.add_url_rule("/zonas/edit/<id>", "zona_edit", zona.edit)
+    app.add_url_rule("/zonas/update","zona_csv", zona.save_csv, methods=["POST"])
     app.add_url_rule("/zonas/update","zona_update", zona.update, methods=["POST"])
-    app.add_url_rule("/zonas/filtro","zona_filtro", zona.filtro, methods=["POST"] )
+    app.add_url_rule("/zonas/filtro","zona_filtro", zona.filtro, methods=["POST"])
 
     #Rutas de Recorridos
     app.add_url_rule("/recorridos", "recorrido_index", recorrido.index)

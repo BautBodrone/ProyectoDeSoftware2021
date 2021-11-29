@@ -5,6 +5,10 @@ from app.helpers.auth import authenticated
 from app.helpers.user_helper import has_permit
 from app.helpers import configurator
 
+from app.helpers.forms import UserForm, UserUpdateForm
+
+from sqlalchemy import exc
+
 # Protected resources
 def index():
     """
@@ -37,8 +41,10 @@ def new():
     if not has_permit("user_new"):
         flash("No cuenta con los permisos necesarios")
         return redirect(request.referrer)
+    
+    form = UserForm()
 
-    return render_template("user/new.html")
+    return render_template("user/new.html", form=form)
 
 
 def create():
@@ -52,15 +58,22 @@ def create():
     if not has_permit("user_new"):
         flash("No cuenta con los permisos necesarios")
         return redirect(request.referrer)
-
-    new_user = User(**request.form)
-    # try:
-    User.save(new_user)
-    # except:
-    #     flash("Usuario con ese nombre o email ya existe", "error")
-    #     return redirect(request.referrer)
     
-    return redirect(url_for("user_index"))
+    form = UserForm()
+    if not form.validate_on_submit():
+        flash(form.errors)
+        return render_template("user/new.html", form=form)
+    
+    try:
+        data= dict(form.data)
+        del data["csrf_token"]
+        new_user = User(**data)
+        User.save(new_user)
+    
+        return redirect(url_for("user_index"))
+    except exc.IntegrityError:
+        flash("Usuario con ese nombre o email ya existe", "danger")
+        return redirect(request.referrer)
 
 def delete():
     """
@@ -92,8 +105,9 @@ def edit(user_id):
         return redirect(request.referrer)
 
     user = User.search_user(user_id)
+    form = UserUpdateForm()     
     
-    return render_template("user/edit.html", user=user)
+    return render_template("user/edit.html", form=form, user=user)
 
 def edit_finish():
     """
@@ -103,6 +117,9 @@ def edit_finish():
     if not authenticated(session):
         abort(401)
 
+    form = UserForm()  
+    data= dict(form.data)
+    del data["csrf_token"]
     data = request.form
     user = User.search_user(data["id"])
 

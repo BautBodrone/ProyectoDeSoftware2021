@@ -66,8 +66,11 @@
       <th>  Color  </th>
       <th>  Estado   </th>
       <th>Coordenadas</th>
-      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_edit') %}
+      {% if user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_edit') %}
         <th>  Acciones  </th>
+        <th>  Editar  </th>
+      {% if user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_delete') %}
+      <th>  Eliminar  </th>
       {% endif %}
   </tr>
 {% for zona in zonas.items %}
@@ -81,11 +84,15 @@
       </td>
     <td>
       <form action="{{  url_for('zona_edit', id = zona.id ) }}"  >
-        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_edit') %}
+        {% if user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_edit') %}
         <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
         {% endif %}
       </form>
-      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_delete') %}
+      </td>
+    
+    
+      <td>
+      {% if user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_delete') %}
       <form action="{{ url_for('zona_delete') }}" method="POST" enctype="multipart/form-data">
         <input type="hidden" id="zona_id" name="zona_id" value="{{zona.id}}">
         <button onclick="return confirm('¿Esta seguro de que desea eliminar este zona?');" class="btn btn-danger mt-2 ml-2">eliminar</a>
@@ -95,6 +102,20 @@
   </tr>
   {% endfor %}
 </table>
+<<<<<<< HEAD
+=======
+  {% if user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_new') %}
+  <a href="{{ url_for('zona_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
+  {% endif %}
+  <div class="map-container">
+    {% for zona in zonas.items %}
+      <input id="{{ zona }}" class="zonas" type="hidden" value="{{ zona.coordenadas }}" >
+      <input id="{{ zona }}" class="zonas-colores" type="hidden" value="{{ zona.color }}" >
+      <input id="{{ zona }}" class="zonas-nombre" type="hidden" value="{{ zona.nombre }}" >
+    {% endfor %}
+    <div id="mapid" class="mapform"></div>
+  </div>
+>>>>>>> feature-HashPassword-Username
 
   {% if zonas.has_prev %}
   <a class="link" href="{{ url_for('zona_index', page_num=zonas.prev_num,) }}">Anterior</a>

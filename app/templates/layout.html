@@ -65,9 +65,11 @@
         <a href="{{ url_for('zona_index') }}" class="navbar">Zonas</a>
         <a href="{{ url_for('punto_index') }}" class="navbar">Puntos de Encuentro</a>
         <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
-        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
-          <a href="{{ url_for('rol_index') }}" class="navbar" >Roles</a>
-          <a href="{{ url_for('user_index') }}" class="navbar" >Usuarios</a>
+        {% if my_user != None %}
+          {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
+            <a href="{{ url_for('rol_index') }}" class="navbar" >Roles</a>
+            <a href="{{ url_for('user_index') }}" class="navbar" >Usuarios</a>
+          {% endif %}
         {% endif %}
         <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
       {% else %}

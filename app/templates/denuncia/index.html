@@ -96,7 +96,7 @@
   {% for page_num in denuncias.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
      {% if page_num%}
        {% if denuncias.page == page_num%}
-         <a href="" class="link selected">{{page_num}}</a>
+         <a href="" class="link active">{{page_num}}</a>
        {% else %}
          <a href="{{ url_for('denuncia_index',page=page_num)}}" class="link">{{page_num}}</a>
        {% endif %}

@@ -54,6 +54,7 @@ def create_app(environment="production"):
     app.add_url_rule("/zonas", "zona_index", zona.index)
     app.add_url_rule("/zonas/map/<id>", "zona_show_map", zona.show_map)
     app.add_url_rule("/zonas/nuevo", "zona_new", zona.new)
+    app.add_url_rule("/zonas/show/<id>", "zona_show", zona.show)
     app.add_url_rule("/zonas/edit/<id>", "zona_edit", zona.edit)
     app.add_url_rule("/zonas", "zona_create", zona.create, methods=["POST"])
     app.add_url_rule("/zonas/delete","zona_delete", zona.delete, methods=["POST"])
@@ -64,6 +65,7 @@ def create_app(environment="production"):
     #Rutas de Recorridos
     app.add_url_rule("/recorridos", "recorrido_index", recorrido.index)
     app.add_url_rule("/recorridos/map/<id>", "recorrido_show_map", recorrido.show_map)
+    app.add_url_rule("/recorrido/show/<id>", "recorrido_show", recorrido.show)
     app.add_url_rule("/recorridos/nuevo", "recorrido_new", recorrido.new)
     app.add_url_rule("/recorridos", "recorrido_create", recorrido.create, methods=["POST"])
     app.add_url_rule("/recorridos/delete","recorrido_delete", recorrido.delete, methods=["POST"])
@@ -99,6 +101,7 @@ def create_app(environment="production"):
     #Editar punto de encuentro
     app.add_url_rule("/puntos/edit/<id>", "punto_edit", punto.edit)
     app.add_url_rule("/puntos/map/<id>", "punto_show_map", punto.show_map)
+    app.add_url_rule("/puntos/show/<id>", "punto_show", punto.show)
     app.add_url_rule("/puntos/update","punto_update",punto.update, methods=["POST"])  
     app.add_url_rule("/puntos/delete/<id>", "punto_delete", punto.delete, methods=["POST"])
 

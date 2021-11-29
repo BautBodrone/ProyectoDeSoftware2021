@@ -29,19 +29,19 @@
 {% block content %}
   <form action="{{ url_for('user_create') }}" method="POST">
     <p>
-      <label>Email<label></br>
-      <input name="email" placeholder="Correo"/ required>
+      <label>Email<label>
+      <input type="email" name="email" placeholder="Correo" required/>
     </p>
     <p>
-      <label>Clave<label></br>
+      <label>Clave<label>
       <input type="password" name="password" placeholder="Clave" required/>
     </p>
     <p>
-      <label>Nombre<label></br>
+      <label>Nombre<label>
       <input name="first_name" placeholder="Nombre" required/>
     </p>
     <p>
-      <label>Apellido<label></br>
+      <label>Apellido<label>
       <input name="last_name" placeholder="Apellido" required/>
     </p>
     <p>

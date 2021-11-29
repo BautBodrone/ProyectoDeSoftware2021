@@ -24,6 +24,14 @@ def new():
     recorridos = Recorrido.query.all()
     return render_template("recorrido/new.html", recorridos=recorridos)
 
+def show(id):
+    """
+        muestra el id    
+    """
+    recorrido = Recorrido.query.filter_by(id=int(id)).first()
+    return render_template("recorrido/show.html",recorrido=recorrido)
+
+
 def show_map(id):
     """
         muestra el mapa dibujando el recorrido del id    

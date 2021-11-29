@@ -6,6 +6,8 @@ body {
 }
 #content{
   margin-left: 2%;
+  width: auto;
+  margin-bottom: 2rem;      
 }
 form label, form select, form option{
   display: block;

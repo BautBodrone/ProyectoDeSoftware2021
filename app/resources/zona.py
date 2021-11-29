@@ -24,6 +24,13 @@ def new():
     """
     return render_template("zona/new.html")
 
+def show(id):
+    """
+         muestra el id
+    """
+    zona = Zona.query.filter_by(id=int(id)).first()
+    return render_template("zona/show.html",zona=zona)
+
 def show_map(id):
     """
          muestra el mapa dibujando la zona del id

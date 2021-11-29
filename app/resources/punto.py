@@ -19,6 +19,13 @@ def index():
 
     return render_template("punto/index.html", puntos=puntos)
 
+def show(id):
+    """
+        muestra la info del punto    
+    """
+    punto = Punto.query.filter_by(id=int(id)).first()
+    return render_template("punto/show.html",punto=punto)
+
 def show_map(id):
     """
         muestra el mapa dibujando el punto del id    

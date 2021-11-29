@@ -22,12 +22,13 @@ class User(db.Model):
     activo = Column(Boolean)
     denuncias = relationship('Denuncia', backref='author', lazy='dynamic',primaryjoin="User.id == Denuncia.asignadoA")
 
-    def __init__(self, first_name=None, last_name=None, email=None, password=None):
+    def __init__(self, first_name=None, last_name=None, email=None, password=None, username=None):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.password = generate_password_hash(password)
         self.activo = True
+        self.username = username
         self.rols.append(Rol.search("operador"))
         
 
@@ -42,14 +43,15 @@ class User(db.Model):
             al logear
         """
         aux=self.query.filter(User.email==params["email"]).first()
+        print(aux)
         try:
-            if check_password_hash(aux.password,params["password"]):
-                return aux
-            else:
-                return None
+            check=check_password_hash(aux.password,params["password"])
         except AttributeError:
+            check = False
+        if check:
+            return aux
+        else:
             return None
-        #return (self.query.filter(User.email==params["email"], check_password_hash(User.password,params["password"])).first())
 
     @classmethod
     def check_permiso(self, email, permiso):
@@ -94,12 +96,15 @@ class User(db.Model):
         return self.activo
 
     def edit(self,data):
+        if self.username != data ["username"]:
+            self.username = data["username"]
         if self.first_name != data["first_name"]:
             self.first_name = data["first_name"]
         if self.last_name != data["last_name"]:
             self.last_name = data["last_name"]
-        if self.password != data["password"]:
-            self.password = data["password"]
+        aux=self.query.filter(User.email==data["email"]).first()
+        if not check_password_hash(aux.password,data["password"]):
+            self.password = generate_password_hash(data["password"])
         if self.email != data["email"]:
             self.email = data["email"]
         if data["estado"] == "True":

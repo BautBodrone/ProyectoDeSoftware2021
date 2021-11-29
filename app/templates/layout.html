@@ -4,7 +4,6 @@
   <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin=""/>
@@ -66,9 +65,11 @@
         <a href="{{ url_for('zona_index') }}" class="navbar">Zonas</a>
         <a href="{{ url_for('punto_index') }}" class="navbar">Puntos de Encuentro</a>
         <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
-        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
-          <a href="{{ url_for('rol_index') }}" class="navbar" >Roles</a>
-          <a href="{{ url_for('user_index') }}" class="navbar" >Usuarios</a>
+        {% if my_user != None %}
+          {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
+            <a href="{{ url_for('rol_index') }}" class="navbar" >Roles</a>
+            <a href="{{ url_for('user_index') }}" class="navbar" >Usuarios</a>
+          {% endif %}
         {% endif %}
         <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
       {% else %}

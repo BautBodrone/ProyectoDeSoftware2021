@@ -120,8 +120,6 @@ def edit_finish():
     form = UserForm()  
     data= dict(form.data)
     del data["csrf_token"]
-    print("-----------------------------")
-    print(data)
     data = request.form
     user = User.search_user(data["id"])
 

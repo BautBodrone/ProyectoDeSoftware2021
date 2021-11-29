@@ -42,8 +42,7 @@ class User(db.Model):
             Revisa en la base de datos para saber si se ingreso correctamente el email y la pass
             al logear
         """
-        aux=self.query.filter(User.email==params["email"]).first()
-        print(aux)
+        aux=self.query.filter(User.username==params["username"]).first()
         try:
             check=check_password_hash(aux.password,params["password"])
         except AttributeError:

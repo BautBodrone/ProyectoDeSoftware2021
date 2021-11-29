@@ -41,7 +41,7 @@
       <th>  Estado   </th>
       <th>Coordenadas</th>
       <th>  Editar  </th>
-      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_delete') %}
+      {% if user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_delete') %}
       <th>  Eliminar  </th>
       {% endif %}
   </tr>
@@ -54,7 +54,7 @@
 
     <td>
       <form action="{{  url_for('zona_edit', id = zona.id ) }}"  >
-        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_edit') %}
+        {% if user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_edit') %}
         <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
         {% endif %}
       </form>
@@ -62,7 +62,7 @@
     
     
       <td>
-      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_delete') %}
+      {% if user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_delete') %}
       <form action="{{ url_for('zona_delete') }}" method="POST" enctype="multipart/form-data">
         <input type="hidden" id="zona_id" name="zona_id" value="{{zona.id}}">
         <button onclick="return confirm('¿Esta seguro de que desea eliminar este zona?');" class="btn btn-danger mt-2 ml-2">eliminar</a>
@@ -72,7 +72,7 @@
   </tr>
   {% endfor %}
 </table>
-  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_new') %}
+  {% if user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_new') %}
   <a href="{{ url_for('zona_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
   {% endif %}
   <div class="map-container">

@@ -45,11 +45,7 @@ def create():
     """
         El metodo ,si esta autenticado, creara una nueva denuncia
     """
-    print("-----------------------------------")
-    print(request.form)
-    print("-----------------------------------")
     
-
     new_denuncia = Denuncia(**request.form)
     
     try:

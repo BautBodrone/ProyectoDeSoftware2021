@@ -5,22 +5,22 @@
 {% endblock %}
 {% block content %}
   <h1>Crear Seguimiento </h1>
-  <form action="{{ url_for('seguimiento_create') }}" method="POST">
+  <form action="{{ url_for('seguimiento_create', denuncia_id=denuncia_id) }}" method="POST">
     <p>
       <label>Descripcion <label></br>
       <input name="descripcion" placeholder="descripcion"/>
     </p>
     <p>
     <label> Usuario Encargado:  <label>
-    <select class="selectpicker" name="user" id="user">
-    {% for user in users %}
-        {% for rol in user.rols %}
-        {% if rol.nombre != None %}
-            <option value={{user}}>{{user.first_name}}</option>
-        {% endif %}
+      <select  name="user" id="user">
+        {% for user in users %}
+          {% for rol in user.rols %}
+            {% if rol.nombre != None %}
+              <option value={{user.id}}>{{user.first_name}}</option>
+            {% endif %}
+          {% endfor %}
         {% endfor %}
-    {% endfor %}
-    </select>
+      </select>
     </p>
     <p>
       <input type="submit" value="Crear">

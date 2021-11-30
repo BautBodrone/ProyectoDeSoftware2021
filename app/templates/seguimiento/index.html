@@ -11,9 +11,9 @@
       <th>  Fecha de Creacion  </th>
       <th>  Descripcion  </th>
   </tr>
-  {% for seguimiento in seguimientos.items %}
+  {% for seguimiento in seguimientos %}
   <tr>
-    <td>{{ seguimiento.user }}</td>
+    <td>{{ seguimiento.user.username }}</td>
     <td>{{ seguimiento.fechaC }}</td>
     <td>{{ seguimiento.descripcion }}</td>
   </tr>
@@ -22,7 +22,7 @@
 
 
 <a href="{{ url_for('denuncia_index') }}" class="link">Volver</a>
-<form action="{{ url_for('seguimiento_new')}}">
+<form action="{{ url_for('seguimiento_new', denuncia_id = denuncia_id) }}">
   <button type="submit" class="btn btn-info mt-2 ml-2">Nuevo</button>
 </form>
 {% endblock %}

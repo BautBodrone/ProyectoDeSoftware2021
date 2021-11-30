@@ -17,20 +17,22 @@ def index(denuncia_id):
     if not authenticated(session):
         abort(401)
 
-    seguimientos= Seguimiento.query.all()
-    denuncia(denuncia_id)
+    print("-----------------")
+    print(denuncia_id)
+    seguimientos= Seguimiento.query.filter_by(denuncia_id=denuncia_id)
+    # denuncia(denuncia_id)
 
     return render_template("seguimiento/index.html",seguimientos=seguimientos,denuncia_id=denuncia_id)
 
-def new():
+def new(denuncia_id):
 
 
     if not authenticated(session):
         abort(401)
     users = User.query.all()
-    return render_template("Seguimiento/new.html", users=users)
+    return render_template("Seguimiento/new.html", users=users, denuncia_id=denuncia_id)
 
-def create():
+def create(denuncia_id):
     """
         El metodo ,si esta autenticado, creara un nuevo seguimiento
     """
@@ -39,16 +41,19 @@ def create():
         abort(401)
 
     new_seguimiento = Seguimiento(**request.form)
-    new_seguimiento.denuncia= denuncia
-    try:
-        Seguimiento.save(new_seguimiento)
-    except:
-        flash("Fallo al cargar el seguimiento", "error")
-        return redirect(request.referrer)
+    new_seguimiento.denuncia_id= denuncia_id
+    print("------------------------------------")
+    print(request.form)
+    
+    # try:
+    Seguimiento.save(new_seguimiento)
+    # except:
+    #     flash("Fallo al cargar el seguimiento", "error")
+    #     return redirect(request.referrer)
 
-    seguimientos= Seguimiento.query.all()
+    seguimientos= Seguimiento.query.filter_by(denuncia_id=denuncia_id)
 
-    return render_template("seguimiento/index.html",seguimientos=seguimientos,denuncia_id=denuncia)
+    return render_template("seguimiento/index.html",seguimientos=seguimientos,denuncia_id=denuncia_id)
 
 
 def delete():

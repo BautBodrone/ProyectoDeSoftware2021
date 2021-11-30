@@ -20,7 +20,8 @@ class User(db.Model):
     username = Column(String(30),unique=True,nullable=False)
     password = Column(Text,nullable=False)
     activo = Column(Boolean)
-    denuncias = relationship('Denuncia', backref='author', lazy='dynamic',primaryjoin="User.id == Denuncia.asignadoA")
+    denuncias = relationship('Denuncia', backref='asignadoA', lazy=True)
+    seguimientos = relationship('Seguimiento', backref='user', lazy=True)
 
     def __init__(self, first_name=None, last_name=None, email=None, password=None, username=None):
         self.first_name = first_name

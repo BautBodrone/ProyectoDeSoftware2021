@@ -67,9 +67,9 @@
     <td>{{ denuncia.nombreD }}</td>
     <td>{{ denuncia.telefono }}</td>
     <td>{{ denuncia.emailD }}</td>
-    <td>{{ denuncia.asignadoA}}</td>
+    <td>{{ denuncia.asignadoA.username}}</td>
     <td>
-      <form action="{{ url_for('seguimiento_index', denuncia_id = denuncia.asignadoA ) }}">
+      <form action="{{ url_for('seguimiento_index', denuncia_id = denuncia.id ) }}">
         <button type="submit" class="btn btn-info mt-2 ml-2">Seguimientos</button>
       </form>
       <form action="{{ url_for('denuncia_edit', denuncia_id = denuncia.id ) }}">

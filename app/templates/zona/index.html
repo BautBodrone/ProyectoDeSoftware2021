@@ -102,8 +102,6 @@
   </tr>
   {% endfor %}
 </table>
-<<<<<<< HEAD
-=======
   {% if user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_new') %}
   <a href="{{ url_for('zona_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
   {% endif %}
@@ -115,7 +113,6 @@
     {% endfor %}
     <div id="mapid" class="mapform"></div>
   </div>
->>>>>>> feature-HashPassword-Username
 
   {% if zonas.has_prev %}
   <a class="link" href="{{ url_for('zona_index', page_num=zonas.prev_num,) }}">Anterior</a>

@@ -114,8 +114,8 @@ def create_app(environment="production"):
     #Rutas de seguimientos
     app.add_url_rule("/seguimientos/<denuncia_id>","seguimiento_index",seguimiento.index)
     #app.add_url_rule("/seguimiento", "seguimiento_index", seguimiento.index)
-    app.add_url_rule("/seguimientos", "seguimiento_create", seguimiento.create, methods=["POST"])
-    app.add_url_rule("/seguimientos/nuevo", "seguimiento_new", seguimiento.new)
+    app.add_url_rule("/seguimientos/<denuncia_id>", "seguimiento_create", seguimiento.create, methods=["POST"])
+    app.add_url_rule("/seguimientos/<denuncia_id>/nuevo", "seguimiento_new", seguimiento.new)
     app.add_url_rule("/seguimientos/delete", "seguimiento_delete", seguimiento.delete, methods=["POST"])
 
 

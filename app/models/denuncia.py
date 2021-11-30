@@ -38,7 +38,8 @@ class Denuncia(db.Model):
     nombreD = Column(String(30))
     telefono = Column(String(30))
     emailD = Column(String(30))
-    asignadoA = Column(Integer, ForeignKey('users.id'))
+    asignadoA_id = Column(Integer, ForeignKey('users.id'))
+    seguimientos = relationship('Seguimiento', backref='denuncia', lazy=True)
 
     def __init__(self , titulo,categoria,descripcion,
                     lat,lng,estado,apellidoD 
@@ -55,7 +56,7 @@ class Denuncia(db.Model):
         self.nombreD = nombreD
         self.telefono = telefono
         self.emailD = emailD
-        self.asignadoA=asignadoA
+        self.asignadoA_id=asignadoA
 
     def delete(self):
         db.session.delete(self)

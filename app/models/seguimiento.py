@@ -15,10 +15,11 @@ class Seguimiento(db.Model):
     fechaC = Column(Date)
     descripcion = Column(Text)
 
-    def __init__(self,denuncia,descripcion=None,user=None):
+    def __init__(self,denuncia_id,descripcion=None,user=None):
         self.descripcion = descripcion
         self.fechaC =  datetime.date.today()
-        self.user_id =user
+        self.user_id = user
+        self.denuncia_id = denuncia_id
     
     def delete(self):
         db.session.delete(self)

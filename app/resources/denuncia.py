@@ -13,9 +13,6 @@ def index():
     """
         El metodo mostrara todos las denuncias en una tabla
     """
-    if not authenticated(session):
-        abort(401)
-
     pagConf = configurator.settings().get_rows_per_page()
     page = request.args.get('page',1, type=int)
     denuncias = Denuncia.query.paginate(page=page,per_page=pagConf)

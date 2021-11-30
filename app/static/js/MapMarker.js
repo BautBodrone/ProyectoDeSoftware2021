@@ -4,7 +4,7 @@ const mapLayerUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 
 export class Map {
     constructor({ selector }) {
-
+        this.group = new L.featureGroup();
         this.marker_list = [];
         this.all_markers = [];
         this.initializeMap(selector);
@@ -75,20 +75,22 @@ export class Map {
                 this.addLine(linea,nombre);
             }
         }
+        if (this.group.getLayers().length != 0){
+            this.group.addTo(this.map);
+            this.map.fitBounds(this.group.getBounds());
+        }
     }
     
     addLine(linea, nombre){
-        var polyline = L.polyline(
+        L.polyline(
             linea,{color: 'green'}
-        ).addTo(this.map).bindPopup(nombre);
-        this.map.fitBounds(polyline.getBounds());
+        ).addTo(this.group).bindPopup(nombre);
     }
 
     addZone(zona, color, nombre){
-        var polygon = L.polygon(
+        L.polygon(
             zona, {color:color}
-        ).addTo(this.map).bindPopup(nombre);
-        this.map.fitBounds(polygon.getBounds());
+        ).addTo(this.group).bindPopup(nombre);
     }
 
     addOneMarker({ lat, lng }) {

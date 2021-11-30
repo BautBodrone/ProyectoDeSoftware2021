@@ -6,7 +6,7 @@
   <script type="module" src="/static/js/map.js" ></script>
   
   <link rel="icon" href="/static/imgs/logo.png" type="image/x-icon" > 
-  <title> {{ recorrido.nombre }}</title>
+  <title> {{ denuncia.titulo }}</title>
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""></script>
@@ -17,9 +17,9 @@
 </head>
 <body>
   <div class="map-container">
-    <input id="{{ recorrido }}" class="recorridos" type="hidden" value="{{ recorrido.coordenadas }}" >
-    <input id="{{ recorrido }}" class="recorridos-colores" type="hidden" value="{{ recorrido.color }}" >
-    <input id="{{ recorrido }}" class="recorridos-nombre" type="hidden" value="{{ recorrido.nombre }}" >
+    <input id="{{ denuncia }}" class="punto-lat" type="hidden" value="{{ denuncia.lat }}">
+    <input id="{{ denuncia }}" class="punto-lng" type="hidden" value="{{ denuncia.lng }}">
+    <input id="{{ denuncia }}" class="punto-nombre" type="hidden" value="{{ denuncia.titulo }}">
     <div id="mapid" class="map-fullpage"></div>
   </div>
 </body>

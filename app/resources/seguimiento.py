@@ -4,6 +4,7 @@ from app.models.seguimiento import Seguimiento
 from app.helpers.auth import authenticated
 from app.db import db
 from app.models.user import User
+from app.models.denuncia import Denuncia
 
 
 def denuncia(unaDenuncia):
@@ -18,9 +19,9 @@ def index(denuncia_id):
         abort(401)
 
     seguimientos= Seguimiento.query.all()
-    denuncia(denuncia_id)
+    denuncia = Denuncia.query.filter_by(id=int(denuncia_id)).first()
 
-    return render_template("seguimiento/index.html",seguimientos=seguimientos,denuncia_id=denuncia_id)
+    return render_template("seguimiento/index.html",seguimientos=seguimientos,denuncia=denuncia)
 
 def new():
 

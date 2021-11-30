@@ -10,14 +10,10 @@
   </div>
 {% endblock %}
 
-{% block navbar %}
-  {{ super() }}
-{% endblock %}
-
 {% block content %}
 <div>
   {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_new') %}
-<a href="{{ url_for('user_new') }}" class="link" style="float:right;  margin-top: 5px; width:75px" >Nuevo</a>
+    <a href="{{ url_for('user_new') }}" class="link" style="float:right;  margin-top: 5px; width:75px" >Nuevo</a>
   {% endif %}
 <form class="tabla" action="{{ url_for('user_filtro') }}" method="POST">
   <h4>Filtrar</h4> 
@@ -31,7 +27,6 @@
     </form>
   <br>
 </div>
-
   <table>
     <tr>
         <th>  Email  </th>

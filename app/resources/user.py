@@ -140,11 +140,12 @@ def filtro():
     data = request.form
     activo = data["activo"]
     first_name = data["first_name"]
+    busqueda = "%{}%".format(first_name)
     if (activo != "" and first_name!= ""):
-      users=User.query.filter_by(activo=activo,first_name=first_name).paginate(page=page,per_page=page_config)
+      users=User.query.filter(User.first_name.like(busqueda),User.activo.like(activo)).paginate(page=page,per_page=page_config)
     else:
         if (activo == "" and first_name != ""):
-            users=User.query.filter_by(first_name=first_name).paginate(page=page,per_page=page_config)
+            users=User.query.filter(User.first_name.like(busqueda)).paginate(page=page,per_page=page_config)
         else:
             if(activo !="" and first_name==""):
                 users=User.query.filter_by(activo=activo).paginate(page=page,per_page=page_config)

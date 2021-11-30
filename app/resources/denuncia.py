@@ -22,6 +22,20 @@ def index():
     
     return render_template("denuncia/index.html", denuncias=denuncias)
 
+def show(id):
+    """
+        muestra la info de la denuncia   
+    """
+    denuncia = Denuncia.query.filter_by(id=int(id)).first()
+    return render_template("denuncia/show.html",denuncia=denuncia)
+
+def show_map(id):
+    """
+        muestra el mapa dibujando la denuncia del id    
+    """
+    denuncia = Denuncia.query.filter_by(id=int(id)).first()
+    return render_template("denuncia/map.html",denuncia=denuncia)
+
 def new():
 
     if not authenticated(session):
@@ -97,12 +111,13 @@ def filtro():
     titulo = data["titulo"]
     fechaC = data["fechaC"]
     fechaF = data["fechaF"]
+    busqueda = "%{}%".format(titulo)
     
     if (estado != "" and titulo != ""):
-      denuncias=Denuncia.query.filter_by(estado=estado,titulo=titulo).paginate(page=page,per_page=pagConf)
+      denuncias=Denuncia.query.filter(Denuncia.titulo.like(busqueda),Denuncia.estado.like(estado)).paginate(page=page,per_page=pagConf)
     else:
         if (estado == "" and titulo != ""):
-            denuncias=Denuncia.query.filter_by(titulo=titulo).paginate(page=page,per_page=pagConf)
+            denuncias=Denuncia.query.filter(Denuncia.titulo.like(busqueda)).paginate(page=page,per_page=pagConf)
         else:
             if (estado != "" and titulo == ""):
                 denuncias=Denuncia.query.filter_by(estado=estado).paginate(page=page,per_page=pagConf)

@@ -6,11 +6,11 @@
 {% block header %}
   <div>
     {{ super() }}
-    <h1 id="header"> Seguimientos para la denuncia {{ denuncia.id }}</h1>
+    <h1 id="header"> {{ denuncia.titulo }}</h1>
   </div>
 {% endblock %}
 {% block content %}
-<form action="{{ url_for('seguimiento_new')}}">
+<form action="{{ url_for('seguimiento_new', denuncia_id=denuncia.id)}}">
   <button type="submit" class="btn btn-info mt-2 ml-2" style="float:right;  margin-top: 5px; width:75px">Nuevo</button>
 </form>
 <table>
@@ -19,7 +19,7 @@
       <th>  Fecha de Creacion  </th>
       <th>  Descripcion  </th>
   </tr>
-  {% for seguimiento in seguimientos.items %}
+  {% for seguimiento in seguimientos %}
   <tr>
     <td>{{ seguimiento.user }}</td>
     <td>{{ seguimiento.fechaC }}</td>

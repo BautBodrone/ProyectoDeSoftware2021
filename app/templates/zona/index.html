@@ -37,7 +37,7 @@
       <th>  Color  </th>
       <th>  Estado   </th>
       <th>Coordenadas</th>
-      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_edit') %}
+      {% if user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_edit') %}
         <th>  Acciones  </th>
       {% endif %}
   </tr>
@@ -51,14 +51,15 @@
         </iframe>
       </td>
     <td>
-      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_edit') %}
+      {% if  user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_edit') %}
         <form action="{{  url_for('zona_edit', id = zona.id ) }}"  >
          <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
         </form>
       {% endif %}
-      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_delete') %}
+      {% if user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_delete') %}
       <form action="{{ url_for('zona_delete') }}" method="POST" enctype="multipart/form-data">
-        <button onclick="return confirm('¿Esta seguro de que desea eliminar este zona?');" class="btn btn-danger mt-2 ml-2">Eliminar</a>
+        <input type="hidden" id="zona_id" name="zona_id" value="{{zona.id}}">
+        <button onclick="return confirm('¿Esta seguro de que desea eliminar esta zona?');" class="btn btn-danger mt-2 ml-2">Eliminar</a>
       </form>
       {% endif %}
     </td>
@@ -78,7 +79,7 @@
        {% endif %}
      {% endif %}
   {% endfor %}
- {% if zonas.has_next %}
+  {% if zonas.has_next %}
   <a class="link" href="{{ url_for('zona_index', page=zonas.next_num) }}">Siguiente</a>
   {% endif %}
 

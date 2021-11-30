@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Boolean, Text
 from sqlalchemy.sql.schema import ForeignKey 
 from sqlalchemy.sql.expression import null
 from sqlalchemy.sql.sqltypes import Date
@@ -30,7 +30,7 @@ class Denuncia(db.Model):
     categoria = Column(ChoiceType(CATEGORIAS))
     fechaC = Column(Date)
     fechaF = Column(Date)
-    descripcion = Column(String(30))
+    descripcion = Column(Text)
     lat = Column(String(30))
     lng = Column(String(30))
     estado = Column(ChoiceType(ESTADOS))
@@ -40,7 +40,6 @@ class Denuncia(db.Model):
     emailD = Column(String(30))
     asignadoA = Column(Integer, ForeignKey('users.id'))
 
-    
     def __init__(self , titulo,categoria,descripcion,
                     lat,lng,estado,apellidoD 
                     ,nombreD,telefono ,emailD,asignadoA):

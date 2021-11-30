@@ -34,8 +34,6 @@ def get_id(id):
             denuncia = Denuncia.query.filter_by(id=id).first()
             if denuncia != None:
                 atributos = DenunciaSchema.dump(denuncia)
-                print(atributos)
-                print("==========================")
                 return jsonify(atributos=atributos)
             else:
                 return handler.range_not_satisfiable("error")

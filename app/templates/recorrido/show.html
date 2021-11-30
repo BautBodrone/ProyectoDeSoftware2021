@@ -29,7 +29,8 @@
     {% endif %}
     {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_delete') %}
     <form action="{{ url_for('recorrido_delete') }}" method="POST" enctype="multipart/form-data">
-        <button onclick="return confirm('¿Esta seguro de que desea eliminar este recorrido?');" class="btn btn-danger mt-2">Eliminar</a>
+      <input type="hidden" id="recorrido_id" name="recorrido_id" value="{{recorrido.id}}">
+      <button onclick="return confirm('¿Esta seguro de que desea eliminar este recorrido?');" class="btn btn-danger mt-2">Eliminar</a>
     </form>
     {% endif %}
 </div>

@@ -6,7 +6,6 @@ from app.db import db
 from app.models.user import User
 from app.models.denuncia import Denuncia
 
-
 def denuncia(unaDenuncia):
     denuncia=unaDenuncia
 
@@ -18,18 +17,17 @@ def index(denuncia_id):
     if not authenticated(session):
         abort(401)
 
-    seguimientos= Seguimiento.query.all()
-    denuncia = Denuncia.query.filter_by(id=int(denuncia_id)).first()
-
+    denuncia = Denuncia.query.filter_by(id=denuncia_id).first()
+    seguimientos= Seguimiento.query.filter_by(denuncia=denuncia.id).all()
     return render_template("seguimiento/index.html",seguimientos=seguimientos,denuncia=denuncia)
 
-def new():
-
+def new(denuncia_id):
 
     if not authenticated(session):
         abort(401)
     users = User.query.all()
-    return render_template("Seguimiento/new.html", users=users)
+    denuncia = Denuncia.query.filter_by(id=denuncia_id).first()
+    return render_template('seguimiento/new.html', users=users, denuncia=denuncia)
 
 def create():
     """
@@ -39,17 +37,17 @@ def create():
     if not authenticated(session):
         abort(401)
 
-    new_seguimiento = Seguimiento(**request.form)
-    new_seguimiento.denuncia= denuncia
+    req = request.form
+    new_seguimiento = Seguimiento(user=req["user"],denuncia=req["denuncia"]
+    ,descripcion=req["descripcion"])
     try:
         Seguimiento.save(new_seguimiento)
     except:
         flash("Fallo al cargar el seguimiento", "error")
         return redirect(request.referrer)
-
-    seguimientos= Seguimiento.query.all()
-
-    return render_template("seguimiento/index.html",seguimientos=seguimientos,denuncia_id=denuncia)
+    denuncia = Denuncia.query.filter_by(id=req["denuncia"]).first()
+    seguimientos= Seguimiento.query.filter_by(denuncia=denuncia.id).all()
+    return render_template("seguimiento/index.html",seguimientos=seguimientos,denuncia=denuncia.id)
 
 
 def delete():

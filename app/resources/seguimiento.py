@@ -41,7 +41,7 @@ def create():
         return redirect(request.referrer)
     denuncia = Denuncia.query.filter_by(id=req["denuncia"]).first()
     seguimientos= Seguimiento.query.filter_by(denuncia=denuncia).all()
-    return render_template("seguimiento/index.html",seguimientos=seguimientos,denuncia=denuncia.id)
+    return render_template("seguimiento/index.html",seguimientos=seguimientos,denuncia=denuncia)
 
 
 def delete():

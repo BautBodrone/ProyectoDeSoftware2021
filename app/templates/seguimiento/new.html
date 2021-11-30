@@ -10,19 +10,19 @@
   </div>
 {% endblock %}
 {% block content %}
-  <h1>Crear Seguimiento </h1>
-  <form action="{{ url_for('seguimiento_create', denuncia_id=denuncia_id) }}" method="POST">
+  <form action="{{ url_for('seguimiento_create') }}" method="POST">
+    <input type="hidden" id="denuncia" name="denuncia" value="{{denuncia.id}}">
     <p>
       <label>Descripcion: <label>
       <textarea rows = "5" cols = "50" name= "descripcion" required ></textarea>
     </p>
     <p>
     <label> Usuario Encargado:  <label>
-      <select  name="user" id="user">
+      <select style="width:10vw" name="user" id="user">
         {% for user in users %}
           {% for rol in user.rols %}
             {% if rol.nombre != None %}
-              <option value={{user.id}}>{{user.first_name}}</option>
+              <option value={{user.id}}>{{user.first_name}} {{user.last_name}}</option>
             {% endif %}
           {% endfor %}
         {% endfor %}

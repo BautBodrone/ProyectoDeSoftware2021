@@ -15,13 +15,13 @@
 </form>
 <table>
   <tr>
-      <th>  User id  </th>
-      <th>  Fecha de Creacion  </th>
-      <th>  Descripcion  </th>
+      <th> Encargado </th>
+      <th> Fecha de Creacion </th>
+      <th> Descripcion </th>
   </tr>
   {% for seguimiento in seguimientos %}
   <tr>
-    <td>{{ seguimiento.user.username }}</td>
+    <td>{{ seguimiento.user.first_name }} {{ seguimiento.user.last_name }}</td>
     <td>{{ seguimiento.fechaC }}</td>
     <td>{{ seguimiento.descripcion }}</td>
   </tr>
@@ -29,7 +29,4 @@
 </table>
 
 <a href="{{ url_for('denuncia_index') }}" class="link">Volver</a>
-<form action="{{ url_for('seguimiento_new', denuncia_id = denuncia_id) }}">
-  <button type="submit" class="btn btn-info mt-2 ml-2">Nuevo</button>
-</form>
 {% endblock %}

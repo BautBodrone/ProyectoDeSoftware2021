@@ -10,8 +10,8 @@
   </div>
 {% endblock %}
 {% block content %}
-  <form action="{{ url_for('seguimiento_create') }}" method="POST">
-    <input type="hidden" id="denuncia" name="denuncia" value="{{denuncia.id}}">
+  <form action="{{ url_for('seguimiento_create', denuncia_id=denuncia.id) }}" method="POST">
+    <input type="hidden" id="denuncia_id" name="denuncia_id" value="{{denuncia.id}}">
     <p>
       <label>Descripcion: <label>
       <textarea rows = "5" cols = "50" name= "descripcion" required ></textarea>

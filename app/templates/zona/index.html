@@ -1,45 +1,16 @@
 {% extends "layout.html" %}
 {% block title %}Zonas{% endblock %}
 {% block head %}
-  {{ super() }}
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-  crossorigin=""></script>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-  <script>
-    const initialLat = -34.9186;
-    const initialLng = -57.956;
-    const mapLayerUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-    class Map {
-        constructor({ selector }) {
-          this.initializeMap(selector);
-      }
-      initializeMap(selector) {
-          this.map = L.map(selector).setView([initialLat, initialLng], 13);
-          L.tileLayer(mapLayerUrl).addTo(this.map);
-      };
-      addZone(zona, color, nombre){
-        let polygon = L.polygon(
-            zona, {color:color}
-        ).addTo(this.map).bindPopup(nombre);
-        this.map.fitBounds(polygon.getBounds());
-      };
-    }
-  </script>
+  {{ super() }}  
 {% endblock %}
+
 {% block header %}
   <div>
     {{ super() }}
     <h1 id="header">Zonas</h1>
   </div>
 {% endblock %}
-{% block navbar %}
-  {{ super() }}
-{% endblock %}
+
 {% block content %}
 {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_new') %}
   <a href="{{ url_for('zona_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
@@ -68,40 +39,34 @@
       <th>Coordenadas</th>
       {% if user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_edit') %}
         <th>  Acciones  </th>
-        <th>  Editar  </th>
-      {% if user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_delete') %}
-      <th>  Eliminar  </th>
       {% endif %}
   </tr>
 {% for zona in zonas.items %}
     <tr>
-      <td>{{ zona.nombre }}</td>
+      <td><a class="link" href="{{ url_for('zona_show', id=zona.id) }}">{{ zona.nombre }}</a></td>
       <td style="background-color: {{ zona.color }};">{{ zona.color }} </td>
       <td>{{ zona.estado }} </td>
       <td>
-        <iframe  src="{{  url_for('zona_show_map', id = zona.id ) }}" loading="lazy" name="map" style="width: 100%;height:8rem;">
+        <iframe  src="{{  url_for('zona_show_map', id = zona.id ) }}" loading="lazy" name="map" style="width:100%;height:100%;">
         </iframe>
       </td>
     <td>
-      <form action="{{  url_for('zona_edit', id = zona.id ) }}"  >
-        {% if user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_edit') %}
-        <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
-        {% endif %}
-      </form>
-      </td>
-    
-    
-      <td>
+      {% if  user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_edit') %}
+        <form action="{{  url_for('zona_edit', id = zona.id ) }}"  >
+         <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
+        </form>
+      {% endif %}
       {% if user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_delete') %}
       <form action="{{ url_for('zona_delete') }}" method="POST" enctype="multipart/form-data">
         <input type="hidden" id="zona_id" name="zona_id" value="{{zona.id}}">
-        <button onclick="return confirm('¿Esta seguro de que desea eliminar este zona?');" class="btn btn-danger mt-2 ml-2">eliminar</a>
+        <button onclick="return confirm('¿Esta seguro de que desea eliminar esta zona?');" class="btn btn-danger mt-2 ml-2">Eliminar</a>
       </form>
       {% endif %}
     </td>
   </tr>
   {% endfor %}
 </table>
+<<<<<<< HEAD
   {% if user!=None and my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_new') %}
   <a href="{{ url_for('zona_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
   {% endif %}
@@ -113,6 +78,8 @@
     {% endfor %}
     <div id="mapid" class="mapform"></div>
   </div>
+=======
+>>>>>>> de87b034df41024c06ac06e0363f517340c4d950
 
   {% if zonas.has_prev %}
   <a class="link" href="{{ url_for('zona_index', page_num=zonas.prev_num,) }}">Anterior</a>
@@ -120,13 +87,13 @@
   {% for page_num in zonas.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
      {% if page_num%}
        {% if zonas.page == page_num%}
-         <a href="" class="link selected">{{page_num}}</a>
+         <a href="" class="link active">{{page_num}}</a>
        {% else %}
          <a href="{{ url_for('zona_index',page=page_num)}}" class="link">{{page_num}}</a>
        {% endif %}
      {% endif %}
   {% endfor %}
- {% if zonas.has_next %}
+  {% if zonas.has_next %}
   <a class="link" href="{{ url_for('zona_index', page=zonas.next_num) }}">Siguiente</a>
   {% endif %}
 

@@ -4,28 +4,19 @@ from app.models.seguimiento import Seguimiento
 from app.helpers.auth import authenticated
 from app.db import db
 from app.models.user import User
-
-
-def denuncia(unaDenuncia):
-    denuncia=unaDenuncia
-
-def getDenuncia():
-    return denuncia
+from app.models.denuncia import Denuncia
 
 def index(denuncia_id):
 
     if not authenticated(session):
         abort(401)
 
-    print("-----------------")
-    print(denuncia_id)
     seguimientos= Seguimiento.query.filter_by(denuncia_id=denuncia_id)
     # denuncia(denuncia_id)
 
     return render_template("seguimiento/index.html",seguimientos=seguimientos,denuncia_id=denuncia_id)
 
 def new(denuncia_id):
-
 
     if not authenticated(session):
         abort(401)
@@ -45,11 +36,11 @@ def create(denuncia_id):
     print("------------------------------------")
     print(request.form)
     
-    # try:
-    Seguimiento.save(new_seguimiento)
-    # except:
-    #     flash("Fallo al cargar el seguimiento", "error")
-    #     return redirect(request.referrer)
+    try:
+        Seguimiento.save(new_seguimiento)
+    except:
+        flash("Fallo al cargar el seguimiento", "error")
+        return redirect(request.referrer)
 
     seguimientos= Seguimiento.query.filter_by(denuncia_id=denuncia_id)
 

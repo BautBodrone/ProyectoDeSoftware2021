@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block title %}{{recorrido.nombre}}{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header">{{recorrido.nombre}}</h1>
+  </div>
+{% endblock %}
+{% block content %}
+<iframe  src="{{  url_for('recorrido_show_map', id = recorrido.id ) }}" loading="lazy" name="map" scrolling="no" style="width:70%;height:80vh;float:right;">
+</iframe>
+<div style="max-width: 30%">
+    <p>
+        <label>Nombre: {{ recorrido.nombre }}<label>
+    </p>
+    <p>
+        <label>Descripcion: {{ recorrido.descripcion }}<label>
+    </p>
+    <p>
+        <label for="estado">Estado: {{ recorrido.estado }}</label>
+    </p>
+    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_edit') %}
+        <form action="{{  url_for('recorrido_edit', id = recorrido.id ) }}"  >
+        <button type="submit" class="btn btn-warning mt-2">Editar</button>
+        </form>
+    {% endif %}
+    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_delete') %}
+    <form action="{{ url_for('recorrido_delete') }}" method="POST" enctype="multipart/form-data">
+      <input type="hidden" id="recorrido_id" name="recorrido_id" value="{{recorrido.id}}">
+      <button onclick="return confirm('¿Esta seguro de que desea eliminar este recorrido?');" class="btn btn-danger mt-2">Eliminar</a>
+    </form>
+    {% endif %}
+</div>
+<br>
+<a href="{{ url_for('recorrido_index') }}" class="link">Volver</a>
+{% endblock %}

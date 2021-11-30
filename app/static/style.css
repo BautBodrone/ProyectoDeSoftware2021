@@ -4,20 +4,15 @@ body {
   font-family: 'Montserrat', Helvetica, sans-serif;
   font-size: 1em;
 }
-#content{
-  margin-left: 2%;
-}
 form label, form select, form option{
   display: block;
   
 }
-div form{
-  display: inline-block;
+
+.tabla {
+  display: flex;  
 }
- .tabla {
-  display: flex;
-  
-}
+
 .tabla input, .tabla select{
   margin-left: 10px;
 }
@@ -40,6 +35,14 @@ form label{
   width: auto;
   text-align: justify;
 }
+
+h1{
+  display: inline-flex;
+  width: 60%;
+  text-align: center;
+  flex-direction: column;
+}
+
 .header {
   padding: 30px;
   text-align: center;
@@ -80,6 +83,7 @@ a.navbar{
 
 a.link {
   text-transform: uppercase;
+  text-align: center;
   font-size: 10px;
   padding: 10px 15px;
   border-radius: 0;
@@ -89,7 +93,14 @@ a.link {
   line-height: 1.5;
   text-decoration: none;
   letter-spacing: 1px;
+}
 
+.map-fullpage{
+  height: 85vh;
+  width: 100%;
+  display: flex;
+  flex-grow: 100;
+  border-radius:10px;
 }
 
 .usuario{
@@ -133,16 +144,6 @@ a.page {
   height: 3.5em;
 }
 
-.navbar #search {
-  width: 100%;
-  border-radius: 0px;
-  height: 42px;
-  text-align: center;
-  color: rgba(208,207,207,1.00);
-  font-size: 14px;
-  margin-bottom: 21px;
-}
-
 .content { 
   padding-top: 1%;
     padding-right: 3%;
@@ -153,8 +154,15 @@ a.page {
     height: auto;
 }
 
-.content table, th{
+.content table button{
+  vertical-align: top;
+  width: 72px;
+  height: 30px;
+  font-size: small;
+ 
+}
 
+.content table, th{
   text-align:center;
   table-layout:fixed;
   width: 100%;
@@ -164,49 +172,6 @@ a.page {
   word-wrap:break-word;
    
 }
-.content table button{
-  vertical-align: top;
-  width: 72px;
-  height: 30px;
-  font-size: small;
- 
-}
- 
-@media screen and (min-width: 768px) {
-  .content  {
-    height: auto;
-    padding-left: 300px;
-    float: center;
-    margin: 10px auto;
-    width: 100%;
-    font-size:90%;
-    
-  }
-  
-  .navbar{
-    width: 300px;
-  }
-  
-}
-
-.content table, th{
-
-  text-align:center;
-  table-layout:fixed;
-  width: 100%;
-  border-collapse: separate;
-  border-spacing:  1px;
-  overflow: hidden;
-  word-wrap:break-word;
-   
-}
-.content table button{
-  vertical-align: top;
-  width: 72px;
-  height: 30px;
-  font-size: small;
- 
-}
 
 @media screen and (min-width: 768px) {
   .content  {
@@ -215,10 +180,34 @@ a.page {
     float: center;
     margin: 10px auto;
     width: 100%;
-    font-size:90%;
-    
+    font-size:90%;   
+  }
+
+  #content{
+    margin-left: 2%;
+    width: auto;
+    margin-bottom: 2rem;      
+  }
+
+  .mapform{
+    max-width:max-content;
+    min-width: 65%;
+    height:60vh;
+    float:right;
+    display: flex;
+    flex-grow: 100;
+    border-radius:10px;
+    margin-bottom: 1rem;
   }
   
+  .map-fullpage{
+    height: 80vh;
+    width: 100%;
+    display: flex;
+    flex-grow: 100;
+    border-radius:10px;
+  }
+
   .navbar{
     width: 300px;
   }  
@@ -226,15 +215,34 @@ a.page {
 
 @media screen and (min-width: 360px) and ( max-width:768px)  {
   .content{
-      
       display:grid;
       width: 100%;
       height: auto;
-      font-size: x-small;
-       
     }
 
-     
+    #content{
+      width: auto;
+      margin-bottom: 2rem;      
+    }
+
+    .map-fullpage{
+      height: 60vh;
+      width: 100%;
+      display: flex;
+      flex-grow: 100;
+      border-radius:10px;
+    }
+
+    .mapform{
+      position: fixed;
+      float: right;
+      width:100%;
+      height:40vh;  
+      flex-grow: 100;
+      border-radius:10px;
+      margin-bottom: 1rem;
+    }
+
     .content table  {
       align-content: center;
       table-layout:fixed;
@@ -252,7 +260,6 @@ a.page {
     }
     .navbar{
       width: 100%;
-
     }
   }
 
@@ -261,7 +268,6 @@ table, td, th {
   text-align: center;
   padding: 8px;
 }
-
 
 table {
   text-align: center;
@@ -283,32 +289,6 @@ th , td{
 
 tr:nth-child(even) {
   background-color: #dddddd;
-}
-
-.map-fullpage{
-  height: 60vh;
-  display: flex;
-  flex-grow: 100;
-  border-radius:10px;
-}
-
-.mapform{
-  float:right;
-  height: 20rem;
-  width: 40rem;
-  display: flex;
-  flex-grow: 100;
-  border-radius:10px;
-  margin-bottom: 1rem;
-}
-
-.map-table{
-  height: 6rem;
-  width: 12rem;
-  white-space:nowrap;
-  display: flex;
-  flex-grow: 100;
-  border-radius:10px;
 }
 
 #lat, #lng, #coordenadas {

@@ -24,6 +24,13 @@ def new():
     """
     return render_template("zona/new.html")
 
+def show(id):
+    """
+         muestra el id
+    """
+    zona = Zona.query.filter_by(id=int(id)).first()
+    return render_template("zona/show.html",zona=zona)
+
 def show_map(id):
     """
          muestra el mapa dibujando la zona del id
@@ -94,7 +101,7 @@ def update():
     req = request.form
     data = Zona(nombre=req["nombre"],estado=req["estado"],
     color=req["color"],coordenadas=req.getlist("coordenadas"))
-    zona = Zona.search_id(data["id"])
+    zona = Zona.search_id(req["id"])
     try:
         zona.update(data)
     except:
@@ -129,11 +136,12 @@ def filtro():
     data = request.form
     estado = data["estado"]
     nombre = data["nombre"]
-    if (estado != "" and nombre!= ""):
-      zonas=Zona.query.filter_by(estado=estado,nombre=nombre).paginate(page=page,per_page=page_config)
+    busqueda = "%{}%".format(nombre)
+    if (estado != "" and nombre != ""):
+      zonas=Zona.query.filter(Zona.nombre.like(busqueda),Recorrido.estado.like(estado)).paginate(page=page,per_page=page_config)
     else:
         if (estado == "" and nombre != ""):
-            zonas=Zona.query.filter_by(nombre=nombre).paginate(page=page,per_page=page_config)
+            zonas=Zona.query.filter(Zona.nombre.like(busqueda)).paginate(page=page,per_page=page_config)
         else:
             if(estado !="" and nombre==""):
                 zonas=Zona.query.filter_by(estado=estado).paginate(page=page,per_page=page_config)

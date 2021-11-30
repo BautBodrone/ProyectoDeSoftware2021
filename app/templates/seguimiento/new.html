@@ -3,12 +3,18 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header">Crear Seguimiento {{denuncia.nombre}}</h1>
+  </div>
+{% endblock %}
 {% block content %}
   <h1>Crear Seguimiento </h1>
   <form action="{{ url_for('seguimiento_create', denuncia_id=denuncia_id) }}" method="POST">
     <p>
-      <label>Descripcion <label></br>
-      <input name="descripcion" placeholder="descripcion"/>
+      <label>Descripcion: <label>
+      <textarea rows = "5" cols = "50" name= "descripcion" required ></textarea>
     </p>
     <p>
     <label> Usuario Encargado:  <label>

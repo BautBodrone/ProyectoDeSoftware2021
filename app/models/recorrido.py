@@ -39,16 +39,7 @@ class Recorrido(db.Model):
         self.coordenadas = data["coordenadas"]
         self.estado = data["estado"]
         db.session.commit()
-
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-
-    @classmethod 
-    def save(self, new_recorrido):
-        db.session.add(new_recorrido)
-        db.session.commit()
-
+        
     def search_id(id):
         return db.session.query(Recorrido).get(id)
         

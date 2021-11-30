@@ -50,7 +50,7 @@
     <div class="header" id="header">
       {% block header %}
       <a href="{{ url_for('home') }}"><img src="/static/imgs/logo.png" alt="logo" width="100" style="position:absolute; left:5%;"></a>
-      {% if is_authenticated(session) %}
+      {% if my_user != None and is_authenticated(session) %}
         <a class="usuario" href= "{{ url_for('user_edit', user_id = my_user(is_authenticated(session)).id ) }}" style="float:right;">{{ is_authenticated(session) }}</a>
       {% endif %}
       {% endblock %}
@@ -60,7 +60,7 @@
     {% block navbar %}
       <a href="/" class="navbar" id="home" >Inicio</a>
       <a href="{{ url_for('denuncia_index') }}" class="navbar">Denuncia</a>
-      {% if is_authenticated(session) %}
+      {% if my_user != None and is_authenticated(session) %}
         <a href="{{ url_for('recorrido_index') }}" class="navbar">Recorrido</a>
         <a href="{{ url_for('zona_index') }}" class="navbar">Zonas</a>
         <a href="{{ url_for('punto_index') }}" class="navbar">Puntos de Encuentro</a>

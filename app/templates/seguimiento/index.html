@@ -3,8 +3,16 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header"> {{ denuncia.titulo }}</h1>
+  </div>
+{% endblock %}
 {% block content %}
-<h1>Seguimientos para denuncia {{denuncia_id}}</h1>
+<form action="{{ url_for('seguimiento_new', denuncia_id=denuncia.id)}}">
+  <button type="submit" class="btn btn-info mt-2 ml-2" style="float:right;  margin-top: 5px; width:75px">Nuevo</button>
+</form>
 <table>
   <tr>
       <th>  User id  </th>
@@ -19,7 +27,6 @@
   </tr>
   {% endfor %}
 </table>
-
 
 <a href="{{ url_for('denuncia_index') }}" class="link">Volver</a>
 <form action="{{ url_for('seguimiento_new', denuncia_id = denuncia_id) }}">

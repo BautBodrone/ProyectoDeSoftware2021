@@ -18,6 +18,7 @@ export default {
   display: block;
   width: 100%;
   height: 3.5em;
+  background-color: beige;
 }
 .navbar {
   font-family: 'Montserrat', sans-serif;
@@ -26,11 +27,13 @@ export default {
   padding-left: 1%;
   padding-top: 1%;
   padding-right: 1%;
-  margin-bottom: 2em;
-  text-align: center;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  text-align: left;
   transition: 0.5s;
   overflow-x: hidden;
   white-space: nowrap;   
+  color:#42b983;
 }
 h3 {
   margin: 40px 0 0;

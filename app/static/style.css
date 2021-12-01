@@ -4,6 +4,7 @@ body {
   font-family: 'Montserrat', Helvetica, sans-serif;
   font-size: 1em;
 }
+
 form label, form select, form option{
   display: block;
   
@@ -43,9 +44,10 @@ h1{
   flex-direction: column;
 }
 
-.header {
+.header h1{
   padding: 30px;
-  text-align: center;
+  padding-left: 50%;
+  text-align: Center;
   font-size: 30px;
 }
 
@@ -55,8 +57,7 @@ h1{
   overflow: hidden;
 }
 
-#footer {
-  position:fixed ;
+footer {
   bottom:0; 
   min-height:2em;
   text-align: center;
@@ -173,6 +174,13 @@ a.page {
    
 }
 
+.buttonHolder .btn,.buttonHolder .link {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-bottom:auto  
+}
+
 @media screen and (min-width: 768px) {
   .content  {
     height: auto;
@@ -187,6 +195,11 @@ a.page {
     margin-left: 2%;
     width: auto;
     margin-bottom: 2rem;      
+  }
+
+  .card{
+    height:60vh;
+    text-align: center; 
   }
 
   .mapform{

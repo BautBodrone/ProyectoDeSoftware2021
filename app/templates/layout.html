@@ -15,7 +15,7 @@
     <script src="{{ url_for('static', filename='sidenavbar.js') }}"></script>
 
     <style>
-      body, #footer, a.navbar, .usuario{
+      body, #footer, a.navbar, .usuario,.card{
         background-color: {{ configurator().get_private_bg_color() }};
         color: {{ configurator().get_private_letters_color() }};
       }
@@ -51,7 +51,7 @@
       {% block header %}
       <a href="{{ url_for('home') }}"><img src="/static/imgs/logo.png" alt="logo" width="100" style="position:absolute; left:5%;"></a>
       {% if my_user != None and is_authenticated(session) %}
-        <a class="usuario" href= "{{ url_for('user_edit', user_id = my_user(is_authenticated(session)).id ) }}" style="float:right;">{{ is_authenticated(session) }}</a>
+        <a class="usuario" style="float:right;">{{ is_authenticated(session) }}</a>
       {% endif %}
       {% endblock %}
     </div>
@@ -103,6 +103,8 @@
       {% block content %}
       {% endblock %}
     </div>
+  </body>
+  <footer>
     <div id="footer">
       {% block footer %}
       <a> Proyecto de software - Grupo 33 © </a>
@@ -110,5 +112,5 @@
     </div> 
     {% block scripts %}
     {% endblock %} 
-  </body>
+  </footer>
 </html>

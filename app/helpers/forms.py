@@ -38,4 +38,7 @@ class ZonaUpdateForm(FlaskForm):
     color = StringField(widget=ColorInput())
     estado = SelectField('Estado', choices=[("publicado",'Publicado'),("despublicado",'Despublicado')])
 
-#Form de 
+#Form de DENUNCIAS
+class DenunciaForm(FlaskForm):
+    one_marker = HiddenField('one-marker')
+    

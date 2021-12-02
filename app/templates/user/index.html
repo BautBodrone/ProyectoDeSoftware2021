@@ -10,14 +10,10 @@
   </div>
 {% endblock %}
 
-{% block navbar %}
-  {{ super() }}
-{% endblock %}
-
 {% block content %}
 <div>
   {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_new') %}
-<a href="{{ url_for('user_new') }}" class="link" style="float:right;  margin-top: 5px; width:75px" >Nuevo</a>
+    <a href="{{ url_for('user_new') }}" class="link" style="float:right;  margin-top: 5px; width:75px" >Nuevo</a>
   {% endif %}
 <form class="tabla" action="{{ url_for('user_filtro') }}" method="POST">
   <h4>Filtrar</h4> 
@@ -50,7 +46,6 @@
     </form>
   <br>
 </div>
-
   <table>
     <tr>
         <th>  Email  </th>
@@ -58,9 +53,8 @@
         <th>  Apellido  </th>
         <th>  Roles  </th>
         <th>  Estado  </th>
-        <th>  Editar  </th>
-        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_delete') %}
-        <th>  Eliminar  </th>
+        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_edit') %}
+        <th>  Acciones  </th>
         {% endif %}
     </tr>
   {% for user in users.items %}
@@ -87,8 +81,6 @@
           <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
           {% endif %}
         </form>
-        </td>
-        <td>
         {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_delete') %}
         <form action="{{ url_for('user_delete') }}" method="POST" enctype="multipart/form-data">
           <input type="hidden" id="user_id" name="user_id" value="{{user.id}}">
@@ -107,7 +99,7 @@
   {% for page_num in users.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
      {% if page_num%}
        {% if users.page == page_num%}
-         <a href="" class="link selected">{{page_num}}</a>
+         <a href="" class="link active">{{page_num}}</a>
        {% else %}
          <a href="{{ url_for('user_index',page=page_num)}}" class="link">{{page_num}}</a>
        {% endif %}

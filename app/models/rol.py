@@ -27,3 +27,9 @@ class Rol(db.Model):
     def save(self,new_rol):
         db.session.add(new_rol)
         db.session.commit()
+        
+    def search(nombre):
+        """
+            Busca un rol por nobre
+        """
+        return db.session.query(Rol).filter_by(nombre=nombre).first()

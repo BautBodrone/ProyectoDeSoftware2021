@@ -6,12 +6,6 @@
   crossorigin=""></script>
   <script type="module" src="/static/js/map.js" ></script>
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-
   {{ super() }}
 {% endblock %}
 {% block header %}
@@ -43,8 +37,8 @@
 {% block content %}
   <form id="form-map" class="one-mark" action="{{ url_for('punto_update') }}" method="POST">
     <input id="punto-lat" class="punto-lat" name="punto-lat" type="hidden" value="{{ punto.lat }}">
-      <input id="punto-lng" class="punto-lng" name="punto-lng" type="hidden" value="{{ punto.lng }}">
-      <input id="{{ punto }}" class="punto-nombre" type="hidden" value="{{ punto.nombre }}">
+    <input id="punto-lng" class="punto-lng" name="punto-lng" type="hidden" value="{{ punto.lng }}">
+    <input id="{{ punto }}" class="punto-nombre" type="hidden" value="{{ punto.nombre }}">
     <div class="map-container">
       <div id="mapid" class="mapform" ></div>
     </div>
@@ -58,7 +52,7 @@
       <input  name="direccion" placeholder="Direccion" value="{{punto.direccion}}"required maxlength=15/>
     </p>
     <p>
-     <label>Estado<label>
+     <label>Estado: </label>
         <select id="estado" name="estado" value="{{punto.estado}}"required>
          <option value="" disabled hidden>
           Seleccione un estado

@@ -20,6 +20,19 @@ def index():
 
     return render_template("punto/index.html", puntos=puntos)
 
+def show(id):
+    """
+        muestra la info del punto    
+    """
+    punto = Punto.query.filter_by(id=int(id)).first()
+    return render_template("punto/show.html",punto=punto)
+
+def show_map(id):
+    """
+        muestra el mapa dibujando el punto del id    
+    """
+    punto = Punto.query.filter_by(id=int(id)).first()
+    return render_template("punto/map.html",punto=punto)
 
 def new():
     if not authenticated(session):
@@ -30,7 +43,6 @@ def new():
         return redirect(request.referrer)
 
     return render_template("punto/new.html")
-
 
 def create():
     if not authenticated(session):
@@ -50,7 +62,6 @@ def create():
         return redirect(request.referrer)
 
     return redirect(url_for("punto_index"))
-
 
 def delete(id):
     if not authenticated(session):
@@ -96,11 +107,12 @@ def filtro():
     data = request.form
     estado = data["estado"]
     nombre = data["nombre"]
+    busqueda = "%{}%".format(nombre)
     if (estado != "" and nombre!= ""):
-      puntos=Punto.query.filter_by(estado=estado,nombre=nombre).paginate(page=page,per_page=page_config)
+      puntos=Punto.query.filter(Punto.nombre.like(busqueda),Punto.estado.like(estado)).paginate(page=page,per_page=page_config)
     else:
         if (estado == "" and nombre != ""):
-            puntos=Punto.query.filter_by(nombre=nombre).paginate(page=page,per_page=page_config)
+            puntos=Punto.query.filter_by(Punto.nombre.like(busqueda)).paginate(page=page,per_page=page_config)
         else:
             if(estado !="" and nombre==""):
                 puntos=Punto.query.filter_by(estado=estado).paginate(page=page,per_page=page_config)

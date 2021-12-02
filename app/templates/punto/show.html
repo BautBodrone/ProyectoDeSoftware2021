@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block title %}{{punto.nombre}}{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header">{{punto.nombre}}</h1>
+  </div>
+{% endblock %}
+{% block content %}
+<iframe  src="{{  url_for('punto_show_map', id = punto.id ) }}" loading="lazy" name="map" scrolling="no" style="width:70%;height:80vh;float:right;">
+</iframe>
+<div style="max-width: 30%">
+    <p>
+        <label>Nombre: {{ punto.nombre }}</label>
+    </p>
+    <p>
+        <label>Email: {{ punto.email }} </label>
+    </p>
+    <p>
+        <label>telefono: {{ punto.telefono }} </label>
+    </p>
+    <p>
+        <label for="estado">Estado: {{punto.estado}} </label>
+    </p>
+    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_edit') %}
+    <form action="{{ url_for('punto_edit', id = punto.id ) }}"  >
+        <button type="submit" class="btn btn-warning mt-2">Editar</button>
+    </form>
+    {% endif %}
+    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_delete') %}
+    <form action="{{ url_for('punto_delete', id = punto.id) }}" method="POST" enctype="multipart/form-data">
+        <button onclick="return confirm('¿Esta seguro de que desea eliminar este punto de encuentro?');"  class="btn btn-danger mt-2">Eliminar</a> 
+    </form>
+    {% endif %}
+</div>
+<br>
+<a href="{{ url_for('punto_index') }}" class="link">Volver</a>
+{% endblock %}

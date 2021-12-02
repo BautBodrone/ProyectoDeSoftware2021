@@ -5,14 +5,7 @@
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""></script>
-  <script type="module" src="/static/js/map.js" ></script>
   
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-
 {% endblock %}
 {% block header %}
   <div>
@@ -24,38 +17,66 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_new') %}
+{% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_new') %}
   <a href="{{ url_for('recorrido_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
-  {% endif %}
-  <div class="map-container">
-    {% for recorrido in recorridos.items %}
-      <input id="{{ recorrido }}" class="recorridos" type="hidden" value="{{ recorrido.coordenadas }}" >
-      <input id="{{ recorrido }}" class="recorridos-nombre" type="hidden" value="{{ recorrido.nombre }}" >
-    {% endfor %}
-    <div id="mapid" class="mapform"></div>
-  </div>
-  {% for recorrido in recorridos.items %}
-    <p>{{ recorrido.nombre }}</p>
-    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_edit') %}
-        <form action="{{ url_for('recorrido_edit', id = recorrido.id ) }}"  >
-          <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
-        </form>
-    {% endif %}
-    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_delete') %}
-    <form action="{{ url_for('recorrido_delete') }}" method="POST" enctype="multipart/form-data">
-        <input type="hidden" id="recorrido_id" name="recorrido_id" value="{{ recorrido.id }}">
-        <button onclick="return confirm('¿Esta seguro de que desea eliminar esta Zona?');" class="btn btn-danger mt-2 ml-2">eliminar</button>
-    </form>
-    {% endif %}
-  {% endfor %}
+{% endif %}
+<form  class="tabla" action="{{ url_for('recorrido_filtro') }}" method="POST">
+  <h3>Filtrar</h3> 
+        <input name="nombre" placeholder="Nombre"/>  
+        <select  name="estado">
+          <option value="" selected>Seleccione un estado</option>
+          <option value="publicado">Publicado</option>
+          <option value="despublicado">Despublicado</option>
+        </select>
+        <input type="submit" value="Filtrar">
+  </form>
+  <br>
+  
+<table>
+  <tr>
+      <th>  Nombre  </th>
+      <th>  Descripcion  </th>
+      <th>  Estado   </th>
+      <th>Coordenadas</th>
+      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_delete') %}
+      <th>  Acciones  </th>
+      {% endif %}
+  </tr>
+{% for recorrido in recorridos.items %}
+  <tr>
+    <td><a class="link" href="{{ url_for('recorrido_show', id=recorrido.id) }}">{{ recorrido.nombre }}</a></td>
+    <td>{{ recorrido.descripcion }} </td>
+    <td>{{ recorrido.estado }} </td>
+    <td>
+      <iframe  src="{{  url_for('recorrido_show_map', id = recorrido.id ) }}" loading="lazy" name="map" style="width:100%;height:100%;">
+      </iframe> 
+    </td>
 
+    <td>
+      <form action="{{  url_for('recorrido_edit', id = recorrido.id ) }}"  >
+        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_edit') %}
+        <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
+        {% endif %}
+      </form>
+      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_delete') %}
+      <form action="{{ url_for('recorrido_delete') }}" method="POST" enctype="multipart/form-data">
+        <input type="hidden" id="recorrido_id" name="recorrido_id" value="{{recorrido.id}}">
+        <button onclick="return confirm('¿Esta seguro de que desea eliminar este recorrido?');" class="btn btn-danger mt-2 ml-2">Eliminar</a>
+      </form>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+</br>
   {% if recorridos.has_prev %}
   <a class="link" href="{{ url_for('recorrido_index', page_num=recorridos.prev_num,) }}">Anterior</a>
   {% endif %}
   {% for page_num in recorridos.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
      {% if page_num%}
        {% if recorridos.page == page_num%}
-         <a href="" class="link selected">{{page_num}}</a>
+         <a href="" class="link active">{{page_num}}</a>
        {% else %}
          <a href="{{ url_for('recorrido_index',page=page_num)}}" class="link">{{page_num}}</a>
        {% endif %}

@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block title %}{{denuncia.nombre}}{% endblock %}
+{% block head %}
+  {{ super() }}
+  {% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header">{{denuncia.titulo}}</h1>
+  </div>
+{% endblock %}
+{% block content %}
+<iframe  src="{{  url_for('denuncia_show_map', id = denuncia.id ) }}" loading="lazy" name="map" scrolling="no" style="width:70%;height:80vh;float:right;">
+</iframe>
+<div style="max-width: 30%">
+    <p>
+        <label>Titulo: {{ denuncia.titulo }}</label>
+    </p>
+    <p>
+        <label>Categoria: {{ denuncia.categoria }}</label>
+    </p>
+    <p>
+        <label>Fecha Inicio: {{ denuncia.fechaC }}</label>
+    </p>
+    {% if (denuncia.fechaF) %}
+    <p>
+        <label>Fecha Fin: {{ denuncia.fechaF }}</label>
+    </p>
+    {% endif %}
+    <p>
+        <label>Descripcion: {{ denuncia.descripcion }}</label>
+    </p>
+    <p>
+        <label for="estado">Estado: {{ denuncia.estado }} </label>
+    </p>
+    <p>
+        <label>Informacion del denunciante: </label>
+        <ul>Email: {{ denuncia.emailD }} </ul>
+        <ul>Nombre: {{ denuncia.nombreD }} </ul>
+        <ul>Apellido: {{ denuncia.apellidoD }} </ul>
+        <ul>Telefono: {{ denuncia.telefono }} </ul>
+    </p>
+    <p>
+        <label>Asignado a: {{ denuncia.asignadoA }}</label>
+    </p>
+    <form action="{{ url_for('seguimiento_index', denuncia_id = denuncia.asignadoA ) }}">
+        <button type="submit" class="btn btn-info mt-2">Seguimientos</button>
+    </form>
+    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'denuncia_edit') %}
+        <form action="{{ url_for('denuncia_edit', denuncia_id = denuncia.id ) }}">
+            <button type="submit" class="btn btn-warning mt-2">Editar</button>
+        </form>
+    {% endif %}
+    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'denuncia_delete') %} 
+        <form action="{{ url_for('denuncia_delete') }}" method="POST" enctype="multipart/form-data">
+            <input type="hidden" id="denuncia_id" name="denuncia_id" value="{{denuncia.id}}">
+            <button onclick="return confirm('Estas seguro de que deseas eliminar esta denuncia?');" class="btn btn-danger mt-2">eliminar</a>
+        </form>
+    {% endif %}
+    <br>
+</div>
+<a href="{{ url_for('denuncia_index') }}" class="link">Volver</a>
+{% endblock %}

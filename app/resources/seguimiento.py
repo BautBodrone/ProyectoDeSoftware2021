@@ -1,52 +1,55 @@
 from flask import flash, redirect, render_template, request, url_for, session, abort
-from app.models import denuncia
-from app.models import seguimiento
 
 from app.models.seguimiento import Seguimiento
 from app.helpers.auth import authenticated
 from app.db import db
 from app.models.user import User
+from app.models.denuncia import Denuncia
 
-pagConf=4
-
-def index():
-    """
-        El metodo mostrara todos las denuncias en una tabla
-    """
+def index(denuncia_id):
 
     if not authenticated(session):
         abort(401)
 
-    return render_template("seguimiento/index.html")
+    seguimientos= Seguimiento.query.filter_by(denuncia_id=denuncia_id)
+    denuncia = Denuncia.query.filter_by(id = denuncia_id).first()
 
-def new(denuncia):
+    return render_template("seguimiento/index.html",seguimientos=seguimientos,denuncia=denuncia)
 
+def new(denuncia_id):
 
     if not authenticated(session):
         abort(401)
     users = User.query.all()
-    return render_template("Seguimiento/new.html", users=users,denuncia=denuncia)
+    denuncia = Denuncia.query.filter_by(id = denuncia_id).first()
+    
+    return render_template("seguimiento/new.html", users=users, denuncia=denuncia)
 
-def create():
+def create(denuncia_id):
     """
-        El metodo ,si esta autenticado, creara una nueva denuncia
+        El metodo ,si esta autenticado, creara un nuevo seguimiento
     """
 
     if not authenticated(session):
         abort(401)
 
-    new_seguimiento = Seguimiento(**request.form)
+    new_seguimiento = Seguimiento(**request.form)   
+    denuncia = Denuncia.query.filter_by(id = denuncia_id).first()
+    
     try:
         Seguimiento.save(new_seguimiento)
     except:
-        flash("Denuncia con ese titulo o coordenadas ya existe", "error")
+        flash("Fallo al cargar el seguimiento", "error")
         return redirect(request.referrer)
-    
-    return redirect(url_for("seguimiento_index"))
+
+    seguimientos= Seguimiento.query.filter_by(denuncia_id=denuncia_id)
+
+    return redirect(url_for("seguimiento_index",denuncia_id=denuncia.id))
+
 
 def delete():
     """
-        El metodo ,si esta autenticado, eliminara al usuario seleccionado
+        El metodo ,si esta autenticado, eliminara el seguimiento
     """
 
     if not authenticated(session):

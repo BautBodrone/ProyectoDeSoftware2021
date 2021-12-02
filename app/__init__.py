@@ -1,6 +1,6 @@
-from os import path, environ
+from os import path, environ,urandom
 
-from flask import Flask, render_template, g, Blueprint, abort, request
+from flask import Flask, render_template, g, Blueprint, abort, request,session
 from flask.helpers import url_for
 from werkzeug.utils import redirect
 from flask_session import Session
@@ -9,9 +9,10 @@ from app.helpers.auth import authenticated
 
 from config import config
 from app import db
+from app.models.user import User
 from app.resources import user, auth, rol , configuration, punto, zona, home, permiso, denuncia, seguimiento, recorrido
 from app.resources.api.zona import zonas_api
-from app.resources.api.denuncias import denuncias_api
+from app.resources.api.denuncia import denuncias_api
 from app.helpers import handler, user_helper, configurator
 
 from app.models.punto import Punto
@@ -19,11 +20,26 @@ from app.models.punto import Punto
 from app.helpers import handler, user_helper
 from app.helpers import auth as helper_auth
 
+from oauthlib.oauth2 import WebApplicationClient
+from flask_login import (LoginManager,
+    current_user,
+    login_required,
+    login_user,
+    logout_user,
+    )
+
+GOOGLE_CLIENT_ID ="121321804230-vh5t42njjsba08v7iif6k2ceai2k83qm.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET = "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"
+GOOGLE_DISCOVERY_URL = (
+    "https://accounts.google.com/.well-known/openid-configuration"
+)
 
 def create_app(environment="production"):
 
     # Configuración inicial de la app
     app = Flask(__name__)
+
+    app.secret_key = environ.get("SECRET_KEY") or urandom(24)
 
     # Carga de la configuración
     env = environ.get("FLASK_ENV", environment)
@@ -45,32 +61,35 @@ def create_app(environment="production"):
     # home
     app.add_url_rule("/", "home", home.index)
 
-    # home
-    app.add_url_rule("/", "home", home.index)
-
     # Autenticación
+    app.add_url_rule("/iniciar", "auth_loginG", auth.loginG)
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
     app.add_url_rule("/cerrar_sesion", "auth_logout", auth.logout)
     app.add_url_rule("/autenticacion", "auth_authenticate", auth.authenticate, methods=["POST"])
+    app.add_url_rule("/login/callback", "auth_callback", auth.callback, methods=["GET"])
 
     #Rutas de Zonas
     app.add_url_rule("/zonas", "zona_index", zona.index)
+    app.add_url_rule("/zonas/map/<id>", "zona_show_map", zona.show_map)
     app.add_url_rule("/zonas/nuevo", "zona_new", zona.new)
+    app.add_url_rule("/zonas/show/<id>", "zona_show", zona.show)
+    app.add_url_rule("/zonas/edit/<id>", "zona_edit", zona.edit)
     app.add_url_rule("/zonas", "zona_create", zona.create, methods=["POST"])
     app.add_url_rule("/zonas/delete","zona_delete", zona.delete, methods=["POST"])
-    app.add_url_rule("/zonas/edit/<id>", "zona_edit", zona.edit)
+    app.add_url_rule("/zonas/upload","zona_csv", zona.save_csv, methods=["POST"])
     app.add_url_rule("/zonas/update","zona_update", zona.update, methods=["POST"])
-    app.add_url_rule("/zonas/filtro","zona_filtro", zona.filtro, methods=["POST"] )
+    app.add_url_rule("/zonas/filtro","zona_filtro", zona.filtro, methods=["POST"])
 
     #Rutas de Recorridos
     app.add_url_rule("/recorridos", "recorrido_index", recorrido.index)
+    app.add_url_rule("/recorridos/map/<id>", "recorrido_show_map", recorrido.show_map)
+    app.add_url_rule("/recorrido/show/<id>", "recorrido_show", recorrido.show)
     app.add_url_rule("/recorridos/nuevo", "recorrido_new", recorrido.new)
     app.add_url_rule("/recorridos", "recorrido_create", recorrido.create, methods=["POST"])
     app.add_url_rule("/recorridos/delete","recorrido_delete", recorrido.delete, methods=["POST"])
     app.add_url_rule("/recorridos/edit/<id>", "recorrido_edit", recorrido.edit)
     app.add_url_rule("/recorridos/update","recorrido_update", recorrido.update, methods=["POST"])
     app.add_url_rule("/recorridos/filtro","recorrido_filtro", recorrido.filtro, methods=["POST"] )
-
 
     # Rutas de Usuarios
     app.add_url_rule("/usuarios", "user_index", user.index)
@@ -94,16 +113,21 @@ def create_app(environment="production"):
     #Rutas de Puntos de encuentro
     app.add_url_rule("/puntos", "punto_index", punto.index)
     app.add_url_rule("/puntos", "punto_create", punto.create, methods=["POST"])
+    app.add_url_rule("/zonas/show/<id>", "zona_show", zona.show)
     app.add_url_rule("/puntos/nuevo", "punto_new", punto.new )
     app.add_url_rule("/puntos/filtro","punto_filtro",punto.filtro, methods=["POST"] )
 
     #Editar punto de encuentro
     app.add_url_rule("/puntos/edit/<id>", "punto_edit", punto.edit)
+    app.add_url_rule("/puntos/map/<id>", "punto_show_map", punto.show_map)
+    app.add_url_rule("/puntos/show/<id>", "punto_show", punto.show)
     app.add_url_rule("/puntos/update","punto_update",punto.update, methods=["POST"])  
     app.add_url_rule("/puntos/delete/<id>", "punto_delete", punto.delete, methods=["POST"])
 
      #  Rutas de Denuncias
     app.add_url_rule("/denuncias", "denuncia_index", denuncia.index)
+    app.add_url_rule("/denuncias/map/<id>", "denuncia_show_map", denuncia.show_map)
+    app.add_url_rule("/denuncias/show/<id>", "denuncia_show", denuncia.show)
     app.add_url_rule("/denuncias", "denuncia_create", denuncia.create, methods=["POST"])
     app.add_url_rule("/denuncias/nuevo", "denuncia_new", denuncia.new)
     app.add_url_rule("/denuncias/delete", "denuncia_delete", denuncia.delete, methods=["POST"])
@@ -112,10 +136,11 @@ def create_app(environment="production"):
     app.add_url_rule("/denuncias/filtro","denuncia_filtro",denuncia.filtro, methods=["POST"] )
 
     #Rutas de seguimientos
-    app.add_url_rule("/seguimientos", "seguimiento_index", seguimiento.index)
-    app.add_url_rule("/seguimientos", "seguimiento_create", seguimiento.create, methods=["POST"])
-    app.add_url_rule("/seguimientos/nuevo", "seguimiento_new", seguimiento.new)
-    app.add_url_rule("/seguimientos/delete", "seguimiento_delete", seguimiento.delete, methods=["POST"])
+    app.add_url_rule("/seguimiento/<denuncia_id>","seguimiento_index",seguimiento.index)
+    #app.add_url_rule("/seguimiento", "seguimiento_index", seguimiento.index)
+    app.add_url_rule("/seguimiento/<denuncia_id>", "seguimiento_create", seguimiento.create, methods=["POST"])
+    app.add_url_rule("/seguimiento/nuevo/<denuncia_id>", "seguimiento_new", seguimiento.new)
+    app.add_url_rule("/seguimiento/delete", "seguimiento_delete", seguimiento.delete, methods=["POST"])
 
 
     # Rutas del api zonas

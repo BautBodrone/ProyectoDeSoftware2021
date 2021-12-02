@@ -39,21 +39,26 @@ class Recorrido(db.Model):
         self.coordenadas = data["coordenadas"]
         self.estado = data["estado"]
         db.session.commit()
-
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-
-    @classmethod 
-    def save(self, new_recorrido):
-        db.session.add(new_recorrido)
-        db.session.commit()
-
+        
     def search_id(id):
-        return db.session.query(Zona).get(id)
+        return db.session.query(Recorrido).get(id)
         
     def publicados():
         try:
             return db.session.query(Recorrido).filter_by(estado='Publicado').all()
         except:
             return []
+        
+    def update(self, recorrido):
+        """
+            Actualiza el zona con los valores pasados por parametro
+        """
+        if self.nombre != recorrido["nombre"]:
+            self.nombre = recorrido["nombre"]
+        if self.estado != recorrido["estado"]:    
+            self.estado = recorrido["estado"]
+        if self.descripcion != recorrido["descripcion"]:
+            self.descripcion = recorrido["descripcion"]
+        if self.coordenadas != recorrido["coordenadas"]:
+            self.coordenadas = recorrido["coordenadas"]
+        db.session.commit()

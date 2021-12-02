@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Boolean, Text
 from sqlalchemy.sql.schema import ForeignKey 
 from sqlalchemy.sql.expression import null
 from sqlalchemy.sql.sqltypes import Date
@@ -30,7 +30,7 @@ class Denuncia(db.Model):
     categoria = Column(ChoiceType(CATEGORIAS))
     fechaC = Column(Date)
     fechaF = Column(Date)
-    descripcion = Column(String(30))
+    descripcion = Column(Text)
     lat = Column(String(30))
     lng = Column(String(30))
     estado = Column(ChoiceType(ESTADOS))
@@ -38,9 +38,9 @@ class Denuncia(db.Model):
     nombreD = Column(String(30))
     telefono = Column(String(30))
     emailD = Column(String(30))
-    asignadoA = Column(Integer, ForeignKey('users.id'))
+    asignadoA_id = Column(Integer, ForeignKey('users.id'))
+    seguimientos = relationship('Seguimiento', backref='denuncia', lazy=True)
 
-    
     def __init__(self , titulo,categoria,descripcion,
                     lat,lng,estado,apellidoD 
                     ,nombreD,telefono ,emailD,asignadoA):
@@ -56,7 +56,7 @@ class Denuncia(db.Model):
         self.nombreD = nombreD
         self.telefono = telefono
         self.emailD = emailD
-        self.asignadoA=asignadoA
+        self.asignadoA_id=asignadoA
 
     def delete(self):
         db.session.delete(self)
@@ -91,8 +91,11 @@ class Denuncia(db.Model):
         if self.descripcion != data["descripcion"]:
             self.descripcion = data["descripcion"]
 
-        if self.coordenadas != data["coordenadas"]:
-            self.coordenadas = data["coordenadas"]
+        if self.lat != data["lat"]:
+            self.lat = data["lat"]
+
+        if self.lng != data["lng"]:
+            self.lng = data["lng"]
 
         if self.estado != data["estado"]:
             self.estado = data["estado"]

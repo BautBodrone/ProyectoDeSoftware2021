@@ -3,29 +3,35 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header">Crear Seguimiento {{denuncia.nombre}}</h1>
+  </div>
+{% endblock %}
 {% block content %}
-  <h1>Crear Seguimiento para {{seguimiento.denuncia.titulo}}</h1>
-  <form action="{{ url_for('seguimiento_create') }}" method="POST">
+  <form action="{{ url_for('seguimiento_create', denuncia_id=denuncia.id) }}" method="POST">
+    <input type="hidden" id="denuncia_id" name="denuncia_id" value="{{denuncia.id}}">
     <p>
-      <label>Descripcion <label></br>
-      <input name="descripcion" placeholder="descripcion"/>
+      <label>Descripcion: <label>
+      <textarea rows = "5" cols = "50" name= "descripcion" required ></textarea>
     </p>
     <p>
     <label> Usuario Encargado:  <label>
-    <select class="selectpicker" name="asignadoA_id" id="asignadoA_id">
-    {% for user in users %}
-        {% for rol in user.rols %}
-        {% if rol.nombre != None %}
-            <option value={{user}}>{{user.first_name}}</option>
-        {% endif %}
+      <select style="width:10vw" name="user" id="user">
+        {% for user in users %}
+          {% for rol in user.rols %}
+            {% if rol.nombre != None %}
+              <option value={{user.id}}>{{user.first_name}} {{user.last_name}}</option>
+            {% endif %}
+          {% endfor %}
         {% endfor %}
-    {% endfor %}
-    </select>
+      </select>
     </p>
     <p>
       <input type="submit" value="Crear">
       <button type="reset">Limpiar</button>
     </p>
   </form>
-  <a href="{{ url_for('seguimiento_index') }}" class="link">Volver</a>
+  <button onclick="history.back()" class="btn btn-info mt-2 ml-2">Volver</button>
 {% endblock %}

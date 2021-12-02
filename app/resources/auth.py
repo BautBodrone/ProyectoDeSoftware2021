@@ -14,8 +14,8 @@ from flask_login import (
 
 import json  
 
-GOOGLE_CLIENT_ID ="121321804230-vh5t42njjsba08v7iif6k2ceai2k83qm.apps.googleusercontent.com"
-GOOGLE_CLIENT_SECRET = "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"
+GOOGLE_CLIENT_ID ="416190660321-8mnvf3fsinumi9lj45f2ruvmge9q3jkn.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET = "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"
 GOOGLE_DISCOVERY_URL = (
     "https://accounts.google.com/.well-known/openid-configuration"
 )
@@ -83,7 +83,6 @@ def callback():
         first_name=users_name,last_name=family_name,password="",username=name, email=users_email)
         User.save(user)
         
-    print("--------------------------------------------------------------")
 
     # Begin user session by logging the user in
     # login_user(user)

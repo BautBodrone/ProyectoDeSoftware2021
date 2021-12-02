@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Text
 from sqlalchemy.sql.schema import ForeignKey 
 from sqlalchemy.sql.expression import null
 from sqlalchemy.sql.sqltypes import Date
@@ -10,15 +10,16 @@ class Seguimiento(db.Model):
 
     __tablename__ = "seguimientos" 
     id = Column(Integer, primary_key=True)
-    user = Column(Integer)
-    denuncia = Column(Integer)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    denuncia_id = Column(Integer, ForeignKey('denuncias.id'))
     fechaC = Column(Date)
-    descripcion = Column(String(80))
+    descripcion = Column(Text)
 
-    def __init__(self ,descripcion=None,user=None):
+    def __init__(self,denuncia_id,descripcion=None,user=None):
         self.descripcion = descripcion
         self.fechaC =  datetime.date.today()
-        self.user =user
+        self.user_id = user
+        self.denuncia_id = denuncia_id
     
     def delete(self):
         db.session.delete(self)

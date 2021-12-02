@@ -13,14 +13,25 @@ def index():
     """
         El metodo mostrara todos las denuncias en una tabla
     """
-    if not authenticated(session):
-        abort(401)
-
     pagConf = configurator.settings().get_rows_per_page()
     page = request.args.get('page',1, type=int)
     denuncias = Denuncia.query.paginate(page=page,per_page=pagConf)
     
     return render_template("denuncia/index.html", denuncias=denuncias)
+
+def show(id):
+    """
+        muestra la info de la denuncia   
+    """
+    denuncia = Denuncia.query.filter_by(id=int(id)).first()
+    return render_template("denuncia/show.html",denuncia=denuncia)
+
+def show_map(id):
+    """
+        muestra el mapa dibujando la denuncia del id    
+    """
+    denuncia = Denuncia.query.filter_by(id=int(id)).first()
+    return render_template("denuncia/map.html",denuncia=denuncia)
 
 def new():
 
@@ -34,7 +45,7 @@ def create():
     """
         El metodo ,si esta autenticado, creara una nueva denuncia
     """
-
+    
     new_denuncia = Denuncia(**request.form)
     
     try:
@@ -97,12 +108,13 @@ def filtro():
     titulo = data["titulo"]
     fechaC = data["fechaC"]
     fechaF = data["fechaF"]
+    busqueda = "%{}%".format(titulo)
     
     if (estado != "" and titulo != ""):
-      denuncias=Denuncia.query.filter_by(estado=estado,titulo=titulo).paginate(page=page,per_page=pagConf)
+      denuncias=Denuncia.query.filter(Denuncia.titulo.like(busqueda),Denuncia.estado.like(estado)).paginate(page=page,per_page=pagConf)
     else:
         if (estado == "" and titulo != ""):
-            denuncias=Denuncia.query.filter_by(titulo=titulo).paginate(page=page,per_page=pagConf)
+            denuncias=Denuncia.query.filter(Denuncia.titulo.like(busqueda)).paginate(page=page,per_page=pagConf)
         else:
             if (estado != "" and titulo == ""):
                 denuncias=Denuncia.query.filter_by(estado=estado).paginate(page=page,per_page=pagConf)

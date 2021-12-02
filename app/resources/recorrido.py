@@ -24,6 +24,21 @@ def new():
     recorridos = Recorrido.query.all()
     return render_template("recorrido/new.html", recorridos=recorridos)
 
+def show(id):
+    """
+        muestra el id    
+    """
+    recorrido = Recorrido.query.filter_by(id=int(id)).first()
+    return render_template("recorrido/show.html",recorrido=recorrido)
+
+
+def show_map(id):
+    """
+        muestra el mapa dibujando el recorrido del id    
+    """
+    recorrido = Recorrido.query.filter_by(id=int(id)).first()
+    return render_template("recorrido/map.html",recorrido=recorrido)
+
 def create():
     """
         El metodo ,si esta autenticado, creara un nuevo recorrido
@@ -66,7 +81,7 @@ def update():
     try:
         recorrido.update(data)
     except:
-        flash("Ya existe otro recorrido con ese nombre")
+        flash("error")
         return redirect(request.referrer)
     flash("Se edito con exito", "success")
     return redirect(url_for("recorrido_index"))
@@ -98,11 +113,12 @@ def filtro():
     data = request.form
     estado = data["estado"]
     nombre = data["nombre"]
-    if (estado != "" and nombre!= ""):
-      recorridos=Recorrido.query.filter_by(estado=estado,nombre=nombre).paginate(page=page,per_page=page_config)
+    busqueda = "%{}%".format(nombre)
+    if (estado != "" and nombre != ""):
+      recorridos=Recorrido.query.filter(Recorrido.nombre.like(busqueda),Recorrido.estado.like(estado)).paginate(page=page,per_page=page_config)
     else:
         if (estado == "" and nombre != ""):
-            recorridos=Recorrido.query.filter_by(nombre=nombre).paginate(page=page,per_page=page_config)
+            recorridos=Recorrido.query.filter(Recorrido.nombre.like(busqueda)).paginate(page=page,per_page=page_config)
         else:
             if(estado !="" and nombre==""):
                 recorridos=Recorrido.query.filter_by(estado=estado).paginate(page=page,per_page=page_config)

@@ -5,6 +5,10 @@ from app.helpers.auth import authenticated
 from app.helpers.user_helper import has_permit
 from app.models.zona import Zona
 from app.helpers import configurator
+import csv
+from app.helpers.forms import ZonaForm
+
+from sqlalchemy import exc
 
 def index():
     """
@@ -21,9 +25,50 @@ def new():
     """
         El metodo ,si esta autenticado,saltara a una nueva pagina para crear una zona
     """
-    zonas = Zona.query.all()
-    return render_template("zona/new.html", zonas=zonas)
+    
+    form = ZonaForm()
+    
+    return render_template("zona/new.html", form=form)
 
+def show(id):
+    """
+         muestra el id
+    """
+    zona = Zona.query.filter_by(id=int(id)).first()
+    return render_template("zona/show.html",zona=zona)
+
+def show_map(id):
+    """
+         muestra el mapa dibujando la zona del id
+    """
+    zona = Zona.query.filter_by(id=int(id)).first()
+    return render_template("zona/map.html",zona=zona)
+
+def save_csv():
+    """
+        Este metodo carga el archivo csv, seteando por defecto "despublicado", 
+        formateando las coordenadas a csv sin caracteres especiales.
+    """
+    if request.files:
+        uploaded_file = request.files['csv']
+        if '.csv' in uploaded_file.filename:  
+            if uploaded_file.filename != '':
+                csv_file = csv.DictReader(uploaded_file.read().decode('utf-8').splitlines())
+                for row in csv_file:
+                    if 'name' in row and 'area' in row:               
+                        row['area'] = row['area'].translate(str.maketrans('', '', '{[]!@#$}'))
+                        newZona = Zona(nombre=row['name'],estado='despublicado',coordenadas=row['area'])
+                        try:
+                            Zona.upload(newZona)
+                        except:
+                            flash("error", "error")
+                            return redirect(request.referrer)
+                    else:
+                        flash("El archivo no cumple con los requerimientos")
+        else: 
+            flash("El archivo debe ser un .csv")
+    return redirect(url_for("zona_index"))    
+    
 def create():
     """
         El metodo ,si esta autenticado, creara una nueva zona
@@ -31,11 +76,23 @@ def create():
     req = request.form
     new_zona = Zona(nombre=req["nombre"],estado=req["estado"],
     color=req["color"],coordenadas=req.getlist("coordenadas"))
+    
+    form = ZonaForm()
+    if not form.validate_on_submit():
+        flash(form.errors)
+        return render_template("zona/new.html", form=form)
 
     try:
+        
+        data= dict(form.data)
+        del data["csrf_token"]
+        new_zona = Zona(**data)
         Zona.save(new_zona)
-    except:
-        flash("error", "error")
+    except exc.DataError:
+        flash("Maximo 6 puntos", "danger")
+        return redirect(request.referrer)
+    except exc.IntegrityError:
+        flash("Zona con ese nombre ya existe", "danger")
         return redirect(request.referrer)
 
     return redirect(url_for("zona_index"))
@@ -59,8 +116,10 @@ def update():
     """
         El metodo , si esta autentiticado, podra cambiar los datos de una zona
     """
-    data = request.form
-    zona = Zona.search_id(data["id"])
+    req = request.form
+    data = Zona(nombre=req["nombre"],estado=req["estado"],
+    color=req["color"],coordenadas=req.getlist("coordenadas"))
+    zona = Zona.search_id(req["id"])
     try:
         zona.update(data)
     except:
@@ -95,11 +154,12 @@ def filtro():
     data = request.form
     estado = data["estado"]
     nombre = data["nombre"]
-    if (estado != "" and nombre!= ""):
-      zonas=Zona.query.filter_by(estado=estado,nombre=nombre).paginate(page=page,per_page=page_config)
+    busqueda = "%{}%".format(nombre)
+    if (estado != "" and nombre != ""):
+      zonas=Zona.query.filter(Zona.nombre.like(busqueda),Recorrido.estado.like(estado)).paginate(page=page,per_page=page_config)
     else:
         if (estado == "" and nombre != ""):
-            zonas=Zona.query.filter_by(nombre=nombre).paginate(page=page,per_page=page_config)
+            zonas=Zona.query.filter(Zona.nombre.like(busqueda)).paginate(page=page,per_page=page_config)
         else:
             if(estado !="" and nombre==""):
                 zonas=Zona.query.filter_by(estado=estado).paginate(page=page,per_page=page_config)

@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block title %}{{zona.nombre}}{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block header %}
+  <div>
+    {{ super() }}
+    <h1 id="header">{{zona.nombre}}</h1>
+  </div>
+{% endblock %}
+{% block content %}
+<iframe  src="{{  url_for('zona_show_map', id = zona.id ) }}" loading="lazy" name="map" scrolling="no" style="width:70%;height:80vh;float:right;">
+</iframe>
+<div style="max-width: 30%"> 
+  <p>
+    <label>Nombre: {{ zona.nombre }}</label>
+  </p>
+  <p>
+    <div style="width:6rem;height:2rem;background-color:{{zona.color}};">{{ zona.color }}</div>
+  </p>
+  <p>
+    <label for="estado">Estado: {{zona.estado}} </label>
+  </p>
+  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_edit') %}
+  <form action="{{  url_for('zona_edit', id = zona.id ) }}"  >  
+      <button type="submit" class="btn btn-warning">Editar</button>
+  </form>
+  {% endif %}
+  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'zona_delete') %}
+  <form action="{{ url_for('zona_delete') }}" method="POST" enctype="multipart/form-data">
+    <input type="hidden" id="zona_id" name="zona_id" value="{{zona.id}}">
+    <button onclick="return confirm('¿Esta seguro de que desea eliminar este zona?');" class="btn btn-danger mt-2">Eliminar</a>
+  </form>
+  {% endif %}
+</div>
+<br>
+<a href="{{ url_for('zona_index') }}" class="link">Volver</a>
+{% endblock %}

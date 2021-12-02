@@ -15,11 +15,12 @@ denuncias_api = Blueprint("denuncias", __name__, url_prefix="/denuncias")
 @denuncias_api.post("")
 def create():
     try:
-        denuncia = Denuncia(**DenunciaSchema.post_format(request.get_json()))
+        denuncia_aux = DenunciaSchema.post_format(request.get_json())
+        denuncia = Denuncia(**denuncia_aux)
         db.session.add(denuncia)
         try:
             db.session.commit()
-            return jsonify(denuncia)
+            return jsonify(denuncia_aux)
         except exc.IntegrityError:
             return handler.server_error("error")
     except:
@@ -33,8 +34,6 @@ def get_id(id):
             denuncia = Denuncia.query.filter_by(id=id).first()
             if denuncia != None:
                 atributos = DenunciaSchema.dump(denuncia)
-                print(atributos)
-                print("==========================")
                 return jsonify(atributos=atributos)
             else:
                 return handler.range_not_satisfiable("error")

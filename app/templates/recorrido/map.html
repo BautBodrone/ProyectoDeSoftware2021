@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="es">
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
+  <script type="module" src="/static/js/map.js" ></script>
+  
+  <link rel="icon" href="/static/imgs/logo.png" type="image/x-icon" > 
+  <title> {{ recorrido.nombre }}</title>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+
+</head>
+<body>
+  <div class="map-container">
+    <input id="{{ recorrido }}" class="recorridos" type="hidden" value="{{ recorrido.coordenadas }}" >
+    <input id="{{ recorrido }}" class="recorridos-colores" type="hidden" value="{{ recorrido.color }}" >
+    <input id="{{ recorrido }}" class="recorridos-nombre" type="hidden" value="{{ recorrido.nombre }}" >
+    <div id="mapid" class="map-fullpage"></div>
+  </div>
+</body>
+</html>

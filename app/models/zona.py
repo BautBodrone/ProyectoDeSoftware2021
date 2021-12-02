@@ -11,12 +11,12 @@ class Zona(db.Model):
 
     __tablename__ = "zonas"
     id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(30),nullable=False)
+    nombre = db.Column(db.String(30), unique=True, nullable=False)
     estado = db.Column(ChoiceType(ESTADOS),nullable=False)
     color = db.Column(db.String(10), default="#FF6E4E",nullable=False)
-    coordenadas = db.Column(db.String(255), nullable=False)
+    coordenadas = db.Column(db.Text, nullable=False)
 
-    def __init__(self, nombre = None, estado = None, color = None, coordenadas = None):
+    def __init__(self, nombre, estado, coordenadas, color = "#FF6E4E"):
         self.nombre = nombre
         self.estado = estado
         self.color = color
@@ -24,12 +24,12 @@ class Zona(db.Model):
 
     def update(self, zona):
         """
-            Actualiza el zona con los valores pasados por parametro
+            Actualiza la zona con los valores pasados por parametro
         """
-        self.nombre = zona["nombre"]
-        self.estado = zona["estado"]
-        self.color = zona["color"]
-        self.coordenadas = zona["coordenadas"]
+        self.nombre = zona.nombre
+        self.estado = zona.estado
+        self.color = zona.color
+        self.coordenadas = zona.coordenadas
         db.session.commit()
 
     def delete(self):
@@ -49,3 +49,17 @@ class Zona(db.Model):
             return db.session.query(Zona).filter_by(estado='publicado').all()
         except:
             return []
+    
+    def upload(zona):
+        aux = db.session.query(Zona).filter_by(nombre=zona.nombre).first()
+        if( aux != None):
+            try:
+                aux.update(zona)
+            except:
+                raise
+        else:
+            try:
+                Zona.save(zona)
+            except:
+                raise 
+        

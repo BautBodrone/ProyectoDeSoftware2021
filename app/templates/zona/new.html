@@ -6,47 +6,76 @@
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""></script>
   <script type="module" src="/static/js/map.js" ></script>
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-
 {% endblock %}
+
 {% block header %}
   <div>
     {{ super() }}
-    <h1 id="header">Nueva zonas</h1>
+    <h1 id="header">Nueva zona</h1>
   </div>
 {% endblock %}
+
 {% block content %}
+  
   <form id="form-map" action="{{ url_for('zona_create') }}" method="POST">
-    <p> 
-      <input type="text" class="coordenadas" name="coordenadas" id="coordenadas">
-      <div class="map-container">
-        <div id="mapid" class="mapform" ></div>
-      </div>
-        
-    </p>
+    {{ form.csrf_token }}
+    <fieldset class="form-field">
+      {{ form.coordenadas }}
+        {% if form.coordenadas.errors %}
+        <ul class="errors">
+          {% for error in form.coordenadas.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
+    <div class="map-container">
+      <div id="mapid" class="mapform" ></div>
+    </div>
+    <div class=card>
+    <fieldset class="form-field">
+      {{ form.nombre.label }}
+      <br>
+      {{ form.nombre }}
+        {% if form.nombre.errors %}
+        <ul class="errors">
+          {% for error in form.nombre.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
+    <fieldset class="form-field">
+      {{ form.color.label }}
+      <br>
+      {{ form.color }}
+        {% if form.color.errors %}
+        <ul class="errors">
+          {% for error in form.color.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
+    <fieldset class="form-field">
+      {{ form.estado.label }}
+      <br>
+      {{ form.estado }}
+        {% if form.estado.errors %}
+        <ul class="errors">
+          {% for error in form.estado.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
+    <div class="buttonHolder position-absolute fixed-bottom">
     <p>
-      <label>Nombre <label>
-      <input type="text" name="nombre" placeholder="Nombre"/>
-    </p>
-    <p>
-        <label>Color <label>
-        <input type="color" id="color" name="color" value="#FF6E4E" >
-    </p>
-    <p>
-      <label for="estado">Estado:</label>
-      <select id="estado" name="estado">
-        <option value="publicado">Publicado</option>
-        <option value="despublicado">Despublicado</option>
-      </select>
-    </p>
-    <p>
-      <button type="submit" value="Crear">Crear</button>
-      <button type="reset">Limpiar</button>
+      <button type="submit" class="btn btn-success" value="Crear">Crear</button>
+      <button type="reset" class="btn btn-secondary">Limpiar</button>
     </p>
   </form>
   <a href="{{ url_for('zona_index') }}" class="link">Volver</a>
+</div>
+</div>
 {% endblock %}

@@ -15,7 +15,7 @@
   </div>
 {% endblock %}
 {% block content %}
-  <form id="form-map" class="one-mark" action="{{ url_for('denuncia_create') }}" method="POST" >
+  <form id="form-map" class="one-mark" action="{{ url_for('denuncia_create') }}" method="POST" novalidate>
     <input id="punto-lat" class="punto-lat" name="lat" type="hidden" >
     <input id="punto-lng" class="punto-lng" name="lng" type="hidden" >
     <div class="map-container">
@@ -31,7 +31,7 @@
         {% if form.titulo.errors %}
         <ul class="errors">
           {% for error in form.titulo.errors %}
-            <li>{{ error }}</li>
+            <p>{{ error }}</p>
           {% endfor %}
         </ul>
       {% endif %}
@@ -42,7 +42,7 @@
         {% if form.categoria.errors %}
         <ul class="errors">
           {% for error in form.categoria.errors %}
-            <li>{{ error }}</li>
+            <p>{{ error }}</p>
           {% endfor %}
         </ul>
       {% endif %}
@@ -53,7 +53,7 @@
         {% if form.descripcion.errors %}
         <ul class="errors">
           {% for error in form.descripcion.errors %}
-            <li>{{ error }}</li>
+            <p>{{ error }}</p>
           {% endfor %}
         </ul>
       {% endif %}
@@ -64,7 +64,7 @@
         {% if form.estado.errors %}
         <ul class="errors">
           {% for error in form.estado.errors %}
-            <li>{{ error }}</li>
+            <p>{{ error }}</p>
           {% endfor %}
         </ul>
       {% endif %}
@@ -75,7 +75,7 @@
         {% if form.apellidoD.errors %}
         <ul class="errors">
           {% for error in form.apellidoD.errors %}
-            <li>{{ error }}</li>
+            <p>{{ error }}</p>
           {% endfor %}
         </ul>
       {% endif %}
@@ -86,7 +86,7 @@
         {% if form.nombreD.errors %}
         <ul class="errors">
           {% for error in form.nombreD.errors %}
-            <li>{{ error }}</li>
+            <p>{{ error }}</p>
           {% endfor %}
         </ul>
       {% endif %}
@@ -97,7 +97,7 @@
         {% if form.telefono.errors %}
         <ul class="errors">
           {% for error in form.telefono.errors %}
-            <li>{{ error }}</li>
+            <p>{{ error }}</p>
           {% endfor %}
         </ul>
       {% endif %}
@@ -108,7 +108,7 @@
         {% if form.emailD.errors %}
         <ul class="errors">
           {% for error in form.emailD.errors %}
-            <li>{{ error }}</li>
+            <p>{{ error }}</p>
           {% endfor %}
         </ul>
       {% endif %}
@@ -119,7 +119,7 @@
         {% if form.asignadoA.errors %}
         <ul class="errors">
           {% for error in form.asignadoA.errors %}
-            <li>{{ error }}</li>
+            <p>{{ error }}</p>
           {% endfor %}
         </ul>
       {% endif %}

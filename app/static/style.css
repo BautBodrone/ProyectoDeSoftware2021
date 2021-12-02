@@ -10,6 +10,17 @@ form label, form select, form option{
   
 }
 
+.errors {
+  color: red
+}
+.error {
+  color: red
+}
+
+.success {
+  color: green
+}
+
 .tabla {
   display: flex;  
 }

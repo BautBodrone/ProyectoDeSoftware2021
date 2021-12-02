@@ -56,7 +56,6 @@ def create():
     data= dict(form.data)
     
     if not form.validate_on_submit():
-        flash(form.errors)
         return render_template("denuncia/new.html", form=form)
     
     try:
@@ -71,6 +70,7 @@ def create():
         flash("Denuncia con ese titulo ya existe", "error")
         return redirect(request.referrer)
     
+    flash("Se creo con exito", "success")
     return redirect(url_for("denuncia_index"))
 
 def delete():
@@ -83,7 +83,7 @@ def delete():
 
     denuncia = Denuncia.search_denuncia(request.form["denuncia_id"])
     denuncia.delete()
-    flash("Se elimino con exito")
+    flash("Se elimino con exito", "success")
 
     return redirect(url_for('denuncia_index'))
 
@@ -112,6 +112,7 @@ def edit_finish():
         flash("Denuncia con ese titulo o coordenadas ya existe", "error")
         return redirect(request.referrer)
 
+    flash("Se edito con exito", "success")
     return redirect(url_for("denuncia_index"))
 
 def filtro():

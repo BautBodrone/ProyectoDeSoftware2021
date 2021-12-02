@@ -101,9 +101,10 @@ export class NewAndEditZona {
     }
 }
 const submitHandler = (event, map) => {
+    alert(map.marker_list)
     if (map.marker_list.length > 2){
         
-        //document.getElementById('zonas').setAttribute('value',map.#drawItems.getBounds);
+        document.getElementById('zonas').setAttribute(map.marker_list);
     }
     else {
         event.preventDefault();
@@ -111,7 +112,7 @@ const submitHandler = (event, map) => {
     }
 }
 window.onload = () => {
-    new NewAndEditZona({
+    const map = new NewAndEditZona({
         selector: 'mapid'
     });
     const form = document.getElementById('form-map');

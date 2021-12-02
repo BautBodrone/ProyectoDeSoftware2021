@@ -126,11 +126,11 @@ def update():
     print("-----------------------------------")
     print(data)
     zona = Zona.search_id(data["id"])
-    try:
-        zona.update(data)
-    except:
-        flash("error")
-        return redirect(request.referrer)
+    # try:
+    zona.update(data)
+    # except:
+    #     flash("error")
+    #     return redirect(request.referrer)
     flash("Se edito con exito", "success")
     return redirect(url_for("zona_index"))
 

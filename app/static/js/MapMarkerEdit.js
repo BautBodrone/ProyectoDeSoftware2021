@@ -5,9 +5,8 @@ const mapLayerUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 export class NewAndEditZona {
     #drawnItems;
     
-    constructor({selector}, zone) {
+    constructor({selector}) {
         this.#drawnItems = new L.FeatureGroup();
-        alert(zone)
         this.#initializeMap(selector);
         this.map.on(L.Draw.Event.CREATED, (e) => {
             this.#eventHandler(e, this.map, this.#drawnItems, this.editControls, this.createControls)
@@ -20,15 +19,21 @@ export class NewAndEditZona {
     #initializeMap(selector){
         this.map = L.map(selector).setView([initialLat, initialLng], 13);
         L.tileLayer(mapLayerUrl).addTo(this.map);
-        //coordenadas = this.parseToArray(coordenadas);
-        //this.#drawnItems.push()
+        let coordenadas = document.getElementById('zonas').value;
+        coordenadas = this.parseToArray(coordenadas);
+        let color = document.getElementById('zonascolores').value;
+        let nombre = document.getElementById('nombre').value;
+        this.addZone(coordenadas,color,nombre);
+        this.map.fitBounds(this.#drawnItems.getBounds());
+        
+        alert(this.#drawnItems.getBounds());
         this.map.addLayer(this.#drawnItems);
         
-        this.map.addControl(this.createControls);
+        this.map.addControl(this.editControls);
     }
 
     #eventHandler(e, map, drawnItems, editControls, createControls){
-        const existingZones = Object.values(drawnItems._layers);
+        const existingZones = Object.values(this.#drawnItems._layers);
 
         if (existingZones.length == 0){
             const layer = e.layer;
@@ -41,6 +46,8 @@ export class NewAndEditZona {
     }
 
     #deleteHandler(map, editControls, createControls){
+        this.#drawnItems.remove();
+        this.zona = '';
         createControls.addTo(map);
         editControls.remove();
     }
@@ -82,15 +89,32 @@ export class NewAndEditZona {
         let aux = coordenadas.split(',');
         let parsed = []
         for (var i=0; i< aux.length; i=i+2){
-            this.parsed.push([aux[i],aux[i+1]]);
+            parsed.push([aux[i],aux[i+1]]);
         }
         return parsed;
     }
     addZone(zona, color, nombre){
-        var polygon = L.polygon(
+        this.zona = L.polygon(
             zona, {color:color}
-        ).addTo(this.map).bindPopup(nombre);
-        this.map.fitBounds(polygon.getBounds());
+        )
+        this.zona.addTo(this.#drawnItems).bindPopup(nombre);
     }
+}
+const submitHandler = (event, map) => {
+    if (map.marker_list.length > 2){
+        
+        //document.getElementById('zonas').setAttribute('value',map.#drawItems.getBounds);
+    }
+    else {
+        event.preventDefault();
+        alert('se debe ingresar al menos tres puntos en el mapa.');
+    }
+}
+window.onload = () => {
+    new NewAndEditZona({
+        selector: 'mapid'
+    });
+    const form = document.getElementById('form-map');
+    form.addEventListener('submit', (event) => submitHandler(event, map));
 }
 

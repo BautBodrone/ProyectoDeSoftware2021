@@ -5,7 +5,9 @@
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""></script>
-  <script type="module" src="/static/js/map.js" ></script>
+  <script type="module" src="/static/js/MapMarkerEdit.js" ></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
  
 {% endblock %}
 {% block header %}
@@ -19,7 +21,7 @@
 <form id="form-map"  action="{{ url_for('zona_update') }}" method="POST">
 
   {{ form.csrf_token }}
-  {{ form.id(value= zona.id)}}
+  {{ form.id(value=zona.id) }}
   {{ form.zonas (class="zonas",placeholder=zona.coordenadas,value=zona.coordenadas) }}
   {{ form.zonascolores (class="zonas-colores",placeholder=zona.color,value=zona.color) }}
   {{ form.zonasnombre (class="zonas-nombre",placeholder=zona.nombre,value=zona.nombre) }}

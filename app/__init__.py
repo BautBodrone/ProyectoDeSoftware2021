@@ -6,6 +6,7 @@ from werkzeug.utils import redirect
 from flask_session import Session
 from flask_sqlalchemy import _SessionSignalEvents
 from app.helpers.auth import authenticated
+from flask_cors import CORS
 
 from config import config
 from app import db
@@ -24,6 +25,7 @@ def create_app(environment="production"):
 
     # Configuración inicial de la app
     app = Flask(__name__)
+    CORS(app)
 
     # Carga de la configuración
     env = environ.get("FLASK_ENV", environment)

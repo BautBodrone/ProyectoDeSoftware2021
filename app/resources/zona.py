@@ -6,7 +6,7 @@ from app.helpers.user_helper import has_permit
 from app.models.zona import Zona
 from app.helpers import configurator
 import csv
-from app.helpers.forms import ZonaForm
+from app.helpers.forms import ZonaForm, ZonaUpdateForm
 
 from sqlalchemy import exc
 
@@ -108,18 +108,27 @@ def edit(id):
         flash("No cuenta con los permisos necesarios")
         return redirect(request.referrer)
     
+    form = ZonaUpdateForm()
+    
     zona = Zona.query.filter_by(id=int(id)).first()
-    return render_template("zona/edit.html", zona=zona)
+    return render_template("zona/edit.html", form=form,zona=zona)
 
 
 def update():
     """
         El metodo , si esta autentiticado, podra cambiar los datos de una zona
     """
-    req = request.form
-    data = Zona(nombre=req["nombre"],estado=req["estado"],
-    color=req["color"],coordenadas=req.getlist("coordenadas"))
-    zona = Zona.search_id(req["id"])
+    # req = request.form
+    # data = Zona(nombre=req["nombre"],estado=req["estado"],
+    # color=req["color"],coordenadas=req.getlist("coordenadas"))
+    # zona = Zona.search_id(req["id"])
+    
+    form = ZonaUpdateForm()
+    data= dict(form.data)
+    del data["csrf_token"]
+    print("-----------------------------------")
+    print(data)
+    zona = Zona.search_id(data["id"])
     try:
         zona.update(data)
     except:

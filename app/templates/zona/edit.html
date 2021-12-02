@@ -17,31 +17,57 @@
 
 {% block content %}
 <form id="form-map"  action="{{ url_for('zona_update') }}" method="POST">
-  <input id="coordenadas" class="zonas" type="hidden" value="{{ zona.coordenadas }}" name="coordenadas">
-  <input id="{{ zona }}" class="zonas-colores" type="hidden" value="{{ zona.color }}" >
-  <input id="{{ zona }}" class="zonas-nombre" type="hidden" value="{{ zona.nombre }}" > 
+
+  {{ form.csrf_token }}
+  {{ form.id(value= zona.id)}}
+  {{ form.zonas (class="zonas",placeholder=zona.coordenadas,value=zona.coordenadas) }}
+  {{ form.zonascolores (class="zonas-colores",placeholder=zona.color,value=zona.color) }}
+  {{ form.zonasnombre (class="zonas-nombre",placeholder=zona.nombre,value=zona.nombre) }}
+
   <div class="map-container">
-     <div id="mapid" class="mapform" ></div>
-  </div>  
-    <input type="hidden" class="form-control"  id="id" name="id" value="{{ zona.id }}">
-    <p>
-      <label>Nombre </label>
-      <input id="nombre" name="nombre" placeholder="{{ zona.nombre}}" value="{{ zona.nombre}}" required/>
-    </p>
-    <p>
-      <label>Color </label>
-      <input id="color" type="color" name="color" placeholder="{{ zona.color }}" value="{{ zona.color }}"required/>
-    </p>
-    <p>
-      <label>Estado </label>
-      <select id="estado" name="estado" value="{{zona.estado}}"required>
-        <option value="" disabled hidden>
-          Seleccione un estado
-        </option>
-        <option value="publicado">Publicado</option>
-        <option value="despublicado">Despublicado</option>
-      </select>
-    </p>
+    <div id="mapid" class="mapform" ></div>
+ </div>
+
+  <div class="map-container">
+    <div id="mapid" class="mapform" ></div>
+  </div>
+  <div class=card>
+  <fieldset class="form-field">
+    {{ form.nombre.label }}
+    <br>
+    {{ form.nombre (placeholder=zona.nombre,value=zona.nombre) }}
+      {% if form.nombre.errors %}
+      <ul class="errors">
+        {% for error in form.nombre.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </fieldset>
+  <fieldset class="form-field">
+    {{ form.color.label }}
+    <br>
+    {{ form.color (placeholder=zona.color,value=zona.color)}}
+      {% if form.color.errors %}
+      <ul class="errors">
+        {% for error in form.color.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </fieldset>
+  <fieldset class="form-field">
+    {{ form.estado.label }}
+    <br>
+    {{ form.estado (placeholder=zona.estado,value=zona.estado)}}
+      {% if form.estado.errors %}
+      <ul class="errors">
+        {% for error in form.estado.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </fieldset>
     <p>
       <input type="submit" value="Modificar">
       <input type="reset" value="reset">

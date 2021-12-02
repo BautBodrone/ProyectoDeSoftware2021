@@ -11,13 +11,18 @@ puntos_api = Blueprint("puntos-encuentro", __name__, url_prefix="/puntos-encuent
 
 @puntos_api.get("/")
 def get():
-    punto = Punto.query.all()
-    print (punto)
-    if punto != None:
-        puntos = PuntoSchema.dump(punto, many=True)
-        return jsonify(puntos=puntos)
+    
+    pagina = request.args.get("pagina","1")
+    if pagina.isnumeric():
+        conf = Configuration.query.first()
+        zonas_page = Punto.query.paginate(page=int(pagina),per_page=conf.rows_per_page)
+        atributos = PuntoSchema.dump(zonas_page,many=True)
+        
+        return jsonify(atributos)
     else:
-        return handler.bad_request("error")
+        handler.bad_request("error")
+    
+    
     
     
 

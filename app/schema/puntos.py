@@ -9,10 +9,11 @@ class PuntoSchema(object):
         
     @classmethod
     def _serialize_collection(cls, collection):
+       
         return {
-            "puntos_encuentro":[cls._serialize(item) for item in collection.items],
-            "total":collection.total,
-            "pagina":collection.page,
+            "puntos_encuentro":[cls._serialize(item) for item in collection.items] ,
+            "total": collection.total,
+            "pagina": collection.page
         }
         
     @classmethod
@@ -20,7 +21,7 @@ class PuntoSchema(object):
         send = {}
         for attr in obj.__table__.columns:
             if attr.name == "id":
-                send["id"] = cls._get_categoria_by_code(getattr(obj, attr.name))
+                send["id"] = getattr(obj, attr.name)
             if attr.name == "nombre":
                 send["nombre"] = getattr(obj, attr.name)
             if attr.name == "direccion":

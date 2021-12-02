@@ -11,8 +11,8 @@ class RecorridoSchema(object):
     def _serialize_collection(cls, collection):
         return {
             "recorridos":[cls._serialize(item) for item in collection.items],
-            "total":collection.total,
-            "pagina":collection.page,
+            "total": collection.total,
+            "pagina": collection.page
         }
         
     @classmethod

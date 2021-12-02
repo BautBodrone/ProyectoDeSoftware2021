@@ -1,4 +1,4 @@
-import { Map } from "./MapMarker.js";
+import { NewAndEditZona } from "./MapMarkerEdit.js";
 
 const submitHandler = (event, map) => {
     if (document.getElementsByClassName('one-mark').length != 0){
@@ -36,7 +36,7 @@ const resetHandler = (map , first_marker) => {
 }
 
 window.onload = () => {
-    const map = new Map({
+    const map = new NewAndEditZona({
         selector: 'mapid'
     });
     map.addMarkersAndZones();

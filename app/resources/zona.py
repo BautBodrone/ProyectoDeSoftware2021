@@ -6,6 +6,9 @@ from app.helpers.user_helper import has_permit
 from app.models.zona import Zona
 from app.helpers import configurator
 import csv
+from app.helpers.forms import ZonaForm
+
+from sqlalchemy import exc
 
 def index():
     """
@@ -22,7 +25,10 @@ def new():
     """
         El metodo ,si esta autenticado,saltara a una nueva pagina para crear una zona
     """
-    return render_template("zona/new.html")
+    
+    form = ZonaForm()
+    
+    return render_template("zona/new.html", form=form)
 
 def show(id):
     """
@@ -70,11 +76,23 @@ def create():
     req = request.form
     new_zona = Zona(nombre=req["nombre"],estado=req["estado"],
     color=req["color"],coordenadas=req.getlist("coordenadas"))
+    
+    form = ZonaForm()
+    if not form.validate_on_submit():
+        flash(form.errors)
+        return render_template("zona/new.html", form=form)
 
     try:
+        
+        data= dict(form.data)
+        del data["csrf_token"]
+        new_zona = Zona(**data)
         Zona.save(new_zona)
-    except:
-        flash("error", "error")
+    except exc.DataError:
+        flash("Maximo 6 puntos", "danger")
+        return redirect(request.referrer)
+    except exc.IntegrityError:
+        flash("Zona con ese nombre ya existe", "danger")
         return redirect(request.referrer)
 
     return redirect(url_for("zona_index"))

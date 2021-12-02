@@ -7,6 +7,9 @@ from app.db import db
 from sqlalchemy import and_
 from app.models.user import User
 from app.helpers import configurator
+from app.helpers.forms import DenunciaForm
+
+from sqlalchemy import exc
 
 # Protected resources
 def index():
@@ -38,20 +41,34 @@ def new():
     if not authenticated(session):
         abort(401)
 
-    users = User.query.all()
-    return render_template("denuncia/new.html", users=users)
+    form = DenunciaForm()
+    form.asignadoA.choices = [(g.id,g.username) for g in User.query.order_by('username')]
+    
+    return render_template("denuncia/new.html", form=form)
 
 def create():
     """
         El metodo ,si esta autenticado, creara una nueva denuncia
     """
+    form = DenunciaForm()
+    form.asignadoA.choices = [(g.id,g.username) for g in User.query.order_by('username')]
     
-    new_denuncia = Denuncia(**request.form)
+    data= dict(form.data)
+    
+    if not form.validate_on_submit():
+        flash(form.errors)
+        return render_template("denuncia/new.html", form=form)
     
     try:
-        Denuncia.save(new_denuncia)
-    except:
-        flash("Denuncia con ese titulo o coordenadas ya existe", "error")
+        data= dict(form.data)
+        print(data)
+        del data["csrf_token"]
+        del data["one_marker"]
+        denuncia = Denuncia(**data)
+        Denuncia.save(denuncia)
+        
+    except exc.IntegrityError:
+        flash("Denuncia con ese titulo ya existe", "error")
         return redirect(request.referrer)
     
     return redirect(url_for("denuncia_index"))

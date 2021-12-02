@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, EmailField, HiddenField, SelectField, TextAreaField
-from wtforms.validators import DataRequired, Length, Email
-from wtforms.widgets.core import ColorInput
+from sqlalchemy.sql.sqltypes import String
+from wtforms import StringField, EmailField, HiddenField, SelectField, IntegerField
+from wtforms.validators import DataRequired, Length, Email, NumberRange
+from wtforms.widgets.core import ColorInput, TextArea
 
 #Forms de USERS
 class UserForm(FlaskForm):
@@ -41,4 +42,16 @@ class ZonaUpdateForm(FlaskForm):
 #Form de DENUNCIAS
 class DenunciaForm(FlaskForm):
     one_marker = HiddenField('one-marker')
-    
+    lat = StringField('punto_lat')
+    lng = StringField('punto_lng')
+    titulo = StringField('Titulo',validators=[DataRequired()])
+    categoria = SelectField('Categoria', choices=[("cañeria_rota",'Cañeria Rota'),
+                        ("calle_inundable",'Calle Inundable'),("calle_rota",'Calle Rota'),("otro",'Otro')], validators=[DataRequired()])
+    descripcion = StringField('Descripcion',widget=TextArea(), validators=[DataRequired()])
+    estado = SelectField('Estado', choices=[("sinConfirmar",'Sin Confirmar'),("curso",'Curso'),
+                                            ("resuelta",'Resuelta'),("cerrada",'Cerrada')], validators=[DataRequired()])
+    apellidoD = StringField(label='Apellido del denunciante', validators=[DataRequired()])
+    nombreD = StringField(label='Nombre del denunciate', validators=[DataRequired()])
+    telefono = IntegerField(label="Telefono", validators=[DataRequired(),NumberRange(min=100000)])
+    emailD = EmailField('Email del denunciante', validators=[DataRequired(), Length(max=30)])
+    asignadoA = SelectField('Usuario Encargado')

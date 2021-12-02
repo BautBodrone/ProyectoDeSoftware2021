@@ -88,9 +88,6 @@ def create():
         del data["csrf_token"]
         new_zona = Zona(**data)
         Zona.save(new_zona)
-    except exc.DataError:
-        flash("Maximo 6 puntos", "danger")
-        return redirect(request.referrer)
     except exc.IntegrityError:
         flash("Zona con ese nombre ya existe", "danger")
         return redirect(request.referrer)

@@ -13,7 +13,6 @@ from flask_login import (
 )
 
 import json  
-
 GOOGLE_CLIENT_ID ="416190660321-8mnvf3fsinumi9lj45f2ruvmge9q3jkn.apps.googleusercontent.com"
 GOOGLE_CLIENT_SECRET = "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"
 GOOGLE_DISCOVERY_URL = (
@@ -34,7 +33,7 @@ def loginG():
     # scopes that let you retrieve user's profile from Google
     request_uri = client.prepare_request_uri(
         authorization_endpoint,
-        redirect_uri="https://127.0.0.1:5000/login/callback",
+        redirect_uri="https://admin-grupo33.proyecto2021.linti.unlp.edu.ar/login/callback",
         scope=["openid", "email", "profile"],
     )
     return redirect(request_uri)

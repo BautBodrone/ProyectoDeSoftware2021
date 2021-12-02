@@ -16,7 +16,7 @@ export default {
     };
   },
   created() {
-    fetch('http://localhost:5000/api/puntos-encuentro/').then((response) => {
+    fetch('http://localhost:5000/api/denuncias/').then((response) => {
         return response.json();
     }).then((json) => {
         this.puntos = json.puntos_encuentro;

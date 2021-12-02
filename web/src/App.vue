@@ -4,10 +4,12 @@
     <h1 class=header> Inicio </h1>
   </div>
   <div class="navbar">
-    <router-link to="/">Inicio</router-link> 
+    <router-link to="/">Inicio</router-link>
+    <router-link to="/denuncias">Ver denuncias</router-link>
+    <router-link to="/denunciar">Denunciar</router-link>
     <router-link to="/zonas-inundables">Zonas inundables</router-link>
     <router-link to="/puntos-de-encuentro">Puntos de encuentros</router-link> 
-    <router-link to="/denunciar">Denunciar</router-link>
+    <router-link to="/recorridos">Recorridos</router-link>
   </div>
   <router-view/>
 </template>

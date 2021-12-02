@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean, Text
+from sqlalchemy.sql.expression import false
 from app.db import db
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -92,6 +93,12 @@ class User(db.Model):
     def search_user_email(email):
         return db.session.query(User).filter_by(email=email).first()
 
+
+    def get(user_email):
+        ######## retornar valores del user
+        
+        return ("first_name","last_name","email","username","password" ,"activo")
+
     def is_activo(self):
         return self.activo
 
@@ -116,7 +123,6 @@ class User(db.Model):
         db.session.commit()
 
     def search_email(unEmail):
-
         return db.session.query(User).filter_by(email=unEmail).first()
     
     def get_permisos(self):

@@ -1,6 +1,6 @@
-from os import path, environ
+from os import path, environ,urandom
 
-from flask import Flask, render_template, g, Blueprint, abort, request
+from flask import Flask, render_template, g, Blueprint, abort, request,session
 from flask.helpers import url_for
 from werkzeug.utils import redirect
 from flask_session import Session
@@ -9,6 +9,7 @@ from app.helpers.auth import authenticated
 
 from config import config
 from app import db
+from app.models.user import User
 from app.resources import user, auth, rol , configuration, punto, zona, home, permiso, denuncia, seguimiento, recorrido
 from app.resources.api.zona import zonas_api
 from app.resources.api.denuncia import denuncias_api
@@ -19,11 +20,26 @@ from app.models.punto import Punto
 from app.helpers import handler, user_helper
 from app.helpers import auth as helper_auth
 
+from oauthlib.oauth2 import WebApplicationClient
+from flask_login import (LoginManager,
+    current_user,
+    login_required,
+    login_user,
+    logout_user,
+    )
+
+GOOGLE_CLIENT_ID ="121321804230-vh5t42njjsba08v7iif6k2ceai2k83qm.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET = "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"
+GOOGLE_DISCOVERY_URL = (
+    "https://accounts.google.com/.well-known/openid-configuration"
+)
 
 def create_app(environment="production"):
 
     # Configuración inicial de la app
     app = Flask(__name__)
+
+    app.secret_key = environ.get("SECRET_KEY") or urandom(24)
 
     # Carga de la configuración
     env = environ.get("FLASK_ENV", environment)
@@ -46,9 +62,11 @@ def create_app(environment="production"):
     app.add_url_rule("/", "home", home.index)
 
     # Autenticación
+    app.add_url_rule("/iniciar", "auth_loginG", auth.loginG)
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
     app.add_url_rule("/cerrar_sesion", "auth_logout", auth.logout)
     app.add_url_rule("/autenticacion", "auth_authenticate", auth.authenticate, methods=["POST"])
+    app.add_url_rule("/login/callback", "auth_callback", auth.callback, methods=["GET"])
 
     #Rutas de Zonas
     app.add_url_rule("/zonas", "zona_index", zona.index)

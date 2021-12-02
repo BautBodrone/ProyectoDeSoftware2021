@@ -50,9 +50,6 @@
     <div class="header" id="header">
       {% block header %}
       <a href="{{ url_for('home') }}"><img src="/static/imgs/logo.png" alt="logo" width="100" style="position:absolute; left:5%;"></a>
-      {% if my_user != None and is_authenticated(session) %}
-        <a class="usuario" href= "{{ url_for('user_edit', user_id = my_user(is_authenticated(session)).id ) }}" style="float:right;">{{ is_authenticated(session) }}</a>
-      {% endif %}
       {% endblock %}
     </div>
     

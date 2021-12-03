@@ -7,7 +7,7 @@ from app.db import db
 from sqlalchemy import and_
 from app.models.user import User
 from app.helpers import configurator
-from app.helpers.forms import DenunciaForm
+from app.helpers.forms import DenunciaForm, DenunciaEditForm
 
 from sqlalchemy import exc
 
@@ -62,7 +62,6 @@ def create():
         data= dict(form.data)
         print(data)
         del data["csrf_token"]
-        del data["one_marker"]
         denuncia = Denuncia(**data)
         Denuncia.save(denuncia)
         
@@ -95,16 +94,23 @@ def edit(denuncia_id):
         abort(401)
 
     denuncia = Denuncia.search_denuncia(denuncia_id)
+    form = DenunciaEditForm()
     
-    return render_template("denuncia/edit.html", denuncia=denuncia)
+    return render_template("denuncia/edit.html", denuncia=denuncia,form=form)
 
 def edit_finish():
 
     if not authenticated(session):
         abort(401)
 
-    data = request.form
-    denuncia = Denuncia.search_denuncia(data["id"])
+    form = DenunciaEditForm()
+    data= dict(form.data)
+    del data["csrf_token"]
+    
+    denuncia = Denuncia.search_id(data["id"])
+    if not form.validate_on_submit():
+        flash(form.errors)
+        return render_template("denuncia/edit.html", denuncia=denuncia, form=form)
 
     try:
         denuncia.edit(data)

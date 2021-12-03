@@ -5,7 +5,7 @@ from app.helpers.auth import authenticated
 from app.helpers.user_helper import has_permit
 from app.models.recorrido import Recorrido
 from app.helpers import configurator
-from app.helpers.forms import RecorridoForm
+from app.helpers.forms import RecorridoForm, RecorridoEditForm
 from sqlalchemy import exc
 
 def index():
@@ -78,8 +78,10 @@ def edit(id):
         flash("No cuenta con los permisos necesarios")
         return redirect(request.referrer)
     
+    form = RecorridoEditForm()
+    
     recorrido = Recorrido.query.filter_by(id=int(id)).first()
-    return render_template("recorrido/edit.html", recorrido=recorrido)
+    return render_template("recorrido/edit.html", recorrido=recorrido, form=form)
 
 
 def update():
@@ -87,12 +89,19 @@ def update():
         El metodo , si esta autentiticado, podra cambiar los datos de un recorrido
     """
     
-    data = request.form
+    form = RecorridoEditForm()
+    data= dict(form.data)
+    del data["csrf_token"]
+    
     recorrido = Recorrido.search_id(data["id"])
+    if not form.validate_on_submit():
+        flash(form.errors)
+        return render_template("recorrido/edit.html", recorrido=recorrido, form=form)
+    
     try:
         recorrido.update(data)
-    except:
-        flash("error")
+    except exc.IntegrityError:
+        flash("Recorrido con ese nombre ya existe", "danger")
         return redirect(request.referrer)
     flash("Se edito con exito", "success")
     return redirect(url_for("recorrido_index"))

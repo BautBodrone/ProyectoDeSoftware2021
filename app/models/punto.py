@@ -13,14 +13,13 @@ class Punto(db.Model):
     telefono = Column(String(30))
     direccion = Column(String(30))
 
-    def __init__(self, email, nombre, lat, lng, estado, telefono, direccion):
+    def __init__(self, email, nombre, lat, lng, estado, telefono):
         self.email = email
         self.nombre = nombre
         self.lat = lat
         self.lng = lng
         self.estado = estado
         self.telefono = telefono
-        self.direccion = direccion
 
     def search_id(id):
         """
@@ -42,7 +41,6 @@ class Punto(db.Model):
             Actualiza el punto con los valores pasados por parametro
         """
         self.nombre = punto["nombre"]
-        self.direccion = punto["direccion"]
         self.lat = punto["punto-lat"]
         self.lng = punto["punto-lng"]
         self.estado = punto["estado"]

@@ -44,7 +44,7 @@ def create(denuncia_id):
 
     seguimientos= Seguimiento.query.filter_by(denuncia_id=denuncia_id)
 
-    return redirect(url_for("seguimiento_index",denuncia_id=denuncia.id))
+    return redirect(url_for("seguimiento_index",seguimientos=seguimientos))
 
 
 def delete():

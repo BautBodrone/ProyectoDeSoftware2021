@@ -20,9 +20,7 @@
       <div id="mapid" class="mapform" ></div>
     </div>
     {% for f in form %}
-      {% if f == form.one_marker %}
-        {{ f(value="nada") }}
-      {% elif f==form.lng or f==form.lat or f==form.csrf_token %}
+      {% if f==form.lng or f==form.lat or f==form.csrf_token %}
         {{ f }}
       {% else %}
       {{ f.label }}

@@ -4,7 +4,7 @@ from app.models.punto import Punto
 from app.helpers.auth import authenticated
 from app.helpers import configurator
 
-from app.helpers.forms import PuntoForm
+from app.helpers.forms import PuntoForm, PuntoEditForm
 from sqlalchemy import exc
 
 # Public resources
@@ -51,17 +51,24 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
-    
-    puntoNuevo = Punto(**request.form)
 
     if not has_permit("punto_new"):
         flash("No cuenta con los permisos necesarios")
         return redirect(request.referrer)
+    
+    form = PuntoForm()
+    data= dict(form.data)
+    del data["csrf_token"]
+    new_punto = Punto(**data)
+    
+    if not form.validate_on_submit():
+        flash(form.errors)
+        return render_template("recorrido/new.html", form=form)
 
     try:
-        Punto.save(puntoNuevo)
-    except:
-        flash("error")
+        Punto.save(new_punto)
+    except exc.IntegrityError:
+        flash("Punto con ese nombre ya existe", "danger")
         return redirect(request.referrer)
 
     flash("Se creo con exito", "success")
@@ -88,12 +95,25 @@ def edit(id):
         flash("No cuenta con los permisos necesarios")
         return redirect(request.referrer)
     
+    form = PuntoEditForm()
+    
     punto = Punto.query.filter_by(id=int(id)).first()
-    return render_template("punto/edit.html", punto=punto)
+    return render_template("punto/edit.html", punto=punto, form=form)
 
 def update():
     data = request.form
     punto = Punto.search_id(data["id"])
+    
+    form = PuntoEditForm()
+    data= dict(form.data)
+    del data["csrf_token"]
+    
+    punto = Punto.search_id(data["id"])
+    if not form.validate_on_submit():
+        flash(form.errors)
+        return render_template("recorrido/edit.html", punto=punto, form=form)
+    
+    
     try:
         punto.update(data)
     except:

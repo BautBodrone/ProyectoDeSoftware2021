@@ -23,33 +23,54 @@
     <div class="map-container">
       <div id="mapid" class="mapform" ></div>
     </div>
-    <input type="hidden" class="form-control"  id="id" name="id" value="{{punto.id}}">
-    <p>
-      <label>Nombre: <label>
-      <input name="nombre" placeholder="Nombre" value="{{punto.nombre}}" required/>
-    </p>
-    <p>
-      <label>Direccion: <label>
-      <input  name="direccion" placeholder="Direccion" value="{{punto.direccion}}"required/>
-    </p>
-    <p>
-     <label>Estado: </label>
-        <select id="estado" name="estado" value="{{punto.estado}}"required>
-         <option value="" disabled hidden>
-          Seleccione un estado
-        </option>
-        <option value="Publicado">Publicado</option>
-        <option value="Despublicado">Despublicado</option>
-    </select>
-    </p>
-    <p>
-      <label>Telefono: <label>
-      <input type="number" name="telefono" placeholder="Telefono" value="{{punto.telefono}}" required/>
-    </p>
-    <p>
-      <label>Email: <label>
-      <input type="email" name="email" placeholder="Email" value="{{punto.email}}" required/>
-    </p>
+    {{ form.csrf_token}}
+    {{ form.id(value= punto.id) }}
+    {{ form.lat(value= punto.lat) }}
+    {{ form.lng(value= punto.lng) }}
+    <fieldset class="form-field">
+      {{ form.email.label }}
+      {{ form.email (placeholder=punto.email,value=punto.email) }}
+        {% if form.email.errors %}
+        <ul class="errors">
+          {% for error in form.email.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
+    <fieldset class="form-field">
+      {{ form.nombre.label }}
+      {{ form.nombre (placeholder=punto.nombre,value=punto.nombre) }}
+        {% if form.nombre.errors %}
+        <ul class="errors">
+          {% for error in form.nombre.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
+    <fieldset class="form-field">
+      {{ form.estado.label }}
+      {{ form.estado (placeholder=punto.estado,value=punto.estado) }}
+        {% if form.estado.errors %}
+        <ul class="errors">
+          {% for error in form.estado.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
+    <fieldset class="form-field">
+      {{ form.telefono.label }}
+      {{ form.telefono (placeholder=punto.telefono,value=punto.telefono) }}
+        {% if form.telefono.errors %}
+        <ul class="errors">
+          {% for error in form.telefono.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
     <p>
       <input type="submit" value="Modificar">
       <input type="reset" value="reset">

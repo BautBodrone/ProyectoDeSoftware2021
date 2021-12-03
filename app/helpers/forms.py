@@ -50,7 +50,6 @@ class ZonaUpdateForm(FlaskForm):
 
 #Form de DENUNCIAS
 class DenunciaForm(FlaskForm):
-    one_marker = HiddenField('one-marker')
     lat = StringField('punto_lat')
     lng = StringField('punto_lng')
     titulo = StringField('Titulo',validators=[DataRequired(message="Campo requerido"),Length(max=30,message="No se pueden mas de 30 caracteres")])
@@ -65,8 +64,33 @@ class DenunciaForm(FlaskForm):
     emailD = EmailField('Email del denunciante', validators=[Email(message="Email no valido"),DataRequired(message="Campo requerido"), Length(max=30)])
     asignadoA = SelectField('Usuario Encargado')
     
+class DenunciaEditForm(FlaskForm):
+    id = HiddenField('id')
+    lat = StringField('punto_lat')
+    lng = StringField('punto_lng')
+    titulo = StringField('Titulo',validators=[DataRequired(message="Campo requerido"),Length(max=30,message="No se pueden mas de 30 caracteres")])
+    categoria = SelectField('Categoria', choices=[("cañeria_rota",'Cañeria Rota'),
+                        ("calle_inundable",'Calle Inundable'),("calle_rota",'Calle Rota'),("otro",'Otro')], validators=[DataRequired(message="Campo requerido")])
+    descripcion = StringField('Descripcion',widget=TextArea(), validators=[DataRequired(message="Campo requerido")])
+    estado = SelectField('Estado', choices=[("sinConfirmar",'Sin Confirmar'),("curso",'Curso'),
+                                            ("resuelta",'Resuelta'),("cerrada",'Cerrada')], validators=[DataRequired(message="Campo requerido")])
+    apellidoD = StringField(label='Apellido del denunciante', validators=[DataRequired(message="Campo requerido"),Length(max=30,message="No se pueden mas de 30 caracteres")])
+    nombreD = StringField(label='Nombre del denunciate', validators=[DataRequired(message="Campo requerido"),Length(max=30,message="No se pueden mas de 30 caracteres")])
+    telefono = IntegerField(label="Telefono", validators=[DataRequired(message="Campo requerido"),NumberRange(min=100000,message="Tiene que tener por lo menos 6 digitos")])
+    emailD = EmailField('Email del denunciante', validators=[Email(message="Email no valido"),DataRequired(message="Campo requerido"), Length(max=30)])
+    asignadoA = SelectField('Usuario Encargado')
+    
+    
 #Form de RECORRIDO
 class RecorridoForm(FlaskForm):
+    coordenadas = HiddenField('coordenadas')
+    nombre = StringField('Nombre de usuario',[DataRequired(message=('Campo requerido')),
+                                              Length(max=30,message="No se pueden mas de 30 caracteres")])
+    descripcion =  StringField('Descripcion',widget=TextArea(), validators=[DataRequired(message="Campo requerido")])
+    estado = SelectField('Estado', choices=[("publicado",'Publicado'),("despublicado",'Despublicado')])
+    
+class RecorridoEditForm(FlaskForm):
+    id = HiddenField('id')
     nombre = StringField('Nombre de usuario',[DataRequired(message=('Campo requerido')),
                                               Length(max=30,message="No se pueden mas de 30 caracteres")])
     descripcion =  StringField('Descripcion',widget=TextArea(), validators=[DataRequired(message="Campo requerido")])
@@ -79,7 +103,17 @@ class PuntoForm (FlaskForm):
     nombre = StringField('Nombre de usuario',[DataRequired(message=('Campo requerido')),
                                               Length(max=30,message="No se pueden mas de 30 caracteres")])
     lat = StringField('punto_lat')
-    lng = StringField('punto_lng')  
+    lng = StringField('punto_lng') 
     estado = SelectField('Estado', choices=[("publicado",'Publicado'),("despublicado",'Despublicado')])
     telefono = IntegerField(label="Telefono", validators=[DataRequired(message="Campo requerido"),NumberRange(min=100000,message="Tiene que tener por lo menos 6 digitos")])
 
+class PuntoEditForm(FlaskForm):
+    id = HiddenField('id')
+    punto_nombre = HiddenField('punto_nombre') #variable del mapa
+    email = EmailField('Email del denunciante', validators=[Email(message="Email no valido"),DataRequired(message="Campo requerido"), Length(max=30)])
+    nombre = StringField('Nombre de punto',[DataRequired(message=('Campo requerido')),
+                                              Length(max=30,message="No se pueden mas de 30 caracteres")])
+    lat = StringField('punto-lat')
+    lng = StringField('punto-lng')  
+    estado = SelectField('Estado', choices=[("publicado",'Publicado'),("despublicado",'Despublicado')])
+    telefono = IntegerField(label="Telefono", validators=[DataRequired(message="Campo requerido"),NumberRange(min=100000,message="Tiene que tener por lo menos 6 digitos")])

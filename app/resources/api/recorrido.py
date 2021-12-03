@@ -15,12 +15,14 @@ recorrido_api = Blueprint("recorrido", __name__, url_prefix="/recorridos-evacuac
 
 @recorrido_api.get("/")
 def get():
-    
-    pagina = request.args.get("pagina","1")
+    pagina = request.args.get("pagina","0")
     if pagina.isnumeric():
         conf = Configuration.query.first()
-        zonas_page = Recorrido.query.paginate(page=int(pagina),per_page=conf.rows_per_page)
-        atributos = RecorridoSchema.dump(zonas_page,many=True)
+        if(pagina!="0"):
+            recorridos = Recorrido.query.paginate(page=int(pagina),per_page=conf.rows_per_page)
+        else:
+            recorridos = Recorrido.publicados()
+        atributos = RecorridoSchema.dump(recorridos,pagina,many=True)
         
         return jsonify(atributos)
     else:

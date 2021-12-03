@@ -1,19 +1,25 @@
 class RecorridoSchema(object):
     
     @classmethod
-    def dump(cls, obj, many=False):
+    def dump(cls, obj, page=None ,many=False):
         if many:
-            return cls._serialize_collection(obj)
+            return cls._serialize_collection(obj,page)
         else:
             return cls._serialize(obj,True)
         
     @classmethod
-    def _serialize_collection(cls, collection):
-        return {
-            "recorridos":[cls._serialize(item) for item in collection.items],
-            "total": collection.total,
-            "pagina": collection.page
-        }
+    def _serialize_collection(cls, collection, page):
+        if page!="0":
+            return {
+                "recorridos":[cls._serialize(item) for item in collection.items],
+                "total": collection.total,
+                "pagina": collection.page
+            }
+        else:
+            return{
+                "recorridos":[cls._serialize(item) for item in collection],
+                "total":len(collection)
+            }
         
     @classmethod
     def _serialize(cls, obj, oneObj=False):

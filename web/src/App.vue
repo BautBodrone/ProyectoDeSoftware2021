@@ -26,7 +26,7 @@ export default {
     };
   },
   created() {
-    fetch('http://localhost:5000/api//configuration-publica/').then((response) => {
+    fetch(process.env.VUE_APP_ROOT_API+'/configuration-publica/').then((response) => {
         return response.json();
     }).then((json) => {
         this.pagination = json.rows_per_page;

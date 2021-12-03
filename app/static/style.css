@@ -161,13 +161,6 @@ a.page {
     height: auto;
 }
 
-.content table button{
-  vertical-align: top;
-  width: 72px;
-  height: 30px;
-  font-size: small;
- 
-}
 
 .content table, th{
   text-align:center;

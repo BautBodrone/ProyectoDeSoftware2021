@@ -8,9 +8,6 @@ from app.models.denuncia import Denuncia
 
 def index(denuncia_id):
 
-    if not authenticated(session):
-        abort(401)
-
     seguimientos= Seguimiento.query.filter_by(denuncia_id=denuncia_id)
     denuncia = Denuncia.query.filter_by(id = denuncia_id).first()
 

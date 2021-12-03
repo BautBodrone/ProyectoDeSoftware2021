@@ -43,19 +43,21 @@
     <p>
         <label>Asignado a: {{ denuncia.asignadoA }}</label>
     </p>
-    <form action="{{ url_for('seguimiento_index', denuncia_id = denuncia.asignadoA ) }}">
+    <form action="{{ url_for('seguimiento_index', denuncia_id = denuncia.id ) }}">
         <button type="submit" class="btn btn-info mt-2">Seguimientos</button>
     </form>
-    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'denuncia_edit') %}
-        <form action="{{ url_for('denuncia_edit', denuncia_id = denuncia.id ) }}">
-            <button type="submit" class="btn btn-warning mt-2">Editar</button>
-        </form>
-    {% endif %}
-    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'denuncia_delete') %} 
-        <form action="{{ url_for('denuncia_delete') }}" method="POST" enctype="multipart/form-data">
-            <input type="hidden" id="denuncia_id" name="denuncia_id" value="{{denuncia.id}}">
-            <button onclick="return confirm('Estas seguro de que deseas eliminar esta denuncia?');" class="btn btn-danger mt-2">eliminar</a>
-        </form>
+    {% if my_user(is_authenticated(session)) != None %}
+        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'denuncia_edit') %}
+            <form action="{{ url_for('denuncia_edit', denuncia_id = denuncia.id ) }}">
+                <button type="submit" class="btn btn-warning mt-2">Editar</button>
+            </form>
+        {% endif %}
+        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'denuncia_delete') %} 
+            <form action="{{ url_for('denuncia_delete') }}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" id="denuncia_id" name="denuncia_id" value="{{denuncia.id}}">
+                <button onclick="return confirm('Estas seguro de que deseas eliminar esta denuncia?');" class="btn btn-danger mt-2">eliminar</a>
+            </form>
+        {% endif %}
     {% endif %}
     <br>
 </div>

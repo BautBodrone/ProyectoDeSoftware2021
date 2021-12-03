@@ -16,7 +16,7 @@ export default {
     };
   },
   created() {
-    fetch('http://localhost:5000/api/recorridos-evacuacion').then((response) => {
+    fetch(process.env.VUE_APP_ROOT_API+'/recorridos-evacuacion').then((response) => {
         return response.json();
     }).then((json) => {
         this.recorridos = json.recorridos;

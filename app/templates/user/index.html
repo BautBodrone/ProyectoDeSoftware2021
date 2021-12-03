@@ -74,7 +74,6 @@
           Bloqueado
         {% endif %}
       </td>
-      
       <td>
         <form action="{{ url_for('user_edit', user_id = user.id ) }}"  >
           {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_edit') %}

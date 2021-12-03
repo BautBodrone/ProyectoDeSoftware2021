@@ -10,9 +10,11 @@
   </div>
 {% endblock %}
 {% block content %}
-<form action="{{ url_for('seguimiento_new', denuncia_id=denuncia.id)}}">
-  <button type="submit" class="btn btn-info mt-2 ml-2" style="float:right;  margin-top: 5px; width:75px">Nuevo</button>
-</form>
+{% if my_user(is_authenticated(session)) != None %}
+  <form action="{{ url_for('seguimiento_new', denuncia_id=denuncia.id)}}">
+    <button type="submit" class="btn btn-info mt-2 ml-2" style="float:right;  margin-top: 5px; width:75px">Nuevo</button>
+  </form>
+{% endif %}
 <table>
   <tr>
       <th> Encargado </th>

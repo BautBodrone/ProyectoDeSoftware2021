@@ -24,12 +24,12 @@ class User(db.Model):
     denuncias = relationship('Denuncia', backref='asignadoA', lazy=True)
     seguimientos = relationship('Seguimiento', backref='user', lazy=True)
 
-    def __init__(self, first_name=None, last_name=None, email=None, password=None, username=None):
+    def __init__(self, first_name=None, last_name=None, email=None, password=None, username=None,activo=True):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.password = generate_password_hash(password)
-        self.activo = True
+        self.activo = activo
         self.username = username
         self.rols.append(Rol.search("operador"))
         
@@ -110,8 +110,6 @@ class User(db.Model):
         if self.last_name != data["last_name"]:
             self.last_name = data["last_name"]
         aux=self.query.filter(User.email==data["email"]).first()
-        if not check_password_hash(aux.password,data["password"]):
-            self.password = generate_password_hash(data["password"])
         if self.email != data["email"]:
             self.email = data["email"]
         if data["estado"] == "True":

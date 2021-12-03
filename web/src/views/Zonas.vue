@@ -28,7 +28,7 @@ export default {
     };
   },
   created() {
-    fetch('http://localhost:5000/api/zonas-inundables/').then((response) => {
+    fetch(process.env.VUE_APP_ROOT_API+'/zonas-inundables/').then((response) => {
         return response.json();
     }).then((json) => {
         this.zonas = json.zonas;

@@ -1,6 +1,8 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash, Flask
+import flask_sqlalchemy
 from app.models.user import User
 from oauthlib.oauth2 import WebApplicationClient
+from config import config
 
 
 import requests
@@ -13,7 +15,6 @@ from flask_login import (
 )
 
 import json  
-
 GOOGLE_CLIENT_ID ="416190660321-8mnvf3fsinumi9lj45f2ruvmge9q3jkn.apps.googleusercontent.com"
 GOOGLE_CLIENT_SECRET = "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"
 GOOGLE_DISCOVERY_URL = (
@@ -34,7 +35,7 @@ def loginG():
     # scopes that let you retrieve user's profile from Google
     request_uri = client.prepare_request_uri(
         authorization_endpoint,
-        redirect_uri="https://127.0.0.1:5000/login/callback",
+        redirect_uri= "https://admin-grupo33.proyecto2021.linti.unlp.edu.ar/login/callback",
         scope=["openid", "email", "profile"],
     )
     return redirect(request_uri)
@@ -80,7 +81,7 @@ def callback():
   
     if not User.query.filter_by(email=users_email).first():
         user = User(
-        first_name=users_name,last_name=family_name,password="",username=name, email=users_email)
+        first_name=users_name,last_name=family_name,password="",username=users_email, email=users_email,activo = False)
         User.save(user)
         
 
@@ -90,6 +91,10 @@ def callback():
     # Send user back to homepage
 
     aux = User.query.filter_by(email=users_email).first()
+    if not aux.is_activo():
+        flash("Usuario bloqueado, Debe esperar la autorizacion del administrador.")
+        return redirect(url_for("auth_login"))
+
     session["user"] = aux.email
     flash("La sesión se inició correctamente.")
 

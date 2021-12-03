@@ -25,6 +25,7 @@ class ProductionConfig(Config):
     DB_NAME = environ.get("DB_NAME", "grupo33")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = (f"mariadb+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:3306/{DB_NAME}")
+    dir = "https://127.0.0.1:5000/login/callback"
 
 
 
@@ -37,6 +38,7 @@ class DevelopmentConfig(Config):
     DB_NAME = environ.get("DB_NAME", "MY_DB_NAME")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = (f"mariadb+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:3306/{DB_NAME}")
+    dir = "https://admin-grupo33.proyecto2021.linti.unlp.edu.ar/login/callback"
 
 class TestingConfig(Config):
     """Testing configuration."""

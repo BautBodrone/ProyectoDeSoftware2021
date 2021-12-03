@@ -19,14 +19,18 @@ export class NewAndEditZona {
     #initializeMap(selector){
         this.map = L.map(selector).setView([initialLat, initialLng], 13);
         L.tileLayer(mapLayerUrl).addTo(this.map);
-        let coordenadas = document.getElementById('zonas').value;
-        coordenadas = this.parseToArray(coordenadas);
-        let color = document.getElementById('zonascolores').value;
+        let coordenadas = document.getElementById('coordenadas').value;
         let nombre = document.getElementById('nombre').value;
-        this.addZone(coordenadas,color,nombre);
+        coordenadas = this.parseToArray(coordenadas);   
+        if (document.getElementById('zonascolores') != null){
+            this.zonas = true;
+            let color = document.getElementById('zonascolores').value;
+            this.addZone(coordenadas,color,nombre);
+        }
+        else{
+           this.addLine(coordenadas,nombre);
+        }
         this.map.fitBounds(this.#drawnItems.getBounds());
-        
-        alert(this.#drawnItems.getBounds());
         this.map.addLayer(this.#drawnItems);
         
         this.map.addControl(this.editControls);
@@ -34,10 +38,10 @@ export class NewAndEditZona {
 
     #eventHandler(e, map, drawnItems, editControls, createControls){
         const existingZones = Object.values(this.#drawnItems._layers);
-
+        
         if (existingZones.length == 0){
             const layer = e.layer;
-
+            
             layer.editing.enable();
             drawnItems.addLayer(layer);
             editControls.addTo(map);
@@ -46,14 +50,13 @@ export class NewAndEditZona {
     }
 
     #deleteHandler(map, editControls, createControls){
-        this.#drawnItems.remove();
-        this.zona = '';
+        this.#drawnItems.clearLayers();
         createControls.addTo(map);
         editControls.remove();
     }
 
     hasValidZone(){
-        return this.drawnLayers.lenght === 1;
+        return this.drawnLayers.length === 1;
     }
 
     get drawnLayers(){
@@ -70,20 +73,31 @@ export class NewAndEditZona {
     }
 
     get createControls(){
-        return this.createControlsToolbar ||= new L.Control.Draw({
-            draw: {
-                circle: false,
-                marker: false,
-                polyline: false
-            }
-        });
+        if ( this.zonas ){
+            return this.createControlsToolbar ||= new L.Control.Draw({
+                draw: {
+                    circle: false,
+                    marker: false,
+                    polyline: false
+                }
+            });
+        }
+        else{
+            return this.createControlsToolbar ||= new L.Control.Draw({
+                draw: {
+                    circle: false,
+                    marker: false,
+                    polygon: false,
+                    rectangle: false
+                }
+            });
+        }
     }
     
     addLine(linea, nombre){
-        var polyline = L.polyline(
+        L.polyline(
             linea,{color: 'green'}
-        ).addTo(this.map).bindPopup(nombre);
-        this.map.fitBounds(polyline.getBounds());
+        ).addTo(this.#drawnItems).bindPopup(nombre);
     }
     parseToArray(coordenadas){
         let aux = coordenadas.split(',');
@@ -94,17 +108,20 @@ export class NewAndEditZona {
         return parsed;
     }
     addZone(zona, color, nombre){
-        this.zona = L.polygon(
+        L.polygon(
             zona, {color:color}
-        )
-        this.zona.addTo(this.#drawnItems).bindPopup(nombre);
+        ).addTo(this.#drawnItems).bindPopup(nombre);
     }
 }
 const submitHandler = (event, map) => {
-    alert(map.marker_list)
-    if (map.marker_list.length > 2){
-        
-        document.getElementById('zonas').setAttribute(map.marker_list);
+    if (map.hasValidZone()){
+        var coordenadas = [];
+        coordenadas = map.drawnLayers[0].getLatLngs().flat().map( coordenadas => {
+            let aux = new String(coordenadas.lat)
+            aux = aux +','+ coordenadas.lng
+            return (aux)
+        });
+        document.getElementById('coordenadas').setAttribute('value',coordenadas);
     }
     else {
         event.preventDefault();

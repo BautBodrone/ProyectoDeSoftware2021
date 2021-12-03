@@ -22,9 +22,13 @@
 
   {{ form.csrf_token }}
   {{ form.id(value=zona.id) }}
-  {{ form.zonas (class="zonas",placeholder=zona.coordenadas,value=zona.coordenadas) }}
+  {{ form.zonas (id="coordenadas",class="zonas",placeholder=zona.coordenadas,value=zona.coordenadas) }}
   {{ form.zonascolores (class="zonas-colores",placeholder=zona.color,value=zona.color) }}
   {{ form.zonasnombre (class="zonas-nombre",placeholder=zona.nombre,value=zona.nombre) }}
+
+  <div class="map-container">
+    <div id="mapid" class="mapform" ></div>
+ </div>
 
   <div class="map-container">
     <div id="mapid" class="mapform" ></div>

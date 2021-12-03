@@ -5,8 +5,10 @@
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""></script>
-  <script type="module" src="/static/js/map.js" ></script>
-  
+  <script type="module" src="/static/js/MapMarkerEdit.js" ></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
+
 {% endblock %}
 {% block header %}
   <div>
@@ -18,8 +20,7 @@
 {% block content %}
   <form id="form-map"  action="{{ url_for('recorrido_update') }}" method="POST">
     <input id="coordenadas" class="recorridos" type="hidden" value="{{ recorrido.coordenadas }}" name="coordenadas">
-    <input id="{{ recorrido }}" class="recorridos-colores" type="hidden" value="{{ recorrido.color }}" >
-    <input id="{{ recorrido }}" class="recorridos-nombre" type="hidden" value="{{ recorrido.nombre }}" >
+    <input id="nombre" class="recorridos-nombre" type="hidden" value="{{ recorrido.nombre }}" >
     <div class="map-container">
       <div id="mapid" class="mapform" ></div>
     </div>

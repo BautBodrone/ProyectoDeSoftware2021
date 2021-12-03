@@ -22,8 +22,8 @@
     </div>
     {{ form.csrf_token}}
     {{ form.id(value= punto.id) }}
-    {{ form.lat(value= punto.lat) }}
-    {{ form.lng(value= punto.lng) }}
+    {{ form.lat(id="punto-lat",class="punto-lat",value=punto.lat) }}
+    {{ form.lng(id="punto-lng",class="punto-lng",value=punto.lng) }}
     {{ form.punto_nombre(value= punto.nombre) }}
     <fieldset class="form-field">
       {{ form.email.label }}
@@ -38,7 +38,7 @@
     </fieldset>
     <fieldset class="form-field">
       {{ form.nombre.label }}
-      {{ form.nombre (placeholder=punto.nombre,value=punto.nombre) }}
+      {{ form.nombre (class="punto-nombre",placeholder=punto.nombre,value=punto.nombre) }}
         {% if form.nombre.errors %}
         <ul class="errors">
           {% for error in form.nombre.errors %}

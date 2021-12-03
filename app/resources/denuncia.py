@@ -35,8 +35,6 @@ def show_map(id):
 
 def new():
 
-    if not authenticated(session):
-        abort(401)
 
     users = User.query.all()
     return render_template("denuncia/new.html", users=users)

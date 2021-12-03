@@ -34,7 +34,7 @@ def loginG():
     # scopes that let you retrieve user's profile from Google
     request_uri = client.prepare_request_uri(
         authorization_endpoint,
-        redirect_uri= "https://admin-grupo33.proyecto2021.linti.unlp.edu.ar/login/callback",
+        redirect_uri= config["production"].dir,
         scope=["openid", "email", "profile"],
     )
     return redirect(request_uri)

@@ -1,4 +1,5 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash, Flask
+import flask_sqlalchemy
 from app.models.user import User
 from oauthlib.oauth2 import WebApplicationClient
 from config import config
@@ -80,7 +81,7 @@ def callback():
   
     if not User.query.filter_by(email=users_email).first():
         user = User(
-        first_name=users_name,last_name=family_name,password="",username=users_email, email=users_email)
+        first_name=users_name,last_name=family_name,password="",username=users_email, email=users_email,activo = False)
         User.save(user)
         
 
@@ -90,6 +91,10 @@ def callback():
     # Send user back to homepage
 
     aux = User.query.filter_by(email=users_email).first()
+    if not aux.is_activo():
+        flash("Usuario bloqueado, Debe esperar a aceptacion del administrador.")
+        return redirect(url_for("auth_login"))
+
     session["user"] = aux.email
     flash("La sesión se inició correctamente.")
 

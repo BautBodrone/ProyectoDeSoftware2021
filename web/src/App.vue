@@ -1,6 +1,4 @@
 <template>
-  
-  
   <header class="top-bar spread">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;" >
       <div class="container-fluid">

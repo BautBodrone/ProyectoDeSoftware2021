@@ -1,5 +1,5 @@
 <template>
-<div style="float:right; height: 75vh; width: 80vw;margin-top:1rem;border-radius:10px;">
+<div style="padding-left:2%; padding-right:2%; height: 75vh; width: 100%; margin-top:1rem;border-radius:10px;">
     <l-map class="map"
     v-model="zoom"
     :zoom="zoom"

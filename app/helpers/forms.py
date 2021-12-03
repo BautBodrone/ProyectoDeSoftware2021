@@ -50,8 +50,8 @@ class ZonaUpdateForm(FlaskForm):
 
 #Form de DENUNCIAS
 class DenunciaForm(FlaskForm):
-    lat = StringField('punto-lat')
-    lng = StringField('punto-lng')
+    lat = HiddenField('punto-lat',id='punto-lat')
+    lng = HiddenField('punto-lng',id='punto-lng')
     titulo = StringField('Titulo',validators=[DataRequired(message="Campo requerido"),Length(max=30,message="No se pueden mas de 30 caracteres")])
     categoria = SelectField('Categoria', choices=[("cañeria_rota",'Cañeria Rota'),
                         ("calle_inundable",'Calle Inundable'),("calle_rota",'Calle Rota'),("otro",'Otro')], validators=[DataRequired(message="Campo requerido")])
@@ -66,8 +66,8 @@ class DenunciaForm(FlaskForm):
     
 class DenunciaEditForm(FlaskForm):
     id = HiddenField('id')
-    lat = StringField('punto-lat')
-    lng = StringField('punto-lng')
+    lat = HiddenField('lat',id='punto-lat')
+    lng = HiddenField('lng',id='punto-lng')
     titulo = StringField('Titulo',validators=[DataRequired(message="Campo requerido"),Length(max=30,message="No se pueden mas de 30 caracteres")])
     categoria = SelectField('Categoria', choices=[("cañeria_rota",'Cañeria Rota'),
                         ("calle_inundable",'Calle Inundable'),("calle_rota",'Calle Rota'),("otro",'Otro')], validators=[DataRequired(message="Campo requerido")])
@@ -102,19 +102,19 @@ class PuntoForm (FlaskForm):
     email = EmailField('Email del denunciante', validators=[Email(message="Email no valido"),DataRequired(message="Campo requerido"), Length(max=30)])
     nombre = StringField('Nombre de usuario',[DataRequired(message=('Campo requerido')),
                                               Length(max=30,message="No se pueden mas de 30 caracteres")])
-    lat = StringField('punto-lat')
-    lng = StringField('punto-lng') 
+    lat = HiddenField('punto-lat',id='punto-lat')
+    lng = HiddenField('punto-lng',id='punto-lng') 
     punto_nombre = StringField('punto-nombre')#variable mapa
     estado = SelectField('Estado', choices=[("publicado",'Publicado'),("despublicado",'Despublicado')])
     telefono = IntegerField(label="Telefono", validators=[DataRequired(message="Campo requerido"),NumberRange(min=100000,message="Tiene que tener por lo menos 6 digitos")])
 
 class PuntoEditForm(FlaskForm):
     id = HiddenField('id')
-    punto_nombre = HiddenField('punto_nombre') #variable del mapa
+    punto_nombre = HiddenField('punto-nombre') #variable del mapa
     email = EmailField('Email del denunciante', validators=[Email(message="Email no valido"),DataRequired(message="Campo requerido"), Length(max=30)])
     nombre = StringField('Nombre de punto',[DataRequired(message=('Campo requerido')),
                                               Length(max=30,message="No se pueden mas de 30 caracteres")])
-    lat = StringField('punto-lat')
-    lng = StringField('punto-lng')  
+    lat = HiddenField('punto-lat',id='punto-lat')
+    lng = HiddenField('punto-lng',id='punto-lng')  
     estado = SelectField('Estado', choices=[("publicado",'Publicado'),("despublicado",'Despublicado')])
     telefono = IntegerField(label="Telefono", validators=[DataRequired(message="Campo requerido"),NumberRange(min=100000,message="Tiene que tener por lo menos 6 digitos")])

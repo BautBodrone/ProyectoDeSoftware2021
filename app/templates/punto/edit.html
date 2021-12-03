@@ -17,9 +17,6 @@
 
 {% block content %}
   <form id="form-map" class="one-mark" action="{{ url_for('punto_update') }}" method="POST">
-    <input id="punto-lat" class="punto-lat" name="punto-lat" type="hidden" value="{{ punto.lat }}">
-    <input id="punto-lng" class="punto-lng" name="punto-lng" type="hidden" value="{{ punto.lng }}">
-    <input id="{{ punto }}" class="punto-nombre" type="hidden" value="{{ punto.nombre }}">
     <div class="map-container">
       <div id="mapid" class="mapform" ></div>
     </div>
@@ -27,6 +24,7 @@
     {{ form.id(value= punto.id) }}
     {{ form.lat(value= punto.lat) }}
     {{ form.lng(value= punto.lng) }}
+    {{ form.punto_nombre(value= punto.nombre) }}
     <fieldset class="form-field">
       {{ form.email.label }}
       {{ form.email (placeholder=punto.email,value=punto.email) }}

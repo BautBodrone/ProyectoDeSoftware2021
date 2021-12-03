@@ -100,8 +100,9 @@ def edit(id):
         return redirect(request.referrer)
     
     form = PuntoEditForm()
-    
     punto = Punto.query.filter_by(id=int(id)).first()
+    form.punto_nombre(id=punto)
+
     return render_template("punto/edit.html", punto=punto, form=form)
 
 def update():

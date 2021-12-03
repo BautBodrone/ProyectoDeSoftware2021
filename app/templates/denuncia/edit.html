@@ -16,16 +16,14 @@
 {% endblock %}
 {% block content %}
   <form id="form-map" class="one-mark" action="{{ url_for('denuncia_edit_finish') }}" method="POST">
-    <input class="punto-lat" name="lat" type="hidden" >
-    <input class="punto-lng" name="lng" type="hidden" >
     <div class="map-container">
       <div id="mapid" class="mapform" ></div>
     </div>
 
     {{ form.csrf_token}}
-    {{ form.id(value= denuncia.id) }}
-    {{ form.lat(value= denuncia.lat) }}
-    {{ form.lng(value= denuncia.lng) }}
+    {{ form.id(value=denuncia.id) }}
+    {{ form.lat(value=denuncia.lat) }}
+    {{ form.lng(value=denuncia.lng) }}
 
     <fieldset class="form-field">
       {{ form.titulo.label }}

@@ -31,7 +31,7 @@ class RecorridoSchema(object):
                     if (i%2)==0:
                          coordenadas["lat"]=lat_long[i]
                     else:
-                        coordenadas["long"]=lat_long[i]
+                        coordenadas["lng"]=lat_long[i]
                         list.append(coordenadas)
                         coordenadas = {}
                 send["coordenadas"]=list

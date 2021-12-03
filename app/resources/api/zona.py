@@ -12,12 +12,14 @@ zonas_api = Blueprint("zonas-inundables", __name__, url_prefix="/zonas-inundable
 @zonas_api.get("/")
 def index():
     
-    pagina = request.args.get("pagina","1")
+    pagina = request.args.get("pagina","0")
     if pagina.isnumeric():
         conf = Configuration.query.first()
-        zonas_page = Zona.query.paginate(page=int(pagina),per_page=conf.rows_per_page)
-        atributos = ZonaSchema.dump(zonas_page,many=True)
-        
+        if pagina!="0":
+            zonas = Zona.query.paginate(page=int(pagina),per_page=conf.rows_per_page)    
+        else:
+            zonas = Zona.publicados()
+        atributos = ZonaSchema.dump(zonas,pagina,many=True)
         return jsonify(atributos)
     else:
         handler.bad_request("error")

@@ -42,8 +42,6 @@ class Punto(db.Model):
             Actualiza el punto con los valores pasados por parametro
         """
         self.nombre = punto["nombre"]
-        print(self.lat,'---------------------------------',punto["lat"])
-        print(self.lng,'---------------------------------',punto["lng"])
         self.lat = punto["lat"]
         self.lng = punto["lng"]
         self.estado = punto["estado"]

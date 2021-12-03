@@ -14,11 +14,15 @@ denuncias_api = Blueprint("denuncias", __name__, url_prefix="/denuncias")
 
 @denuncias_api.get("/")
 def get():
-    pagina = request.args.get("pagina","1")
+    pagina = request.args.get("pagina","0")
     if pagina.isnumeric():
         conf = Configuration.query.first()
-        denuncias_page = Denuncia.query.paginate(page=int(pagina),per_page=conf.rows_per_page)
-        atributos = DenunciaSchema.dump(denuncias_page,many=True)
+        if pagina != "0":
+            denuncias_page = Denuncia.query.paginate(page=int(pagina),per_page=conf.rows_per_page)
+        else:
+            denuncias_page = Denuncia.query.all()
+            print(denuncias_page)
+        atributos = DenunciaSchema.dump(denuncias_page,pagina,many=True)
         
         return jsonify(atributos)
     else:

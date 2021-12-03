@@ -3,21 +3,26 @@ import collections
 class DenunciaSchema(object):
     
     @classmethod
-    def dump(cls, obj, many=False):
+    def dump(cls, obj, page=None ,many=False):
         if many:
-            return cls._serialize_collection(obj)
+            return cls._serialize_collection(obj,page)
         else:
             return cls._serialize(obj,True)
         
     @classmethod
-    def _serialize_collection(cls, collection):
-       
-        return {
-            "denuncias":[cls._serialize(item) for item in collection.items] ,
-            "total": collection.total,
-            "pagina": collection.page
-        }
-        
+    def _serialize_collection(cls, collection, page):
+        if page!="0":
+            return {
+                "denuncias":[cls._serialize(item) for item in collection.items] ,
+                "total": collection.total,
+                "pagina": collection.page
+            }
+        else:
+            return{
+                "recorridos":[cls._serialize(item) for item in collection],
+                "total":len(collection)
+            }
+            
     @classmethod
     def _get_categoria_by_id(cls,id):
         if (id > 0 and id < 4):

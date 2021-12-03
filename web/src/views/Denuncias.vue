@@ -2,6 +2,11 @@
   <div class="denuncias">
     <Map v-bind:denuncias="denuncias"/>
   </div>
+  <div class="max-w-xl mx-auto px-4">
+    <div class="rounded-lg shadow-lg p-4">
+      <p> TEST </p>
+    </div>
+  </div>
 </template>
 <script>
 import Map from '@/components/Map.vue';

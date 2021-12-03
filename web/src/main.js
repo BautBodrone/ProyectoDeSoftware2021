@@ -13,6 +13,21 @@ import router from './router'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
+import 'leaflet/dist/leaflet.css'
+
+import { Field, Form } from 'vee-validate';
+export default {
+  components: {
+    Field,
+    Form,
+  },
+  methods: {
+    // Validator function
+    isRequired(value) {
+      return value ? true : 'This field is required';
+    },
+  },
+}
 
 const app = createApp(App).use(router).mount('#app')
 app.use(BootstrapVue3)

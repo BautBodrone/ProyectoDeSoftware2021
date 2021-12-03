@@ -16,7 +16,7 @@ export default {
     };
   },
   created() {
-    fetch('http://localhost:5000/api/denuncias/').then((response) => {
+    fetch(process.env.VUE_APP_ROOT_API+'/denuncias/').then((response) => {
         return response.json();
     }).then((json) => {
         this.denuncias = json.denuncias;

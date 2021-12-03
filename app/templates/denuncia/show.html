@@ -43,7 +43,7 @@
     <p>
         <label>Asignado a: {{ denuncia.asignadoA }}</label>
     </p>
-    <form action="{{ url_for('seguimiento_index', denuncia_id = denuncia.asignadoA ) }}">
+    <form action="{{ url_for('seguimiento_index', denuncia_id = denuncia.id ) }}">
         <button type="submit" class="btn btn-info mt-2">Seguimientos</button>
     </form>
     {% if my_user(is_authenticated(session)) != None %}

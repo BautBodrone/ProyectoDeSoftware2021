@@ -1,7 +1,3 @@
-
-
-//createApp(App).use(router).mount('#app')
-
 import {createApp} from 'vue'
 import BootstrapVue3 from 'bootstrap-vue-3'
 import App from './App.vue'
@@ -15,7 +11,12 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
 import 'leaflet/dist/leaflet.css'
 
+import { createValidation } from 'vue3-form-validation'
 import { Field, Form } from 'vee-validate';
+
+const validation = createValidation({
+  defaultValidationBehavior: 'lazier'
+})
 export default {
   components: {
     Field,
@@ -29,6 +30,4 @@ export default {
   },
 }
 
-const app = createApp(App).use(router).mount('#app')
-app.use(BootstrapVue3)
-app.mount('#app')
+createApp(App).use(router,BootstrapVue3,validation).mount('#app')

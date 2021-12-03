@@ -2,10 +2,9 @@
 <template>
   <div class="max-w-xl mx-auto px-4">
     <div class="rounded-lg shadow-lg p-4">
-    <Form>
 
       <form>
-
+        
   <p>
     <label for="titulo">Titulo</label>
     <input
@@ -27,7 +26,7 @@
     >
   </p>
   <p>
-    <label for="nombre_denunciante">nombre_denunciante</label>
+    <label for="nombre_denunciante">Nombre</label>
     <input
       id="nombre_denunciante"
       v-model="nombre_denunciante"
@@ -66,31 +65,43 @@
     ></textarea>
   </p>
   <p>
-    <label for="movie">Película favorita</label>
+    <label for="categoria_id">Categoria</label>
     <select
-      id="movie"
-      v-model="movie"
-      name="movie"
+      id="categoria_id"
+      v-model="categoria_id"
+      name="categoria_id"
+      selected= "1"
     >
-      <option>Star Wars</option>
-      <option>Vanilla Sky</option>
-      <option>Atomic Blonde</option>
+      <option value="1" >Cañeria Rota</option>
+      <option value="2">Calle Inundable</option>
+      <option value="3">Calle Rota</option>
+      <option value="4">Otro</option>
     </select>
   </p>
-
-  <p>
-    <input
-      type="submit"
-      value="Enviar"
-    >
-  </p>
+  <button @click="enviar">Enviar</button>
 
 </form>
-</Form>
     </div>
   </div>
 
 
+      <div style="padding-left:2%; padding-right:2%; height: 75vh; width: 100%; margin-top:1rem;border-radius:10px;">
+        <l-map class="map"
+        v-model="zoom"
+        :zoom="zoom"
+        :center="[lat,lng]"
+        @click="onClick"
+        >
+        <div v-if="this.markerLatLng.lat!=undefined">
+            <l-marker :lat-lng="[markerLatLng.lat,markerLatLng.lng]"/>
+        </div>
+        <l-tile-layer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        </l-map>
+      </div>
+      <div class="denuncias">
+    </div>
       <!--
     <div
       v-for="{ as, name, label, children, ...attrs } in schema.fields"
@@ -115,14 +126,20 @@
   
 </template>
 <script>
-import { Form,// Field, ErrorMessage 
-} from 'vee-validate';
+import {
+  LMap,
+  LTileLayer,
+  LMarker,
+}
+from "@vue-leaflet/vue-leaflet";
+import "leaflet/dist/leaflet.css";
 export default {
   name: 'DynamicForm',
   components: {
-    Form,
-    //Field,
-    //ErrorMessage
+    LMap,
+    LTileLayer,
+    LMarker,
+ 
   },
   props: {
     schema: {
@@ -130,5 +147,40 @@ export default {
       required: true,
     },
   },
-};
+  data() {
+      return {
+          zoom: 13,
+          lat: -34.9186, 
+          lng: -57.956,
+          markerLatLng: [],
+          categoria_id:1,
+      };
+  },
+  created() {
+      if("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(pos => {
+              this.lat = pos.coords.latitude;
+              this.lng = pos.coords.longitude;
+          },
+      )
+      return;
+      }
+      this.$getLocation()
+      .then(coordinates => {
+          console.log(coordinates);
+      });
+  },
+  methods: {
+      onClick(e) { 
+          if(e.latlng) {
+              this.markerLatLng = e.latlng;
+          }
+      },
+      enviar(){
+        alert(`nombre_denunciante: ${this.nombre_denunciante},apellido_denunciante: ${this.apellido_denunciante},descripcion; ${this.descripcion},telcel_denunciante: ${this.telcel_denunciante}
+        , email_denunciante: ${this.email_denunciante} ,categoria_id: ${this.categoria_id}, coordenadas:${this.markerLatLng.lat}, ${this.markerLatLng.lng}`)
+      }  
+  }
+}
+
 </script>

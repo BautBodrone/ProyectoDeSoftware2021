@@ -17,41 +17,29 @@
 
 {% block content %}
   <form id= "form-map" class="one-mark" action="{{ url_for('punto_create') }}" method="POST">
-    <input id="punto-lat" class="punto-lat" name="lat" type="hidden" >
-    <input id="punto-lng" class="punto-lng" name="lng" type="hidden" >
     <div class="map-container">
       <div id="mapid" class="mapform" ></div>
     </div>
-    <p>
-      <label>Nombre<label>
-      <input name="nombre" placeholder="Nombre" required/>
-    </p>
-    <p>
-      <label>Direccion<label>
-      <input  name="direccion" placeholder="Direccion" required/>
-    </p>
-     
-     <label>Estado</label>
-     <select name="estado" required>
-        <option value="" selected disabled hidden>
-          Seleccione un estado
-        </option>
-        <option value="Publicado">Publicado</option>
-        <option value="Despublicado">Despublicado</option>
-     </select>
-    </p>
-    <p>
-      <label>Telefono</label>
-      <input type="number" name="telefono" placeholder="Telefono" required/>
-    </p>
-    <p>
-      <label>Email</label>
-      <input type="email" name="email" placeholder="Email" required/>
-    </p>
+    {% for f in form %}
+      {% if f == form.csrf_token %}
+        {{ f }}
+      {% elif f==form.lat or f==form.lng %}
+        {{ f }}
+      {% else %}
+      {{ f.label }}
+      {{ f }}
+      <ul class="errors">
+        {% for error in f.errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    {% endfor %}
     <p>
       <input type="submit" value="Crear">
       <input type="reset" value="Limpiar">
     </p>
   </form>
+  <a href="{{ url_for('zona_index') }}" class="link">Volver</a>
 
 {% endblock %}

@@ -4,6 +4,9 @@ from app.models.punto import Punto
 from app.helpers.auth import authenticated
 from app.helpers import configurator
 
+from app.helpers.forms import PuntoForm
+from sqlalchemy import exc
+
 # Public resources
 def index():
     """
@@ -40,8 +43,10 @@ def new():
     if not has_permit("punto_new"):
         flash("No cuenta con los permisos necesarios")
         return redirect(request.referrer)
+    
+    form = PuntoForm()
 
-    return render_template("punto/new.html")
+    return render_template("punto/new.html",form=form)
 
 def create():
     if not authenticated(session):

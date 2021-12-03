@@ -16,114 +16,24 @@
 {% endblock %}
 {% block content %}
   <form id="form-map" class="one-mark" action="{{ url_for('denuncia_create') }}" method="POST" novalidate>
-    <input id="punto-lat" class="punto-lat" name="lat" type="hidden" >
-    <input id="punto-lng" class="punto-lng" name="lng" type="hidden" >
     <div class="map-container">
       <div id="mapid" class="mapform" ></div>
     </div>
-    {{ form.csrf_token }}
-    {{ form.one_marker(value="nada") }}
-    {{ form.lat }}
-    {{ form.lng }}
-    <fieldset class="form-field">
-      {{ form.titulo.label }}
-      {{ form.titulo }}
-        {% if form.titulo.errors %}
-        <ul class="errors">
-          {% for error in form.titulo.errors %}
-            <p>{{ error }}</p>
-          {% endfor %}
-        </ul>
+    {% for f in form %}
+      {% if f == form.one_marker %}
+        {{ f(value="nada") }}
+      {% elif f==form.lng or f==form.lat or f==form.csrf_token %}
+        {{ f }}
+      {% else %}
+      {{ f.label }}
+      {{ f }}
+      <ul class="errors">
+        {% for error in f.errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      </ul>
       {% endif %}
-    </fieldset>
-    <fieldset class="form-field">
-      {{ form.categoria.label }}
-      {{ form.categoria }}
-        {% if form.categoria.errors %}
-        <ul class="errors">
-          {% for error in form.categoria.errors %}
-            <p>{{ error }}</p>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    </fieldset>
-    <fieldset class="form-field">
-      {{ form.descripcion.label }}
-      {{ form.descripcion }}
-        {% if form.descripcion.errors %}
-        <ul class="errors">
-          {% for error in form.descripcion.errors %}
-            <p>{{ error }}</p>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    </fieldset>
-    <fieldset class="form-field">
-      {{ form.estado.label }}
-      {{ form.estado }}
-        {% if form.estado.errors %}
-        <ul class="errors">
-          {% for error in form.estado.errors %}
-            <p>{{ error }}</p>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    </fieldset>
-    <fieldset class="form-field">
-      {{ form.apellidoD.label }}
-      {{ form.apellidoD }}
-        {% if form.apellidoD.errors %}
-        <ul class="errors">
-          {% for error in form.apellidoD.errors %}
-            <p>{{ error }}</p>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    </fieldset>
-    <fieldset class="form-field">
-      {{ form.nombreD.label }}
-      {{ form.nombreD }}
-        {% if form.nombreD.errors %}
-        <ul class="errors">
-          {% for error in form.nombreD.errors %}
-            <p>{{ error }}</p>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    </fieldset>
-    <fieldset class="form-field">
-      {{ form.telefono.label }}
-      {{ form.telefono }}
-        {% if form.telefono.errors %}
-        <ul class="errors">
-          {% for error in form.telefono.errors %}
-            <p>{{ error }}</p>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    </fieldset>
-    <fieldset class="form-field">
-      {{ form.emailD.label }}
-      {{ form.emailD }}
-        {% if form.emailD.errors %}
-        <ul class="errors">
-          {% for error in form.emailD.errors %}
-            <p>{{ error }}</p>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    </fieldset>
-    <fieldset class="form-field">
-      {{ form.asignadoA.label }}
-      {{ form.asignadoA }}
-        {% if form.asignadoA.errors %}
-        <ul class="errors">
-          {% for error in form.asignadoA.errors %}
-            <p>{{ error }}</p>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    </fieldset>
+    {% endfor %}
     <p>
       <input type="submit" value="Crear">
       <button type="reset">Limpiar</button>

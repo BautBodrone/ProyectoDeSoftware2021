@@ -5,6 +5,8 @@ from app.helpers.auth import authenticated
 from app.helpers.user_helper import has_permit
 from app.models.recorrido import Recorrido
 from app.helpers import configurator
+from app.helpers.forms import RecorridoForm
+from sqlalchemy import exc
 
 def index():
     """
@@ -22,7 +24,9 @@ def new():
         El metodo ,si esta autenticado,saltara a una nueva pagina para crear un recorrido
     """
     recorridos = Recorrido.query.all()
-    return render_template("recorrido/new.html", recorridos=recorridos)
+    form = RecorridoForm()
+    
+    return render_template("recorrido/new.html", recorridos=recorridos, form=form)
 
 def show(id):
     """
@@ -43,13 +47,20 @@ def create():
     """
         El metodo ,si esta autenticado, creara un nuevo recorrido
     """
-    req = request.form
-    new_recorrido = Recorrido(nombre=req["nombre"],estado=req["estado"],
-    descripcion=req["descripcion"],coordenadas=req.getlist("coordenadas"))
 
+    form = RecorridoForm()
+    recorridos = Recorrido.query.all()
+    
+    if not form.validate_on_submit():   
+        flash(form.errors)
+        return render_template("recorrido/new.html", form=form, recorridos=recorridos)
+    
     try:
+        data= dict(form.data)
+        del data["csrf_token"]
+        new_recorrido = Recorrido(**data)
         Recorrido.save(new_recorrido)
-    except:
+    except exc.IntegrityError:
         flash("Ya existe otro recorrido con ese nombre", "error")
         return redirect(request.referrer)
 

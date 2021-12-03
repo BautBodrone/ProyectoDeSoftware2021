@@ -10,7 +10,7 @@
   </div>
 {% endblock %}
 {% block content %}
-  <form action="{{ url_for('user_edit_finish') }}" method="POST">
+  <form action="{{ url_for('user_edit_finish') }}" method="POST" novalidate>
     {{ form.csrf_token }}
     {{ form.id(value= user.id)}}
     <fieldset class="form-field">
@@ -19,7 +19,7 @@
         {% if form.username.errors %}
         <ul class="errors">
           {% for error in form.username.errors %}
-            <li>{{ error }}</li>
+            <p>{{ error }}</p>
           {% endfor %}
         </ul>
       {% endif %}
@@ -30,7 +30,7 @@
         {% if form.email.errors %}
         <ul class="errors">
           {% for error in form.email.errors %}
-            <li>{{ error }}</li>
+            <p>{{ error }}</p>
           {% endfor %}
         </ul>
       {% endif %}
@@ -41,7 +41,7 @@
         {% if form.password.errors %}
         <ul class="errors">
           {% for error in form.password.errors %}
-            <li>{{ error }}</li>
+            <p>{{ error }}</p>
           {% endfor %}
         </ul>
       {% endif %}
@@ -52,7 +52,7 @@
         {% if form.first_name.errors %}
         <ul class="errors">
           {% for error in form.first_name.errors %}
-            <li>{{ error }}</li>
+            <p>{{ error }}</p>
           {% endfor %}
         </ul>
       {% endif %}
@@ -63,7 +63,7 @@
         {% if form.last_name.errors %}
         <ul class="errors">
           {% for error in form.last_name.errors %}
-            <li>{{ error }}</li>
+            <p>{{ error }}</p>
           {% endfor %}
         </ul>
       {% endif %}

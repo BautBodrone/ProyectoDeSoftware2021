@@ -103,7 +103,6 @@ export class NewAndEditZona {
 const submitHandler = (event, map) => {
     alert(map.marker_list)
     if (map.marker_list.length > 2){
-        
         document.getElementById('zonas').setAttribute(map.marker_list);
     }
     else {

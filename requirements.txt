@@ -11,3 +11,4 @@ oauthlib==2.0.6
 requests==2.26.0
 Flask-Login==0.5.0
 flask-cors==3.0.10
+email-validator==1.1.3

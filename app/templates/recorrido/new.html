@@ -17,25 +17,25 @@
 
 {% block content %}
   <form id="form-map" action="{{ url_for('recorrido_create') }}" method="POST">
-      <input id="coordenadas" type="hidden" class="coordenadas" name="coordenadas" id="coordenadas">
       <div class="map-container">
         <div id="mapid" class="mapform" ></div>
       </div> 
-    <p>
-      <label>Nombre <label>
-      <input type="text" name="nombre" placeholder="Nombre" required/>
-    </p>
-    <p>
-      <label>Descripcion<label>
-      <textarea rows = "5" cols = "21" name= "descripcion" required ></textarea>
-    </p>
-    <p>
-        <label for="estado">Estado:</label>
-        <select id="estado" name="estado">
-          <option value="publicado">Publicado</option>
-          <option value="despublicado">Despublicado</option>
-        </select>
-    </p>
+      {% for f in form %}
+      {% if f == form.csrf_token %}
+        {{ f }}
+      {% elif f==form.coordenadas %}
+        {{ f }}
+      {% else %}
+      {{ f.label }}
+      {{ f }}
+      <ul class="errors">
+        {% for error in f.errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    {% endfor %}
+      <br>
     <p>
       <input type="submit" value="Crear">
       <input type="reset" value="reset">

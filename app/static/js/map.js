@@ -1,4 +1,4 @@
-import { Map } from "./MapMarker.js";
+import { Map} from "./MapMarker.js";
 
 const submitHandler = (event, map) => {
     if (document.getElementsByClassName('one-mark').length != 0){

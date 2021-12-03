@@ -4,6 +4,8 @@ from app.models.punto import Punto
 from app.helpers.auth import authenticated
 from app.helpers import configurator
 
+from app.helpers.forms import PuntoForm, PuntoEditForm
+from sqlalchemy import exc
 
 # Public resources
 def index():
@@ -13,6 +15,10 @@ def index():
 
     if not authenticated(session):
         abort(401)
+    
+    if not has_permit("punto_index"):
+        flash("No cuenta con los permisos necesarios","danger")
+        return redirect(request.referrer)
 
     page = request.args.get('page',1, type=int)
     page_config = configurator.settings().get_rows_per_page()
@@ -39,36 +45,45 @@ def new():
         abort(401)
 
     if not has_permit("punto_new"):
-        flash("No cuenta con los permisos necesarios")
+        flash("No cuenta con los permisos necesarios","danger")
         return redirect(request.referrer)
+    
+    form = PuntoForm()
 
-    return render_template("punto/new.html")
+    return render_template("punto/new.html",form=form)
 
 def create():
     if not authenticated(session):
         abort(401)
-    
-    puntoNuevo = Punto(**request.form)
 
     if not has_permit("punto_new"):
-        flash("No cuenta con los permisos necesarios")
+        flash("No cuenta con los permisos necesarios","danger")
         return redirect(request.referrer)
+    
+    form = PuntoForm()
+    data= dict(form.data)
+    del data["csrf_token"]
+    del data["punto_nombre"]
+    new_punto = Punto(**data)
+    
+    if not form.validate_on_submit():
+        flash(form.errors)
+        return render_template("recorrido/new.html", form=form)
 
     try:
-        Punto.save(puntoNuevo)
-        flash("Nuevo punto creado")
-    except:
-        flash("error")
+        Punto.save(new_punto)
+        flash("Se creo con exito", "success")
+        return redirect(url_for("punto_index"))
+    except exc.IntegrityError:
+        flash("Punto con ese nombre ya existe", "danger")
         return redirect(request.referrer)
-
-    return redirect(url_for("punto_index"))
 
 def delete(id):
     if not authenticated(session):
         abort(401)
 
     if not has_permit("punto_delete"):
-        flash("No cuenta con los permisos necesarios")
+        flash("No cuenta con los permisos necesarios","danger")
         return redirect(request.referrer)
 
     puntoEliminar = Punto.query.filter_by(id=int(id)).first()
@@ -81,22 +96,43 @@ def edit(id):
         abort(401)
 
     if not has_permit("punto_edit"):
-        flash("No cuenta con los permisos necesarios")
+        flash("No cuenta con los permisos necesarios","danger")
         return redirect(request.referrer)
     
+    form = PuntoEditForm()
     punto = Punto.query.filter_by(id=int(id)).first()
-    return render_template("punto/edit.html", punto=punto)
+    form.punto_nombre(id=punto)
+
+    return render_template("punto/edit.html", punto=punto, form=form)
 
 def update():
+    
+    if not authenticated(session):
+        abort(401)
+
+    if not has_permit("punto_edit"):
+        flash("No cuenta con los permisos necesarios","danger")
+        return redirect(request.referrer)
+    
     data = request.form
     punto = Punto.search_id(data["id"])
+    
+    form = PuntoEditForm()
+    data= dict(form.data)
+    del data["csrf_token"]
+    
+    punto = Punto.search_id(data["id"])
+    if not form.validate_on_submit():
+        flash(form.errors)
+        return render_template("recorrido/edit.html", punto=punto, form=form)
+    
     try:
         punto.update(data)
-    except:
-        flash("error")
+        flash("Se edito con exito", "success")
+        return redirect(url_for("punto_index"))
+    except exc.IntegrityError:
+        flash("Punto con ese nombre ya existe", "danger")
         return redirect(request.referrer)
-    flash("Se edito con exito", "success")
-    return redirect(url_for("punto_index"))
 
 def filtro():
     """

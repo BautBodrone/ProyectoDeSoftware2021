@@ -39,7 +39,7 @@ def new():
         abort(401)
 
     if not has_permit("user_new"):
-        flash("No cuenta con los permisos necesarios")
+        flash("No cuenta con los permisos necesarios","danger")
         return redirect(request.referrer)
     
     form = UserForm()
@@ -56,7 +56,7 @@ def create():
         abort(401)
 
     if not has_permit("user_new"):
-        flash("No cuenta con los permisos necesarios")
+        flash("No cuenta con los permisos necesarios","danger")
         return redirect(request.referrer)
     
     form = UserForm()
@@ -64,13 +64,14 @@ def create():
         flash(form.errors)
         return render_template("user/new.html", form=form)
     
+    data= dict(form.data)
+    del data["csrf_token"]
+    
     try:
-        data= dict(form.data)
-        del data["csrf_token"]
         new_user = User(**data)
         User.save(new_user)
-    
         return redirect(url_for("user_index"))
+    
     except exc.IntegrityError:
         flash("Usuario con ese nombre o email ya existe", "danger")
         return redirect(request.referrer)
@@ -84,12 +85,12 @@ def delete():
         abort(401)
 
     if not has_permit("user_delete"):
-        flash("No cuenta con los permisos necesarios")
+        flash("No cuenta con los permisos necesarios","danger")
         return redirect(request.referrer)
 
     user = User.search_user(request.form["user_id"])
     user.delete()
-    flash("Se elimino con exito")
+    flash("Se elimino con exito","success")
 
     return redirect(url_for('user_index'))
 
@@ -101,7 +102,7 @@ def edit(user_id):
         abort(401)
 
     if not has_permit("user_edit"):
-        flash("No cuenta con los permisos necesarios")
+        flash("No cuenta con los permisos necesarios","danger")
         return redirect(request.referrer)
 
     user = User.search_user(user_id)
@@ -116,6 +117,10 @@ def edit_finish():
 
     if not authenticated(session):
         abort(401)
+        
+    if not has_permit("user_edit"):
+        flash("No cuenta con los permisos necesarios")
+        return redirect(request.referrer)
 
     form = UserForm()  
     data= dict(form.data)

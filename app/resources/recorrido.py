@@ -5,12 +5,21 @@ from app.helpers.auth import authenticated
 from app.helpers.user_helper import has_permit
 from app.models.recorrido import Recorrido
 from app.helpers import configurator
+from app.helpers.forms import RecorridoForm, RecorridoEditForm
+from sqlalchemy import exc
 
 def index():
     """
         Busca de confi la cantidad de paginas y cantidad de elementos que debe mostrar
         Luego metodo mostrara todos los recorridos en una tabla
     """
+    if not authenticated(session):
+        abort(401)
+    
+    if not has_permit("recorrido_index"):
+        flash("No cuenta con los permisos necesarios","danger")
+        return redirect(request.referrer)
+    
     page = request.args.get('page',1, type=int)
     page_config = configurator.settings().get_rows_per_page()
     recorridos = Recorrido.query.paginate(page=page,per_page=page_config)
@@ -21,8 +30,18 @@ def new():
     """
         El metodo ,si esta autenticado,saltara a una nueva pagina para crear un recorrido
     """
+    
+    if not authenticated(session):
+        abort(401)
+    
+    if not has_permit("recorrido_new"):
+        flash("No cuenta con los permisos necesarios","success")
+        return redirect(request.referrer)
+    
     recorridos = Recorrido.query.all()
-    return render_template("recorrido/new.html", recorridos=recorridos)
+    form = RecorridoForm()
+    
+    return render_template("recorrido/new.html", recorridos=recorridos, form=form)
 
 def show(id):
     """
@@ -43,17 +62,32 @@ def create():
     """
         El metodo ,si esta autenticado, creara un nuevo recorrido
     """
-    req = request.form
-    new_recorrido = Recorrido(nombre=req["nombre"],estado=req["estado"],
-    descripcion=req["descripcion"],coordenadas=req.getlist("coordenadas"))
-
+    
+    if not authenticated(session):
+        abort(401)
+    
+    if not has_permit("recorrido_new"):
+        flash("No cuenta con los permisos necesarios","success")
+        return redirect(request.referrer)
+    
+    form = RecorridoForm()
+    recorridos = Recorrido.query.all()
+    
+    if not form.validate_on_submit():   
+        flash(form.errors)
+        return render_template("recorrido/new.html", form=form, recorridos=recorridos)
+    
+    data= dict(form.data)
+    del data["csrf_token"]
+    
     try:
+        new_recorrido = Recorrido(**data)
         Recorrido.save(new_recorrido)
-    except:
+        flash("Se creo el recorrido con exito","success")
+        return redirect(url_for("recorrido_index"))
+    except exc.IntegrityError:
         flash("Ya existe otro recorrido con ese nombre", "error")
         return redirect(request.referrer)
-
-    return redirect(url_for("recorrido_index"))
 
 def edit(id):
     """
@@ -64,11 +98,13 @@ def edit(id):
         abort(401)
 
     if not has_permit("recorrido_edit"):
-        flash("No cuenta con los permisos necesarios")
+        flash("No cuenta con los permisos necesarios","danger")
         return redirect(request.referrer)
     
+    form = RecorridoEditForm()
+    
     recorrido = Recorrido.query.filter_by(id=int(id)).first()
-    return render_template("recorrido/edit.html", recorrido=recorrido)
+    return render_template("recorrido/edit.html", recorrido=recorrido, form=form)
 
 
 def update():
@@ -76,15 +112,29 @@ def update():
         El metodo , si esta autentiticado, podra cambiar los datos de un recorrido
     """
     
-    data = request.form
+    if not authenticated(session):
+        abort(401)
+    
+    if not has_permit("recorrido_edit"):
+        flash("No cuenta con los permisos necesarios","danger")
+        return redirect(request.referrer)
+    
+    form = RecorridoEditForm()
+    data= dict(form.data)
+    del data["csrf_token"]
+    
     recorrido = Recorrido.search_id(data["id"])
+    if not form.validate_on_submit():
+        flash(form.errors)
+        return render_template("recorrido/edit.html", recorrido=recorrido, form=form)
+    
     try:
         recorrido.update(data)
-    except:
-        flash("error")
+        flash("Se edito con exito", "success")
+        return redirect(url_for("recorrido_index"))
+    except exc.IntegrityError:
+        flash("Recorrido con ese nombre ya existe", "danger")
         return redirect(request.referrer)
-    flash("Se edito con exito", "success")
-    return redirect(url_for("recorrido_index"))
 
 def delete():
     """
@@ -95,13 +145,13 @@ def delete():
         abort(401)
 
     if not has_permit("recorrido_delete"):
-        flash("No cuenta con los permisos necesarios")
+        flash("No cuenta con los permisos necesarios","danger")
         return redirect(request.referrer)
 
     recorrido = Recorrido.search_id(request.form["recorrido_id"])
     recorrido.delete()
-    flash("Se elimino con exito")
-
+    
+    flash("Se elimino con exito","success")
     return redirect(url_for('recorrido_index'))
 
 def filtro():

@@ -6,7 +6,7 @@ from app.helpers.user_helper import has_permit
 from app.models.zona import Zona
 from app.helpers import configurator
 import csv
-from app.helpers.forms import ZonaForm
+from app.helpers.forms import ZonaForm, ZonaUpdateForm
 
 from sqlalchemy import exc
 
@@ -14,6 +14,13 @@ def index():
     """
         El metodo mostrara todos las zonas en una tabla
     """
+
+    if not authenticated(session):
+        abort(401)
+
+    if not has_permit("zona_index"):
+        flash("No cuenta con los permisos necesarios")
+        return render_template("home.html")
 
     page = request.args.get('page',1, type=int)
     page_config = configurator.settings().get_rows_per_page()
@@ -25,6 +32,13 @@ def new():
     """
         El metodo ,si esta autenticado,saltara a una nueva pagina para crear una zona
     """
+    
+    if not authenticated(session):
+        abort(401)
+
+    if not has_permit("zona_new"):
+        flash("No cuenta con los permisos necesarios","danger")
+        return render_template("home.html")
     
     form = ZonaForm()
     
@@ -73,6 +87,14 @@ def create():
     """
         El metodo ,si esta autenticado, creara una nueva zona
     """
+    
+    if not authenticated(session):
+        abort(401)
+
+    if not has_permit("zona_new"):
+        flash("No cuenta con los permisos necesarios","danger")
+        return render_template("home.html")
+    
     req = request.form
     new_zona = Zona(nombre=req["nombre"],estado=req["estado"],
     color=req["color"],coordenadas=req.getlist("coordenadas"))
@@ -82,20 +104,18 @@ def create():
         flash(form.errors)
         return render_template("zona/new.html", form=form)
 
+    data= dict(form.data)
+    del data["csrf_token"]
+
     try:
-        
-        data= dict(form.data)
-        del data["csrf_token"]
         new_zona = Zona(**data)
         Zona.save(new_zona)
-    except exc.DataError:
-        flash("Maximo 6 puntos", "danger")
-        return redirect(request.referrer)
+        flash("Se creo una zona con exito","success")
+        return redirect(url_for("zona_index"))
+
     except exc.IntegrityError:
         flash("Zona con ese nombre ya existe", "danger")
         return redirect(request.referrer)
-
-    return redirect(url_for("zona_index"))
 
 def edit(id):
     """
@@ -105,28 +125,38 @@ def edit(id):
         abort(401)
 
     if not has_permit("zona_edit"):
-        flash("No cuenta con los permisos necesarios")
+        flash("No cuenta con los permisos necesarios","danger")
         return redirect(request.referrer)
     
+    form = ZonaUpdateForm()
+    
     zona = Zona.query.filter_by(id=int(id)).first()
-    return render_template("zona/edit.html", zona=zona)
+    return render_template("zona/edit.html", form=form,zona=zona)
 
 
 def update():
     """
         El metodo , si esta autentiticado, podra cambiar los datos de una zona
     """
-    req = request.form
-    data = Zona(nombre=req["nombre"],estado=req["estado"],
-    color=req["color"],coordenadas=req.getlist("coordenadas"))
-    zona = Zona.search_id(req["id"])
+    if not authenticated(session):
+        abort(401)
+
+    if not has_permit("zona_edit"):
+        flash("No cuenta con los permisos necesarios","danger")
+        return render_template("home.html")
+    
+    form = ZonaUpdateForm()
+    data= dict(form.data)
+    del data["csrf_token"]
+    zona = Zona.search_id(data["id"])
     try:
         zona.update(data)
-    except:
-        flash("error")
+        flash("Se edito con exito", "success")
+        return redirect(url_for("zona_index"))
+
+    except exc.IntegrityError:
+        flash("Zona con ese nombre ya existe", "danger")
         return redirect(request.referrer)
-    flash("Se edito con exito", "success")
-    return redirect(url_for("zona_index"))
 
 def delete():
     """
@@ -141,7 +171,7 @@ def delete():
 
     zona = Zona.search_id(request.form["zona_id"])
     zona.delete()
-    flash("Se elimino con exito")
+    flash("Se elimino con exito", "success")
 
     return redirect(url_for('zona_index'))
 

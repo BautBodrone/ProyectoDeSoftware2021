@@ -15,67 +15,23 @@
   </div>
 {% endblock %}
 {% block content %}
-  <form id="form-map" class="one-mark" action="{{ url_for('denuncia_create') }}" method="POST">
-    <input id="punto-lat" class="punto-lat" name="lat" type="hidden" >
-    <input id="punto-lng" class="punto-lng" name="lng" type="hidden" >
+  <form id="form-map" class="one-mark" action="{{ url_for('denuncia_create') }}" method="POST" novalidate>
     <div class="map-container">
       <div id="mapid" class="mapform" ></div>
     </div>
-    <p>
-      <label>Titulo<label>
-      <input name="titulo" placeholder="Titulo de denuncia" required/>
-    </p>
-    <p>
-      <label for="categoria">Categoria:</label>
-          <select id="categoria" name="categoria">
-            <option value="cañeria_rota">Cañeria Rota</option>
-            <option value="calle_inundable">Calle Inundable</option>
-            <option value="calle_rota">Calle rota</option>
-            <option value="otro">Otro</option>
-          </select>
-    </p>  
-    <p>
-      <label>Descripcion <label>
-      <input name="descripcion" placeholder="descripcion" required/>
-    </p>
-    
-      <p>
-        <label for="estado">Estado:</label>
-            <select id="estado" name="estado">
-              <option value="sinConfirmar">Sin confirmar</option>
-              <option value="curso">En curso</option>
-              <option value="resuelta">Resuelta</option>
-              <option value="cerrada">Cerrada</option>
-            </select>
-      </p>     
-      <p>
-        <label>Apellido del denunciante <label>
-        <input name="apellidoD" placeholder="apellidoD" required/>
-      </p>
-      <p>
-        <label>Nombre del denunciante <label>
-        <input name="nombreD" placeholder="nombreD" required/>
-      </p>
-      <p>
-        <label>Telefono <label>
-        <input name="telefono" placeholder="Telefono" required/>
-      </p>
-      <p>
-        <label>Email del denunciante <label>
-        <input name="emailD" placeholder="emailD" required/>
-      </p>
-    <p>
-      <label>Usuario Encargado : <label>
-      <select  name="asignadoA" id="asignadoA">
-        {% for user in users %}
-          {% for rol in user.rols %}
-            {% if rol.nombre != None %}
-              <option value={{user.id}}>{{user.first_name}}</option>
-            {% endif %}
-          {% endfor %}
+    {% for f in form %}
+      {% if f==form.lng or f==form.lat or f==form.csrf_token %}
+        {{ f }}
+      {% else %}
+      {{ f.label }}
+      {{ f }}
+      <ul class="errors">
+        {% for error in f.errors %}
+          <p>{{ error }}</p>
         {% endfor %}
-      </select>
-      </p>
+      </ul>
+      {% endif %}
+    {% endfor %}
     <p>
       <input type="submit" value="Crear">
       <button type="reset">Limpiar</button>

@@ -26,10 +26,10 @@ class Zona(db.Model):
         """
             Actualiza la zona con los valores pasados por parametro
         """
-        self.nombre = zona.nombre
-        self.estado = zona.estado
-        self.color = zona.color
-        self.coordenadas = zona.coordenadas
+        self.nombre = zona["nombre"]
+        self.estado = zona["estado"]
+        self.color = zona["color"]
+        self.coordenadas = zona["zonas"]
         db.session.commit()
 
     def delete(self):

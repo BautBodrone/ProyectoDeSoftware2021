@@ -16,71 +16,114 @@
 {% endblock %}
 {% block content %}
   <form id="form-map" class="one-mark" action="{{ url_for('denuncia_edit_finish') }}" method="POST">
-    <input class="punto-lat" name="lat" type="hidden" >
-    <input class="punto-lng" name="lng" type="hidden" >
     <div class="map-container">
       <div id="mapid" class="mapform" ></div>
     </div>
-    <div class="form-group">
-      <input type="hidden" class="form-control"  id="id" name="id" value="{{denuncia.id}}">
-    </div>
-    
-    <p>
-      <label>Titulo<label></br>
-      <input name="titulo" placeholder="{{denuncia.titulo}}" value="{{denuncia.titulo}}" required/>
-    </p>
-    <p>
-      <label for="categoria">Categoria:</label>
-          <select id="categoria" name="categoria">
-            <option value="cañeria_rota">Cañeria Rota</option>
-            <option value="calle_inundable">Calle Inundable</option>
-            <option value="calle_rota">Calle rota</option>
-            <option value="otro">Otro</option>
-          </select>
-    </p>     
-    <p>
-      <label>Descripcion<label></br>
-      <input name="descripcion" placeholder="{{denuncia.descripcion}}" value="{{denuncia.descripcion}}"/>
-    </p>
-    <p>
-      <label for="estado">Estado:</label>
-          <select id="estado" name="estado">
-            <option value="sinConfirmar">Sin confirmar</option>
-            <option value="curso">En curso</option>
-            <option value="resuelta">Resuelta</option>
-            <option value="cerrada">Cerrada</option>
-          </select>
-    </p>     
-    <p>
-      <label>Fecha Comienzo<label></br>
-      <input type="date" name="fechaC" placeholder="{{denuncia.fechaC}}" value="{{denuncia.fechaC}}" />
-    </p>
-    {% if denuncia.estado == "cerrada"%}
-    <p>
-      <label>Fecha Fin<label></br>
-      <input type="date" name="fechaF" placeholder="{{denuncia.fechaF}}" value="{{denuncia.fechaF}}" />
-    </p>
-    {% endif %}
-    <p>
-      <label>Apellido del denunciante <label></br>
-      <input name="apellidoD" placeholder="{{denuncia.apellidoD}}" value="{{denuncia.apellidoD}}" />
-    </p>
 
-    <p>
-      <label>Nombre del denunciante <label></br>
-      <input type="nombreD" name="nombreD" placeholder="{{denuncia.nombreD}}" value="{{denuncia.nombreD}}"/>
-    </p>
+    {{ form.csrf_token}}
+    {{ form.id(value=denuncia.id) }}
+    {{ form.lat(id="punto-lat",class="punto-lat",value=denuncia.lat) }}
+    {{ form.lng(id="punto-lng",class="punto-lng",value=denuncia.lng) }}
 
-    <p>
-      <label>Telefono<label></br>
-      <input name="telefono" placeholder="{{denuncia.telefono}}" value="{{denuncia.telefono}}"/>
-    </p>
-
-    <p>
-      <label>Email del denunciante<label></br>
-      <input name="emailD" placeholder="{{denuncia.emailD}}" value="{{denuncia.emailD}}"/>
-    </p>
-
+    <fieldset class="form-field">
+      {{ form.titulo.label }}
+      {{ form.titulo (class="punto-nombre",placeholder=denuncia.titulo,value=denuncia.titulo) }}
+        {% if form.titulo.errors %}
+        <ul class="errors">
+          {% for error in form.titulo.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
+    <fieldset class="form-field">
+      {{ form.categoria.label }}
+      {{ form.categoria (placeholder=denuncia.categoria,value=denuncia.categoria) }}
+        {% if form.categoria.errors %}
+        <ul class="errors">
+          {% for error in form.categoria.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
+    <fieldset class="form-field">
+      {{ form.descripcion.label }}
+      {{ form.descripcion (placeholder=denuncia.descripcion,value=denuncia.descripcion) }}
+        {% if form.descripcion.errors %}
+        <ul class="errors">
+          {% for error in form.descripcion.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
+    <fieldset class="form-field">
+      {{ form.estado.label }}
+      {{ form.estado (placeholder=denuncia.estado,value=denuncia.estado) }}
+        {% if form.estado.errors %}
+        <ul class="errors">
+          {% for error in form.estado.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
+    <fieldset class="form-field">
+      {{ form.apellidoD.label }}
+      {{ form.apellidoD (placeholder=denuncia.apellidoD,value=denuncia.apellidoD) }}
+        {% if form.apellidoD.errors %}
+        <ul class="errors">
+          {% for error in form.apellidoD.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
+    <fieldset class="form-field">
+      {{ form.nombreD.label }}
+      {{ form.nombreD (placeholder=denuncia.nombreD,value=denuncia.nombreD) }}
+        {% if form.nombreD.errors %}
+        <ul class="errors">
+          {% for error in form.nombreD.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
+    <fieldset class="form-field">
+      {{ form.telefono.label }}
+      {{ form.telefono (placeholder=denuncia.telefono,value=denuncia.telefono) }}
+        {% if form.telefono.errors %}
+        <ul class="errors">
+          {% for error in form.telefono.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
+    <fieldset class="form-field">
+      {{ form.emailD.label }}
+      {{ form.emailD (placeholder=denuncia.emailD,value=denuncia.emailD) }}
+        {% if form.emailD.errors %}
+        <ul class="errors">
+          {% for error in form.emailD.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
+    <fieldset class="form-field">
+      {{ form.asignadoA.label }}
+      {{ form.asignadoA (placeholder=denuncia.asignadoA,value=denuncia.asignadoA) }}
+        {% if form.asignadoA.errors %}
+        <ul class="errors">
+          {% for error in form.asignadoA.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
     <p>
       <input type="submit" value="Editar">
       <button type="reset">Limpiar</button>

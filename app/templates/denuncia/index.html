@@ -50,7 +50,7 @@
     <td>{{ denuncia.estado }}</td>
     <td>
       <form action="{{ url_for('seguimiento_index', denuncia_id = denuncia.id ) }}">
-        <button type="submit" class="btn btn-info mt-2 ml-2">Seguimientos</button>
+        <button type="submit" class="btn btn-info mt-2 ml-2" >Seguimientos</button>
       </form>
       {% if my_user(is_authenticated(session)) != None %}
         {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'denuncia_edit') %}

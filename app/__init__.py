@@ -14,6 +14,7 @@ from app.resources.api.zona import zonas_api
 from app.resources.api.denuncia import denuncias_api
 from app.resources.api.puntos   import puntos_api
 from app.resources.api.recorrido import recorrido_api
+from app.resources.api.configuration import configuration_api
 from app.helpers import handler, user_helper, configurator
 
 from app.models.punto import Punto
@@ -138,6 +139,7 @@ def create_app(environment="production"):
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")
     
+    api.register_blueprint(configuration_api)
     api.register_blueprint(puntos_api)
     api.register_blueprint(recorrido_api)
     api.register_blueprint(zonas_api)

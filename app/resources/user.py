@@ -125,6 +125,8 @@ def edit_finish():
 
     try:
         user.edit(data)
+        flash("Se modifico usuario con exito")
+        
     except:
         flash("Usuario con ese nombre o email ya existe", "error")
         return redirect(request.referrer)
@@ -168,4 +170,4 @@ def filtro():
                 users=User.query.filter_by(activo=activo).paginate(page=page,per_page=page_config)
             else:
                 users=User.query.paginate(page=page,per_page=page_config)
-    return render_template("user/index.html", users=users )
+    return render_template("user/index.html", users=users, activo=activo, first_name=first_name )

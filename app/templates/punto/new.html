@@ -23,12 +23,12 @@
       <div id="mapid" class="mapform" ></div>
     </div>
     <p>
-      <label>Nombre<label>
-      <input name="nombre" placeholder="Nombre" required/>
+      <label>Nombre<label></br>
+      <input name="nombre" placeholder="Nombre" required maxlength=20/>
     </p>
     <p>
-      <label>Direccion<label>
-      <input  name="direccion" placeholder="Direccion" required/>
+      <label>Direccion<label></br>
+      <input  name="direccion" placeholder="Direccion" required  maxlength=15/>
     </p>
      
      <label>Estado</label>
@@ -41,16 +41,17 @@
      </select>
     </p>
     <p>
-      <label>Telefono</label>
-      <input type="number" name="telefono" placeholder="Telefono" required/>
+      <label>Telefono<label></br>
+      <input type="number" name="telefono" placeholder="Telefono" required maxlength=15/>
     </p>
     <p>
-      <label>Email</label>
-      <input type="email" name="email" placeholder="Email" required/>
+      <label>Email<label></br>
+      <input type="email" name="email" placeholder="Email" required maxlength=20/>
     </p>
     <p>
-      <input type="submit" value="Crear">
-      <input type="reset" value="Limpiar">
+      <input type="submit" value="Crear" style="margin-right:10px">
+      <button type="reset">Limpiar</button>
+      <a href="{{ url_for('punto_index') }}" class="link" style="float:center">Volver</a>
     </p>
   </form>
 

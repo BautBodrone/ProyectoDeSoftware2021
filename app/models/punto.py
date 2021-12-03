@@ -32,6 +32,7 @@ class Punto(db.Model):
     def save(self, new_punto):
         db.session.add(new_punto)
         print(db.session.commit())
+        
 
     def delete(self):
         db.session.delete(self)

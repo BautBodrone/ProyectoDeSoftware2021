@@ -15,6 +15,25 @@
   </div>
 {% endblock %}
 
+{% block navbar %}
+<a href="/" class="navbar" id="home" >Inicio</a>
+{% if is_authenticated(session) %}
+
+  <a href="{{ url_for('recorrido_index') }}" class="navbar">Recorrido</a>
+  <a href="{{ url_for('zona_index') }}" class="navbar">Zonas</a>
+  <a href="{{ url_for('punto_index') }}" class="navbar active">Puntos de Encuentro</a>
+  <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
+  {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
+    <a href="{{ url_for('rol_index') }}" class="navbar" >Roles</a>
+    <a href="{{ url_for('user_index') }}" class="navbar" >Usuarios</a>
+  {% endif %}
+  <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
+{% else %}
+  <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
+{% endif %}
+{% endblock %}
+
+
 {% block content %}
   <form id="form-map" class="one-mark" action="{{ url_for('punto_update') }}" method="POST">
     <input id="punto-lat" class="punto-lat" name="punto-lat" type="hidden" value="{{ punto.lat }}">
@@ -25,12 +44,12 @@
     </div>
     <input type="hidden" class="form-control"  id="id" name="id" value="{{punto.id}}">
     <p>
-      <label>Nombre: <label>
-      <input name="nombre" placeholder="Nombre" value="{{punto.nombre}}" required/>
+      <label>Nombre<label>
+      <input name="nombre" placeholder="Nombre" value="{{punto.nombre}}" required maxlength=20/>
     </p>
     <p>
-      <label>Direccion: <label>
-      <input  name="direccion" placeholder="Direccion" value="{{punto.direccion}}"required/>
+      <label>Direccion<label>
+      <input  name="direccion" placeholder="Direccion" value="{{punto.direccion}}"required maxlength=15/>
     </p>
     <p>
      <label>Estado: </label>
@@ -43,12 +62,12 @@
     </select>
     </p>
     <p>
-      <label>Telefono: <label>
-      <input type="number" name="telefono" placeholder="Telefono" value="{{punto.telefono}}" required/>
+      <label>Telefono<label></br>
+      <input type="number" name="telefono" placeholder="Telefono" value="{{punto.telefono}}" maxlength=15/>
     </p>
     <p>
-      <label>Email: <label>
-      <input type="email" name="email" placeholder="Email" value="{{punto.email}}" required/>
+      <label>Email<label></br>
+      <input type="email" name="email" placeholder="Email" value="{{punto.email}}" maxlength=20/>
     </p>
     <p>
       <input type="submit" value="Modificar">

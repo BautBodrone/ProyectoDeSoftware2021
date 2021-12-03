@@ -3,6 +3,22 @@ import collections
 class DenunciaSchema(object):
     
     @classmethod
+    def dump(cls, obj, many=False):
+        if many:
+            return cls._serialize_collection(obj)
+        else:
+            return cls._serialize(obj,True)
+        
+    @classmethod
+    def _serialize_collection(cls, collection):
+       
+        return {
+            "denuncias":[cls._serialize(item) for item in collection.items] ,
+            "total": collection.total,
+            "pagina": collection.page
+        }
+        
+    @classmethod
     def _get_categoria_by_id(cls,id):
         if (id > 0 and id < 4):
             opciones = {
@@ -52,15 +68,15 @@ class DenunciaSchema(object):
             raise
         
     @classmethod
-    def dump(cls, obj):
+    def _serialize(cls, obj, oneObj=False):
         send = {}
         for attr in obj.__table__.columns:
             if attr.name == "categoria":
                 send["categoria_id"] = cls._get_categoria_by_code(getattr(obj, attr.name))
             if attr.name == "lat":
-                lat = getattr(obj, attr.name)
+                send["lat"] = getattr(obj, attr.name)
             if attr.name == "lng":
-                lng = getattr(obj, attr.name)
+                send["lng"] = getattr(obj, attr.name)
             if attr.name == "apellidoD":
                 send["apellido_denunciante"] = getattr(obj, attr.name)
             if attr.name == "nombreD":
@@ -75,6 +91,4 @@ class DenunciaSchema(object):
                 send["descripcion"] = getattr(obj, attr.name)
             if attr.name == "descripcion":
                 send["descripcion"] = getattr(obj, attr.name)
-        lat = lat +","+ lng
-        send["coordenadas"] = lat
         return send

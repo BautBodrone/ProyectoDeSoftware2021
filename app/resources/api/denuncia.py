@@ -3,6 +3,7 @@ from flask import jsonify, Blueprint, request, abort
 from app.models.denuncia import Denuncia
 from app.db import db
 import collections
+from app.models.configuration import Configuration
 from app.schema.denuncia import DenunciaSchema
 import app.helpers.handler as handler
 
@@ -11,7 +12,18 @@ from sqlalchemy import exc
 
 denuncias_api = Blueprint("denuncias", __name__, url_prefix="/denuncias")
 
-
+@denuncias_api.get("/")
+def get():
+    pagina = request.args.get("pagina","1")
+    if pagina.isnumeric():
+        conf = Configuration.query.first()
+        denuncias_page = Denuncia.query.paginate(page=int(pagina),per_page=conf.rows_per_page)
+        atributos = DenunciaSchema.dump(denuncias_page,many=True)
+        
+        return jsonify(atributos)
+    else:
+        handler.bad_request("error")
+    
 @denuncias_api.post("")
 def create():
     try:

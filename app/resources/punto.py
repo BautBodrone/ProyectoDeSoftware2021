@@ -4,6 +4,7 @@ from app.models.punto import Punto
 from app.helpers.auth import authenticated
 from app.helpers import configurator
 
+
 # Public resources
 def index():
     """
@@ -55,11 +56,11 @@ def create():
 
     try:
         Punto.save(puntoNuevo)
+        flash("Nuevo punto creado")
     except:
         flash("error")
         return redirect(request.referrer)
 
-    flash("Se creo con exito", "success")
     return redirect(url_for("punto_index"))
 
 def delete(id):
@@ -117,4 +118,4 @@ def filtro():
                 puntos=Punto.query.filter_by(estado=estado).paginate(page=page,per_page=page_config)
             else:
                 puntos=Punto.query.paginate(page=page,per_page=page_config)
-    return render_template("punto/index.html", puntos=puntos )
+    return render_template("punto/index.html", puntos=puntos, estado=estado, nombre=nombre )

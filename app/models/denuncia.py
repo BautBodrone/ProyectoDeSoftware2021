@@ -31,7 +31,7 @@ class Denuncia(db.Model):
     fechaC = Column(Date)
     fechaF = Column(Date)
     descripcion = Column(Text)
-    lat = Column(String(30))
+    lat = Column(String(30))    
     lng = Column(String(30))
     estado = Column(ChoiceType(ESTADOS))
     apellidoD = Column(String(30))
@@ -80,9 +80,6 @@ class Denuncia(db.Model):
 
         if self.categoria != data["categoria"]:
             self.categoria = data["categoria"]
-
-        if self.fechaC != data["fechaC"]:
-            self.fechaC = data["fechaC"]
 
         if self.estado == "cerrada":
             if self.fechaF != data["fechaF"]:

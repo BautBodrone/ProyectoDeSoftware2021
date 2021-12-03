@@ -8,6 +8,7 @@ from sqlalchemy import and_
 from app.models.user import User
 from app.helpers import configurator
 from app.helpers.forms import DenunciaForm, DenunciaEditForm
+from app.helpers.user_helper import has_permit
 
 from sqlalchemy import exc
 
@@ -16,6 +17,7 @@ def index():
     """
         El metodo mostrara todos las denuncias en una tabla
     """
+    
     pagConf = configurator.settings().get_rows_per_page()
     page = request.args.get('page',1, type=int)
     denuncias = Denuncia.query.paginate(page=page,per_page=pagConf)
@@ -41,6 +43,10 @@ def new():
     if not authenticated(session):
         abort(401)
 
+    if not has_permit("denuncia_new"):
+        flash("No cuenta con los permisos necesarios","danger")
+        return redirect(request.referrer)
+
     form = DenunciaForm()
     form.asignadoA.choices = [(g.id,g.username) for g in User.query.order_by('username')]
     
@@ -50,6 +56,13 @@ def create():
     """
         El metodo ,si esta autenticado, creara una nueva denuncia
     """
+    if not authenticated(session):
+        abort(401)
+
+    if not has_permit("denuncia_new"):
+        flash("No cuenta con los permisos necesarios","danger")
+        return redirect(request.referrer)
+    
     form = DenunciaForm()
     form.asignadoA.choices = [(g.id,g.username) for g in User.query.order_by('username')]
     
@@ -58,19 +71,18 @@ def create():
     if not form.validate_on_submit():
         return render_template("denuncia/new.html", form=form)
     
+    data= dict(form.data)
+    del data["csrf_token"]
+    
     try:
-        data= dict(form.data)
-        print(data)
-        del data["csrf_token"]
         denuncia = Denuncia(**data)
         Denuncia.save(denuncia)
+        flash("Se creo con exito", "success")
+        return redirect(url_for("denuncia_index"))
         
     except exc.IntegrityError:
         flash("Denuncia con ese titulo ya existe", "error")
         return redirect(request.referrer)
-    
-    flash("Se creo con exito", "success")
-    return redirect(url_for("denuncia_index"))
 
 def delete():
     """
@@ -79,6 +91,10 @@ def delete():
 
     if not authenticated(session):
         abort(401)
+
+    if not has_permit("denuncia_delete"):
+        flash("No cuenta con los permisos necesarios","danger")
+        return redirect(request.referrer)
 
     denuncia = Denuncia.search_denuncia(request.form["denuncia_id"])
     denuncia.delete()
@@ -93,8 +109,13 @@ def edit(denuncia_id):
     if not authenticated(session):
         abort(401)
 
+    if not has_permit("denuncia_edit"):
+        flash("No cuenta con los permisos necesarios","danger")
+        return redirect(request.referrer)
+
     denuncia = Denuncia.search_denuncia(denuncia_id)
     form = DenunciaEditForm()
+    form.asignadoA.choices = [(g.id,g.username) for g in User.query.order_by('username')]
     
     return render_template("denuncia/edit.html", denuncia=denuncia,form=form)
 
@@ -103,23 +124,27 @@ def edit_finish():
     if not authenticated(session):
         abort(401)
 
+    if not has_permit("denuncia_edit"):
+        flash("No cuenta con los permisos necesarios","danger")
+        return redirect(request.referrer)
+
     form = DenunciaEditForm()
     data= dict(form.data)
     del data["csrf_token"]
+    form.asignadoA.choices = [(g.id,g.username) for g in User.query.order_by('username')]
     
-    denuncia = Denuncia.search_id(data["id"])
+    denuncia = Denuncia.query.filter_by(id=data["id"]).first()
+    
     if not form.validate_on_submit():
         flash(form.errors)
         return render_template("denuncia/edit.html", denuncia=denuncia, form=form)
-
     try:
         denuncia.edit(data)
-    except:
+        flash("Se edito con exito", "success")
+        return redirect(url_for("denuncia_index"))
+    except exc.IntegrityError:
         flash("Denuncia con ese titulo o coordenadas ya existe", "error")
         return redirect(request.referrer)
-
-    flash("Se edito con exito", "success")
-    return redirect(url_for("denuncia_index"))
 
 def filtro():
     """

@@ -50,8 +50,8 @@ class ZonaUpdateForm(FlaskForm):
 
 #Form de DENUNCIAS
 class DenunciaForm(FlaskForm):
-    lat = StringField('punto_lat')
-    lng = StringField('punto_lng')
+    lat = StringField('punto-lat')
+    lng = StringField('punto-lng')
     titulo = StringField('Titulo',validators=[DataRequired(message="Campo requerido"),Length(max=30,message="No se pueden mas de 30 caracteres")])
     categoria = SelectField('Categoria', choices=[("cañeria_rota",'Cañeria Rota'),
                         ("calle_inundable",'Calle Inundable'),("calle_rota",'Calle Rota'),("otro",'Otro')], validators=[DataRequired(message="Campo requerido")])
@@ -66,8 +66,8 @@ class DenunciaForm(FlaskForm):
     
 class DenunciaEditForm(FlaskForm):
     id = HiddenField('id')
-    lat = StringField('punto_lat')
-    lng = StringField('punto_lng')
+    lat = StringField('punto-lat')
+    lng = StringField('punto-lng')
     titulo = StringField('Titulo',validators=[DataRequired(message="Campo requerido"),Length(max=30,message="No se pueden mas de 30 caracteres")])
     categoria = SelectField('Categoria', choices=[("cañeria_rota",'Cañeria Rota'),
                         ("calle_inundable",'Calle Inundable'),("calle_rota",'Calle Rota'),("otro",'Otro')], validators=[DataRequired(message="Campo requerido")])
@@ -102,8 +102,9 @@ class PuntoForm (FlaskForm):
     email = EmailField('Email del denunciante', validators=[Email(message="Email no valido"),DataRequired(message="Campo requerido"), Length(max=30)])
     nombre = StringField('Nombre de usuario',[DataRequired(message=('Campo requerido')),
                                               Length(max=30,message="No se pueden mas de 30 caracteres")])
-    lat = StringField('punto_lat')
-    lng = StringField('punto_lng') 
+    lat = StringField('punto-lat')
+    lng = StringField('punto-lng') 
+    punto_nombre = StringField('punto-nombre')#variable mapa
     estado = SelectField('Estado', choices=[("publicado",'Publicado'),("despublicado",'Despublicado')])
     telefono = IntegerField(label="Telefono", validators=[DataRequired(message="Campo requerido"),NumberRange(min=100000,message="Tiene que tener por lo menos 6 digitos")])
 

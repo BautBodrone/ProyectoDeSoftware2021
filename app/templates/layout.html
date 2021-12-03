@@ -103,14 +103,14 @@
       {% block content %}
       {% endblock %}
     </div>
+    <footer>
+      <div id="footer position-absolute fixed-bottom">
+        {% block footer %}
+        <a> Proyecto de software - Grupo 33 © </a>
+        {% endblock %}
+      </div> 
+      {% block scripts %}
+      {% endblock %} 
+    </footer>
   </body>
-  <footer>
-    <div id="footer">
-      {% block footer %}
-      <a> Proyecto de software - Grupo 33 © </a>
-      {% endblock %}
-    </div> 
-    {% block scripts %}
-    {% endblock %} 
-  </footer>
 </html>

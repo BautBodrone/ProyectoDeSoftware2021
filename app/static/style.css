@@ -10,10 +10,7 @@ form label, form select, form option{
   
 }
 
-.errors {
-  color: red
-}
-.error {
+.errors,.error,.danger {
   color: red
 }
 
@@ -210,7 +207,6 @@ a.page {
 
   .card{
     height:60vh;
-    text-align: center; 
   }
 
   .mapform{
@@ -289,7 +285,7 @@ a.page {
 
 table, td, th {
   border: 1px solid rgb(32, 32, 32);
-  text-align: center;
+  text-align: center !important;
   padding: 8px;
 }
 

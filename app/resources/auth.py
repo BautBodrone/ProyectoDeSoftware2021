@@ -1,6 +1,7 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash, Flask
 from app.models.user import User
 from oauthlib.oauth2 import WebApplicationClient
+from config import config
 
 
 import requests
@@ -33,7 +34,7 @@ def loginG():
     # scopes that let you retrieve user's profile from Google
     request_uri = client.prepare_request_uri(
         authorization_endpoint,
-        redirect_uri="https://admin-grupo33.proyecto2021.linti.unlp.edu.ar/login/callback",
+        redirect_uri= "https://admin-grupo33.proyecto2021.linti.unlp.edu.ar/login/callback",
         scope=["openid", "email", "profile"],
     )
     return redirect(request_uri)
@@ -79,7 +80,7 @@ def callback():
   
     if not User.query.filter_by(email=users_email).first():
         user = User(
-        first_name=users_name,last_name=family_name,password="",username=name, email=users_email)
+        first_name=users_name,last_name=family_name,password="",username=users_email, email=users_email)
         User.save(user)
         
 

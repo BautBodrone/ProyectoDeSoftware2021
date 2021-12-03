@@ -3,7 +3,7 @@
     <l-map class="map"
     v-model="zoom"
     :zoom="zoom"
-    :center="[-34.9186, -57.956]"
+    :center="[lat,lng]"
     >
     <div v-for="recorrido in recorridos" v-bind:key="recorrido">
         <l-polyline :lat-lngs="[recorrido.coordenadas]" :name="recorrido.nombre" :color="recorrido.color">
@@ -55,6 +55,8 @@ export default ({
     data() {
         return {
             zoom: 13,
+            lat: -34.9186, 
+            lng: -57.956
         };
     },
     props: {
@@ -63,6 +65,20 @@ export default ({
         recorridos: [],
         denuncias: [],
     },
+    created() {
+        if("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(pos => {
+                this.lat = pos.coords.latitude;
+                this.lng = pos.coords.longitude;
+            },
+        )
+        return;
+        }
+        this.$getLocation()
+        .then(coordinates => {
+            console.log(coordinates);
+        });
+    }
 });
 </script>
 <style scoped>

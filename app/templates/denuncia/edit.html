@@ -22,12 +22,12 @@
 
     {{ form.csrf_token}}
     {{ form.id(value=denuncia.id) }}
-    {{ form.lat(value=denuncia.lat) }}
-    {{ form.lng(value=denuncia.lng) }}
+    {{ form.lat(id="punto-lat",class="punto-lat",value=denuncia.lat) }}
+    {{ form.lng(id="punto-lng",class="punto-lng",value=denuncia.lng) }}
 
     <fieldset class="form-field">
       {{ form.titulo.label }}
-      {{ form.titulo (placeholder=denuncia.titulo,value=denuncia.titulo) }}
+      {{ form.titulo (class="punto-nombre",placeholder=denuncia.titulo,value=denuncia.titulo) }}
         {% if form.titulo.errors %}
         <ul class="errors">
           {% for error in form.titulo.errors %}

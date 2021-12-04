@@ -194,7 +194,7 @@ export default {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(`nombre_denunciante: ${this.nombre_denunciante},apellido_denunciante: ${this.apellido_denunciante},descripcion; ${this.descripcion},telcel_denunciante: ${this.telcel_denunciante}
-          , email_denunciante: ${this.email_denunciante} ,categoria_id: ${this.categoria_id}, coordenadas:${this.markerLatLng.lat}, ${this.markerLatLng.lng}`)
+          , email_denunciante: ${this.email_denunciante} ,categoria_id: ${this.categoria_id}, coordenadas:[${this.markerLatLng.lat}, ${this.markerLatLng.lng}]`)
           };
           fetch("https://admin-grupo33.proyecto2021.linti.unlp.edu.ar/api/denuncias", requestOptions)
             .then(response => response.json())

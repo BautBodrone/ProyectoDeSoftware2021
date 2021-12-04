@@ -31,29 +31,29 @@
   <router-view/>
 </template>
 
-// <script>
-// export default {
-//   name: 'App',
-//   data() {
-//     return {
-//       pagination: 'Integer',
-//       bg_color: 'String',
-//       accent_color: 'String',
-//       color: 'String'  
-//     };
-//   },
-//   created() {
-//     fetch(process.env.VUE_APP_ROOT_API+'/configuration-publica/').then((response) => {
-//         return response.json();
-//     }).then((json) => {
-//         this.pagination = json.rows_per_page;
-//         this.order = json.order;
-//         this.bg_color = json.public_bg_color;
-//         this.accent_color = json.public_accent_color;
-//         this.color = json.public_letters_color;
-//     }).catch((e) => {
-//         console.log(e)
-//     })
-//   }
-// };
-// </script>
+<script>
+export default {
+  name: 'App',
+  data() {
+    return {
+      rows_per_page: 'Integer',
+      bg_color: 'String',
+      accent_color: 'String',
+      color: 'String'  
+    };
+  },
+  created() {
+    fetch(process.env.VUE_APP_ROOT_API+'/configuration-publica/').then((response) => {
+        return response.json();
+    }).then((json) => {
+        this.rows_per_page = json.rows_per_page;
+        this.order = json.order;
+        this.bg_color = json.public_bg_color;
+        this.accent_color = json.public_accent_color;
+        this.color = json.public_letters_color;
+    }).catch((e) => {
+        console.log(e)
+    })
+  }
+};
+</script>

@@ -3,12 +3,11 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">Iniciar sesion</h1>
-  </div>
+
+{% block headline %}
+Iniciar Sesión
 {% endblock %}
+
 {% block content %}
   <form action="{{ url_for('auth_authenticate') }}" method="POST">
     <input name="username" placeholder="Username" required/>

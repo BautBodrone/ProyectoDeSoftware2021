@@ -5,15 +5,13 @@
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""></script>
   <script type="module" src="/static/js/map.js" ></script>
-
   {{ super() }}
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">Nueva denuncia</h1>
-  </div>
+
+{% block headline %}
+Denunciar
 {% endblock %}
+
 {% block content %}
   <form id="form-map" class="one-mark" action="{{ url_for('denuncia_create') }}" method="POST" novalidate>
     <div class="map-container">

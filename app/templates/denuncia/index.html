@@ -3,18 +3,13 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">Denuncias</h1>
-  </div>
+
+{% block headline %}
+Denuncias
 {% endblock %}
 
-{% block navbar %}
-  {{ super() }}
-{% endblock %}
 {% block content %}
-<a href="{{ url_for('denuncia_new') }}" class="link" style="float:right;  margin-top: 5px; width:75px">Nuevo</a>
+<a href="{{ url_for('denuncia_new') }}" class="link" style="float:right;  margin-top: 5px;">Nuevo</a>
 <form  class="tabla" action="{{ url_for('denuncia_filtro') }}" method="POST">
   <div>
     <h4>Filtrar</h4> 
@@ -73,7 +68,6 @@
 </table>
 
 <br>
-<div class="paginado">
   {% if denuncias.has_prev %}
   <a class="link" href="{{ url_for('denuncia_index', page_num=denuncias.prev_num,) }}">Anterior</a>
   {% endif %}
@@ -89,6 +83,5 @@
  {% if denuncias.has_next %}
   <a class="link" href="{{ url_for('denuncia_index', page=denuncias.next_num) }}">Siguiente</a>
   {% endif %}
-</div>
 <a href="{{ url_for('home') }}" class="link">Volver</a>
 {% endblock %}

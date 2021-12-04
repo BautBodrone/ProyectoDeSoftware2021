@@ -10,11 +10,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
  
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">Editar zona</h1>
-  </div>
+{% block headline %}
+Editar "{{ zona.nombre }}"
 {% endblock %}
 
 {% block content %}

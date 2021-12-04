@@ -3,15 +3,11 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">Recorridos</h1>
-  </div>
+
+{% block headline %}
+Crear Recorrido
 {% endblock %}
-{% block navbar %}
-  {{ super() }}
-{% endblock %}
+
 {% block content %}
 {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_new') %}
   <a href="{{ url_for('recorrido_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>

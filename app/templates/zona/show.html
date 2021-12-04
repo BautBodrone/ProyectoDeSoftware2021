@@ -3,11 +3,8 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">{{zona.nombre}}</h1>
-  </div>
+{% block headline %}
+{{ zona.nombre }}
 {% endblock %}
 {% block content %}
 <iframe  src="{{  url_for('zona_show_map', id = zona.id ) }}" loading="lazy" name="map" scrolling="no" style="width:70%;height:80vh;float:right;">

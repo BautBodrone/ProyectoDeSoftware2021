@@ -10,11 +10,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
 
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">Editar recorrido</h1>
-  </div>
+
+{% block headline %}
+Editar "{{ recorrido.nombre }}"
 {% endblock %}
 
 {% block content %}
@@ -28,7 +26,6 @@
   
     <fieldset class="form-field">
       {{ form.nombre.label }}
-      <br>
       {{ form.nombre (placeholder=recorrido.nombre,value=recorrido.nombre) }}
         {% if form.nombre.errors %}
         <ul class="errors">
@@ -40,7 +37,6 @@
     </fieldset>
     <fieldset class="form-field">
       {{ form.descripcion.label }}
-      <br>
       {{ form.descripcion (placeholder=recorrido.descripcion,value=recorrido.descripcion) }}
         {% if form.descripcion.errors %}
         <ul class="errors">

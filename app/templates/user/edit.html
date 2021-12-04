@@ -3,12 +3,11 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">Editar usuario</h1>
-  </div>
+
+{% block headline %}
+Editar "{{ user.username }}"
 {% endblock %}
+
 {% block content %}
   <form action="{{ url_for('user_edit_finish') }}" method="POST" novalidate>
     {{ form.csrf_token }}

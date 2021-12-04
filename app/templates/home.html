@@ -7,14 +7,8 @@
   crossorigin=""></script>
   <script type="module" src="/static/js/map.js" ></script>
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">Inicio</h1>
-  </div>
-{% endblock %}
-{% block navbar %}
-  {{ super() }}
+{% block headline %}
+Inicio
 {% endblock %}
 {% block content %}
   <div class="map-container">

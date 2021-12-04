@@ -3,17 +3,14 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1> Puntos de encuentro</h1>
-  </div>
+
+{% block headline %}
+Punto de Encuentro
 {% endblock %}
 
 {% block content %}
-<div>
   {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_new') %}
-    <a href="{{ url_for('punto_new') }}" class="link" style="float:right;  margin-top: 5px; width:75px" >Nuevo</a>
+    <a href="{{ url_for('punto_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
   {% endif %}
   <form class="tabla" action="{{ url_for('punto_filtro') }}" method="POST">
   <h4>Filtrar</h4>
@@ -26,7 +23,6 @@
       <input type="submit" value="Filtrar">
     </form>
     <br>
-</div>
   <table>
     <tr>
         <th>  Nombre  </th>
@@ -61,8 +57,6 @@
     {% endfor %}
   </table>
 
-
-<div class="paginado">
   {% if puntos.has_prev %}
   <a class="link" href="{{ url_for('punto_index', page_num=puntos.prev_num,) }}">Anterior</a>
   {% endif %}
@@ -82,5 +76,4 @@
 
   <a href="{{ url_for('home') }}" class="link">Volver</a>
 
-  </div>
 {% endblock %}

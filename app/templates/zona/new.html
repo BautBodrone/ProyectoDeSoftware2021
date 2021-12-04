@@ -8,11 +8,8 @@
   <script type="module" src="/static/js/map.js" ></script>
 {% endblock %}
 
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">Nueva zona</h1>
-  </div>
+{% block headline %}
+Nueva Zona
 {% endblock %}
 
 {% block content %}
@@ -37,13 +34,14 @@
       </ul>
       {% endif %}
     {% endfor %}
-    <div class="buttonHolder position-absolute fixed-bottom">
+    
+    <div class="buttonHolder ">
     <p>
       <button type="submit" class="btn btn-success" value="Crear">Crear</button>
       <button type="reset" class="btn btn-secondary">Limpiar</button>
     </p>
+    </div>
+  </div>
   </form>
   <a href="{{ url_for('zona_index') }}" class="link">Volver</a>
-</div>
-</div>
 {% endblock %}

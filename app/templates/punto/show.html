@@ -3,12 +3,11 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">{{punto.nombre}}</h1>
-  </div>
+
+{% block headline %}
+{{ punto.nombre }}
 {% endblock %}
+
 {% block content %}
 <iframe  src="{{  url_for('punto_show_map', id = punto.id ) }}" loading="lazy" name="map" scrolling="no" style="width:70%;height:80vh;float:right;">
 </iframe>

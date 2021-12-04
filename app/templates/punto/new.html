@@ -8,11 +8,8 @@
   {{ super() }}
 {% endblock %}
 
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">Crear punto de encuentro</h1>
-  </div>
+{% block headline %}
+Crear Punto de Encuentro
 {% endblock %}
 
 {% block content %}
@@ -38,9 +35,8 @@
     <p>
       <input type="submit" value="Crear" style="margin-right:10px">
       <button type="reset">Limpiar</button>
-      <a href="{{ url_for('punto_index') }}" class="link" style="float:center">Volver</a>
-    </p>
+      </p>
   </form>
-  <a href="{{ url_for('zona_index') }}" class="link">Volver</a>
+  <a href="{{ url_for('punto_index') }}" class="link">Volver</a>
 
 {% endblock %}

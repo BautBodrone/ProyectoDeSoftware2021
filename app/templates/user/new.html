@@ -3,12 +3,10 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">Crear usuario</h1>
-  </div>
+{% block headline %}
+Crear Usuario
 {% endblock %}
+
 {% block content %}
   <form action="{{ url_for('user_create') }}" method="POST" novalidate>
     {{ form.csrf_token }}

@@ -3,12 +3,11 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">{{recorrido.nombre}}</h1>
-  </div>
+
+{% block headline %}
+{{ recorrido.nombre }}
 {% endblock %}
+
 {% block content %}
 <iframe  src="{{  url_for('recorrido_show_map', id = recorrido.id ) }}" loading="lazy" name="map" scrolling="no" style="width:70%;height:80vh;float:right;">
 </iframe>

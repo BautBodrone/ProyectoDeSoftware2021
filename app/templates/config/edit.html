@@ -3,15 +3,11 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">Configuración de Página</h1>
-  </div>
+
+{% block headline %}
+Configuraciones
 {% endblock %}
-{% block navbar %}
-  {{ super() }}
-{% endblock %}
+
 {% block content %}
   <h4>Página de configuracion de la aplicación</h4>
   {% if is_authenticated(session) %}
@@ -53,7 +49,6 @@
     <br>
   </form>    
   {% endif %}
-  <div style="margin-top:20px  ">
-    <a href="{{ url_for('home') }}" class="link">Volver</a>
-  </div>
+  <a href="{{ url_for('home') }}" class="link">Volver</a>
+
 {% endblock %}

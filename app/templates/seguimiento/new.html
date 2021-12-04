@@ -3,12 +3,11 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">Crear Seguimiento {{denuncia.nombre}}</h1>
-  </div>
+
+{% block headline %}
+Crear seguimiento a "{{ denuncia.titulo }}""
 {% endblock %}
+
 {% block content %}
   <form action="{{ url_for('seguimiento_create', denuncia_id=denuncia.id) }}" method="POST">
     <input type="hidden" id="denuncia_id" name="denuncia_id" value="{{denuncia.id}}">

@@ -2,13 +2,12 @@
 {% block title %}{{denuncia.nombre}}{% endblock %}
 {% block head %}
   {{ super() }}
-  {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">{{denuncia.titulo}}</h1>
-  </div>
 {% endblock %}
+
+{% block headline %}
+Denuncia "{{ denuncia.titulo }}"
+{% endblock %}
+
 {% block content %}
 <iframe  src="{{  url_for('denuncia_show_map', id = denuncia.id ) }}" loading="lazy" name="map" scrolling="no" style="width:70%;height:80vh;float:right;">
 </iframe>

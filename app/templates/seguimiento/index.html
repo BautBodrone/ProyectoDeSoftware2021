@@ -3,16 +3,15 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title"> {{ denuncia.titulo }}</h1>
-  </div>
+
+{% block headline %}
+{{ denuncia.titulo }}
 {% endblock %}
+
 {% block content %}
 {% if my_user(is_authenticated(session)) != None %}
   <form action="{{ url_for('seguimiento_new', denuncia_id=denuncia.id)}}">
-    <button type="submit" class="btn btn-info mt-2 ml-2" style="float:right;  margin-top: 5px; width:75px">Nuevo</button>
+    <button type="submit" class="btn btn-info mt-2 ml-2" style="float:right;  margin-top: 5px;">Nuevo</button>
   </form>
 {% endif %}
 <table>

@@ -8,12 +8,11 @@
 
   {{ super() }}
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">Editar denuncia</h1>
-  </div>
+
+{% block headline %}
+Editar "{{ denuncia.titulo }}"
 {% endblock %}
+
 {% block content %}
   <form id="form-map" class="one-mark" action="{{ url_for('denuncia_edit_finish') }}" method="POST">
     <div class="map-container">

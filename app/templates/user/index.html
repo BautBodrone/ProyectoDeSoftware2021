@@ -3,20 +3,17 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block header %}
-  <div>
-    {{ super() }}
-    <h1 id="title">Usuarios</h1>
-  </div>
+
+{% block headline %}
+Usuarios
 {% endblock %}
 
 {% block content %}
-<div>
   {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_new') %}
-    <a href="{{ url_for('user_new') }}" class="link" style="float:right;  margin-top: 5px; width:75px" >Nuevo</a>
+    <a href="{{ url_for('user_new') }}" class="link" style="float:right;  margin-top: 5px;" >Nuevo</a>
   {% endif %}
 <form class="tabla" action="{{ url_for('user_filtro') }}" method="POST">
-  <h4>Filtrar</h4> 
+  <h3>Filtrar</h3> 
       <input name="first_name" placeholder="Nombre" value="{{ first_name}}" />
       
       {{activo}}
@@ -45,7 +42,6 @@
       <input type="submit" value="Filtrar">
     </form>
   <br>
-</div>
   <table>
     <tr>
         <th>  Email  </th>
@@ -75,11 +71,11 @@
         {% endif %}
       </td>
       <td>
+        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_edit') %}
         <form action="{{ url_for('user_edit', user_id = user.id ) }}"  >
-          {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_edit') %}
           <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
-          {% endif %}
         </form>
+        {% endif %}
         {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_delete') %}
         <form action="{{ url_for('user_delete') }}" method="POST" enctype="multipart/form-data">
           <input type="hidden" id="user_id" name="user_id" value="{{user.id}}">
@@ -91,7 +87,6 @@
     {% endfor %}
   </table>
 
-<div class="paginado">
   {% if users.has_prev %}
   <a class="link" href="{{ url_for('user_index', page_num=users.prev_num,) }}">Anterior</a>
   {% endif %}
@@ -107,9 +102,5 @@
  {% if users.has_next %}
   <a class="link" href="{{ url_for('user_index', page=users.next_num) }}">Siguiente</a>
  {% endif %}
-
-
   <a href="{{ url_for('home') }}" class="link">Volver</a>
-
-   </div>
 {% endblock %}

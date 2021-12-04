@@ -58,7 +58,9 @@ h1{
   text-align: center;
   flex-direction: column;
 }
-
+.header{
+  display: flex;
+}
 .header h1{
   padding: 30px;
   text-align: Center;
@@ -123,6 +125,7 @@ a.link {
 
 .usuario{
   text-transform: uppercase;
+  height: fit-content;
   font-size: 10px;
   padding: 10px 15px;
   border-radius: 0;
@@ -184,13 +187,6 @@ a.page {
    
 }
 
-.buttonHolder .btn,.buttonHolder .link {
-  width: 100%;
-  table-layout: fixed;
-  border-collapse: collapse;
-  margin-bottom:auto  
-}
-
 @media screen and (min-width: 768px) {
   .content  {
     height: auto;
@@ -200,7 +196,15 @@ a.page {
     width: 100%;
     font-size:90%;   
   }
-
+  img{
+    margin-left: 25%;
+    margin-top: 10%;
+  }
+  .buttonHolder .btn,.buttonHolder .link {
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin-bottom:auto  
+  }
   #content{
     margin-left: 2%;
     width: auto;
@@ -235,17 +239,31 @@ a.page {
 }
 
 @media screen and (min-width: 360px) and ( max-width:768px)  {
+  #title{
+    padding: 0px;
+    font-size: 3em;
+  }
+  .header {
+    display: flex;
+    flex-direction: column;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
   .content{
       display:grid;
       width: 100%;
       height: auto;
     }
-
+    .buttonHolder .btn,.buttonHolder .link {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      margin-bottom:auto  
+    }
     #content{
       width: auto;
       margin-bottom: 2rem;      
     }
-
     .map-fullpage{
       height: 60vh;
       width: 100%;
@@ -255,23 +273,31 @@ a.page {
     }
 
     .mapform{
-      position: fixed;
-      float: right;
       width:100%;
       height:40vh;  
       flex-grow: 100;
       border-radius:10px;
       margin-bottom: 1rem;
     }
-
-    .content table  {
+    .map-container{
+      height: 40vh;
+    }
+    img{
+      display: block;
+      width: 30%;
+      margin: auto;
+    }
+    .content table, form, .usuario{
+      margin-top: auto;
       align-content: center;
       table-layout:fixed;
       width: 100%;
       border-collapse: separate;
       border-spacing:  1px;
-      overflow: hidden;
-       
+      overflow: hidden;  
+    }
+    .usuario{
+      text-align: center;
     }
     .content table button{
       align-items: center;
@@ -279,8 +305,9 @@ a.page {
       height: 30px;
       font-size: small;
     }
-    .navbar{
+    .navbar, .navbar a{
       width: 100%;
+      text-align: center;
     }
   }
 
@@ -288,6 +315,7 @@ table, td, th {
   border: 1px solid rgb(32, 32, 32);
   text-align: center !important;
   padding: 8px;
+  width:fit-content ;
 }
 
 table {

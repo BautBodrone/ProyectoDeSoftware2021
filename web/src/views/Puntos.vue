@@ -9,17 +9,17 @@
     <div v-for="row in recorridos" v-bind:key="row">
       <label>{{row.nombre}}</label>
     </div>  
-    <pagination v-model="page" :records=puntos.length :per-page="1" @paginate="myCallback"/>
+    <!--<pagination v-model="page" :records=puntos.length :per-page="1" @paginate="myCallback"/>-->
   </div>
 </template>
 <script>
 import Map from '@/components/Map.vue';
-import Pagination from 'v-pagination-3';
+//import Pagination from 'v-pagination-3';
 export default {
   name: 'Puntos',
   components:{
     Map,
-    Pagination
+    //Pagination
   },
   data() {
     return {

@@ -12,16 +12,13 @@
               <router-link class="nav-link active" to="/" aria-current="page">Home</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link active" to="/denunciar" aria-current="page">Denuncias</router-link>
+              <router-link class="nav-link active" to="/denunciar" aria-current="page">Denunciar</router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link active" to="/zonas-inundables" aria-current="page">Zonas Inundables</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link active" to="/puntos-de-encuentro" aria-current="page">Puntos</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link active" to="/recorridos" aria-current="page">Recorrido</router-link>
+              <router-link class="nav-link active" to="/puntos-de-encuentro" aria-current="page">Puntos de encuentro</router-link>
             </li>
           </ul>
         </div>
@@ -36,10 +33,10 @@ export default {
   name: 'App',
   data() {
     return {
-      rows_per_page: 'Integer',
-      bg_color: 'String',
-      accent_color: 'String',
-      color: 'String'  
+      rows_per_page: Number,
+      bg_color: String,
+      accent_color: String,
+      color: String  
     };
   },
   created() {

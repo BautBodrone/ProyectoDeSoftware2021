@@ -3,7 +3,22 @@
     <div class="rounded-lg shadow-lg p-4">
 
       <form>
-        
+      <div style="padding-left:2%; padding-right:2%; height: 45vh; width: 100%; margin-top:1rem;border-radius:10px;">
+        <l-map class="map"
+        v-model="zoom"
+        :zoom="zoom"
+        :center="[lat,lng]"
+        @click="onClick"
+        >
+        <div v-if="this.markerLatLng.lat!=undefined">
+            <l-marker :lat-lng="[markerLatLng.lat,markerLatLng.lng]"/>
+        </div>
+        <l-tile-layer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        </l-map>
+      </div>
+             
   <p>
     <label for="titulo">Titulo</label>
     <input
@@ -83,45 +98,6 @@
     </div>
   </div>
 
-
-      <div style="padding-left:2%; padding-right:2%; height: 75vh; width: 100%; margin-top:1rem;border-radius:10px;">
-        <l-map class="map"
-        v-model="zoom"
-        :zoom="zoom"
-        :center="[lat,lng]"
-        @click="onClick"
-        >
-        <div v-if="this.markerLatLng.lat!=undefined">
-            <l-marker :lat-lng="[markerLatLng.lat,markerLatLng.lng]"/>
-        </div>
-        <l-tile-layer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        </l-map>
-      </div>
-      <div class="denuncias">
-    </div>
-      <!--
-    <div
-      v-for="{ as, name, label, children, ...attrs } in schema.fields"
-      :key="name"
-    >
-      <label :for="name">{{ label }}</label>
-      <Field :as="as" :id="name" :name="name" v-bind="attrs">
-        <template v-if="children && children.length">
-          <component v-for="({ tag, text, ...childAttrs }, idx) in children"
-            :key="idx"
-            :is="tag"
-            v-bind="childAttrs"
-          >
-            {{ text }}
-          </component>
-        </template>
-      </Field>
-      <ErrorMessage :name="name" />
-    </div>
-    <button>Submit</button>
-    -->
   
 </template>
 <script>
@@ -208,3 +184,8 @@ export default {
 }
 
 </script>
+<style scoped>
+div {
+  text-align: center;
+}
+</style>

@@ -1,4 +1,6 @@
-Acceso a la aplicación: https://admin-grupo33.proyecto2021.linti.unlp.edu.ar/
+Acceso a la aplicación publica: https://grupo33.proyecto2021.linti.unlp.edu.ar/
+
+Acceso a la aplicación privada: https://admin-grupo33.proyecto2021.linti.unlp.edu.ar/
 
 Credenciales:
 

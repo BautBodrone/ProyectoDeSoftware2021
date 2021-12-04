@@ -78,7 +78,7 @@
       <option value="4">Otro</option>
     </select>
   </p>
-  <button @click="enviar">Enviar</button>
+  <button @click="submitForm">Enviar</button>
 
 </form>
     </div>
@@ -126,13 +126,13 @@
   
 </template>
 <script>
+import useValidate from '@vuelidate/core';
+import {required} from '@vuelidate/validators';
 import {
   LMap,
   LTileLayer,
   LMarker,
-}
-from "@vue-leaflet/vue-leaflet";
-import "leaflet/dist/leaflet.css";
+}from "@vue-leaflet/vue-leaflet";import "leaflet/dist/leaflet.css";
 export default {
   name: 'DynamicForm',
   components: {
@@ -149,11 +149,23 @@ export default {
   },
   data() {
       return {
+          v$: useValidate(),
           zoom: 13,
           lat: -34.9186, 
           lng: -57.956,
           markerLatLng: [],
           categoria_id:1,
+      } 
+  },
+  validations(){
+    return{
+        markerLatLng: { required },
+        categoria_id:{ required },
+        nombre_denunciante:{ required },
+        apellido_denunciante:{ required },
+        descripcion:{ required },
+        telcel_denunciante:{ required },
+        email_denunciante:{ required }
       };
   },
   created() {
@@ -176,9 +188,22 @@ export default {
               this.markerLatLng = e.latlng;
           }
       },
-      enviar(){
-        alert(`nombre_denunciante: ${this.nombre_denunciante},apellido_denunciante: ${this.apellido_denunciante},descripcion; ${this.descripcion},telcel_denunciante: ${this.telcel_denunciante}
-        , email_denunciante: ${this.email_denunciante} ,categoria_id: ${this.categoria_id}, coordenadas:${this.markerLatLng.lat}, ${this.markerLatLng.lng}`)
+      submitForm(){
+        this.v$.$validate()
+        if (!this.v$.$error){
+          const requestOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(`nombre_denunciante: ${this.nombre_denunciante},apellido_denunciante: ${this.apellido_denunciante},descripcion; ${this.descripcion},telcel_denunciante: ${this.telcel_denunciante}
+          , email_denunciante: ${this.email_denunciante} ,categoria_id: ${this.categoria_id}, coordenadas:${this.markerLatLng.lat}, ${this.markerLatLng.lng}`)
+          };
+          fetch("https://admin-grupo33.proyecto2021.linti.unlp.edu.ar/api/denuncia", requestOptions)
+            .then(response => response.json())
+            .then(data => (this.postId = data.id));
+          }
+        else{
+          alert("Complete todos los campos")
+        }
       }  
   }
 }

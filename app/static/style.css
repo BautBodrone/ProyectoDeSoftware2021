@@ -9,9 +9,6 @@ form label, form select, form option{
   display: block;
   
 }
-div form{
-  display: inline-block;
-}
  .tabla {
   display: flex; 
 }
@@ -64,10 +61,11 @@ h1{
 
 .header h1{
   padding: 30px;
-  padding-left: 50%;
   text-align: Center;
   font-size: 30px;
-  position: relative;
+  width: 100%;
+  display: revert;
+  margin-bottom: 0rem;
 }
 
 .clear {
@@ -230,7 +228,6 @@ a.page {
     flex-grow: 100;
     border-radius:10px;
   }
-
   .navbar{
     width: 300px;
   }  
@@ -323,3 +320,10 @@ tr:nth-child(even) {
   height:80px;   
 }
 
+.footer {
+  position: center;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}

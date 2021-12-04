@@ -60,7 +60,7 @@
     {% block navbar %}
       <a href="/" class="navbar" id="home" >Inicio</a>
       <a href="{{ url_for('denuncia_index') }}" class="navbar">Denuncia</a>
-      {% if my_user(is_authenticated(session)) != None and is_authenticated(session) %}
+      {% if my_user != None and is_authenticated(session) %}
         <a href="{{ url_for('recorrido_index') }}" class="navbar">Recorrido</a>
         <a href="{{ url_for('zona_index') }}" class="navbar">Zonas</a>
         <a href="{{ url_for('punto_index') }}" class="navbar">Puntos de Encuentro</a>
@@ -90,11 +90,11 @@
     </div>
     <div class="content" id="content">
       
-      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% with messages = get_flashed_messages() %}
         {% if messages %}
           <ul class=flashes>
-          {% for category,message in messages %}
-            <p class="{{ category }}">{{ message }}</p>
+          {% for message in messages %}
+            <li>{{ message }}</li>
           {% endfor %}
           </ul>
         {% endif %}
@@ -103,14 +103,14 @@
       {% block content %}
       {% endblock %}
     </div>
-    <footer>
-      <div id="footer position-absolute fixed-bottom">
-        {% block footer %}
-        <a> Proyecto de software - Grupo 33 © </a>
-        {% endblock %}
-      </div> 
-      {% block scripts %}
-      {% endblock %} 
-    </footer>
   </body>
+  <footer>
+    <div id="footer">
+      {% block footer %}
+      <a> Proyecto de software - Grupo 33 © </a>
+      {% endblock %}
+    </div> 
+    {% block scripts %}
+    {% endblock %} 
+  </footer>
 </html>

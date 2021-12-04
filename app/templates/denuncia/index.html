@@ -15,7 +15,7 @@
 {% endblock %}
 {% block content %}
 <a href="{{ url_for('denuncia_new') }}" class="link" style="float:right;  margin-top: 5px; width:75px">Nuevo</a>
-<form action="{{ url_for('denuncia_filtro') }}" method="POST">
+<form  class="tabla" action="{{ url_for('denuncia_filtro') }}" method="POST">
   <div>
     <h4>Filtrar</h4> 
       <input name="titulo" placeholder="Titulo" value="{{titulo}}"/>
@@ -32,8 +32,8 @@
   <input type="submit" value="Filtrar">
 </div>
 </form>
-<br></div>
-</div>
+<br>
+
 <table>
   <tr>
       <th>  Titulo  </th>
@@ -72,6 +72,7 @@
   {% endfor %}
 </table>
 
+<br>
 <div class="paginado">
   {% if denuncias.has_prev %}
   <a class="link" href="{{ url_for('denuncia_index', page_num=denuncias.prev_num,) }}">Anterior</a>

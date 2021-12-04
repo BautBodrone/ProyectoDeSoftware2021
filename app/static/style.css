@@ -75,10 +75,11 @@ h1{
 }
 
 #footer {
-  position: fixed;
-  bottom:0;    
+  position:fixed ;
+  bottom:0; 
+  min-height:2em;
   text-align: center;
-  width: 100%; 
+  width: 100%;
 }
 
 a.navbar{
@@ -318,12 +319,4 @@ tr:nth-child(even) {
 .paginado{
   margin-top: 10px;
   height:80px;   
-}
-
-.footer {
-  position: center;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
 }

@@ -6,7 +6,7 @@ Credenciales:
 
     Administrador: admin   Contraseña:123123
     
-    Operario: matias@gmail.com Contraseña: 54321
+    Operario: matias Contraseña: 54321
 
 Grupo 33
 

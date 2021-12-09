@@ -41,6 +41,8 @@ Punto de Encuentro
       <td>{{ punto.estado }}</td>
       <td>{{ punto.telefono }} </td>
       <td> <iframe  src="{{  url_for('punto_show_map', id = punto.id ) }}" loading="lazy" name="map" style="width:100%;height:100%;"></iframe></td>
+      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_edit') 
+      or my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_delete')%}
       <td>
         {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'punto_edit') %}
         <form action="{{ url_for('punto_edit', id = punto.id ) }}"  >
@@ -53,6 +55,7 @@ Punto de Encuentro
         </form>
         {% endif %}
       </td>
+      {% endif %}
     </tr>
     {% endfor %}
   </table>

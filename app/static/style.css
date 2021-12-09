@@ -37,7 +37,6 @@ form label, form select, form option{
   margin-bottom: 2%;
   
 }
-
 form button{
   margin-right: 20px;
   width: auto;
@@ -57,6 +56,18 @@ h1{
   width: 60%;
   text-align: center;
   flex-direction: column;
+}
+.usuario{
+  text-transform: uppercase;
+  padding: 10px 15px;
+  height: fit-content;
+  font-size: 10px;
+  border-radius: 0;
+  display: inline-block;
+  margin-bottom: 5px;
+  line-height: 1 ;
+  text-decoration: none;
+  letter-spacing: 1px;
 }
 .header{
   display: flex;
@@ -90,7 +101,6 @@ a.navbar{
   padding: 15px 10px;
   border-radius: 0;
   display: inline-block;
-  margin-right: 5px;
   margin-bottom: 5px;
   margin-top: 5px;
   line-height: 1.5;
@@ -108,7 +118,6 @@ a.link {
   padding: 10px 15px;
   border-radius: 0;
   display: inline-block;
-  margin-right: 5px;
   margin-bottom: 5px;
   line-height: 1.5;
   text-decoration: none;
@@ -123,20 +132,6 @@ a.link {
   border-radius:10px;
 }
 
-.usuario{
-  text-transform: uppercase;
-  height: fit-content;
-  font-size: 10px;
-  padding: 10px 15px;
-  border-radius: 0;
-  display: inline-block;
-  margin-right: 5px;
-  margin-bottom: 5px;
-  line-height: 1 ;
-  text-decoration: none;
-  margin-top: 50px;
-  letter-spacing: 1px;
-}
 a.page {
   pointer-events: none;
   cursor: default;
@@ -197,13 +192,18 @@ a.page {
     font-size:90%;   
   }
   img{
-    margin-left: 25%;
-    margin-top: 10%;
+    position:absolute;
+    margin-left: 2%;
   }
   .buttonHolder .btn,.buttonHolder .link {
     table-layout: fixed;
     border-collapse: collapse;
     margin-bottom:auto  
+  }
+  .usuario{
+    right: 2%; 
+    position:absolute;
+    margin-top: 50px;
   }
   #content{
     margin-left: 2%;

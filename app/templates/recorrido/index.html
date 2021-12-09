@@ -14,15 +14,15 @@ Crear Recorrido
 {% endif %}
 <form  class="tabla" action="{{ url_for('recorrido_filtro') }}" method="POST">
   <h3>Filtrar</h3> 
-        <input name="nombre" placeholder="Nombre"/>  
-        <select  name="estado">
-          <option value="" selected>Seleccione un estado</option>
-          <option value="publicado">Publicado</option>
-          <option value="despublicado">Despublicado</option>
-        </select>
-        <input type="submit" value="Filtrar">
-  </form>
-  <br>
+  <input name="nombre" placeholder="Nombre"/>  
+  <select  name="estado">
+    <option value="" selected>Seleccione un estado</option>
+    <option value="publicado">Publicado</option>
+    <option value="despublicado">Despublicado</option>
+  </select>
+  <input type="submit" value="Filtrar">
+</form>
+<br>
   
 <table>
   <tr>
@@ -43,13 +43,14 @@ Crear Recorrido
       <iframe  src="{{  url_for('recorrido_show_map', id = recorrido.id ) }}" loading="lazy" name="map" style="width:100%;height:100%;">
       </iframe> 
     </td>
-
+    {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_edit') 
+    or my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_delete')%}
     <td>
+      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_edit') %}
       <form action="{{  url_for('recorrido_edit', id = recorrido.id ) }}"  >
-        {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_edit') %}
         <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
-        {% endif %}
       </form>
+      {% endif %}
       {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'recorrido_delete') %}
       <form action="{{ url_for('recorrido_delete') }}" method="POST" enctype="multipart/form-data">
         <input type="hidden" id="recorrido_id" name="recorrido_id" value="{{recorrido.id}}">
@@ -57,6 +58,7 @@ Crear Recorrido
       </form>
       {% endif %}
     </td>
+    {% endif %}
   </tr>
   {% endfor %}
 </table>

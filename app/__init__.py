@@ -1,11 +1,7 @@
 from os import path, environ,urandom
 
-from flask import Flask, render_template, g, Blueprint, abort, request,session
-from flask.helpers import url_for
-from werkzeug.utils import redirect
+from flask import Flask, Blueprint
 from flask_session import Session
-from flask_sqlalchemy import _SessionSignalEvents
-from app.helpers.auth import authenticated
 from flask_cors import CORS
 
 from config import config
@@ -18,10 +14,6 @@ from app.resources.api.puntos   import puntos_api
 from app.resources.api.recorrido import recorrido_api
 from app.resources.api.configuration import configuration_api
 from app.helpers import handler, user_helper, configurator
-
-from app.models.punto import Punto
-
-from app.helpers import handler, user_helper
 from app.helpers import auth as helper_auth
 
 from oauthlib.oauth2 import WebApplicationClient
@@ -158,8 +150,8 @@ def create_app(environment="production"):
 
     # Handlers
     app.register_error_handler(400, handler.bad_request)
-    app.register_error_handler(404, handler.not_found_error)
     app.register_error_handler(401, handler.unauthorized_error)
+    app.register_error_handler(404, handler.not_found_error)
     app.register_error_handler(500, handler.server_error)
     
     # Retornar la instancia de app configurada

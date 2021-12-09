@@ -51,7 +51,7 @@
       <a href="{{ url_for('home') }}"><img src="/static/imgs/logo.png" alt="logo" width="100"></a>
       <h1 id="title">{% block headline %}{% endblock %}</h1>
       {% if my_user != None and is_authenticated(session) %}
-        <a class="usuario" style="float:right;">{{ is_authenticated(session) }}</a>
+        <a class="usuario">{{ is_authenticated(session) }}</a>
       {% endif %}
     </div>
     

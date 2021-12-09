@@ -70,6 +70,8 @@ Usuarios
           Bloqueado
         {% endif %}
       </td>
+      {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_edit') 
+      or my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_delete') %}  
       <td>
         {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_edit') %}
         <form action="{{ url_for('user_edit', user_id = user.id ) }}"  >
@@ -83,6 +85,7 @@ Usuarios
         </form>
         {% endif %}
       </td>
+      {% endif %}
     </tr>
     {% endfor %}
   </table>

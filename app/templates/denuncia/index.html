@@ -58,7 +58,7 @@ Denuncias
         {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'denuncia_delete') %} 
         <form action="{{ url_for('denuncia_delete') }}" method="POST" enctype="multipart/form-data">
         <input type="hidden" id="denuncia_id" name="denuncia_id" value="{{denuncia.id}}">
-        <button onclick="return confirm('Estas seguro de que deseas eliminar esta denuncia?');" class="btn btn-danger mt-2 ml-2">eliminar</a>
+        <button onclick="return confirm('Estas seguro de que deseas eliminar esta denuncia?');" class="btn btn-danger mt-2 ml-2">Eliminar</a>
         </form>
         {% endif %}
       {% endif %}

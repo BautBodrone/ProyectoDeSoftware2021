@@ -22,6 +22,11 @@ const routes = [
     name: 'Denunciar',
     component: () => import('../views/Denunciar.vue')
   },
+  {
+    path: '/denuncias',
+    name: 'Denuncias',
+    component: () => import('../views/Denuncias.vue')
+  },
 ]
 
 const router = createRouter({

@@ -2,9 +2,6 @@
   <header class="top-bar spread">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;" >
       <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <img alt="Vue logo" src="@/assets/logo.png" width="100" height="100"> 
           <ul class="navbar-nav my-2 my-lg-0 me-sm-0 my-sm-0">
@@ -12,7 +9,7 @@
               <router-link class="nav-link active" to="/" aria-current="page">Home</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link active" to="/denunciar" aria-current="page">Denunciar</router-link>
+              <router-link class="nav-link active" to="/denuncias" aria-current="page">Ver denuncias</router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link active" to="/zonas-inundables" aria-current="page">Zonas Inundables</router-link>
@@ -20,12 +17,16 @@
             <li class="nav-item">
               <router-link class="nav-link active" to="/puntos-de-encuentro" aria-current="page">Puntos de encuentro</router-link>
             </li>
+            <li class="nav-item">
+              <router-link class="nav-link active" to="/denunciar" aria-current="page">Generar denuncia</router-link>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
   </header>
   <router-view/>
+  <label style="text-align:center;width:100%">Proyecto de software - Grupo 33 ©</label>
 </template>
 
 <script>

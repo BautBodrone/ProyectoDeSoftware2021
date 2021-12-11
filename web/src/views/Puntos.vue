@@ -1,46 +1,67 @@
 <template>
-  <div class="puntos">
+  <div class="puntos" style="display:flex">
     <Map v-bind:puntos="puntos" v-bind:recorridos="recorridos"/>
-    <b>Puntos:</b>
-    <div v-for="row in puntos" v-bind:key="row">
-      <label>{{row.nombre}}</label>
-    </div> 
-    <b>Recorridos:</b>
-    <div v-for="row in recorridos" v-bind:key="row">
-      <label>{{row.nombre}}</label>
-    </div>  
-    <!--<pagination v-model="page" :records=puntos.length :per-page="1" @paginate="myCallback"/>-->
+    <div style="width:40%;margin-top:1%">
+    <div v-if="puntos">
+        <b>Puntos:</b>
+        <div v-for="row in puntos_all" v-bind:key="row" style="margin-bottom:2%">
+            <vue-collapsible-panel :expanded="false" @click="showPunto(row)" @leave="showAll()">
+              <template #title>
+                  {{row.nombre}}
+              </template>
+              <template #content>
+                  {{row.direccion}}<br>
+                  {{row.telefono}}
+              </template>
+            </vue-collapsible-panel>
+        </div>
+    </div>
+    <div v-if="recorridos">
+        <b>Recorridos:</b>
+        <div v-for="row in recorridos_all" v-bind:key="row" style="margin-bottom:2%">
+            <vue-collapsible-panel :expanded="false" @click="showRecorrido(row)" @leave="showAll()">
+                <template #title>
+                    {{row.nombre}}
+                </template>
+                <template #content>
+                    <label>{{row.nombre}}</label>
+                    <label>{{row.descripcion}}</label>
+                </template>
+            </vue-collapsible-panel>
+        </div>
+    </div>
+    </div>
   </div>
 </template>
 <script>
 import Map from '@/components/Map.vue';
-//import Pagination from 'v-pagination-3';
+import {
+  VueCollapsiblePanel,
+} from '@dafcoe/vue-collapsible-panel'
+import '@dafcoe/vue-collapsible-panel/dist/vue-collapsible-panel.css'
 export default {
   name: 'Puntos',
   components:{
     Map,
-    //Pagination
+    VueCollapsiblePanel,
   },
   data() {
     return {
-    puntos : [],
-    recorridos : [],
-    page: 1
+      puntos_all : [],
+      puntos : [],
+      recorridos_all : [],
+      recorridos : [],
     };
   },
   props: {
     rows_per_page : Number
-  },
-  method: {
-    myCallBack(e){
-      alert(e);
-    }
   },
   created() {
     fetch(process.env.VUE_APP_ROOT_API+'/puntos-encuentro/').then((response) => {
         return response.json();
     }).then((json) => {
         this.puntos = json.puntos_encuentro;
+        this.puntos_all = this.puntos;
     }).catch((e) => {
         console.log(e)
     }),
@@ -48,14 +69,30 @@ export default {
         return response.json();
     }).then((json) => {
         this.recorridos = json.recorridos;
+        this.recorridos_all = this.recorridos;
     }).catch((e) => {
         console.log(e)
     })
+  },
+  methods:{
+    showPunto(row){
+      this.recorridos = [];
+      this.puntos = [row];
+    },
+    showRecorrido(row){
+      this.recorridos = [row];
+      this.puntos = [];
+    },
+    showAll(){
+      this.recorridos = this.recorridos_all;
+      this.puntos = this.puntos_all;
+    },
   }
 };
 </script>
 <style scoped>
-div{
-  text-align: center;
+.collapsed > .when-open,
+.not-collapsed > .when-closed {
+  display: none;
 }
 </style>

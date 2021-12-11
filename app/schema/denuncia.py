@@ -19,7 +19,7 @@ class DenunciaSchema(object):
             }
         else:
             return{
-                "recorridos":[cls._serialize(item) for item in collection],
+                "denuncias":[cls._serialize(item) for item in collection],
                 "total":len(collection)
             }
             
@@ -94,6 +94,6 @@ class DenunciaSchema(object):
                 send["titulo"] = getattr(obj, attr.name)
             if attr.name == "descripcion":
                 send["descripcion"] = getattr(obj, attr.name)
-            if attr.name == "descripcion":
-                send["descripcion"] = getattr(obj, attr.name)
+            if attr.name == "fechaC":
+                send["fecha_inicio"] = getattr(obj, attr.name)
         return send

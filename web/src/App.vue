@@ -1,4 +1,5 @@
 <template>
+<div class="vh-100">
   <header class="top-bar spread">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;" >
       <div class="container-fluid">
@@ -26,7 +27,8 @@
     </nav>
   </header>
   <router-view/>
-  <label style="text-align:center;width:100%">Proyecto de software - Grupo 33 ©</label>
+</div>
+  <label style="text-align:center;height:100h ;width:100%">Proyecto de software - Grupo 33 ©</label>
 </template>
 
 <script>

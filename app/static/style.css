@@ -84,12 +84,7 @@ h1{
 }
 
 #footer {
-  position:fixed ;
-  bottom:0; 
-  min-height:2em;
   text-align: center;
-  width: 100%;
-  z-index: 9999;
 }
 
 a.navbar{
@@ -103,8 +98,7 @@ a.navbar{
   line-height: 1.5;
   text-decoration: none;
   letter-spacing: 1px;
-  text-align: left;
-  height:50px; 
+  text-align: left; 
   width:250px;
 }
 
@@ -154,7 +148,6 @@ a.page {
   font-size: 15px;
   display: block;
   width: 100%;
-  height: auto;
 }
 
 .content { 

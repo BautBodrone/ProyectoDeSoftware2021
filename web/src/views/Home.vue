@@ -1,13 +1,45 @@
 <template>
-  <div class="home">
-    <div class="content">
-      <h1> Bienvenidos </h1>
-      <h2>En esta página podrás ver las zonas inundables de la ciudad,</h2>
-      <h2>los puntos de encuentro </h2>
-      <h2>y generar denuncias sobre el mantenimiento,</h2>
-      <h2>estado y funcionamiento de calles y alcantarillas.</h2>
+  <div class="container p-4 overflow-auto" style="display:flex ;height: 75vh;">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      <div class="col" style="display:flex">
+        <div class="card">
+          <img src="@/assets/puntos_recorridos_info.jpeg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Denuncias</h5>
+            <p class="card-text"> Se mostraran todas las denuncias con un punto en el mapa. Si se desea selecciona una puede hacerlos desde el listado que se encuentra a la izquierda.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="display:flex">
+        <div class="card">
+          <img src="@/assets/zonas_info.jpeg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Zonas</h5>
+            <p class="card-text">Se mostraran todas las zonas en el mapa. Si se desea selecciona una puede hacerlos desde el listado que se encuentra a la izquierda. Y si desea visualizarlas todos lo podra hacer presionando Mostrar todas.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="display:flex">
+        <div class="card">
+          <img src="@/assets/puntos_recorridos_info.jpeg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Puntos y Recorridos</h5>
+            <p class="card-text">Se mostraran todos los puntos y recorridos con un punto en el mapa. Si se desea selecciona una puede hacerlos desde el listado que se encuentra a la izquierda.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="display:flex">
+        <div class="card">
+          <img src="@/assets/denunciar_info.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Denunciar</h5>
+            <p class="card-text">En caso de que encuentre un problema puede informalo en la seccion "Denunciar" secleccionando en el mapa el punto y llenando la informacion que se muestra a la izquierda.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
 </template>
 <script>
 // @ is an alias to /src

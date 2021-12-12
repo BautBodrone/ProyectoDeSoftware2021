@@ -65,9 +65,8 @@ class DenunciaSchema(object):
             send["telefono"] = dict["telcel_denunciante"]
             send["emailD"] = dict["email_denunciante"]
             send["titulo"] = dict["titulo"]
-            send["descripcion"] = dict["descripcion"][:30]
+            send["descripcion"] = dict["descripcion"]
             send["estado"] = "curso"
-            send["asignadoA"] = 1
             return send
         else:
             raise

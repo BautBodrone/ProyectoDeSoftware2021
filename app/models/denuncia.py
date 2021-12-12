@@ -43,7 +43,7 @@ class Denuncia(db.Model):
 
     def __init__(self , titulo,categoria,descripcion,
                     lat,lng,estado,apellidoD 
-                    ,nombreD,telefono ,emailD,asignadoA):
+                    ,nombreD,telefono ,emailD,asignadoA=None):
         self.titulo = titulo
         self.categoria = categoria
         self.descripcion = descripcion

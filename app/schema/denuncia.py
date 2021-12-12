@@ -54,6 +54,7 @@ class DenunciaSchema(object):
     def post_format(cls,dict):
         base = ['categoria_id', 'coordenadas', 'apellido_denunciante', 'nombre_denunciante',
                 'telcel_denunciante', 'email_denunciante', 'titulo', 'descripcion']
+        print("entroSQUEMA======================================")
         if (collections.Counter(base) == collections.Counter(dict.keys())):
             send = {}
             send["categoria"] = cls._get_categoria_by_id(dict['categoria_id'])

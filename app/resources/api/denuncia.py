@@ -27,7 +27,7 @@ def get():
     else:
         handler.bad_request("error")
     
-@denuncias_api.post("")
+@denuncias_api.post("/")
 def create():
     try:
         denuncia_aux = DenunciaSchema.post_format(request.get_json())

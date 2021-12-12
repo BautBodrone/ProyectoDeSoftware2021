@@ -2,7 +2,7 @@
   <div class="max-w-xl mx-auto px-4">
     <div class="rounded-lg shadow-lg p-4">
 
-      <form>
+      <form @submit.prevent="formSubmit">
       <div style="padding-left:2%; padding-right:2%; height: 45vh; width: 100%; margin-top:1rem;border-radius:10px;">
         <l-map class="map"
         v-model="zoom"
@@ -102,7 +102,7 @@
 </template>
 <script>
 import useValidate from '@vuelidate/core';
-import {required} from '@vuelidate/validators';
+import {required, email} from '@vuelidate/validators';
 import {
   LMap,
   LTileLayer,
@@ -114,7 +114,6 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
- 
   },
   props: {
     schema: {
@@ -122,9 +121,11 @@ export default {
       required: true,
     },
   },
+  setup () {
+    return{ v$: useValidate() }
+  },
   data() {
       return {
-          v$: useValidate(),
           zoom: 13,
           lat: -34.9186, 
           lng: -57.956,
@@ -134,13 +135,14 @@ export default {
   },
   validations(){
     return{
+        titulo: { required },
         markerLatLng: { required },
         categoria_id:{ required },
         nombre_denunciante:{ required },
         apellido_denunciante:{ required },
         descripcion:{ required },
         telcel_denunciante:{ required },
-        email_denunciante:{ required }
+        email_denunciante:{ required, email }
       };
   },
   created() {
@@ -163,21 +165,34 @@ export default {
               this.markerLatLng = e.latlng;
           }
       },
-      submitForm(){
-        this.v$.$validate()
+      async submitForm(){
+        this.v$.$validate();
         if (!this.v$.$error){
+          let coordenadas = this.markerLatLng.lat +','+ this.markerLatLng.lng;
+          const datos = {categoria_id:this.categoria_id,
+          coordenadas:coordenadas,
+          apellido_denunciante:this.apellido_denunciante,
+          nombre_denunciante:this.nombre_denunciante,
+          telcel_denunciante:this.telcel_denunciante,
+          email_denunciante:this.email_denunciante,
+          titulo:this.titulo,
+          descripcion:this.descripcion,
+          };
           const requestOptions = {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(`nombre_denunciante: ${this.nombre_denunciante},apellido_denunciante: ${this.apellido_denunciante},descripcion; ${this.descripcion},telcel_denunciante: ${this.telcel_denunciante}
-          , email_denunciante: ${this.email_denunciante} ,categoria_id: ${this.categoria_id}, coordenadas:[${this.markerLatLng.lat}, ${this.markerLatLng.lng}]`)
+            headers: {'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(datos)
           };
-          fetch(process.env.VUE_APP_ROOT_API+"/denuncias", requestOptions)
+          await fetch(process.env.VUE_APP_ROOT_API+"/denuncias/", requestOptions)
             .then(response => response.json())
-            .then(data => (this.postId = data.id));
+            .then(data => (this.postId = data.id))
+            .catch(function (){
+                alert("Ya existe denuncia con ese título");
+            });
           }
         else{
-          alert("Complete todos los campos")
+          alert("Complete todos los campos");
         }
       }  
   }

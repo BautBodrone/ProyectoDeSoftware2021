@@ -1,9 +1,9 @@
 <template>
-  <div class="max-w-xl mx-auto px-4">
+  <div class="max-w-xl mx-auto px-4" >
     <div class="rounded-lg shadow-lg p-4">
 
-      <form @submit.prevent="formSubmit">
-      <div style="padding-left:2%; padding-right:2%; height: 45vh; width: 100%; margin-top:1rem;border-radius:10px;">
+      <form @submit.prevent="formSubmit" style="display:flex">
+      <div style="padding-left:2%; padding-right:2%; height: 75vh; width: 70%;border-radius:10px;">
         <l-map class="map"
         v-model="zoom"
         :zoom="zoom"
@@ -18,9 +18,10 @@
         />
         </l-map>
       </div>
-             
+  <div style="width:30%;">        
   <p>
     <label for="titulo">Titulo</label>
+    <br>
     <input
       id="titulo"
       v-model="titulo"
@@ -31,6 +32,7 @@
   </p>
   <p>
     <label for="apellido_denunciante">Apellido</label>
+    <br>
     <input
       id="apellido_denunciante"
       v-model="apellido_denunciante"
@@ -41,6 +43,7 @@
   </p>
   <p>
     <label for="nombre_denunciante">Nombre</label>
+    <br>
     <input
       id="nombre_denunciante"
       v-model="nombre_denunciante"
@@ -51,6 +54,7 @@
   </p>
   <p>
     <label for="email_denunciante">Email</label>
+    <br>
     <input
       id="email_denunciante"
       v-model="email_denunciante"
@@ -59,9 +63,9 @@
       maxlength="30"
     >
   </p>
- 
   <p>
     <label for="telcel_denunciante">Telefono</label>
+    <br>
     <input
       id="telcel_denunciante"
       v-model="telcel_denunciante"
@@ -69,8 +73,9 @@
       name="telcel_denunciante"
       min="100000">
   </p>
- <p>
+  <p>
     <label for="descripcion">Descripcion</label>
+    <br>
     <textarea
       id="descripcion"
       v-model="descripcion"
@@ -80,6 +85,7 @@
   </p>
   <p>
     <label for="categoria_id">Categoria</label>
+    <br>
     <select
       id="categoria_id"
       v-model="categoria_id"
@@ -93,7 +99,7 @@
     </select>
   </p>
   <button @click="submitForm">Enviar</button>
-
+  </div>
 </form>
     </div>
   </div>
@@ -201,6 +207,9 @@ export default {
 </script>
 <style scoped>
 div {
-  text-align: center;
+  text-align: left;
+}
+.map {
+    border-radius: 10px;
 }
 </style>

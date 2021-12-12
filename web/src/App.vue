@@ -1,5 +1,5 @@
 <template>
-<div class="vh-100">
+<div class="vh-100 overflow-auto">
   <header class="top-bar spread">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;" >
       <div class="container-fluid">
@@ -16,7 +16,7 @@
               <router-link class="nav-link active" to="/zonas-inundables" aria-current="page">Zonas</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link active" to="/puntos-de-encuentro" aria-current="page">Puntos</router-link>
+              <router-link class="nav-link active" to="/puntos-de-encuentro" aria-current="page">Puntos y Recorridos</router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link active" to="/denunciar" aria-current="page">Denunciar</router-link>
@@ -28,7 +28,9 @@
   </header>
   <router-view/>
 </div>
-  <label style="text-align:center;height:100h ;width:100%">Proyecto de software - Grupo 33 ©</label>
+<div class="footer">
+  <label style="text-align:center;width:100%">Proyecto de software - Grupo 33 ©</label>
+</div>
 </template>
 
 <script>

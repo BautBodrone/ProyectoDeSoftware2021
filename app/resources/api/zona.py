@@ -16,7 +16,7 @@ def index():
     if pagina.isnumeric():
         conf = Configuration.query.first()
         if pagina!="0":
-            zonas = Zona.query.paginate(page=int(pagina),per_page=conf.rows_per_page)    
+            zonas = Zona.query.filter_by(estado="publicado").paginate(page=int(pagina),per_page=conf.rows_per_page)    
         else:
             zonas = Zona.publicados()
         atributos = ZonaSchema.dump(zonas,pagina,many=True)

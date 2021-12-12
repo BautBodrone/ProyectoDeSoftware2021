@@ -9,10 +9,7 @@ form label, form select, form option{
   display: block;
   
 }
- .tabla {
-  display: flex; 
-}
-.tabla .filtro input {
+.filtro input {
   display: inline-block;
 }
 
@@ -32,10 +29,9 @@ form label, form select, form option{
   margin-left: 10px;
 }
 
-  form div label, form div select, form div option{
+form div label, form div select, form div option{
   display: inline-block;
   margin-bottom: 2%;
-  
 }
 form button{
   margin-right: 20px;
@@ -93,6 +89,7 @@ h1{
   min-height:2em;
   text-align: center;
   width: 100%;
+  z-index: 9999;
 }
 
 a.navbar{
@@ -125,7 +122,7 @@ a.link {
 }
 
 .map-fullpage{
-  height: 85vh;
+  height: 75vh;
   width: 100%;
   display: flex;
   flex-grow: 100;
@@ -139,7 +136,8 @@ a.page {
 
 .navbar {
   font-family: 'Montserrat', sans-serif;
-  float: left;
+  position: relative;
+  left: 0;
   width: 15%;
   padding-left: 1%;
   padding-top: 1%;
@@ -148,7 +146,6 @@ a.page {
   text-align: center;
   transition: 0.5s;
   overflow-x: hidden;
-  padding-top: 60px;
   white-space: nowrap;
 }
 
@@ -162,34 +159,31 @@ a.page {
 
 .content { 
   padding-top: 1%;
-    padding-right: 3%;
-    padding-left: 3%;
-    float: center;
-    margin: 10px auto;
-    width: 50%;
-    height: auto;
+  padding-right: 3%;
+  padding-left: 3%;
+  margin: 10px auto;
+  width: 50%;
 }
 
-
-.content table, th{
+.content table{
+  border-spacing:  1px;
+  border: 1px solid rgb(32, 32, 32);
   text-align:center;
-  table-layout:fixed;
   width: 100%;
   border-collapse: separate;
   border-spacing:  1px;
   overflow: hidden;
   word-wrap:break-word;
-   
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 769px) {
   .content  {
+    float: right;
     height: auto;
-    padding-left: 300px;
-    float: center;
     margin: 10px auto;
-    width: 100%;
-    font-size:90%;   
+    font-size:90%;  
+    width: 80%; 
+    margin-bottom: 2em;
   }
   img{
     position:absolute;
@@ -201,14 +195,9 @@ a.page {
     margin-bottom:auto  
   }
   .usuario{
-    right: 2%; 
+    right: 3%; 
     position:absolute;
     margin-top: 50px;
-  }
-  #content{
-    margin-left: 2%;
-    width: auto;
-    margin-bottom: 2rem;      
   }
 
   .card{
@@ -225,20 +214,14 @@ a.page {
     border-radius:10px;
     margin-bottom: 1rem;
   }
-  
-  .map-fullpage{
-    height: 80vh;
-    width: 100%;
-    display: flex;
-    flex-grow: 100;
-    border-radius:10px;
-  }
   .navbar{
-    width: 300px;
+    position: relative;
+    display: inline-block;
+    width: 20%;
   }  
 }
 
-@media screen and (min-width: 360px) and ( max-width:768px)  {
+@media screen and ( max-width:768px)  {
   #title{
     padding: 0px;
     font-size: 3em;
@@ -250,37 +233,30 @@ a.page {
     padding-right: 1rem;
   }
   .content{
-      display:grid;
-      width: 100%;
-      height: auto;
-    }
+    display:grid;
+    width: 100%;
+    height: auto;  
+  }
     .buttonHolder .btn,.buttonHolder .link {
       width: 100%;
       table-layout: fixed;
       border-collapse: collapse;
       margin-bottom:auto  
     }
-    #content{
-      width: auto;
-      margin-bottom: 2rem;      
-    }
     .map-fullpage{
-      height: 60vh;
+      height: 89vh;
       width: 100%;
       display: flex;
       flex-grow: 100;
       border-radius:10px;
+      overflow: hidden;
     }
-
     .mapform{
       width:100%;
       height:40vh;  
       flex-grow: 100;
       border-radius:10px;
-      margin-bottom: 1rem;
-    }
-    .map-container{
-      height: 40vh;
+      margin-bottom: 1rem; 
     }
     img{
       display: block;
@@ -290,7 +266,6 @@ a.page {
     .content table, form, .usuario{
       margin-top: auto;
       align-content: center;
-      table-layout:fixed;
       width: 100%;
       border-collapse: separate;
       border-spacing:  1px;
@@ -305,26 +280,24 @@ a.page {
       height: 30px;
       font-size: small;
     }
+    .navbar {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
     .navbar, .navbar a{
       width: 100%;
       text-align: center;
     }
   }
-
+  
 table, td, th {
-  border: 1px solid rgb(32, 32, 32);
   text-align: center !important;
   padding: 8px;
   width:fit-content ;
 }
 
-table {
-  text-align: center;
-  border-collapse: collapse;
-  min-width: 50%;
-}
-
 th , td{
+  border: 1px solid rgb(240, 240, 240);
   height: 1%;
 }
 

@@ -1,5 +1,5 @@
 <template>
-<div style="padding-left:2%; padding-right:2%; height: 75vh; width: 100%; margin-top:1rem;border-radius:10px;">
+<div style="padding-left:2%; padding-right:2%; height: 75vh; width: 70%; margin-top:1rem;border-radius:10px;">
     <l-map class="map"
     v-model="zoom"
     :zoom="zoom"
@@ -18,6 +18,11 @@
     <div v-for="punto in puntos" :key="punto">
         <l-marker :lat-lng="[punto.lat,punto.lng]" :name="punto.nombre">
             <l-popup>{{punto.nombre}}</l-popup>
+        </l-marker>
+    </div>
+    <div v-for="denuncia in denuncias" :key="denuncia">
+        <l-marker :lat-lng="[denuncia.lat,denuncia.lng]" :name="denuncia.titulo">
+            <l-popup>{{denuncia.titulo}}</l-popup>
         </l-marker>
     </div>
     <div v-for="denuncia in denuncias" :key="denuncia">

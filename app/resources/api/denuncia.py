@@ -21,7 +21,6 @@ def get():
             denuncias_page = Denuncia.query.paginate(page=int(pagina),per_page=conf.rows_per_page)
         else:
             denuncias_page = Denuncia.query.all()
-            print(denuncias_page)
         atributos = DenunciaSchema.dump(denuncias_page,pagina,many=True)
         
         return jsonify(atributos)

@@ -1,9 +1,8 @@
-from flask import redirect, render_template, request, url_for, abort, session, flash, Flask
+from flask import redirect, render_template, request, url_for, abort, session, flash, Flask ,current_app
 import flask_sqlalchemy
 from app.models.user import User
 from oauthlib.oauth2 import WebApplicationClient
-from config import config
-
+from app import config
 
 import requests
 from flask_login import (
@@ -27,6 +26,11 @@ client = WebApplicationClient(GOOGLE_CLIENT_ID)
 
 def loginG():
     # Find out what URL to hit for Google login
+    if current_app.config["ENV"]== "production":
+       dir="https://127.0.0.1:5000/login/callback"
+    else:
+        dir="https://admin-grupo33.proyecto2021.linti.unlp.edu.ar/login/callback"
+    
     google_provider_cfg = get_google_provider_cfg()
     authorization_endpoint = google_provider_cfg["authorization_endpoint"]
     
@@ -35,7 +39,7 @@ def loginG():
     # scopes that let you retrieve user's profile from Google
     request_uri = client.prepare_request_uri(
         authorization_endpoint,
-        redirect_uri= "https://admin-grupo33.proyecto2021.linti.unlp.edu.ar/login/callback",
+        redirect_uri= dir,
         scope=["openid", "email", "profile"],
     )
     return redirect(request_uri)

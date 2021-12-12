@@ -99,8 +99,8 @@ class RecorridoEditForm(FlaskForm):
     
 #Form de Punto
 class PuntoForm (FlaskForm):
-    email = EmailField('Email del denunciante', validators=[Email(message="Email no valido"),DataRequired(message="Campo requerido"), Length(max=30)])
-    nombre = StringField('Nombre de usuario',[DataRequired(message=('Campo requerido')),
+    email = EmailField('Email de contacto', validators=[Email(message="Email no valido"),DataRequired(message="Campo requerido"), Length(max=30)])
+    nombre = StringField('Nombre del punto',[DataRequired(message=('Campo requerido')),
                                               Length(max=30,message="No se pueden mas de 30 caracteres")])
     lat = HiddenField('punto-lat',id='punto-lat')
     lng = HiddenField('punto-lng',id='punto-lng') 
@@ -109,9 +109,9 @@ class PuntoForm (FlaskForm):
 
 class PuntoEditForm(FlaskForm):
     id = HiddenField('id')
-    email = EmailField('Email del denunciante', validators=[Email(message="Email no valido"),DataRequired(message="Campo requerido"), Length(max=30)])
-    nombre = StringField('Nombre de punto',[DataRequired(message=('Campo requerido')),
+    nombre = StringField('Nombre del punto',[DataRequired(message=('Campo requerido')),
                                               Length(max=30,message="No se pueden mas de 30 caracteres")])
+    email = EmailField('Email de contacto', validators=[Email(message="Email no valido"),DataRequired(message="Campo requerido"), Length(max=30)])
     lat = HiddenField('punto-lat',id='punto-lat')
     lng = HiddenField('punto-lng',id='punto-lng')  
     estado = SelectField('Estado', choices=[("publicado",'Publicado'),("despublicado",'Despublicado')])

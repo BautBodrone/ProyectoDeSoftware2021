@@ -63,7 +63,6 @@ def create():
     form = PuntoForm()
     data= dict(form.data)
     del data["csrf_token"]
-    del data["punto_nombre"]
     new_punto = Punto(**data)
     
     if not form.validate_on_submit():

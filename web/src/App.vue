@@ -7,7 +7,7 @@
           <img alt="Vue logo" src="@/assets/logo.png" width="100" height="100"> 
           <ul class="navbar-nav my-2 my-lg-0 me-sm-0 my-sm-0">
             <li class="nav-item">
-              <router-link class="nav-link active" to="/" aria-current="page">Home</router-link>
+              <router-link class="nav-link active" to="/" aria-current="page">Inicio</router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link active" to="/denuncias" aria-current="page">Denuncias</router-link>

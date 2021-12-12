@@ -16,7 +16,7 @@ class Recorrido(db.Model):
     nombre = db.Column(String(30), unique=True,nullable=False)
     descripcion = db.Column(String(60))
     estado = db.Column(ChoiceType(ESTADOS))
-    coordenadas = db.Column(db.String(255), nullable=False)
+    coordenadas = db.Column(db.Text, nullable=False)
 
     def __init__(self,nombre=None, descripcion=None, coordenadas=None, estado=None):
         self.nombre = nombre

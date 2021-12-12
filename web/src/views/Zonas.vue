@@ -6,13 +6,13 @@
         <div v-if="zonas">
           <div class="card-header">
             <h3>Zonas
-            <button @click="showAll()">Show All</button>
+            <button @click="showAll()" class="btn btn-secondary">Mostrar todas</button>
             </h3>
           </div>
           <div class="card-body">
-            <div v-for="row in all" v-bind:key="row" style="margin-bottom:2%">
+            <div v-for="row in all" v-bind:key="row" style="margin-bottom:5%">
                 <label>{{row.nombre}}</label>
-                <button @click="show(row)">Show</button>
+                <button @click="show(row)" class="btn btn-info">Mostrar</button>
             </div>
              
           </div> 
@@ -57,7 +57,6 @@ export default {
 <style scoped>
 div{
     text-align: left;
-    margin-bottom:2%
 }
 button{
     float:right

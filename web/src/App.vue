@@ -9,16 +9,16 @@
               <router-link class="nav-link active" to="/" aria-current="page">Home</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link active" to="/denuncias" aria-current="page">Ver denuncias</router-link>
+              <router-link class="nav-link active" to="/denuncias" aria-current="page">Denuncias</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link active" to="/zonas-inundables" aria-current="page">Zonas Inundables</router-link>
+              <router-link class="nav-link active" to="/zonas-inundables" aria-current="page">Zonas</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link active" to="/puntos-de-encuentro" aria-current="page">Puntos de encuentro</router-link>
+              <router-link class="nav-link active" to="/puntos-de-encuentro" aria-current="page">Puntos</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link active" to="/denunciar" aria-current="page">Generar denuncia</router-link>
+              <router-link class="nav-link active" to="/denunciar" aria-current="page">Denunciar</router-link>
             </li>
           </ul>
         </div>

@@ -1,15 +1,23 @@
 <template>
-  <div class="zonas" style="display:flex">
-    <Map v-bind:zonas="zonas"/>
-    <div style="width:40%;margin-top:1%">
-    <div v-if="zonas">
-        <b>Zonas:</b>
-        <div v-for="row in all" v-bind:key="row" style="margin-bottom:2%">
-            <label>{{row.nombre}}</label>
-            <button @click="show(row)">Show</button>
+  <div class="p-4">
+    <div class="zonas" style="display:flex">
+      <Map v-bind:zonas="zonas"/>
+      <div class="card overflow-auto" style="height:75vh; width:30% ">
+        <div v-if="zonas">
+          <div class="card-header">
+            <h3>Zonas
+            <button @click="showAll()">Show All</button>
+            </h3>
+          </div>
+          <div class="card-body">
+            <div v-for="row in all" v-bind:key="row" style="margin-bottom:2%">
+                <label>{{row.nombre}}</label>
+                <button @click="show(row)">Show</button>
+            </div>
+             
+          </div> 
         </div>
-        <button @click="showAll()">Show All</button>  
-    </div>
+      </div>
     </div>
   </div>
 </template>

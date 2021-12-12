@@ -1,21 +1,27 @@
 <template>
-  <div class="denuncias" style="display:flex">
-    <Map v-bind:denuncias="denuncias"/>
-    <div style="width:40%;margin-top:1%">
-    <div v-if="denuncias">
-        <b>Denuncias:</b>
-        <div v-for="row in all" v-bind:key="row" style="margin-bottom:2%">
-            <vue-collapsible-panel :expanded="false" @click="show(row)">
-              <template #title>
-                  {{row.titulo}}
-              </template>
-              <template #content>
-                  Descripcion: {{row.descripcion}}<br>
-                  Iniciada el día: {{row.fecha_inicio}}
-              </template>
-            </vue-collapsible-panel>
-        </div> 
-    </div>
+  <div class="p-4">
+    <div class="denuncias" style="display:flex">
+      <Map v-bind:denuncias="denuncias"/>
+      <div class="card overflow-auto" style="height:75vh; width:30% ">
+        <div v-if="denuncias">
+          <div class="card-header">
+            <h3>Denuncias</h3>
+          </div>
+          <div class="card-body">
+            <div v-for="row in all" v-bind:key="row" style="margin-bottom:2%">
+                <vue-collapsible-panel :expanded="false" @click="show(row)">
+                  <template #title>
+                      {{row.titulo}}
+                  </template>
+                  <template #content>
+                      Descripcion: {{row.descripcion}}<br>
+                      Iniciada el día: {{row.fecha_inicio}}
+                  </template>
+                </vue-collapsible-panel>
+            </div> 
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

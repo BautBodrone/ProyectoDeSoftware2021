@@ -10,12 +10,22 @@
     
     <style>
       body, a.navbar, .usuario,.card{
-        background-color: {{ configurator().get_private_bg_color() }};
-        color: {{ configurator().get_private_letters_color() }};
+        {% if configurator() != None %}
+            background-color: {{ configurator().get_private_bg_color() }};
+            color: {{ configurator().get_private_letters_color() }};
+          {% else %}
+            background-color: #FFFFFF ;
+            color: #000000 ;
+          {% endif %}
       }
       a.link, #container, #header, .navbar, a.navbar.selected, a.navbar:hover , #footer{
-        background-color: {{ configurator().get_private_accent_color() }};
-        color: {{ configurator().get_private_letters_color() }};
+        {% if configurator() != None %}
+            background-color: {{ configurator().get_private_bg_color() }};
+            color: {{ configurator().get_private_letters_color() }};
+          {% else %}
+            background-color: #892A2A;
+            color: #000000 ;
+          {% endif %}
       }
       a.navbar.active, a.link.active {
         filter: brightness(1.5);

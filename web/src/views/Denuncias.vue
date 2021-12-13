@@ -3,6 +3,7 @@
     <div class="denuncias" style="display:flex">
       <Map v-bind:denuncias="denuncias"/>
       <div class="card overflow-auto" style="height:75vh; width:30% ">
+        <router-link class="btn btn-info" to="/denunciar" aria-current="page">Crear denuncia</router-link>
         <div v-if="denuncias">
           <div class="card-header">
             <h3>Denuncias</h3>

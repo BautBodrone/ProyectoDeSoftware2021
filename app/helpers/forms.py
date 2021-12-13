@@ -103,7 +103,9 @@ class PuntoForm (FlaskForm):
     nombre = StringField('Nombre del punto',[DataRequired(message=('Campo requerido')),
                                               Length(max=30,message="No se pueden mas de 30 caracteres")])
     lat = HiddenField('punto-lat',id='punto-lat')
-    lng = HiddenField('punto-lng',id='punto-lng') 
+    lng = HiddenField('punto-lng',id='punto-lng')
+    direccion = StringField('Direccion',[DataRequired(message=('Campo requerido')),
+                                              Length(max=30,message="No se pueden mas de 30 caracteres")]) 
     estado = SelectField('Estado', choices=[("publicado",'Publicado'),("despublicado",'Despublicado')])
     telefono = IntegerField(label="Telefono", validators=[DataRequired(message="Campo requerido"),NumberRange(min=100000,message="Tiene que tener por lo menos 6 digitos")])
 
@@ -114,5 +116,7 @@ class PuntoEditForm(FlaskForm):
     email = EmailField('Email de contacto', validators=[Email(message="Email no valido"),DataRequired(message="Campo requerido"), Length(max=30)])
     lat = HiddenField('punto-lat',id='punto-lat')
     lng = HiddenField('punto-lng',id='punto-lng')  
+    direccion = nombre = StringField('Direccion',[DataRequired(message=('Campo requerido')),
+                                              Length(max=30,message="No se pueden mas de 30 caracteres")]) 
     estado = SelectField('Estado', choices=[("publicado",'Publicado'),("despublicado",'Despublicado')])
     telefono = IntegerField(label="Telefono", validators=[DataRequired(message="Campo requerido"),NumberRange(min=100000,message="Tiene que tener por lo menos 6 digitos")])

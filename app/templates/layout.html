@@ -18,9 +18,9 @@
             color: #000000 ;
           {% endif %}
       }
-      a.link, #container, #header, .navbar, a.navbar.selected, a.navbar:hover , #footer{
+      a.link, #container, #header, .navbar , #footer{
         {% if configurator() != None %}
-            background-color: {{ configurator().get_private_bg_color() }};
+            background-color: {{ configurator().get_private_accent_color() }};
             color: {{ configurator().get_private_letters_color() }};
           {% else %}
             background-color: #892A2A;
@@ -28,29 +28,20 @@
           {% endif %}
       }
       a.navbar.active, a.link.active {
-        filter: brightness(1.5);
+        filter: saturate(200%);
+        filter: brightness(1.4);
       }
       a.navbar:hover {
         filter: brightness(0.88);
-      }
-      @media (max-width: 768px, min-width:360){
-          .navbar a{
-            display:hidden;
-          }
-      }
-      @media (max-width:360){
-        a{
-          color:red
-        }
       }
     </style>
       {% block head %}
         <link rel="icon" href="/static/imgs/logo.png" type="image/x-icon" > 
         <title>{% block title %}{% endblock %}</title>
       {% endblock %}
-    </head>
-    <body>
-      <div id=page>
+  </head>
+  <body>
+    <div id=page>
       <div class="header" id="header">
         <a href="{{ url_for('home') }}"><img src="/static/imgs/logo.png" alt="logo" width="100"></a>
         <h1 id="title">{% block headline %}{% endblock %}</h1>
@@ -88,8 +79,8 @@
           }
         
         </script>
-      {% endblock %}
       </div>
+      {% endblock %}
       <div class="content" id="content">
         
         {% with messages = get_flashed_messages() %}
@@ -106,8 +97,8 @@
         {% endblock %}
       </div>
     </div>
-      <footer class="footer" id="footer" >
-        Proyecto de software - Grupo 33 ©
-      </footer>
+    <footer class="footer" id="footer" >
+      Proyecto de software - Grupo 33 ©
+    </footer>
   </body>
 </html>

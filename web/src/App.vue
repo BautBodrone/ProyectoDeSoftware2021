@@ -1,6 +1,6 @@
 <template>
   <header class="top-bar spread">
-    <nav class="navbar navbar-expand-lg navbar-light" id="navbar" :style="{ 'background-color': accent_color }">
+    <nav class="navbar navbar-expand-sm navbar-light" id="navbar" :style="{ 'background-color': accent_color }">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <img alt="Vue logo" src="@/assets/logo.png" width="100" height="100"> 
@@ -27,8 +27,8 @@
   </header>
   <body :style="{ 'background-color': bg_color, 'color': color }"> 
     <router-view > </router-view>
-    <p class="footer" style="text-align:center;width:100%"> Proyecto de software - Grupo 33 ©</p>
   </body>
+  <footer style="position:static;display:inline-block;text-align:center;width:100%"> Proyecto de software - Grupo 33 ©</footer>
 </template>
 
 <script>
@@ -59,3 +59,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+.navbar-expand-sm .navbar-collapse{
+  display: block;
+  text-align: center;
+}
+</style>

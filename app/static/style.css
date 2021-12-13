@@ -103,7 +103,6 @@ a.navbar{
   text-decoration: none;
   letter-spacing: 1px;
   text-align: left; 
-  width:250px;
 }
 
 a.link {
@@ -134,12 +133,11 @@ a.page {
 
 .navbar {
   font-family: 'Montserrat', sans-serif;
-  left: 0;
+  float: left;
   padding-left: 1%;
-  padding-top: 1%;
   padding-right: 1%;
   transition: 0.5s;
-  overflow-x: hidden;
+  overflow: hidden;
   white-space: nowrap;
 }
 
@@ -213,6 +211,10 @@ a.page {
 @media screen and ( max-width:768px)  {
   #page{
     display: contents;
+  }
+  #auth{
+    display: grid;
+    margin-top: 2em;
   }
   #title{
     padding: 0px;

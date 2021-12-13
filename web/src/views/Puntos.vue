@@ -4,7 +4,7 @@
       <Map v-bind:puntos="puntos_mapa" v-bind:recorridos="recorridos_mapa"/>
       <div style="display:block; width:30%; height:70vh">
         <button @click="showAll()" class="btn btn-secondary" style="width:100%">Mostrar todas</button>
-      <div class="card overflow-auto" style="height:40vh; ">
+      <div class="card overflow-auto" style="height:36vh; ">
         <div v-if="puntos_all">
           <div class="card-header">
             <h3>Puntos</h3>

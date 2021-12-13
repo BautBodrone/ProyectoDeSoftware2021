@@ -16,7 +16,7 @@ Configuraciones
     <form action="{{ url_for('configuration_update') }}" method="POST">
       <p>
         <h5 for="rows_per_page">Filas por página</h5>
-        <input id="rows_per_page" type="number" name="rows_per_page" placeholder="{{ configurator().get_rows_per_page() }}" />
+        <input id="rows_per_page" type="number" min="1" name="rows_per_page" value="{{ configurator().get_rows_per_page() }}" />
       </p>
       <p>
         <h5>Criterio de orden</h5>
@@ -27,7 +27,7 @@ Configuraciones
             <option value='z..a'>Z..A</option>
           </select>
       </p>
-      <div>
+      <div class="card" style="height:auto;display:block;margin:auto; width: 50%;">
         <h5>Paleta aplicación privada:</h5>
         <label for="private_bg_color" class="dropbtn">Fondo</label>
         <input type="color" id="private_bg_color" name="private_bg_color" value="{{ configurator().get_private_bg_color() }}" />
@@ -36,7 +36,7 @@ Configuraciones
         <label for="private_bg_color" class="dropbtn">  Letras</label>
         <input type="color" id="private_leters_color" name="private_letters_color" value="{{ configurator().get_private_letters_color() }}" />
       </div>
-      <div>
+      <div class="card" style="height:auto;display:block;margin:auto; width: 50%;">
         <h5>Paleta aplicación pública:</h5>
         
         <label for="public_bg_color" class="dropbtn">Fondo</label>
@@ -46,8 +46,8 @@ Configuraciones
         <label for="public_bg_color" class="dropbtn">   Letras</label>
         <input type="color" id="public_leters_color" name="public_letters_color" value="{{ configurator().get_public_letters_color() }}" />
       </div>
-      <button type="reset">Limpiar</button>
-      <input type="submit" value="Guardar">
+      <button type="reset" class="btn btn-warning">Limpiar</button>
+      <button type="submit" class="btn btn-info">Guardar</button>
       <br>
     </form>    
   </th>

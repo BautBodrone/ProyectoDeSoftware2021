@@ -4,10 +4,12 @@ body {
   font-family: 'Montserrat', Helvetica, sans-serif;
   font-size: 1em;
 }
-
+#page{
+  height: 100vh;
+  margin-bottom: -24px;
+}
 form label, form select, form option{
   display: block;
-  
 }
 .filtro input {
   display: inline-block;
@@ -84,7 +86,9 @@ h1{
 }
 
 #footer {
+  display: inline-block;
   text-align: center;
+  width: 100%;
 }
 
 a.navbar{
@@ -130,14 +134,10 @@ a.page {
 
 .navbar {
   font-family: 'Montserrat', sans-serif;
-  position: relative;
   left: 0;
-  width: 15%;
   padding-left: 1%;
   padding-top: 1%;
   padding-right: 1%;
-  margin-bottom: 2em;
-  text-align: center;
   transition: 0.5s;
   overflow-x: hidden;
   white-space: nowrap;
@@ -154,8 +154,6 @@ a.page {
   padding-top: 1%;
   padding-right: 3%;
   padding-left: 3%;
-  margin: 10px auto;
-  width: 50%;
 }
 
 .content table{
@@ -172,11 +170,9 @@ a.page {
 @media screen and (min-width: 769px) {
   .content  {
     float: right;
-    height: auto;
     margin: 10px auto;
     font-size:90%;  
     width: 80%; 
-    margin-bottom: 2em;
   }
   img{
     position:absolute;
@@ -215,6 +211,9 @@ a.page {
 }
 
 @media screen and ( max-width:768px)  {
+  #page{
+    display: contents;
+  }
   #title{
     padding: 0px;
     font-size: 3em;
@@ -228,7 +227,8 @@ a.page {
   .content{
     display:grid;
     width: 100%;
-    height: auto;  
+    height: auto;
+    margin-bottom: 2em;
   }
     .buttonHolder .btn,.buttonHolder .link {
       width: 100%;
@@ -257,14 +257,15 @@ a.page {
       margin: auto;
     }
     .content table, form, .usuario{
+      display: contents;
       margin-top: auto;
       align-content: center;
       width: 100%;
       border-collapse: separate;
       border-spacing:  1px;
-      overflow: hidden;  
     }
     .usuario{
+      display: block;
       text-align: center;
     }
     .content table button{

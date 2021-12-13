@@ -9,6 +9,7 @@ Iniciar Sesión
 {% endblock %}
 
 {% block content %}
+<div>
   <form action="{{ url_for('auth_authenticate') }}" method="POST">
     <input name="username" placeholder="Username" required/>
     <br>
@@ -18,4 +19,5 @@ Iniciar Sesión
   </form>
   <br>
   <a href="{{ url_for('auth_loginG') }}" class="link">Iniciar sesión con google</a>
+</div>
 {% endblock %}

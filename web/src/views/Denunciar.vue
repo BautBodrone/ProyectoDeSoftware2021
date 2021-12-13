@@ -1,113 +1,133 @@
 <template>
-<div class="container col-md-8 col-sm-12" >
-      <b-card-group deck>
-        <b-card
-          bg-variant="ligth"
-          header="Crear Turno"
-          class="text-center"
-          header-tag="header"
-          header-bg-variant="primary"
-          header-text-variant="white"
-          style="max-width: 50rem;"
-          align="center"
-        >
-      <form form v-on:submit.prevent="onSubmit">
-      <div style="padding-left:2%; padding-right:2%; height: 45vh; width: 100%; margin-top:1rem;border-radius:10px;">
-        <l-map class="map"
-        v-model="zoom"
-        :zoom="zoom"
-        :center="[lat,lng]"
-        @click="onClick"
-        >
-        <div v-if="this.markerLatLng.lat!=undefined">
-            <l-marker :lat-lng="[markerLatLng.lat,markerLatLng.lng]"/>
-        </div>
-        <l-tile-layer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        </l-map>
-      </div>
-      
-      <p
-  v-for="error of v$.$errors"
-  :key="error.$uid"
->
-<strong>{{ error.$property }}</strong>
-<small>  </small>
-<strong>{{ error.$message }}</strong>
-</p>       
-  <p>
-    <label for="form.titulo">Titulo</label>
-    <input
-      v-model="form.titulo"
-      type="text"
-      name="titulo"
-      maxlength="30"
-    >
-  </p>
-  <p>
-    <label for="form.apellido_denunciante">Apellido</label>
-    <input
-      v-model="form.apellido_denunciante"
-      type="text"
-      name="apellido_denunciante"
-      maxlength="30"
-    >
-  </p>
-  <p>
-    <label for="form.nombre_denunciante">Nombre</label>
-    <input
-      v-model="form.nombre_denunciante"
-      type="text"
-      name="nombre_denunciante"
-      maxlength="30"
-    >
-  </p>
-  <p>
-    <label for="form.email_denunciante">Email</label>
-    <input
-      v-model="form.email_denunciante"
-      type="text"
-      name="email_denunciante"
-      maxlength="30"
-    >
-  </p>
- 
-  <p>
-    <label for="form.telcel_denunciante">Telefono</label>
-    <input
-      v-model="form.telcel_denunciante"
-      type="number"
-      name="telcel_denunciante"
-      min="100000">
-  </p>
- <p>
-    <label for="form.descripcion">Descripcion</label>
-    <textarea
-      v-model="form.descripcion"
-      type="text"
-      name="descripcion"
-    ></textarea>
-  </p>
-  <p>
-    <label for="form.categoria_id">Categoria</label>
-    <select
-      v-model="form.categoria_id"
-      name="categoria_id"
-      selected= "1"
-    >
-      <option value="1" >Cañeria Rota</option>
-      <option value="2">Calle Inundable</option>
-      <option value="3">Calle Rota</option>
-      <option value="4">Otro</option>
-    </select>
-  </p>
-  <input class="button" type="submit" value="Submit">
-  </form>
-  </b-card>
-  </b-card-group>
-    </div>
+  <div class="p-4">
 
+    <form @submit.prevent="formSubmit" style="display:flex">
+    <div style="padding-left:2%; padding-right:2%; height: 75vh; width: 70%;border-radius:10px;">
+      
+      <l-map class="map"
+      v-model="zoom"
+      :zoom="zoom"
+      :center="[lat,lng]"
+      @click="onClick"
+      >
+      <div v-if="this.markerLatLng.lat!=undefined">
+          <l-marker :lat-lng="[markerLatLng.lat,markerLatLng.lng]"/>
+      </div>
+      <l-tile-layer
+      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      </l-map>
+    </div>
+      <div style="width:30% ">
+        <div class="card overflow-auto" style="height:75vh">
+          <div class="card-header">
+            <h3 class="text-center">Generar denuncia</h3>
+          </div>
+          <div class="card-body">  
+            <div v-if="v$.markerLatLng.$error" style="color:red;">Seleccione un punto en el mapa</div>          
+            <div class="text-center">
+              <label for="titulo">Titulo</label>
+              <br>
+              <input
+                id="titulo"
+                v-model="titulo"
+                type="text"
+                name="titulo"
+                maxlength="30"
+                class="form-control text-center"
+              >
+              <div v-if="v$.titulo.$error" style="color:red;">Ingrese un titulo</div>
+            </div>
+            <div class="text-center">
+              <label for="apellido_denunciante">Apellido</label>
+              <br>
+              <input
+                id="apellido_denunciante"
+                v-model="apellido_denunciante"
+                type="text"
+                name="apellido_denunciante"
+                maxlength="30"
+                class="form-control text-center"
+              >
+              <div v-if="v$.apellido_denunciante.$error" style="color:red;">Ingrese un apellido</div>
+            </div>
+            <div class="text-center">
+              <label for="nombre_denunciante">Nombre</label>
+              <br>
+              <input
+                id="nombre_denunciante"
+                v-model="nombre_denunciante"
+                type="text"
+                name="nombre_denunciante"
+                maxlength="30"
+                class="form-control text-center"
+              >
+              <div v-if="v$.nombre_denunciante.$error" style="color:red;">Ingrese un nombre</div>
+            </div>
+            <div class="text-center">
+              <label for="email_denunciante">Email</label>
+              <br>
+              <input
+                id="email_denunciante"
+                v-model="email_denunciante"
+                type="email"
+                name="email_denunciante"
+                maxlength="30"
+                class="form-control text-center"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+              >
+              <div v-if="v$.email_denunciante.$error" style="color:red;">Ingrese un email valido</div>
+            </div>
+            <div class="text-center">
+              <label for="telcel_denunciante">Telefono</label>
+              <br>
+              <input
+                id="telcel_denunciante"
+                v-model="telcel_denunciante"
+                type="number"
+                name="telcel_denunciante"
+                min="100000"
+                class="form-control text-center"
+              >
+              <div v-if="v$.telcel_denunciante.$error" style="color:red;">Ingrese un telefono valido</div>
+            </div>
+            <p class="text-center">
+              <label for="categoria_id">Categoria</label>
+              <br>
+              <select
+                id="categoria_id"
+                v-model="categoria_id"
+                name="categoria_id"
+                selected= "1"
+                class="form-control text-center"
+                required
+              >
+                <option value="1" >Cañeria Rota</option>
+                <option value="2">Calle Inundable</option>
+                <option value="3">Calle Rota</option>
+                <option value="4">Otro</option>
+              </select>
+            </p>
+            <p class="text-center">
+              <label for="descripcion">Descripcion</label>
+              <br>
+              <textarea
+                id="descripcion"
+                v-model="descripcion"
+                type="text"
+                name="descripcion"
+                class="form-control"
+              ></textarea>
+            </p>
+            
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <button @click="submitForm" class="btn btn-success">Enviar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 
 
   
@@ -115,7 +135,7 @@
 <script>
 // import axios from 'axios'
 import useValidate from '@vuelidate/core';
-import {required, email} from '@vuelidate/validators';
+import {required, email, minLength} from '@vuelidate/validators';
 import {
   LMap,
   LTileLayer,
@@ -128,7 +148,6 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
- 
   },
 
   props: {
@@ -137,35 +156,33 @@ export default {
       required: true,
     },
   },
-
+  setup () {
+    return{ v$: useValidate() }
+  },
   data() {
       return {
-        form:{
-          titulo:'',
-          coordenadas:'',
-          apellido_denunciante:'',
-          nombre_denunciante:'',
-          email_denunciante:'',
-          telcel_denunciante:'',
-          descripcion:'',
-          categoria_id:'1',
-        },
-          v$: useValidate(),
           zoom: 13,
           lat: -34.9186, 
           lng: -57.956,
           markerLatLng: [],
           categoria_id:1,
+          titulo:'',
+          nombre_denunciante:'',
+          apellido_denunciante:'',
+          descripcion:'',
+          telcel_denunciante:'',
+          email_denunciante:'',
       } 
   },
 
   validations(){
     return{
+        titulo: { required },
         markerLatLng: { required },
         categoria_id:{ required },
         nombre_denunciante:{ required },
         apellido_denunciante:{ required },
-        telcel_denunciante:{ required },
+        telcel_denunciante:{ required, minLength: minLength(6) },
         email_denunciante:{ required, email }
       };
   },
@@ -191,23 +208,32 @@ export default {
               this.markerLatLng = e.latlng;
           }
       },
-      onSubmit(){
-        const axios = require('axios');
-        this.v$.$validate()
-
-            axios.post('https://127.0.0.1:5000/api/denuncias',{
-                "categoria_id": 1,
-                "coordenadas": "41.40338,2.17403",
-                "apellido_denunciante": "Fulanasdito",
-                "nombre_denunciante": "Cosasdme",
-                "telcel_denunciante": "221-8436754",
-                "email_denunciante": "juan.perez@gmasdail.com",
-              })
-              .then((response) => {
-                console.log(response);
-              }, (error) => {
-                console.log(error);
-              });
+      async submitForm(){
+        this.v$.$validate();
+        if (!this.v$.$error){
+          let coordenadas = this.markerLatLng.lat +','+ this.markerLatLng.lng;
+          const datos = {categoria_id:this.categoria_id,
+          coordenadas:coordenadas,
+          apellido_denunciante:this.apellido_denunciante,
+          nombre_denunciante:this.nombre_denunciante,
+          telcel_denunciante:this.telcel_denunciante,
+          email_denunciante:this.email_denunciante,
+          titulo:this.titulo,
+          descripcion:this.descripcion,
+          };
+          const requestOptions = {
+            method: "POST",
+            headers: {'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(datos)
+          };
+          await fetch(process.env.VUE_APP_ROOT_API+"/denuncias/", requestOptions)
+            .then(response => response.json())
+            .then(data => (this.postId = data.id))
+            .catch(function (){
+                alert("Ya existe denuncia con ese título");
+            });
+          }
       }  
     }
   }
@@ -215,6 +241,9 @@ export default {
   </script>
 <style scoped>
 div {
-  text-align: center;
+  text-align: left;
+}
+.map {
+    border-radius: 10px;
 }
 </style>

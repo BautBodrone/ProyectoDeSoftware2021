@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
     
     <style>
-      body, #footer, a.navbar, .usuario,.card{
+      body, a.navbar, .usuario,.card{
         background-color: {{ configurator().get_private_bg_color() }};
         color: {{ configurator().get_private_letters_color() }};
       }
-      a.link, #container, #header, .navbar, a.navbar.selected, a.navbar:hover {
+      a.link, #container, #header, .navbar, a.navbar.selected, a.navbar:hover , #footer{
         background-color: {{ configurator().get_private_accent_color() }};
         color: {{ configurator().get_private_letters_color() }};
       }
@@ -34,70 +34,69 @@
         }
       }
     </style>
-    {% block head %}
-      <link rel="icon" href="/static/imgs/logo.png" type="image/x-icon" > 
-      <title>{% block title %}{% endblock %}</title>
-    {% endblock %}
-  </head>
-  <body>
-    <div class="header" id="header">
-      <a href="{{ url_for('home') }}"><img src="/static/imgs/logo.png" alt="logo" width="100"></a>
-      <h1 id="title">{% block headline %}{% endblock %}</h1>
-      {% if my_user != None and is_authenticated(session) %}
-        <a class="usuario">{{ is_authenticated(session) }}</a>
-      {% endif %}
-    </div>
-    {% block navbar %}
-    <div class="navbar" id="navbar" >
-      <a href="/" class="navbar" id="home" >Inicio</a>
-      {% if my_user != None and is_authenticated(session) %}
-        <a href="{{ url_for('denuncia_index') }}" class="navbar">Denuncia</a>
-        <a href="{{ url_for('recorrido_index') }}" class="navbar">Recorrido</a>
-        <a href="{{ url_for('zona_index') }}" class="navbar">Zonas</a>
-        <a href="{{ url_for('punto_index') }}" class="navbar">Puntos de Encuentro</a>
-        <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
-        {% if my_user(is_authenticated(session)) != None %}
-          {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
-            <a href="{{ url_for('rol_index') }}" class="navbar" >Roles</a>
-            <a href="{{ url_for('user_index') }}" class="navbar" >Usuarios</a>
+      {% block head %}
+        <link rel="icon" href="/static/imgs/logo.png" type="image/x-icon" > 
+        <title>{% block title %}{% endblock %}</title>
+      {% endblock %}
+    </head>
+    <body>
+      <div class="header" id="header">
+        <a href="{{ url_for('home') }}"><img src="/static/imgs/logo.png" alt="logo" width="100"></a>
+        <h1 id="title">{% block headline %}{% endblock %}</h1>
+        {% if my_user != None and is_authenticated(session) %}
+          <a class="usuario">{{ is_authenticated(session) }}</a>
+        {% endif %}
+      </div>
+      {% block navbar %}
+      <div class="navbar vh-100" id="navbar" >
+        <a href="/" class="navbar" id="home" >Inicio</a>
+        {% if my_user != None and is_authenticated(session) %}
+          <a href="{{ url_for('denuncia_index') }}" class="navbar">Denuncia</a>
+          <a href="{{ url_for('recorrido_index') }}" class="navbar">Recorrido</a>
+          <a href="{{ url_for('zona_index') }}" class="navbar">Zonas</a>
+          <a href="{{ url_for('punto_index') }}" class="navbar">Puntos de Encuentro</a>
+          <a href="{{ url_for('configuration_edit') }}" class="navbar">Configuracion</a>
+          {% if my_user(is_authenticated(session)) != None %}
+            {% if my_user(is_authenticated(session)).check_permiso(is_authenticated(session),'user_index') %}  
+              <a href="{{ url_for('rol_index') }}" class="navbar" >Roles</a>
+              <a href="{{ url_for('user_index') }}" class="navbar" >Usuarios</a>
+            {% endif %}
           {% endif %}
+          <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
+        {% else %}
+          <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
         {% endif %}
-        <a href="{{ url_for('auth_logout') }}" class="navbar">Cerrar sesión</a>
-      {% else %}
-        <a href="{{ url_for('auth_login') }}" class="navbar">Iniciar sesión</a>
-      {% endif %}
-      <script type="text/javascript">
-         const currentLocation = location.href;
-         const menuItem = document.querySelectorAll('a');
-         const menuLength = menuItem.length;
-         for (let i = 0 ; i< menuLength; i ++ ){
-           if (menuItem[i].href === currentLocation){
-             menuItem[i].classList.add("active");
-           }
-         }
-      
-      </script>
-    {% endblock %}
-    </div>
-    <div class="content" id="content">
-      
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          <ul class=flashes>
-          {% for message in messages %}
-            <li>{{ message }}</li>
-          {% endfor %}
-          </ul>
-        {% endif %}
-      {% endwith %}
+        <script type="text/javascript">
+          const currentLocation = location.href;
+          const menuItem = document.querySelectorAll('a');
+          const menuLength = menuItem.length;
+          for (let i = 0 ; i< menuLength; i ++ ){
+            if (menuItem[i].href === currentLocation){
+              menuItem[i].classList.add("active");
+            }
+          }
+        
+        </script>
+      {% endblock %}
+      </div>
+      <div class="content" id="content">
+        
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
 
-      {% block content %}
-      {% endblock %}
-    </div><div style="clear:both;"></div>
-    <footer id="footer">
-      {% block footer %}
-      <a> Proyecto de software - Grupo 33 © </a>
-      {% endblock %}
-    </footer>
+        {% block content %}
+        {% endblock %}
+      </div>
+      <footer class="footer" id="footer" >
+        Proyecto de software - Grupo 33 ©
+      </footer>
+    
   </body>
 </html>

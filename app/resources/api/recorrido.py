@@ -19,7 +19,7 @@ def get():
     if pagina.isnumeric():
         conf = Configuration.query.first()
         if(pagina!="0"):
-            recorridos = Recorrido.query.paginate(page=int(pagina),per_page=conf.rows_per_page)
+            recorridos = Recorrido.query.filter_by(estado="publicado").paginate(page=int(pagina),per_page=conf.rows_per_page)
         else:
             recorridos = Recorrido.publicados()
         atributos = RecorridoSchema.dump(recorridos,pagina,many=True)

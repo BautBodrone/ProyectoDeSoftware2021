@@ -1,32 +1,34 @@
 <template>
   <header class="top-bar spread">
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;" >
+    <nav class="navbar navbar-expand-lg navbar-light" id="navbar" :style="{ 'background-color': accent_color }">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <img alt="Vue logo" src="@/assets/logo.png" width="100" height="100"> 
           <ul class="navbar-nav my-2 my-lg-0 me-sm-0 my-sm-0">
             <li class="nav-item">
-              <router-link class="nav-link active" to="/" aria-current="page">Home</router-link>
+              <router-link class="nav-link active" to="/" aria-current="page">Inicio</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link active" to="/denuncias" aria-current="page">Ver denuncias</router-link>
+              <router-link class="nav-link active" to="/denuncias" aria-current="page">Denuncias</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link active" to="/zonas-inundables" aria-current="page">Zonas Inundables</router-link>
+              <router-link class="nav-link active" to="/zonas-inundables" aria-current="page">Zonas</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link active" to="/puntos-de-encuentro" aria-current="page">Puntos de encuentro</router-link>
+              <router-link class="nav-link active" to="/puntos-de-encuentro" aria-current="page">Puntos y Recorridos</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link active" to="/denunciar" aria-current="page">Generar denuncia</router-link>
+              <router-link class="nav-link active" to="/denunciar" aria-current="page">Denunciar</router-link>
             </li>
           </ul>
         </div>
       </div>
     </nav>
   </header>
-  <router-view/>
-  <label style="text-align:center;width:100%">Proyecto de software - Grupo 33 ©</label>
+  <body :style="{ 'background-color': bg_color, 'color': color }"> 
+    <router-view > </router-view>
+    <p class="footer" style="text-align:center;width:100%"> Proyecto de software - Grupo 33 ©</p>
+  </body>
 </template>
 
 <script>
@@ -37,7 +39,8 @@ export default {
       rows_per_page: Number,
       bg_color: String,
       accent_color: String,
-      color: String  
+      color: String,
+      order:'' 
     };
   },
   created() {
@@ -49,7 +52,8 @@ export default {
         this.bg_color = json.public_bg_color;
         this.accent_color = json.public_accent_color;
         this.color = json.public_letters_color;
-    }).catch((e) => {
+    })
+    .catch((e) => {
         console.log(e)
     })
   }

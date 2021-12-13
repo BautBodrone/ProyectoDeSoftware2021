@@ -27,7 +27,7 @@ def get():
     else:
         handler.bad_request("error")
     
-@denuncias_api.post("")
+@denuncias_api.post("/")
 def create():
     print("entro api")
     try:

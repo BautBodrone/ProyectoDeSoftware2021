@@ -16,7 +16,7 @@ def get():
     if pagina.isnumeric():
         conf = Configuration.query.first()
         if pagina!="0":
-            puntos = Punto.query.paginate(page=int(pagina),per_page=conf.rows_per_page)
+            puntos = Punto.query.filter_by(estado="publicado").paginate(page=int(pagina),per_page=conf.rows_per_page)
         else:
             puntos = Punto.publicados()
         atributos = PuntoSchema.dump(puntos,pagina,many=True)

@@ -7,7 +7,7 @@
       <div class="card overflow-auto" style="height:36vh; ">
         <div v-if="puntos_all">
           <div class="card-header">
-            <h3>Puntos</h3>
+            <h5>Puntos</h5>
           </div>
           <div class="card-body">
             <div v-for="row in puntos_list" v-bind:key="row" style="margin-bottom:2%">
@@ -21,14 +21,14 @@
                 </template>
               </vue-collapsible-panel>
             </div>
+            <Pagination v-model="page_puntos" :records="cant_puntos" :per-page="rows_per_page" @paginate="newItemsPuntos" :options="options"/>
           </div>
         </div>
-        <Pagination v-model="page_puntos" :records="cant_puntos" :per-page="rows_per_page" @paginate="newItemsPuntos"/>
       </div>
       <div class="card overflow-auto" style="height:35vh;">
       <div v-if="recorridos_all">
         <div class="card-header">
-          <h3>Recorridos</h3>
+          <h5>Recorridos</h5>
         </div>
         <div class="card-body">
           <div v-for="row in recorridos_list" v-bind:key="row" style="margin-bottom:2%">
@@ -41,7 +41,7 @@
                 </template>
             </vue-collapsible-panel>
           </div>
-          <Pagination v-model="page_recorridos" :records="cant_recorridos" :per-page="rows_per_page" @paginate="newItemsRecorridos"/>
+          <Pagination v-model="page_recorridos" :records="cant_recorridos" :per-page="rows_per_page" @paginate="newItemsRecorridos" :options="options"/>
         </div>
       </div>
       </div>
@@ -75,7 +75,17 @@ export default {
       cant_recorridos : '',
       rows_per_page: '',
       page_puntos : 1,
-      page_recorridos : 1
+      page_recorridos : 1,
+      options : {
+        chunk:5,
+        edgeNavigation:true,
+        chunksNavigation:"scroll",
+        hideCount:true,
+        texts:{
+          first:"<<",
+          last:">>"
+        }
+      }
     };
   },
   created() {

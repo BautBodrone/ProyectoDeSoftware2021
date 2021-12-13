@@ -119,18 +119,14 @@
                 class="form-control"
               ></textarea>
             </p>
-            
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <button @click="submitForm" class="btn btn-success">Enviar</button>
+              <button @click="submitForm" class="btn btn-success" style="width:100%">Enviar</button>
             </div>
           </div>
         </div>
       </div>
     </form>
   </div>
-
-
-  
 </template>
 <script>
 import useValidate from '@vuelidate/core';

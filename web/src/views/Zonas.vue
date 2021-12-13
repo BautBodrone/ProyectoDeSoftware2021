@@ -14,9 +14,7 @@
                 <label>{{row.nombre}}</label>
                 <button @click="show(row)" class="btn btn-info">Mostrar</button>
             </div>
-          </div>
-          <div style="">
-            <Pagination v-model="page" :records="cant" :per-page="rows_per_page" @paginate="newItems"/>
+            <Pagination v-model="page" :records="cant" :per-page="rows_per_page" @paginate="newItems" :options="options"/>
           </div>
         </div>
       </div>
@@ -39,7 +37,17 @@ export default {
       zonas_list : [],
       page : 1,
       cant : '',
-      rows_per_page: ''
+      rows_per_page: '',
+      options : {
+        chunk:5,
+        edgeNavigation:true,
+        chunksNavigation:"scroll",
+        hideCount:true,
+        texts:{
+          first:"<<",
+          last:">>"
+        }
+      }
     };
   },
   created() {

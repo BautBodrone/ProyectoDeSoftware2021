@@ -1,5 +1,4 @@
 <template>
-<div class="vh-100 overflow-auto">
   <header class="top-bar spread">
     <nav class="navbar navbar-expand-lg navbar-light" id="navbar" style="background-color: #e3f2fd;" >
       <div class="container-fluid">
@@ -27,10 +26,7 @@
     </nav>
   </header>
   <router-view/>
-</div>
-<div class="footer">
-  <label style="text-align:center;width:100%">Proyecto de software - Grupo 33 ©</label>
-</div>
+  <p class="footer" style="text-align:center;width:100%"> Proyecto de software - Grupo 33 ©</p>
 </template>
 
 <script>

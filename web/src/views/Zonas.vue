@@ -14,7 +14,9 @@
                 <label>{{row.nombre}}</label>
                 <button @click="show(row)" class="btn btn-info">Mostrar</button>
             </div>
-            <Pagination v-model="page" :records="cant" :per-page="rows_per_page" @paginate="newItems" :options="options"/>
+            <div class= "position-absolute bottom-0 start-10">
+              <Pagination v-model="page" :records="cant" :per-page="rows_per_page" @paginate="newItems" :options="options"/>
+            </div>
           </div>
         </div>
       </div>

@@ -21,7 +21,9 @@
                 </template>
               </vue-collapsible-panel>
             </div>
-            <Pagination v-model="page_puntos" :records="cant_puntos" :per-page="rows_per_page" @paginate="newItemsPuntos" :options="options"/>
+            <div class= "position-absolute bottom-0 start-10">
+              <Pagination v-model="page_puntos" :records="cant_puntos" :per-page="rows_per_page" @paginate="newItemsPuntos" :options="options"/>
+            </div>
           </div>
         </div>
       </div>
@@ -41,7 +43,9 @@
                 </template>
             </vue-collapsible-panel>
           </div>
-          <Pagination v-model="page_recorridos" :records="cant_recorridos" :per-page="rows_per_page" @paginate="newItemsRecorridos" :options="options"/>
+          <div class= "position-absolute bottom-0 start-10">
+            <Pagination v-model="page_recorridos" :records="cant_recorridos" :per-page="rows_per_page" @paginate="newItemsRecorridos" :options="options"/>
+          </div>
         </div>
       </div>
       </div>

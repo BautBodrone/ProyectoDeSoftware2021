@@ -1,7 +1,7 @@
 <template>
 <div class="vh-100 overflow-auto">
   <header class="top-bar spread">
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;" >
+    <nav class="navbar navbar-expand-lg navbar-light" id="navbar" style="background-color: #e3f2fd;" >
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <img alt="Vue logo" src="@/assets/logo.png" width="100" height="100"> 
@@ -41,7 +41,8 @@ export default {
       rows_per_page: Number,
       bg_color: String,
       accent_color: String,
-      color: String  
+      color: String,
+      order:'' 
     };
   },
   created() {
@@ -53,7 +54,8 @@ export default {
         this.bg_color = json.public_bg_color;
         this.accent_color = json.public_accent_color;
         this.color = json.public_letters_color;
-    }).catch((e) => {
+    })
+    .catch((e) => {
         console.log(e)
     })
   }

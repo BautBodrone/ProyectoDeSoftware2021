@@ -84,14 +84,14 @@ class DenunciaEditForm(FlaskForm):
 #Form de RECORRIDO
 class RecorridoForm(FlaskForm):
     coordenadas = HiddenField('coordenadas')
-    nombre = StringField('Nombre de usuario',[DataRequired(message=('Campo requerido')),
+    nombre = StringField('Nombre',[DataRequired(message=('Campo requerido')),
                                               Length(max=30,message="No se pueden mas de 30 caracteres")])
     descripcion =  StringField('Descripcion',widget=TextArea(), validators=[DataRequired(message="Campo requerido")])
     estado = SelectField('Estado', choices=[("publicado",'Publicado'),("despublicado",'Despublicado')])
     
 class RecorridoEditForm(FlaskForm):
     id = HiddenField('id')
-    nombre = StringField('Nombre de usuario',[DataRequired(message=('Campo requerido')),
+    nombre = StringField('Nombre',[DataRequired(message=('Campo requerido')),
                                               Length(max=30,message="No se pueden mas de 30 caracteres")])
     descripcion =  StringField('Descripcion',widget=TextArea(), validators=[DataRequired(message="Campo requerido")])
     estado = SelectField('Estado', choices=[("publicado",'Publicado'),("despublicado",'Despublicado')])

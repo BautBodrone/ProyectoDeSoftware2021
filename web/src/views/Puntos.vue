@@ -3,7 +3,7 @@
     <div class="puntos" style="display:flex">
       <Map v-bind:puntos="puntos_mapa" v-bind:recorridos="recorridos_mapa"/>
       <div style="display:block; width:30%; height:70vh">
-        <button @click="showAll()" class="btn btn-secondary" style="width:100%">Mostrar todas</button>
+        <button @click="showAll()" class="btn btn-secondary" style="width:100%">Mostrar todo</button>
       <div class="card overflow-auto" style="height:36vh; ">
         <div v-if="puntos_all">
           <div class="card-header">
@@ -37,12 +37,11 @@
                     {{row.nombre}}
                 </template>
                 <template #content>
-                    <label>{{row.nombre}}</label>
                     <label>{{row.descripcion}}</label>
                 </template>
             </vue-collapsible-panel>
           </div>
-          <Pagination v-model="page_recorridos" :records="cant_recorridos" :per-page="rows_per_page" @paginate="newItemsPuntos"/>
+          <Pagination v-model="page_recorridos" :records="cant_recorridos" :per-page="rows_per_page" @paginate="newItemsRecorridos"/>
         </div>
       </div>
       </div>
@@ -142,7 +141,7 @@ export default {
           console.log(e)
       })
     },
-    newItemsRecorrido(){
+    newItemsRecorridos(){
       fetch(process.env.VUE_APP_ROOT_API+'/recorridos-evacuacion/?pagina='+this.page_recorridos).then((response) => {
         return response.json();
       }).then((json) => {

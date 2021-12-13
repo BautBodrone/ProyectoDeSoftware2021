@@ -228,6 +228,9 @@ export default {
             .then(data => (this.postId = data.id))
             .catch(function (){
                 alert("Ya existe denuncia con ese título");
+            })
+            .finally(() => {
+              alert("Denuncia agregada");
             });
           }
       }  

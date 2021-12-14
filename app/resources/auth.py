@@ -27,9 +27,9 @@ client = WebApplicationClient(GOOGLE_CLIENT_ID)
 def loginG():
     # Find out what URL to hit for Google login
     if current_app.config["ENV"]== "production":
-       dir="https://127.0.0.1:5000/login/callback"
-    else:
         dir="https://admin-grupo33.proyecto2021.linti.unlp.edu.ar/login/callback"
+    else:
+        dir="https://127.0.0.1:5000/login/callback"
     
     google_provider_cfg = get_google_provider_cfg()
     authorization_endpoint = google_provider_cfg["authorization_endpoint"]

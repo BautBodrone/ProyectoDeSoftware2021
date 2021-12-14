@@ -52,14 +52,11 @@ class Zona(db.Model):
     
     def upload(zona):
         aux = db.session.query(Zona).filter_by(nombre=zona.nombre).first()
-        if( aux != None):
-            try:
+        try:
+            if( aux != None):
                 aux.update(zona)
-            except:
-                raise
-        else:
-            try:
+            else:
                 Zona.save(zona)
-            except:
-                raise 
+        except:
+            raise 
         

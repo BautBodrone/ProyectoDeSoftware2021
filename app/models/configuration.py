@@ -23,13 +23,14 @@ class Configuration(db.Model):
     public_accent_color = Column(String(10), default='#21A179',nullable=False)
     public_letters_color = Column(String(10), default='#1E1E24',nullable=False)
     
+    
     def __init__(self, data):
         self.rows_per_page = data["rows_per_page"]
         self.order = data["order"]
         self.private_bg_color = data["private_bg_color"]
         self.private_accent_color = data["private_accent_color"]
         self.private_letters_color = data["private_letters_color"]
-        self.public_bg_color = data["pubic_bg_color"]
+        self.public_bg_color = data["public_bg_color"]
         self.public_accent_color = data["public_accent_color"]
         self.public_letters_color = data["public_letters_color"]
     
@@ -53,6 +54,11 @@ class Configuration(db.Model):
             self.public_accent_color = data["public_accent_color"]
         if (data["public_letters_color"] != self.public_letters_color):
             self.public_letters_color = data["public_letters_color"]
+        db.session.commit()
+
+    @classmethod 
+    def save(self, new_config):
+        db.session.add(new_config)
         db.session.commit()
 
     def get_private_bg_color(self):
@@ -80,7 +86,12 @@ class Configuration(db.Model):
         return self.rows_per_page
 
     def get_config():
-       """
-            Retorna el objeto configurations
-       """
-       return db.session.query(Configuration).first()
+        """
+        Retorna el objeto configurations
+        """
+        config = db.session.query(Configuration).first()
+        if (config == None):
+            aux = {"rows_per_page":2,"order":"cercania","private_bg_color":"#f5f5f5","private_accent_color":"#1dd7b2","private_letters_color":"#262626","public_bg_color":"#ebebeb","public_accent_color":"#ffa3a3" ,"public_letters_color":"#121212"}
+            config = Configuration(aux)
+            Configuration.save(aux)
+        return config

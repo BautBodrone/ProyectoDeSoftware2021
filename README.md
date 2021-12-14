@@ -80,6 +80,19 @@ En caso de correrlo en el servidor de la facultad estara el env con la configura
 FLASK_ENV=production flask shell
 ```
 
+## Base de datos del programa
+
+Si se crea la venv se debe crear un archivo .env para declarar los datos de nuestra base de datos, ej:
+
+DB_HOST=localhost
+DB_USER=Ejemplo
+DB_PASS=1234
+DB_NAME=ejemplo
+
+Sino en el archivo config.py se puede modificar en la parte de development, los datos de la base de datos 
+igual al ejemplo de arriba.
+
+
 ## Estructura de carpetas del proyecto
 
 ```bash
@@ -90,7 +103,7 @@ resources         # Módulo con los controladores de la aplicación (parte web)
 templates         # Módulo con los templates
 db.py             # Instancia de base de datos
 __init__.py       # Instancia de la aplicación y ruteo
-schema		  # Modulo de manejo de las API
-web		  # Modulo de app publica con vue
+schema		      # Modulo de manejo de las API
+web		          # Modulo de app publica con vue
 
 ```

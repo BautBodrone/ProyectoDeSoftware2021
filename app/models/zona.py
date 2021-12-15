@@ -22,7 +22,7 @@ class Zona(db.Model):
         self.color = color
         self.coordenadas = coordenadas
 
-    def update(self, zona):
+    def update(self,zona):
         """
             Actualiza la zona con los valores pasados por parametro
         """
@@ -41,17 +41,20 @@ class Zona(db.Model):
         db.session.add(new_zona)
         db.session.commit()
 
-    def search_id(id):
+    @classmethod
+    def search_id(cls,id):
         return db.session.query(Zona).get(id)
 
-    def publicados():
+    @classmethod
+    def publicados(cls):
         try:
             return db.session.query(Zona).filter_by(estado='publicado').all()
         except:
             return []
     
-    def upload(zona):
-        aux = db.session.query(Zona).filter_by(nombre=zona.nombre).first()
+    @classmethod
+    def upload(cls,zona):
+        aux = db.session.query(Zona).filter_by(nombre=zona["nombre"]).first()
         try:
             if( aux != None):
                 aux.update(zona)

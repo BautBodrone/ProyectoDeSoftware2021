@@ -9,7 +9,7 @@ def is_admin(email):
     return False
 
 def user(email):
-    return User.search_email(email)
+    return User.search_user_email(email)
 
 def has_permit(permit):
     try:

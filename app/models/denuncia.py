@@ -63,12 +63,12 @@ class Denuncia(db.Model):
         db.session.commit()
 
     @classmethod 
-    def save(self, new_denuncia):
+    def save(cls, new_denuncia):
         db.session.add(new_denuncia)
         db.session.commit()
 
-
-    def search_denuncia(id):
+    @classmethod
+    def search_denuncia(cls,id):
         return db.session.query(Denuncia).get(id)
 
     def estado_denuncia(self):

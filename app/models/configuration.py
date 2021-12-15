@@ -57,7 +57,7 @@ class Configuration(db.Model):
         db.session.commit()
 
     @classmethod 
-    def save(self, new_config):
+    def save(cls, new_config):
         db.session.add(new_config)
         db.session.commit()
 
@@ -85,13 +85,23 @@ class Configuration(db.Model):
         """
         return self.rows_per_page
 
-    def get_config():
+    @classmethod
+    def get_config(cls):
         """
         Retorna el objeto configurations
         """
         config = db.session.query(Configuration).first()
         if (config == None):
-            aux = {"rows_per_page":2,"order":"cercania","private_bg_color":"#f5f5f5","private_accent_color":"#1dd7b2","private_letters_color":"#262626","public_bg_color":"#ebebeb","public_accent_color":"#ffa3a3" ,"public_letters_color":"#121212"}
+            aux = {
+                "rows_per_page":2,
+                "order":"cercania",
+                "private_bg_color":"#f5f5f5",
+                "private_accent_color":"#1dd7b2",
+                "private_letters_color":"#262626",
+                "public_bg_color":"#ebebeb",
+                "public_accent_color":"#ffa3a3",
+                "public_letters_color":"#121212"
+            }
             config = Configuration(aux)
-            Configuration.save(aux)
+            Configuration.save(config)
         return config

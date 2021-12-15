@@ -1,4 +1,3 @@
-from flask.templating import render_template
 from flask import flash, redirect, render_template, request, url_for, session, abort
 
 from app.helpers.auth import authenticated
@@ -71,9 +70,10 @@ def save_csv():
                 for row in csv_file:
                     if 'name' in row and 'area' in row:               
                         row['area'] = row['area'].translate(str.maketrans('', '', '{[]!@#$}'))
-                        newZona = Zona(nombre=row['name'],estado='despublicado',coordenadas=row['area'])
+                        newZona = {"nombre":row['name'],"estado":'despublicado',"zonas":row['area'],"color":"#FF6E4E"}
                         try:
                             Zona.upload(newZona)
+                            flash("Se cargo con exito", "success")
                         except:
                             flash("error", "error")
                             return redirect(request.referrer)

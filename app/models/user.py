@@ -87,17 +87,13 @@ class User(db.Model):
         db.session.add(new_user)
         db.session.commit()
 
-    def search_user(id):
+    @classmethod
+    def search_user(cls,id):
         return db.session.query(User).get(id)
 
-    def search_user_email(email):
+    @classmethod
+    def search_user_email(cls,email):
         return db.session.query(User).filter_by(email=email).first()
-
-
-    def get(user_email):
-        ######## retornar valores del user
-        
-        return ("first_name","last_name","email","username","password" ,"activo")
 
     def is_activo(self):
         return self.activo
@@ -120,9 +116,6 @@ class User(db.Model):
             self.activo = aux
         db.session.commit()
 
-    def search_email(unEmail):
-        return db.session.query(User).filter_by(email=unEmail).first()
-    
     def get_permisos(self):
         permisos = []
         for rol in self.rols:

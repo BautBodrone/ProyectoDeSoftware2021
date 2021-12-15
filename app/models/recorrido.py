@@ -39,11 +39,13 @@ class Recorrido(db.Model):
         self.coordenadas = data["coordenadas"]
         self.estado = data["estado"]
         db.session.commit()
-        
-    def search_id(id):
+    
+    @classmethod
+    def search_id(cls,id):
         return db.session.query(Recorrido).get(id)
-        
-    def publicados():
+
+    @classmethod  
+    def publicados(cls):
         try:
             return db.session.query(Recorrido).filter_by(estado='Publicado').all()
         except:

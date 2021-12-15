@@ -27,8 +27,9 @@ class Rol(db.Model):
     def save(self,new_rol):
         db.session.add(new_rol)
         db.session.commit()
-        
-    def search(nombre):
+
+    @classmethod   
+    def search(cls,nombre):
         """
             Busca un rol por nobre
         """

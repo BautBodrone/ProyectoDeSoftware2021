@@ -6,7 +6,6 @@ from flask_cors import CORS
 
 from config import config
 from app import db
-from app.models.user import User
 from app.resources import user, auth, rol , configuration, punto, zona, home, permiso, denuncia, seguimiento, recorrido
 from app.resources.api.zona import zonas_api
 from app.resources.api.denuncia import denuncias_api

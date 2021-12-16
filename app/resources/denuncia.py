@@ -3,7 +3,6 @@ from app.models import denuncia
 
 from app.models.denuncia import Denuncia
 from app.helpers.auth import authenticated
-from app.db import db
 from sqlalchemy import and_
 from app.models.user import User
 from app.helpers import configurator

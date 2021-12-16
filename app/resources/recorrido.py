@@ -1,4 +1,3 @@
-from flask.templating import render_template
 from flask import flash, redirect, render_template, request, url_for, session, abort
 
 from app.helpers.auth import authenticated

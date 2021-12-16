@@ -1,7 +1,6 @@
-from flask import flash, redirect, render_template, request, url_for, session, abort
+from flask import render_template
 
 from app.models.rol import Rol
-from app.helpers.auth import authenticated
 
 def index():
     rols = Rol.query.all()

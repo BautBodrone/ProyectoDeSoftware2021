@@ -2,7 +2,6 @@ from flask import flash, redirect, render_template, request, url_for, session, a
 
 from app.models.seguimiento import Seguimiento
 from app.helpers.auth import authenticated
-from app.db import db
 from app.models.user import User
 from app.models.denuncia import Denuncia
 

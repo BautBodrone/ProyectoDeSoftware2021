@@ -1,8 +1,6 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash, Flask ,current_app
-import flask_sqlalchemy
 from app.models.user import User
 from oauthlib.oauth2 import WebApplicationClient
-from app import config
 
 import requests
 from flask_login import (

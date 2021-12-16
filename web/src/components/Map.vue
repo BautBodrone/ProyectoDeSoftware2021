@@ -1,5 +1,5 @@
 <template>
-<div style="padding-left:2%; padding-right:2%; height: 75vh; width: 70%;border-radius:10px;">
+<div class="mapa">
     <l-map class="map"
     v-model="zoom"
     :zoom="zoom"
@@ -87,8 +87,14 @@ export default ({
 });
 </script>
 <style scoped>
-.map {
-    border-radius: 10px;
+@media screen and ( max-width:768px)  {
+  .map{
+    width: 100%;
+  }
+  .mapa{ 
+    height: 60vh; 
+    width: 100%;
+  }
 }
 </style>
 

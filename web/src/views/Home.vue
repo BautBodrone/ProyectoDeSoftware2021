@@ -2,7 +2,7 @@
   <div class="container p-4" style="display:flex;">
     <div class="row row-cols-1 row-cols-md-2 g-4">
       <div class="col" style="display:flex">
-        <div class="card">
+        <div class="card" style="width:100%; height:100%">
           <img src="@/assets/puntos_recorridos_info.jpeg" class="card-img-top" alt="recorridos" style="width: 100%;">
           <div class="card-body">
             <h5 class="card-title">Denuncias</h5>
@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="col position-relative" style="display:flex">
-        <div class="card">
+        <div class="card" style="width:100%; height:100%">
           <img src="@/assets/zonas_info.jpeg" class="card-img-top" alt="zonas" style="width: 100%;">
           <div class="card-body">
             <h5 class="card-title">Zonas</h5>
@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="col position-relative" style="display:flex">
-        <div class="card">
+        <div class="card" style="width:100%; height:100%">
           <img src="@/assets/puntos_recorridos_info.jpeg" class="card-img-top" alt="puntos" style="width: 100%;">
           <div class="card-body">
             <h5 class="card-title">Puntos y Recorridos</h5>
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="col position-relative" style="display:flex">
-        <div class="card">
+        <div class="card" style="width:100%; height:100%">
           <img src="@/assets/denunciar_info.png" class="card-img-top" alt="denunciar" style="width: 100%;;">
           <div class="card-body">
             <h5 class="card-title">Denunciar</h5>

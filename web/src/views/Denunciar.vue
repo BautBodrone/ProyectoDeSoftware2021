@@ -1,10 +1,9 @@
 <template>
-  <div class="p-4">
-
-    <form @submit.prevent="formSubmit" style="display:flex">
-    <div style="padding-left:2%; padding-right:2%; height: 75vh; width: 70%;border-radius:10px;">
+  <div class="content">
+    <form class="p-4" @submit.prevent="formSubmit" style="display:flex">
+    <div class="mapa">
       
-      <l-map class="map"
+      <l-map class="mapa"
       v-model="zoom"
       :zoom="zoom"
       :center="[lat,lng]"
@@ -18,110 +17,108 @@
       />
       </l-map>
     </div>
-      <div style="width:30% ">
-        <div class="card overflow-auto" style="height:75vh">
-          <div class="card-header">
-            <h3 class="text-center">Generar denuncia</h3>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-center">Generar denuncia</h3>
+        </div>
+        <div class="card-body">  
+          <div v-if="v$.markerLatLng.$error" style="color:red;">Seleccione un punto en el mapa</div>          
+          <div class="text-center">
+            <label for="titulo">Titulo</label>
+            <br>
+            <input
+              id="titulo"
+              v-model="titulo"
+              type="text"
+              name="titulo"
+              maxlength="30"
+              class="form-control text-center"
+            >
+            <div v-if="v$.titulo.$error" style="color:red;">Ingrese un titulo</div>
           </div>
-          <div class="card-body">  
-            <div v-if="v$.markerLatLng.$error" style="color:red;">Seleccione un punto en el mapa</div>          
-            <div class="text-center">
-              <label for="titulo">Titulo</label>
-              <br>
-              <input
-                id="titulo"
-                v-model="titulo"
-                type="text"
-                name="titulo"
-                maxlength="30"
-                class="form-control text-center"
-              >
-              <div v-if="v$.titulo.$error" style="color:red;">Ingrese un titulo</div>
-            </div>
-            <div class="text-center">
-              <label for="apellido_denunciante">Apellido</label>
-              <br>
-              <input
-                id="apellido_denunciante"
-                v-model="apellido_denunciante"
-                type="text"
-                name="apellido_denunciante"
-                maxlength="30"
-                class="form-control text-center"
-              >
-              <div v-if="v$.apellido_denunciante.$error" style="color:red;">Ingrese un apellido</div>
-            </div>
-            <div class="text-center">
-              <label for="nombre_denunciante">Nombre</label>
-              <br>
-              <input
-                id="nombre_denunciante"
-                v-model="nombre_denunciante"
-                type="text"
-                name="nombre_denunciante"
-                maxlength="30"
-                class="form-control text-center"
-              >
-              <div v-if="v$.nombre_denunciante.$error" style="color:red;">Ingrese un nombre</div>
-            </div>
-            <div class="text-center">
-              <label for="email_denunciante">Email</label>
-              <br>
-              <input
-                id="email_denunciante"
-                v-model="email_denunciante"
-                type="email"
-                name="email_denunciante"
-                maxlength="30"
-                class="form-control text-center"
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-              >
-              <div v-if="v$.email_denunciante.$error" style="color:red;">Ingrese un email valido</div>
-            </div>
-            <div class="text-center">
-              <label for="telcel_denunciante">Telefono</label>
-              <br>
-              <input
-                id="telcel_denunciante"
-                v-model="telcel_denunciante"
-                type="number"
-                name="telcel_denunciante"
-                min="100000"
-                class="form-control text-center"
-              >
-              <div v-if="v$.telcel_denunciante.$error" style="color:red;">Ingrese un telefono valido</div>
-            </div>
-            <p class="text-center">
-              <label for="categoria_id">Categoria</label>
-              <br>
-              <select
-                id="categoria_id"
-                v-model="categoria_id"
-                name="categoria_id"
-                selected= "1"
-                class="form-control text-center"
-                required
-              >
-                <option value="1" >Cañeria Rota</option>
-                <option value="2">Calle Inundable</option>
-                <option value="3">Calle Rota</option>
-                <option value="4">Otro</option>
-              </select>
-            </p>
-            <p class="text-center">
-              <label for="descripcion">Descripcion</label>
-              <br>
-              <textarea
-                id="descripcion"
-                v-model="descripcion"
-                type="text"
-                name="descripcion"
-                class="form-control"
-              ></textarea>
-            </p>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <button @click="submitForm" class="btn btn-success" style="width:100%">Enviar</button>
-            </div>
+          <div class="text-center">
+            <label for="apellido_denunciante">Apellido</label>
+            <br>
+            <input
+              id="apellido_denunciante"
+              v-model="apellido_denunciante"
+              type="text"
+              name="apellido_denunciante"
+              maxlength="30"
+              class="form-control text-center"
+            >
+            <div v-if="v$.apellido_denunciante.$error" style="color:red;">Ingrese un apellido</div>
+          </div>
+          <div class="text-center">
+            <label for="nombre_denunciante">Nombre</label>
+            <br>
+            <input
+              id="nombre_denunciante"
+              v-model="nombre_denunciante"
+              type="text"
+              name="nombre_denunciante"
+              maxlength="30"
+              class="form-control text-center"
+            >
+            <div v-if="v$.nombre_denunciante.$error" style="color:red;">Ingrese un nombre</div>
+          </div>
+          <div class="text-center">
+            <label for="email_denunciante">Email</label>
+            <br>
+            <input
+              id="email_denunciante"
+              v-model="email_denunciante"
+              type="email"
+              name="email_denunciante"
+              maxlength="30"
+              class="form-control text-center"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            >
+            <div v-if="v$.email_denunciante.$error" style="color:red;">Ingrese un email valido</div>
+          </div>
+          <div class="text-center">
+            <label for="telcel_denunciante">Telefono</label>
+            <br>
+            <input
+              id="telcel_denunciante"
+              v-model="telcel_denunciante"
+              type="number"
+              name="telcel_denunciante"
+              min="100000"
+              class="form-control text-center"
+            >
+            <div v-if="v$.telcel_denunciante.$error" style="color:red;">Ingrese un telefono valido</div>
+          </div>
+          <p class="text-center">
+            <label for="categoria_id">Categoria</label>
+            <br>
+            <select
+              id="categoria_id"
+              v-model="categoria_id"
+              name="categoria_id"
+              selected= "1"
+              class="form-control text-center"
+              required
+            >
+              <option value="1" >Cañeria Rota</option>
+              <option value="2">Calle Inundable</option>
+              <option value="3">Calle Rota</option>
+              <option value="4">Otro</option>
+            </select>
+          </p>
+          <p class="text-center">
+            <label for="descripcion">Descripcion</label>
+            <br>
+            <textarea
+              id="descripcion"
+              v-model="descripcion"
+              type="text"
+              name="descripcion"
+              class="form-control"
+            ></textarea>
+          </p>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button @click="submitForm" class="btn btn-success" style="width:100%">Enviar</button>
           </div>
         </div>
       </div>
@@ -238,11 +235,3 @@ export default {
   }
 
   </script>
-<style scoped>
-div {
-  text-align: left;
-}
-.map {
-    border-radius: 10px;
-}
-</style>

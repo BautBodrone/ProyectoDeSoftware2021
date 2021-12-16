@@ -1,9 +1,9 @@
 <template>
-  <div class="p-4">
-    <div class="zonas" style="display:flex">
+<div class="content">
+  <div class="p-4" style="display:flex">
       <Map v-bind:zonas="zonas_mapa"/>
-      <div class="card overflow-auto" style="height:75vh; width:30% ">
-        <div v-if="zonas_list">
+      <div class="card">
+        <div v-if="zonas_list"> 
           <div class="card-header">
             <h3>Zonas
             <button @click="showAll()" class="btn btn-secondary">Mostrar todas</button>
@@ -14,14 +14,12 @@
                 <label>{{row.nombre}}</label>
                 <button @click="show(row)" class="btn btn-info">Mostrar</button>
             </div>
-            <div class= "position-absolute bottom-0 start-10">
-              <Pagination v-model="page" :records="cant" :per-page="rows_per_page" @paginate="newItems" :options="options"/>
-            </div>
+            <Pagination v-model="page" :records="cant" :per-page="rows_per_page" @paginate="newItems" :options="options"/>
           </div>
         </div>
       </div>
-    </div>
   </div>
+</div>
 </template>
 <script>
 import Pagination from 'v-pagination-3';
@@ -96,11 +94,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-div{
-    text-align: left;
-}
-button{
-    float:right
-}
-</style>

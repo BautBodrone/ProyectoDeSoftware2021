@@ -65,3 +65,46 @@ export default {
   text-align: center;
 }
 </style>
+<style>
+div{
+  text-align: left;
+}
+button{
+  float:right
+}
+.card{
+  height:75vh; 
+  width:30%;
+  overflow: auto;
+}
+.mapa{
+  padding-left:1%; 
+  padding-right:1%; 
+  display:flex;
+  width:70%;
+  border-radius:10px;
+}
+.map{
+  border-radius: 10px;
+}
+.content{
+  flex-direction: column;
+  width: 100%;
+}
+@media screen and ( max-width:768px)  {
+  .mapa{
+    display:block;
+    width:100%;
+    height: 60vh;
+  }
+  .p-4{
+    flex-direction: column;
+    width: 100%;
+  }
+  .card{
+    height: 100%;
+    width: 100%;
+    overflow: visible;
+  }
+}
+</style>

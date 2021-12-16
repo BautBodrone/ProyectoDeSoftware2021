@@ -1,8 +1,8 @@
 <template>
-  <div class="p-4">
-    <div class="denuncias" style="display:flex">
+  <div class="content">
+    <div class="p-4" style="display:flex">
       <Map v-bind:denuncias="denuncias_mapa"/>
-      <div class="card overflow-auto" style="height:75vh; width:30% ">
+      <div class="card">
         <router-link class="btn btn-info" to="/denunciar" aria-current="page">Crear denuncia</router-link>
         <div v-if="all">
           <div class="card-header">
@@ -22,9 +22,7 @@
                   </template>
                 </vue-collapsible-panel>
             </div>
-            <div class= "position-absolute bottom-0 start-10">
-              <Pagination v-model="page" :records="cant" :per-page="rows_per_page" @paginate="newItems" :options="options"/>
-            </div>
+            <Pagination v-model="page" :records="cant" :per-page="rows_per_page" @paginate="newItems" :options="options"/>
           </div>
         </div>
       </div>

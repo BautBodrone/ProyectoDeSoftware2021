@@ -15,20 +15,6 @@ from app.resources.api.configuration import configuration_api
 from app.helpers import handler, user_helper, configurator
 from app.helpers import auth as helper_auth
 
-from oauthlib.oauth2 import WebApplicationClient
-from flask_login import (LoginManager,
-    current_user,
-    login_required,
-    login_user,
-    logout_user,
-    )
-
-GOOGLE_CLIENT_ID ="121321804230-vh5t42njjsba08v7iif6k2ceai2k83qm.apps.googleusercontent.com"
-GOOGLE_CLIENT_SECRET = "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"
-GOOGLE_DISCOVERY_URL = (
-    "https://accounts.google.com/.well-known/openid-configuration"
-)
-
 def create_app(environment="production"):
 
     # Configuración inicial de la app

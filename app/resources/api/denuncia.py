@@ -29,10 +29,7 @@ def get():
     
 @denuncias_api.post("/")
 def create():
-    print("entro api")
     try:
-        print("----------------------------Pido jsdon")
-        print(request.get_json())
         denuncia_aux = DenunciaSchema.post_format(request.get_json())
         
         denuncia = Denuncia(**denuncia_aux)

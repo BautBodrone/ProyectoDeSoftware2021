@@ -26,6 +26,8 @@ Legajo: 15563/3
 De Lena Ignacio
 Legajo: 16883/1
 
+##Resultado de proyecto
+Aprobado
 
 ## Iniciar ambiente
 
